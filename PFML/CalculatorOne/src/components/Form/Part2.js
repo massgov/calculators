@@ -1,9 +1,14 @@
 import React, { Fragment } from 'react';
+import numbro from 'numbro';
 import { InputCurrency, InputRadioGroup, CalloutAlert, InputText } from '@massds/mayflower-react';
 import { FormContext } from './context';
 
 import './index.css';
 
+const toCurrency = (number) => {
+  const currency = numbro(number).formatCurrency({thousandSeparated: true, mantissa: 2, spaceSeparated: false})
+  return currency;
+}
 
 const Part2 = () => {
     return (
@@ -22,8 +27,7 @@ const Part2 = () => {
             const famPercent = 0.0011;
             const totalPercent = medPercent + famPercent;
             const totalPayroll = payroll_w2 + (over50per ? payroll_1099 : 0)
-            const totalPayment = totalPayment * totalPercent;
-            console.log(totalPayment)
+            const totalPayment = totalPayroll * totalPercent;
             
             return (
               <fieldset>
@@ -87,8 +91,9 @@ const Part2 = () => {
                       </div>
                       {
                         (payroll_w2 &&  payroll_1099) && (
-                          <CalloutAlert theme="c-primary">
-                            <p>Total estimated annual contribution for your company is <strong>{totalPayment}</strong> </p>
+                          <CalloutAlert theme="c-primary" icon={null}>
+                            <p>Total estimated annual contribution for your company is <strong>{toCurrency(totalPayment)}</strong> </p>
+                            <p>Of this amount, <strong>{toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>{toCurrency(famPercent * totalPayroll)}</strong> is for family leave.</p>
                           </CalloutAlert>
                         )
                       }
