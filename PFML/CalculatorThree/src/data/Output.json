@@ -1,0 +1,29 @@
+{
+    "paragraphOne": {
+        "partOne": "Your estimated weekly benefit is",
+        "partTwo": ", which is about",
+        "partThree": "of what you make today."
+    },
+    "paragraphTwo": {
+        "partOne": "Your estimated total maximum benefit is",
+        "partTwo": ", which is about",
+        "partThree": "of what you made last year."
+    },
+    "paragraphThree": {
+        "more": {
+            "partOne": "Because you earned more than",
+            "partTwo": "(1/2 of the statewide average wage) during the last year, you are eligible to receive",
+            "partThree": "per week plus",
+            "partFour": "of your earnings above",
+            "partFive": "up to",
+            "partSix": ". The maximum benefit is",
+            "partSeven": "per week."
+        },
+        "less": {
+        	"partOne": "Because you earned less than",
+            "partTwo": "(1/2 of the statewide average wage) during the last year, you are eligible to receive",
+            "partThree": "of your weekly income, up to",
+            "partFour": "per week."
+        }
+    }
+}
