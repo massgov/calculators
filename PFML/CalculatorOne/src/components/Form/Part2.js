@@ -21,7 +21,9 @@ const Part2 = () => {
             const medPercent = over25 ? 0.0052 : 0.0031;
             const famPercent = 0.0011;
             const totalPercent = medPercent + famPercent;
-            
+            const totalPayroll = payroll_w2 + (over50per ? payroll_1099 : 0)
+            const totalPayment = totalPayment * totalPercent;
+            console.log(totalPayment)
             
             return (
               <fieldset>
@@ -86,7 +88,7 @@ const Part2 = () => {
                       {
                         (payroll_w2 &&  payroll_1099) && (
                           <CalloutAlert theme="c-primary">
-                            <p>Total estimated annual contribution for your company is <strong>{(payroll_w2 + payroll_1099) * 0.0063}</strong> </p>
+                            <p>Total estimated annual contribution for your company is <strong>{totalPayment}</strong> </p>
                           </CalloutAlert>
                         )
                       }
