@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { InputCurrency, InputRadioGroup, CalloutAlert, InputText } from '@massds/mayflower-react';
 import { FormContext } from './context';
 
@@ -15,6 +15,37 @@ const Part1 = () => {
             }
             const onChange_employees_1099 = (e) => {
               context.updateState({ employees_1099: e })
+            }
+            const { has_mass_employees, employees_w2, employees_1099 } = context;
+            const employeeCount = +employees_w2 + +employees_1099;
+            const over25 = employeeCount >= 25;
+            const over50per = (employees_1099/employees_w2) > 0.5; 
+            let message; 
+            if(over25) {
+              if(over50per) {
+                message = (
+                  <Fragment>
+                    <p><strong>You are required to remit payment to the department starting 7/1 and you are liable for a portion of medical leave for your employees.</strong> Because you have more than 25 total employees in Massachusetts. </p>
+                    <p><strong>You are required to remit payment on behalf of your contractors.</strong> For employers with over 50% their workforce made up of 1099s need to consider these as full time employees under the new language.</p>
+                  </Fragment>
+                )
+              } else {
+                message =  (
+                  <Fragment>
+                    <p><strong>You are required to remit payment to the department starting 7/1 and you are liable for a portion of medical leave for your employees.</strong> Because you have more than 25 total employees in Massachusetts. </p>
+                    <p><strong>You are not required to remit payment on behalf of your contractors.</strong> Because you have less than 50% of contractors</p>
+                  </Fragment>
+                )
+              }
+            } else if (over50per) {
+              message =  (
+                <Fragment>
+                  <p><strong>You are not liable for medical leave payment for your employees.</strong> Because you have more than 25 total employees in Massachusetts.</p>
+                  <p><strong>You are not required to remit payment on behalf of your contractors.</strong> Because you have less than 50% of contractors</p>
+                </Fragment>
+              )
+            }; else {
+              message = (<p><strong>You are not required to remit payment to the department starting 7/1.</strong> Because you have less than 25 total employees in Massachusetts. </p>)
             }
             return (
               <fieldset>
@@ -37,7 +68,7 @@ const Part1 = () => {
                   }}
                   />
                 {
-                  !context.has_mass_employees && (
+                  !has_mass_employees && (
                     <CalloutAlert theme="c-error-red">
                       <p>You are <strong>not required</strong> to remit payment to the department starting 7/1. </p>
                     </CalloutAlert>
@@ -74,6 +105,13 @@ const Part1 = () => {
                     onChange={onChange_employees_1099}
                   />
                 </div>
+                {
+                  (has_mass_employees && _w2 && employees_1099) && (
+                    <CalloutAlert theme="c-primary">
+                      { message }
+                    </CalloutAlert>
+                  ) 
+                }
               </fieldset>
             )
           }
