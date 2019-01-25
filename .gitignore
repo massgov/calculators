@@ -58,7 +58,8 @@ typings/
 .env
 
 .cache/
-public
+build/
+**/public/assets/
 yarn-error.log
 
 .DS_Store
