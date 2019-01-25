@@ -44,7 +44,7 @@ const Part1 = () => {
                   <p><strong>You are not required to remit payment on behalf of your contractors.</strong> Because you have less than 50% of contractors</p>
                 </Fragment>
               )
-            }; else {
+            } else {
               message = (<p><strong>You are not required to remit payment to the department starting 7/1.</strong> Because you have less than 25 total employees in Massachusetts. </p>)
             }
             return (
@@ -106,7 +106,7 @@ const Part1 = () => {
                   />
                 </div>
                 {
-                  (has_mass_employees && _w2 && employees_1099) && (
+                  (has_mass_employees && employees_w2 && employees_1099) && (
                     <CalloutAlert theme="c-primary">
                       { message }
                     </CalloutAlert>
