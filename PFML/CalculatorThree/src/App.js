@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Footer, InputRadioButton } from '@massds/mayflower-react';
+import { Header, Footer, Button } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
@@ -59,8 +59,11 @@ class App extends Component {
               <QuestionTwo onChange={this.handleInput} disabled={questTwoDisabled} />
               <hr />
               {this.state.yearIncome > 0 && this.state.maxWeeks > 0 && (
-                <Output yearIncome={this.state.yearIncome} maxWeeks={this.state.maxWeeks}/>
-              )}  
+                <React.Fragment>
+                  <Output yearIncome={this.state.yearIncome} maxWeeks={this.state.maxWeeks}/>
+                  <Button type="submit" size="small" info="Learn more about filing a claim." text="Learn about how to file a claim" href="https://www.mass.gov" />
+                </React.Fragment>
+              )}
             </section>
           </main>
         <Footer {...this.footerProps} />
