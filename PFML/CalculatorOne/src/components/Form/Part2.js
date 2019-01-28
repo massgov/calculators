@@ -18,9 +18,9 @@ const Part2 = () => {
             const onChange_employees_w2 = (e) => {
               context.updateState({ employees_w2: e })
             }
-            const { employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages } = context;
+            const { employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages, payroll_base, has_mass_employees } = context;
             const over50per = (employees_1099/employees_w2) > 0.5; 
-            const employeeCount = over50per ? (+employees_w2 + +employees_1099) : +employees_w2;
+            const employeeCount = +employees_w2 + (over50per ? +employees_1099 : 0);
             const over25 = employeeCount >= 25;
             const medPercent = over25 ? 0.0052 : 0.0031;
             const famPercent = 0.0011;
@@ -47,7 +47,7 @@ const Part2 = () => {
                   }
                   />
               {
-                (context.payroll_base === 'all') ? (
+                (payroll_base === 'all') ? (
                   <Fragment>
                     <div class="ma__input-group--inline" key="payroll_w2">
                       <InputCurrency
@@ -68,6 +68,7 @@ const Part2 = () => {
                         }}
                         onChange={(e) => context.updateState({payroll_w2: e })}
                         required={true}
+                        disabled = {!employeeCount}
                         />
                       </div>
                       <div class="ma__input-group--inline" key="payroll_1099">
@@ -88,10 +89,11 @@ const Part2 = () => {
                             thousandSeparated: true
                           }}
                           onChange={(e) => context.updateState({ payroll_1099: e })}
+                          disabled = {!employeeCount}
                           required={true}
                           />
                       </div>
-                      <Collapse in={payroll_w2 &&  payroll_1099} dimension="height" className="ma__callout-alert">
+                      <Collapse in={has_mass_employees && payroll_w2 &&  payroll_1099} dimension="height" className="ma__callout-alert">
                         <div className="ma__collapse">
                           <CalloutAlert theme="c-primary" icon={null}>
                             <p>Total estimated annual contribution for your company is <strong>{toCurrency(totalPayment)}</strong> (<strong>{toCurrency(totalPaymentEmp)}</strong> per employee).</p>
