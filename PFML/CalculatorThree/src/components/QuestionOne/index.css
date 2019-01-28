@@ -13,7 +13,24 @@ html {
     .ma__input-group__items--inline.ma__input-group__items--outline .ma__input-group__item.item-5 {
       width: calc(50% - 10px); } }
 
-.ma__callout-alert {
+.ma__collapse {
   margin: 20px 0px; }
-  .ma__callout-alert p {
+  .ma__collapse p {
     margin-bottom: 0rem; }
+  .ma__collapse.collapsed {
+    visibility: hidden;
+    height: 0px; }
+  .ma__collapse.collapsing, .ma__collapse.expanding {
+    position: relative;
+    overflow: hidden;
+    visibility: visible;
+    -webkit-transition-property: height, visibility;
+    transition-property: height, visibility;
+    transition-duration: 0.5s;
+    -webkit-transition-duration: 0.5s;
+    transition-timing-function: ease;
+    -webkit-transition-timing-function: ease; }
+  .ma__collapse.expanded {
+    height: auto;
+    visibility: visible;
+    display: block; }

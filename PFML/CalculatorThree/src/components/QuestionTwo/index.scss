@@ -1,3 +1,8 @@
-.ma__form-input--inline {
-	display: inline-block;	
+.ma__input-group {
+  &--inline {
+    margin-top: 20px;
+    display: flex;
+      align-items: center;
+      justify-content: space-between;
+  }
 }

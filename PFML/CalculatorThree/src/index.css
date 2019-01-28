@@ -705,3 +705,7 @@ label {
 @media print {
   .ma__filter-box {
     display: none; } }
+
+.ma__part {
+  margin-top: 20px;
+  margin-bottom: 20px; }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputRadioGroup, CalloutAlert, Paragraph } from '@massds/mayflower-react';
+import { InputRadioGroup, CalloutAlert, Paragraph, Collapse } from '@massds/mayflower-react';
 import QuestionOneProps from '../../data/QuestionOne.json'
 import './index.css';
 
@@ -7,7 +7,7 @@ class QuestionOne extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "",
+      message: null,
       messageTheme: "",
       weeks: ""
     };
@@ -43,14 +43,18 @@ class QuestionOne extends Component {
   		onChange: this.handleChange, 
   		radioButtons: options
   	}
+  	const open = this.state.message ? true : false;
+  	console.log(open)
     return (
       <React.Fragment>
         <InputRadioGroup {...radioGroupProps} />
-        {this.state.message && (
-          <CalloutAlert theme={this.state.messageTheme} icon={{name: this.state.messageTheme === "c-error-red" ? "alert" : "",ariaHidden: true}} >
-            <Paragraph text={this.state.message} />
-          </CalloutAlert>
-        )}
+        <Collapse in={open} dimension="height" className="ma__callout-alert">
+          <div className="ma__collapse">
+            <CalloutAlert theme={this.state.messageTheme} icon={{name: this.state.messageTheme === "c-error-red" ? "alert" : "",ariaHidden: true}} >
+              <Paragraph text={this.state.message} />
+            </CalloutAlert>
+          </div>
+        </Collapse>
       </React.Fragment>
     );
   }

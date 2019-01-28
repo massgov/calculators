@@ -58,8 +58,13 @@ typings/
 .env
 
 .cache/
+build/
+**/public/assets/
 yarn-error.log
 
 .DS_Store
 **/.DS_Store
 .idea/
+
+
+src/**/*.css
