@@ -19,7 +19,8 @@ class Form extends Component {
       payroll_base: 'all',
       payroll_w2: null,
       payroll_1099: null,
-      pageroll_wages: null
+      pageroll_wages: null,
+      time_value: 1
     }
   }
   render() {

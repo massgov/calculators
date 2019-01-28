@@ -11,10 +11,18 @@ const Part1 = () => {
         {
           (context) => {
             const onChange_employees_w2 = (e) => {
-              context.updateState({ employees_w2: e })
+              context.updateState({ 
+                employees_w2: e,
+                med_leave_cont: (e + context.employees_1099 >= 25) ? 0.6 : 0,
+                fam_leave_cont: 0 
+              })
             }
             const onChange_employees_1099 = (e) => {
-              context.updateState({ employees_1099: e })
+              context.updateState({ 
+                employees_1099: e,
+                med_leave_cont: (e + context.employees_w2 >= 25) ? 0.6 : 0,
+                fam_leave_cont: 0
+              })
             }
             const { has_mass_employees, employees_w2, employees_1099 } = context;
             const employeeCount = +employees_w2 + +employees_1099;
