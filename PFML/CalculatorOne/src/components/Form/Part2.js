@@ -18,7 +18,7 @@ const Part2 = () => {
             const onChange_employees_w2 = (e) => {
               context.updateState({ employees_w2: e })
             }
-            const { employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages, payroll_base } = context;
+            const { employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages, payroll_base, has_mass_employees } = context;
             const over50per = (employees_1099/employees_w2) > 0.5; 
             const employeeCount = +employees_w2 + (over50per ? +employees_1099 : 0);
             const over25 = employeeCount >= 25;
@@ -91,7 +91,7 @@ const Part2 = () => {
                           />
                       </div>
                       {
-                        (payroll_w2 &&  payroll_1099) && (
+                        (has_mass_employees && payroll_w2 &&  payroll_1099) && (
                           <CalloutAlert theme="c-primary" icon={null}>
                             <p>Total estimated annual contribution for your company is <strong>{toCurrency(totalPayment)}</strong>. ({toCurrency(totalPayment/employeeCount)} per employee) </p>
                             <p>Of this amount, <strong>{toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>{toCurrency(famPercent * totalPayroll)}</strong> is for family leave.</p>
@@ -122,7 +122,7 @@ const Part2 = () => {
                       />
                     </div>
                     {
-                      (payroll_wages && payroll_wages > 0 && over25) && (
+                      (has_mass_employees && payroll_wages && payroll_wages > 0 && over25) && (
                         <CalloutAlert theme="c-primary" icon={null}>
                           <p>Total estimated annual contribution for this employee is <strong>{toCurrency(payroll_wages * 0.0063)}</strong> </p>
                         </CalloutAlert>
