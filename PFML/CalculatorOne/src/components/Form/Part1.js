@@ -17,9 +17,9 @@ const Part1 = () => {
               context.updateState({ employees_1099: e })
             }
             const { has_mass_employees, employees_w2, employees_1099 } = context;
-            const employeeCount = +employees_w2 + +employees_1099;
-            const over25 = employeeCount >= 25;
             const over50per = (employees_1099/employees_w2) > 0.5; 
+            const employeeCount = +employees_w2 + (over50per ? +employees_1099 : 0);
+            const over25 = employeeCount >= 25;
             let message; 
             if(over25) {
               if(over50per) {
