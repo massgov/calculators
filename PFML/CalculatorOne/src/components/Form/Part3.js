@@ -74,7 +74,6 @@ class Part3 extends React.Component {
             }
             
             const disable = has_mass_employees && employees_w2 && employees_1099 && ((payroll_w2 && payroll_1099 && context.payroll_base === 'all') || (context.payroll_base === 'one' && payroll_wages)) ? false : true;
-
             return (
               <React.Fragment>
                 <fieldset>

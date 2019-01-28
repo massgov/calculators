@@ -3,6 +3,9 @@
   align-items: center;
   justify-content: space-between; }
 
+.ma__label--small {
+  font-size: 1em; }
+
 fieldset > * {
   margin-top: 20px; }
 
