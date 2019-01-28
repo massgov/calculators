@@ -16,13 +16,12 @@ const Part2 = () => {
         {
           (context) => {
             const onChange_employees_w2 = (e) => {
-              console.log(e)
               context.updateState({ employees_w2: e })
             }
             const { employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages } = context;
-            const employeeCount = +employees_w2 + +employees_1099;
-            const over25 = employeeCount >= 25;
             const over50per = (employees_1099/employees_w2) > 0.5; 
+            const employeeCount = over50per ? (+employees_w2 + +employees_1099) : +employees_w2;
+            const over25 = employeeCount >= 25;
             const medPercent = over25 ? 0.0052 : 0.0031;
             const famPercent = 0.0011;
             const totalPercent = medPercent + famPercent;
