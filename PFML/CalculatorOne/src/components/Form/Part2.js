@@ -49,7 +49,7 @@ const Part2 = () => {
               {
                 (context.payroll_base === 'all') ? (
                   <Fragment>
-                    <div class="ma__input-group--inline">
+                    <div class="ma__input-group--inline" key="payroll_w2">
                       <InputCurrency
                         labelText="What was your total payroll for W2 Employees last year?"
                         id="payroll_w2"
@@ -66,11 +66,11 @@ const Part2 = () => {
                           trimMantissa: false,
                           thousandSeparated: true
                         }}
-                        onChange={(e) => context.updateState({ payroll_w2: e })}
+                        onChange={(e) => context.updateState({payroll_w2: e })}
                         required={true}
                         />
                       </div>
-                      <div class="ma__input-group--inline">
+                      <div class="ma__input-group--inline" key="payroll_1099">
                         <InputCurrency
                           labelText="How much did you pay 1099 contractors last year?"
                           id="payroll_1099"
@@ -102,7 +102,7 @@ const Part2 = () => {
                     </Fragment>
                 ) : (
                 <Fragment>
-                  <div class="ma__input-group--inline">
+                  <div class="ma__input-group--inline" key="payroll_wages">
                     <InputCurrency
                       labelText="What was the employee’s gross wages last year?"
                       id="payroll_wages"
