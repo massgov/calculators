@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import numbro from 'numbro';
-import { InputCurrency, InputRadioGroup, CalloutAlert, InputText } from '@massds/mayflower-react';
+import { InputCurrency, InputRadioGroup, CalloutAlert, InputText, Collapse } from '@massds/mayflower-react';
 import { FormContext } from './context';
 
 import './index.css';
@@ -28,6 +28,7 @@ const Part2 = () => {
             const totalPercent = medPercent + famPercent;
             const totalPayroll = payroll_w2 + (over50per ? payroll_1099 : 0)
             const totalPayment = totalPayroll * totalPercent;
+            const totalPaymentEmp = over50per ? (totalPayment / employeeCount) : (totalPayment / employees_w2);
             
             return (
               <fieldset>
@@ -67,6 +68,7 @@ const Part2 = () => {
                           thousandSeparated: true
                         }}
                         onChange={(e) => context.updateState({ payroll_w2: e })}
+                        required={true}
                         />
                       </div>
                       <div class="ma__input-group--inline">
@@ -87,16 +89,17 @@ const Part2 = () => {
                             thousandSeparated: true
                           }}
                           onChange={(e) => context.updateState({ payroll_1099: e })}
+                          required={true}
                           />
                       </div>
-                      {
-                        (payroll_w2 &&  payroll_1099) && (
+                      <Collapse in={payroll_w2 &&  payroll_1099} dimension="height" className="ma__callout-alert">
+                        <div className="ma__collapse">
                           <CalloutAlert theme="c-primary" icon={null}>
-                            <p>Total estimated annual contribution for your company is <strong>{toCurrency(totalPayment)}</strong> </p>
+                            <p>Total estimated annual contribution for your company is <strong>{toCurrency(totalPayment)}</strong> (<strong>{toCurrency(totalPaymentEmp)}</strong> per employee).</p>
                             <p>Of this amount, <strong>{toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>{toCurrency(famPercent * totalPayroll)}</strong> is for family leave.</p>
                           </CalloutAlert>
-                        )
-                      }
+                        </div>
+                      </Collapse>
                     </Fragment>
                 ) : (
                 <Fragment>
@@ -118,15 +121,17 @@ const Part2 = () => {
                         thousandSeparated: true
                       }}
                       onChange={(e) => context.updateState({ payroll_wages: e })}
+                      required={true}
                       />
                     </div>
-                    {
-                      (payroll_wages && payroll_wages > 0 && over25) && (
+                    <Collapse in={payroll_wages && payroll_wages > 0 && over25} dimension="height" className="ma__callout-alert">
+                      <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
-                          <p>Total estimated annual contribution for this employee is <strong>{payroll_wages * 0.0063}</strong> </p>
+                          <p>Total estimated annual contribution for this employee is <strong>{toCurrency(payroll_wages * totalPercent)}</strong> </p>
+                          <p>Of this amount, <strong>{toCurrency(medPercent * payroll_wages)}</strong> is for medical leave and <strong>{toCurrency(famPercent * payroll_wages)}</strong> is for family leave.</p>
                         </CalloutAlert>
-                      )
-                    }
+                      </div>
+                    </Collapse>
                   </Fragment>
                 )
               }
