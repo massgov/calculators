@@ -16,7 +16,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      yearIncome: localStorage.getItem("yearIncome") || "",
+      yearIncome: localStorage.getItem("yearIncome") || 0,
       maxWeeks: localStorage.getItem("maxWeeks") || "",
       leaveReason: localStorage.getItem("leaveReason") || ""
     };
@@ -62,7 +62,8 @@ class App extends Component {
     }
   }
 
-  handleInput = (numberValue, e) => {
+  handleInput = (e) => {
+    const numberValue = e.target.value;
     this.setState({
       yearIncome: numberValue
     });
@@ -76,8 +77,8 @@ class App extends Component {
   }
 
   render() {
-    const questTwoDisabled = this.state.weeks > 0 ? false : true;
     const { leaveReason, yearIncome, maxWeeks } = this.state;
+    const questTwoDisabled = !(maxWeeks > 0);
     return (
       <div className="App">
         <Header {...this.headerProps} />
@@ -87,7 +88,7 @@ class App extends Component {
                 <h1 className="ma__page-header__title">Paid Family Medical Leave Benefits Caculator</h1>
               </div>
               <QuestionOne error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
-              <QuestionTwo onChange={this.handleInput} disabled={questTwoDisabled} defaultText={yearIncome.toString()} />
+              <QuestionTwo onChange={this.handleInput} disabled={questTwoDisabled} defaultValue={yearIncome} />
               <hr />
               {yearIncome > 0 && maxWeeks > 0 && (
                 <React.Fragment>

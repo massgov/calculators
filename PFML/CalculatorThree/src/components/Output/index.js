@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { InputCurrency, Paragraph, CalloutAlert, Collapse } from '@massds/mayflower-react';
+import React from 'react';
+import { Paragraph, CalloutAlert, HelpTip } from '@massds/mayflower-react';
 import numbro from 'numbro';
 import CalculatorThreeVariables from '../../data/CalculatorThreeVariables.json';
 import OutputProps from '../../data/Output.json';
@@ -10,6 +10,7 @@ import './index.css';
 
 
 const Output = (props) => {
+  // Base variables provided in the base variable json.
   const { maAvgYear, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction } = CalculatorThreeVariables.baseVariables;
   // Inputs from question 1 and 2.
   const { yearIncome, maxWeeks } = props;
@@ -50,12 +51,9 @@ const Output = (props) => {
 		const percent = numbro(number).format({output: "percent", mantissa: mantissa, spaceSeparated: false});
 		return percent;
 	}
-	
-  return (
-      <div className="ma__output">
-    	  <p>{paragraphOne.partOne} {<EmpSpan text={toCurrency(estWeeklyBenefit)}/>} {paragraphOne.partTwo} {<EmpSpan text={toPercentage(percentWeeklyIncome)}/>} {paragraphOne.partThree}</p>
-        <p>{paragraphTwo.partOne} {<EmpSpan text={toCurrency(totBenefit)}/>}{paragraphTwo.partTwo} {<EmpSpan text={toPercentage(percentIncome)}/>} {paragraphTwo.partThree}</p>
-        <CalloutAlert theme="c-primary" icon={{name: "", ariaHidden: true}}>
+  const empClass = "ma__output-emphasized";
+  const getHelpText = () => {
+    return(<CalloutAlert theme="c-primary" icon={{name: "", ariaHidden: true}}>
           { yearIncome > benefitBreak ? (
             <React.Fragment>
               <Paragraph text={`${more.partOne} ${toCurrency(benefitBreak)} ${more.partTwo} ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreak)} ${more.partFive} ${toCurrency(maxBenefit)}${more.partSix} ${toCurrency(maxBenefitWeek)} ${more.partSeven}`} />
@@ -67,7 +65,12 @@ const Output = (props) => {
               <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = (${toCurrency(yearIncome)} x ${toPercentage(lowBenefitFraction)}) / ${weeksPerYear} weeks per year`} /></div>
             </React.Fragment>
           )}
-        </CalloutAlert>
+        </CalloutAlert>)
+  }
+  return (
+      <div className="ma__output">
+    	  <HelpTip textBefore={`${paragraphOne.partOne} `} triggerText={`<span class=${empClass} >${toCurrency(estWeeklyBenefit)}</span>`} textAfter={`${paragraphOne.partTwo} <span class=${empClass} >${toPercentage(percentWeeklyIncome)}</span> ${paragraphOne.partThree}`} id="help-tip-benefits" labelID="help-tip-benefits-label">{getHelpText()}</HelpTip>
+        <p>{paragraphTwo.partOne} {<EmpSpan text={toCurrency(totBenefit)}/>}{paragraphTwo.partTwo} {<EmpSpan text={toPercentage(percentIncome)}/>} {paragraphTwo.partThree}</p>
       </div>
   );
 }

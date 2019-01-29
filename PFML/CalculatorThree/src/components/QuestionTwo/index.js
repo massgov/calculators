@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { InputCurrency, Paragraph } from '@massds/mayflower-react';
+import React from 'react';
+import { InputCurrency } from '@massds/mayflower-react';
 import QuestionTwoProps from '../../data/QuestionTwo.json'
 import './index.css';
 
@@ -11,7 +11,7 @@ const QuestionTwo = (props) => {
           labelText={question}
           id="question-2"
           name="question-2"
-          defaultText={props.defaultText}
+          defaultValue={props.defaultValue}
           min={0}
           format={{
           	"mantissa": 2,
@@ -23,6 +23,7 @@ const QuestionTwo = (props) => {
   		    errorMsg={errorMsg}
   		    onChange={props.onChange}
           required={true}
+          disabled={props.disabled}
   		  />
       </div>
     );

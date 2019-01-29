@@ -4,6 +4,22 @@
 	color: $c-primary;
 	font-weight: 700;
 }
+
+.ma__help-tip__trigger {
+  .ma__output-emphasized {
+    &:hover,
+    &:focus,
+    &:active {
+      color: $c-white;
+    }
+  }
+}
+
+.ma__help-tip__trigger.active {
+  .ma__output-emphasized {
+    color: $c-white;
+  }
+}
 .ma__output-calculation { 
 	display: flex;
   	align-items: center;
