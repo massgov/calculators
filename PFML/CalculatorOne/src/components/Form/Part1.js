@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { InputCurrency, InputRadioGroup, CalloutAlert, InputText, Collapse } from '@massds/mayflower-react';
+import { InputCurrency, InputRadioGroup, CalloutAlert, InputNumber, Collapse } from '@massds/mayflower-react';
 import { FormContext } from './context';
 
 import './index.css';
@@ -83,14 +83,14 @@ const Part1 = () => {
                     </div>
                   </Collapse>
                 <div class="ma__input-group--inline">
-                  <InputText
+                  <InputNumber
                     labelText="How many of your MA employees receive W2s?"
                     id="employees_w2"
                     name="employees_w2"
                     type="number"
                     width={0}
                     maxlength={0}
-                    placeholder="type something"
+                    placeholder="0"
                     errorMsg="you did not type something"
                     defaultText={context.employees_w2}
                     disabled={!context.has_mass_employees}
@@ -99,14 +99,14 @@ const Part1 = () => {
                   />
                 </div>
                 <div class="ma__input-group--inline">
-                  <InputText
+                  <InputNumber
                     labelText="How many 1099 contractors have you hired in the past year?"
                     name="employees_1099"
                     id="employees_1099"
                     type="number"
                     width={0}
                     maxlength={0}
-                    placeholder="type something"
+                    placeholder="0"
                     errorMsg="you did not type something"
                     defaultText={context.employees_1099}
                     disabled={!context.has_mass_employees}

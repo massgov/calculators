@@ -45,6 +45,7 @@ const Part2 = () => {
                       context.updateState({ payroll_base: e.selected })
                     }
                   }
+                  disabled={!has_mass_employees}
                   />
               {
                 (payroll_base === 'all') ? (

@@ -17,9 +17,9 @@ class Form extends Component {
       employees_1099: null,
       updateState: (newState) => this.setState(newState),
       payroll_base: 'all',
-      payroll_w2: null,
-      payroll_1099: null,
-      pageroll_wages: null,
+      payroll_w2: 0,
+      payroll_1099: 0,
+      pageroll_wages: 0,
       time_value: 1
     }
   }
