@@ -6,25 +6,36 @@ import './index.css';
 class QuestionOne extends Component {
   constructor(props) {
     super(props);
+    const message = this.getMessage(QuestionOneProps, props.defaultSelected);
     this.state = {
-      message: null,
-      messageTheme: "",
-      weeks: ""
+      message: (message && message.message) ? message.message : "",
+      messageTheme: (message && message.messageTheme) ? message.messageTheme : "",
+      weeks: (message && message.weeks) ? message.weeks : ""
     };
   }
 
-  handleChange = ({selected, name, event}) => {
-    let maxWeeks;
-    QuestionOneProps.options.forEach(option => {
+  getMessage = (qOneProps, selected) => {
+    let message;
+    qOneProps.options.forEach(option => {
       if(option.value === selected) {
-        maxWeeks = option.weeks;
-        this.setState({ 
+        message = { 
           message: option.message,
           messageTheme: option.theme,
           weeks: option.weeks 
-        });
+        };
       }
     })
+    return message;
+  }
+
+  handleChange = ({selected, name, event}) => {
+    const message = this.getMessage(QuestionOneProps, selected);
+    this.setState({ 
+      message: message.message,
+      messageTheme: message.messageTheme,
+      weeks: message.weeks 
+    });
+    const maxWeeks = message.weeks;
     if(typeof this.props.onChange == "function"){
       this.props.onChange({selected, maxWeeks, event})
     }
@@ -39,7 +50,7 @@ class QuestionOne extends Component {
   		inline: true,
   		error: this.props.error,
   		disabled: this.props.disabled,
-  		//defaultSelected: this.props.defaultSelected,
+  		defaultSelected: this.props.defaultSelected,
   		onChange: this.handleChange, 
   		radioButtons: options
   	}

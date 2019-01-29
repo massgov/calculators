@@ -11,7 +11,7 @@ const QuestionTwo = (props) => {
           labelText={question}
           id="question-2"
           name="question-2"
-          defaultText="0"
+          defaultText={props.defaultText}
           min={0}
           format={{
           	"mantissa": 2,
@@ -19,11 +19,11 @@ const QuestionTwo = (props) => {
           	"thousandSeparated": true,
           	"negative": "parenthesis",
           	"output": "currency"
-  		  }}
-  		  errorMsg={errorMsg}
-  		  onChange={props.onChange}
-        required={true}
-  		/>
+  		    }}
+  		    errorMsg={errorMsg}
+  		    onChange={props.onChange}
+          required={true}
+  		  />
       </div>
     );
 };
