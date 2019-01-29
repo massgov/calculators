@@ -2,7 +2,7 @@
   "baseVariables": {
   	"maAvgYear": 66546.00,
   	"weeksPerYear": 52,
-  	"maxBenefit": 61817.60,
+  	"maxBenefitWeek": 850.00,
   	"lowBenefitFraction": 0.9,
   	"highBenefitFraction": 0.5
   }

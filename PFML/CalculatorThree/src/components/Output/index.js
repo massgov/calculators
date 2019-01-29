@@ -10,24 +10,35 @@ import './index.css';
 
 
 const Output = (props) => {
-  const { maAvgYear, weeksPerYear, maxBenefit, lowBenefitFraction, highBenefitFraction } = CalculatorThreeVariables.baseVariables;
+  const { maAvgYear, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction } = CalculatorThreeVariables.baseVariables;
+  // Inputs from question 1 and 2.
+  const { yearIncome, maxWeeks } = props;
+  const { paragraphOne, paragraphTwo, paragraphThree } = OutputProps;
+  const { more, less } = paragraphThree;
+  
   const benefitBreak = maAvgYear * 0.5;
   const benefitBreakWeek = benefitBreak/weeksPerYear * lowBenefitFraction;
+  const maxBenefit = (maxBenefitWeek - benefitBreakWeek) * weeksPerYear * 2 + benefitBreak;
   const maxBenefitDelta = maxBenefit - benefitBreak;
-  const maxBenefitWeek = benefitBreakWeek + (maxBenefitDelta * highBenefitFraction)/weeksPerYear
-  const { yearIncome, maxWeeks } = props;
-	
+
   let estBenefit;
 	if(yearIncome <= benefitBreak) {
+    // If the yearly income is less than half the state wide avg income.
 		estBenefit = yearIncome * lowBenefitFraction;
 	} else {
+    // If yearly income is greater than half the state wide avg income.
 		const addBenefit = ( yearIncome - benefitBreak ) > maxBenefitDelta ? ( maxBenefitDelta * highBenefitFraction ) : (( yearIncome - benefitBreak) * highBenefitFraction );
 		estBenefit = (benefitBreak * lowBenefitFraction) + addBenefit;
 	}
-	
+
+  // The estimated weekly benefit you would receive.
   const estWeeklyBenefit = estBenefit / weeksPerYear;
-	const percentWeeklyIncome = estWeeklyBenefit / ( yearIncome / weeksPerYear );
+  // The estimated total benefit you can receive based on the number of weeks you are covered.
 	const totBenefit = estWeeklyBenefit * maxWeeks;
+
+  // The percent of weekly income the benefit will cover
+  const percentWeeklyIncome = estWeeklyBenefit / ( yearIncome / weeksPerYear );
+  // The percent of your annual income that, based on the max number of week, you can receive.
 	const percentIncome = totBenefit / yearIncome;
 
 	const toCurrency = (number) => {
@@ -40,9 +51,6 @@ const Output = (props) => {
 		return percent;
 	}
 	
-  const { paragraphOne, paragraphTwo, paragraphThree } = OutputProps;
-  const { more, less } = paragraphThree;
-
   return (
       <div className="ma__output">
     	  <p>{paragraphOne.partOne} {<EmpSpan text={toCurrency(estWeeklyBenefit)}/>} {paragraphOne.partTwo} {<EmpSpan text={toPercentage(percentWeeklyIncome)}/>} {paragraphOne.partThree}</p>
@@ -51,16 +59,14 @@ const Output = (props) => {
           { yearIncome > benefitBreak ? (
             <React.Fragment>
               <Paragraph text={`${more.partOne} ${toCurrency(benefitBreak)} ${more.partTwo} ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreak)} ${more.partFive} ${toCurrency(maxBenefit)}${more.partSix} ${toCurrency(maxBenefitWeek)} ${more.partSeven}`} />
-              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [${toPercentage(highBenefitFraction)} x (${toCurrency(yearIncome)} - ${toCurrency(benefitBreak)})] / ${weeksPerYear} weeks per year`} /></div>
+              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = [${toCurrency(benefitBreakWeek)} + ${toPercentage(highBenefitFraction)} x (${yearIncome > maxBenefit ? toCurrency(maxBenefit) : toCurrency(yearIncome)} - ${toCurrency(benefitBreak)})] / ${weeksPerYear} weeks per year`} /></div>
             </React.Fragment>
           ) : (
             <React.Fragment>
               <Paragraph text={`${less.partOne} ${toCurrency(benefitBreak)} ${less.partTwo} ${toPercentage(lowBenefitFraction)} ${less.partThree} ${toCurrency(benefitBreakWeek)} ${less.partFour}`} />
               <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = (${toCurrency(yearIncome)} x ${toPercentage(lowBenefitFraction)}) / ${weeksPerYear} weeks per year`} /></div>
             </React.Fragment>
-          )
-            
-          }
+          )}
         </CalloutAlert>
       </div>
   );
