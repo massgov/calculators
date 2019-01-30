@@ -61,7 +61,7 @@ const Part2 = (props) => {
               {
                 (payroll_base === 'all') ? (
                   <Fragment>
-                    <div className="ma__input-group--inline" key="payroll_w2">
+                    <div key="payroll_w2">
                       <InputCurrency
                         labelText={questionTwo.question}
                         id="payroll_w2"
@@ -82,45 +82,47 @@ const Part2 = (props) => {
                           onChangePayW2(value)
                         }}
                         required={true}
+                        disabled={!employeeCount}
+                        inline={true}
+                      />
+                    </div>
+                    <div key="payroll_1099">
+                      <InputCurrency
+                        labelText={questionThree.question}
+                        id="payroll_1099"
+                        name="payroll_1099"
+                        width={0}
+                        maxlength={200}
+                        placeholder="e.g. $100,000"
+                        errorMsg={questionThree.errorMsg}
+                        defaultValue={context.payroll_1099}
+                        min={0}
+                        format={{
+                          mantissa: 2,
+                          trimMantissa: false,
+                          thousandSeparated: true
+                        }}
+                        onChange={(e, value) => {
+                          context.updateState({ payroll_1099: value })
+                          onChangePay1099(value)
+                        }}
                         disabled = {!employeeCount}
-                        />
+                        required={true}
+                        inline={true}
+                      />
+                    </div>
+                    <Collapse in={has_mass_employees && payroll_w2 && (over50per ? payroll_1099 > 0 : payroll_1099 >= 0)} dimension="height" className="ma__callout-alert">
+                      <div className="ma__collapse">
+                        <CalloutAlert theme="c-primary" icon={null}>
+                          <p>Total estimated annual contribution for your company is <strong>{toCurrency(totalPayment)}</strong> (<strong>{toCurrency(totalPaymentEmp)}</strong> per employee).</p>
+                          <p>Of this amount, <strong>{toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>{toCurrency(famPercent * totalPayroll)}</strong> is for family leave.</p>
+                        </CalloutAlert>
                       </div>
-                      <div className="ma__input-group--inline" key="payroll_1099">
-                        <InputCurrency
-                          labelText={questionThree.question}
-                          id="payroll_1099"
-                          name="payroll_1099"
-                          width={0}
-                          maxlength={200}
-                          placeholder="e.g. $100,000"
-                          errorMsg={questionThree.errorMsg}
-                          defaultValue={context.payroll_1099}
-                          min={0}
-                          format={{
-                            mantissa: 2,
-                            trimMantissa: false,
-                            thousandSeparated: true
-                          }}
-                          onChange={(e, value) => {
-                            context.updateState({ payroll_1099: value })
-                            onChangePay1099(value)
-                          }}
-                          disabled = {!employeeCount}
-                          required={true}
-                          />
-                      </div>
-                      <Collapse in={has_mass_employees && payroll_w2 && (over50per ? payroll_1099 > 0 : payroll_1099 >= 0)} dimension="height" className="ma__callout-alert">
-                        <div className="ma__collapse">
-                          <CalloutAlert theme="c-primary" icon={null}>
-                            <p>Total estimated annual contribution for your company is <strong>{toCurrency(totalPayment)}</strong> (<strong>{toCurrency(totalPaymentEmp)}</strong> per employee).</p>
-                            <p>Of this amount, <strong>{toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>{toCurrency(famPercent * totalPayroll)}</strong> is for family leave.</p>
-                          </CalloutAlert>
-                        </div>
-                      </Collapse>
-                    </Fragment>
+                    </Collapse>
+                  </Fragment>
                 ) : (
                 <Fragment>
-                  <div className="ma__input-group--inline" key="payroll_wages">
+                  <div key="payroll_wages">
                     <InputCurrency
                       labelText={questionFour.question}
                       id="payroll_wages"
@@ -141,23 +143,23 @@ const Part2 = (props) => {
                         onChangePayWages(value)
                       }}
                       required={true}
-                      />
-                    </div>
-                    <Collapse in={payroll_wages && payroll_wages > 0 && over25} dimension="height" className="ma__callout-alert">
-                      <div className="ma__collapse">
-                        <CalloutAlert theme="c-primary" icon={null}>
-                          <p>Total estimated annual contribution for this employee is <strong>{toCurrency(payroll_wages_cap * totalPercent)}</strong>.</p>
-                          <p>Of this amount, <strong>{toCurrency(medPercent * payroll_wages_cap)}</strong> is for medical leave and <strong>{toCurrency(famPercent * payroll_wages_cap)}</strong> is for family leave.</p>
+                      inline={true}
+                    />
+                  </div>
+                  <Collapse in={payroll_wages && payroll_wages > 0 && over25} dimension="height" className="ma__callout-alert">
+                    <div className="ma__collapse">
+                      <CalloutAlert theme="c-primary" icon={null}>
+                        <p>Total estimated annual contribution for this employee is <strong>{toCurrency(payroll_wages_cap * totalPercent)}</strong>.</p>
+                        <p>Of this amount, <strong>{toCurrency(medPercent * payroll_wages_cap)}</strong> is for medical leave and <strong>{toCurrency(famPercent * payroll_wages_cap)}</strong> is for family leave.</p>
                           { payroll_wages > socialSecCap && (
                             <p>Because the employess wages are over the social security cap, they do not contribute for income above <strong>{toCurrency(socialSecCap)}</strong>.</p>
                           )}
-                        </CalloutAlert>
-                      </div>
-                    </Collapse>
-                  </Fragment>
+                      </CalloutAlert>
+                    </div>
+                  </Collapse>
+                </Fragment>
                 )
               }
-
               </fieldset>
             )
           }

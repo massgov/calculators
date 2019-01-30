@@ -83,13 +83,13 @@ const Part1 = (props) => {
                       </CalloutAlert>
                     </div>
                   </Collapse>
-                <div className="ma__input-group--inline">
                   <InputNumber
                     labelText={questionTwo.question}
                     id="employees_w2"
                     name="employees_w2"
                     type="number"
                     width={0}
+                    inline={true}
                     maxlength={0}
                     placeholder="e.g. 50"
                     errorMsg={questionTwo.errorMsg}
@@ -106,8 +106,6 @@ const Part1 = (props) => {
                     }}
                     required={true}
                   />
-                </div>
-                <div className="ma__input-group--inline">
                   <InputNumber
                     labelText={questionThree.question}
                     name="employees_1099"
@@ -116,6 +114,7 @@ const Part1 = (props) => {
                     width={0}
                     maxlength={0}
                     placeholder="e.g. 50"
+                    inline={true}
                     errorMsg={questionThree.errorMsg}
                     defaultValue={context.employees_1099}
                     disabled={!context.has_mass_employees}
@@ -130,7 +129,6 @@ const Part1 = (props) => {
                     }}
                     required={true}
                   />
-                </div>
                 <Collapse in={(has_mass_employees && employees_w2)} dimension="height" className="ma__callout-alert">
                   <div className="ma__collapse">
                     <CalloutAlert theme="c-primary">

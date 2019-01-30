@@ -1,19 +1,5 @@
 @import "./node_modules/@massds/mayflower-react/es/components/styles/global";
 
-.ma__input-group {
-  &--inline {
-    display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-flow: row wrap;
-      @media ($bp-small-max) {
-      	.ma__input-number, .ma__input-currency__control {
-      		width: 100%;
-      	}
-      }
-  }
-}
-
 .ma__label--small {
 	font-size: 1em;
 }
