@@ -35,27 +35,27 @@ const Part1 = () => {
               if(over50per) {
                 message = (
                   <Fragment>
-                    <p><strong>You are required to remit payment to the department starting 7/1 and you are liable for a portion of medical leave for your employees.</strong> Because you have more than 25 total employees in Massachusetts. </p>
-                    <p><strong>You are required to remit payment on behalf of your contractors.</strong> For employers with over 50% their workforce made up of 1099s need to consider these as full time employees under the new language.</p>
+                    <p><strong>You are required to remit payment to the department starting 7/1 and you are liable for a portion of your employees medical leave contribution</strong> because you have more than 25 total employees in Massachusetts. </p>
+                    <p><strong>You are required to remit payment on behalf of your contractors.</strong> Employers with 50% or more of their workforce made up of 1099s need to consider these as full time employees under the new language.</p>
                   </Fragment>
                 )
               } else {
                 message =  (
                   <Fragment>
-                    <p><strong>You are required to remit payment to the department starting 7/1 and you are liable for a portion of medical leave for your employees.</strong> Because you have more than 25 total employees in Massachusetts. </p>
-                    <p><strong>You are not required to remit payment on behalf of your contractors.</strong> Because you have less than 50% of contractors</p>
+                    <p><strong>You are required to remit payment to the department starting 7/1 and you are liable for a portion of your employees medical leave contribution</strong> because you have more than 25 total employees in Massachusetts. </p>
+                    <p><strong>You are not required to remit payment on behalf of your contractors</strong> because you have less than 50% of contractors</p>
                   </Fragment>
                 )
               }
             } else if (over50per) {
               message =  (
                 <Fragment>
-                  <p><strong>You are not liable for medical leave payment for your employees.</strong> Because you have less than 25 total employees in Massachusetts.</p>
-                  <p><strong>You are not required to remit payment on behalf of your contractors.</strong> Because you have less than 50% of contractors</p>
+                  <p><strong>You are not liable for medical leave payment for your employees</strong> because you have less than 25 total employees in Massachusetts.</p>
+                  <p><strong>You are not required to remit payment on behalf of your contractors</strong> because you have less than 50% of contractors</p>
                 </Fragment>
               )
             } else {
-              message = (<p><strong>You are not required to remit payment to the department starting 7/1.</strong> Because you have less than 25 total employees in Massachusetts. </p>)
+              message = (<p><strong>You are not required to remit payment to the department starting 7/1</strong> because you have less than 25 total employees in Massachusetts. </p>)
             }
             return (
               <fieldset>
@@ -63,7 +63,7 @@ const Part1 = () => {
                   title="Do you have any employees in Massachusetts?"
                   name="mass_employees"
                   outline
-                  //defaultSelected="yes"
+                  defaultSelected="yes"
                   errorMsg="You must selected your favorite plant."
                   radioButtons={[
                     {id: 'yes',value: 'yes',label: 'Yes'},
@@ -92,7 +92,7 @@ const Part1 = () => {
                     type="number"
                     width={0}
                     maxlength={0}
-                    placeholder="0"
+                    placeholder="e.g. 50"
                     errorMsg="you did not type something"
                     defaultValue={context.employees_w2}
                     disabled={!context.has_mass_employees}
@@ -108,7 +108,7 @@ const Part1 = () => {
                     type="number"
                     width={0}
                     maxlength={0}
-                    placeholder="0"
+                    placeholder="e.g. 50"
                     errorMsg="you did not type something"
                     defaultValue={context.employees_1099}
                     disabled={!context.has_mass_employees}
@@ -116,7 +116,7 @@ const Part1 = () => {
                     required={true}
                   />
                 </div>
-                <Collapse in={(has_mass_employees && employees_w2 && employees_1099)} dimension="height" className="ma__callout-alert">
+                <Collapse in={(has_mass_employees && employees_w2)} dimension="height" className="ma__callout-alert">
                   <div className="ma__collapse">
                     <CalloutAlert theme="c-primary">
                         { message }

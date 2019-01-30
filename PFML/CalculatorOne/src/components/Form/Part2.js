@@ -35,7 +35,7 @@ const Part2 = () => {
                   title="Which option are you calculating your contribution based upon? "
                   name="payroll_base"
                   outline
-                  //defaultSelected="all"
+                  defaultSelected="all"
                   errorMsg="You must selected your favorite plant."
                   radioButtons={[
                     {id: 'payroll_base_all',value: 'all',label: 'All Employees'},
