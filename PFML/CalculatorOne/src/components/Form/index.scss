@@ -53,12 +53,30 @@ fieldset > * {
       }
 }
 
-.ma__table .ma__td--group {
-	padding-left: 0px !important;
+.ma__table {
+    border-bottom: 3px solid $c-primary-lighter !important;
+    .ma__table-headers {
+        border-top: 3px solid $c-primary-lighter !important;
+        border-bottom: 3px solid $c-primary-lighter !important;
+		background-color: $c-primary-lightest;
+	}
+    .ma__td--group {
+	    padding-left: 0px !important;
+	}
 }
 
 .ma__table-heading {
-	margin: 20px 0px 30px;;
+	margin: 20px 0px 30px;
+	text-align: center
+}
+
+
+.ma_input-group--mobile-1 {
+    @media ($bp-small-max) {
+		.ma__input-group__item.item-2 {
+	    	width: calc(100% - 10px);
+		}
+	}
 }
 .input-range {
 	margin-bottom: 50px;

@@ -27,22 +27,24 @@ const Part2 = () => {
             const totalPaymentEmp = totalPayment / employeeCount;
             return (
               <fieldset>
-                <InputRadioGroup
-                  title="Which option are you calculating your contribution based upon? "
-                  name="payroll_base"
-                  outline
-                  defaultSelected="all"
-                  errorMsg="You must selected your favorite plant."
-                  radioButtons={[
-                    {id: 'payroll_base_all',value: 'all',label: 'All Employees'},
-                    {id: 'payroll_base_one',value: 'one',label: 'Individual Employee'}
-                  ]}
-                  onChange={(e) => {
-                      context.updateState({ payroll_base: e.selected })
+                <div className="ma_input-group--mobile-1">
+                  <InputRadioGroup
+                    title="Which option are you calculating your contribution based upon? "
+                    name="payroll_base"
+                    outline
+                    defaultSelected="all"
+                    errorMsg="You must selected your favorite plant."
+                    radioButtons={[
+                      {id: 'payroll_base_all',value: 'all',label: 'All Employees'},
+                      {id: 'payroll_base_one',value: 'one',label: 'Individual Employee'}
+                    ]}
+                    onChange={(e) => {
+                        context.updateState({ payroll_base: e.selected })
+                      }
                     }
-                  }
-                  disabled={!has_mass_employees || !employeeCount}
+                    disabled={!has_mass_employees || !employeeCount}
                   />
+                </div>
               {
                 (payroll_base === 'all') ? (
                   <Fragment>
@@ -116,7 +118,7 @@ const Part2 = () => {
                         trimMantissa: false,
                         thousandSeparated: true
                       }}
-                      onChange={(e) => context.updateState({ payroll_wages: e.target.value })}
+                      onChange={(e, value) => context.updateState({ payroll_wages: value })}
                       required={true}
                       />
                     </div>

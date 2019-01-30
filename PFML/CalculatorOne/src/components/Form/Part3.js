@@ -100,7 +100,7 @@ class Part3 extends React.Component {
                         disabled={disable}
                       />  
                     </fieldset>
-                    <div className="ma__table-heading">
+                    <h2 className="ma__table-heading">
                       <SelectBox
                         label="Paid Family Medical Leave By"
                         stackLabel={false}
@@ -116,13 +116,13 @@ class Part3 extends React.Component {
                         }}
                         className="ma__select-box js-dropdown"
                       />
-                    </div>
+                    </h2>
                   </React.Fragment>
                 )}
                 {!disable && context.payroll_base === 'all' && (
                   <table className="ma__table">
                     <tbody>
-                      <tr>
+                      <tr className="ma__table-headers">
                         <th>Contribution</th>
                         <th></th>
                         <th>Medical Leave</th>
