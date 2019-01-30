@@ -1,35 +1,44 @@
 import React, {  Fragment } from 'react';
 import { InputRadioGroup, CalloutAlert, InputNumber, Collapse, Paragraph } from '@massds/mayflower-react';
+import { decode, encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { FormContext } from './context';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import PartOneProps from '../../data/PartOne.json';
 
 import './index.css';
 
+/**
+ * Map from url query params to props. The values in `url` will still be encoded
+ * as strings since we did not pass a `urlPropsQueryConfig` to addUrlProps.
+ */
+function mapUrlToProps(url, props) {
+  return {
+    massEmp: decode(UrlQueryParamTypes.boolean, url.massEmp),
+    w2: decode(UrlQueryParamTypes.number, url.w2),
+    emp1099: decode(UrlQueryParamTypes.number, url.emp1099)
+  };
+}
 
-const Part1 = () => {
+/**
+ * Manually specify how to deal with changes to URL query param props.
+ * We do this since we are not using a urlPropsQueryConfig.
+ */
+function mapUrlChangeHandlersToProps(props) {
+  return {
+    onChangeMassEmp: (value) => replaceInUrlQuery('massEmp', encode(UrlQueryParamTypes.boolean, value)),
+    onChangeW2: (value) => replaceInUrlQuery('w2', encode(UrlQueryParamTypes.number, value)),
+    onChangeEmp1099: (value) => replaceInUrlQuery('emp1099', encode(UrlQueryParamTypes.number, value))
+  }
+}
+
+const Part1 = (props) => {
     const { minEmployees, largeCompMedCont, smallCompMedCont, largeCompFamCont, smallCompFamCont, emp1099Fraction } = CalculatorOneVariables.baseVariables;
     const { questionOne, questionTwo, questionThree, output } = PartOneProps;
+    const { onChangeMassEmp, onChangeW2, onChangeEmp1099 } = props;
     return (
       <FormContext.Consumer>
         {
           (context) => {
-            const onChange_employees_w2 = (e) => {
-              const empW2 = e.target.value;
-              context.updateState({ 
-                employees_w2: empW2,
-                med_leave_cont: (empW2 + context.employees_1099 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                fam_leave_cont: (empW2 + context.employees_1099 >= minEmployees) ? largeCompFamCont : smallCompFamCont 
-              })
-            }
-            const onChange_employees_1099 = (e) => {
-              const emp1099 = e.target.value;
-              context.updateState({ 
-                employees_1099: emp1099,
-                med_leave_cont: (emp1099 + context.employees_w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                fam_leave_cont: (emp1099 + context.employees_w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont
-              })
-            }
             const { has_mass_employees, employees_w2, employees_1099 } = context;
             const over50per = (employees_1099/employees_w2) > emp1099Fraction; 
             const employeeCount = +employees_w2 + (over50per ? +employees_1099 : 0);
@@ -62,35 +71,28 @@ const Part1 = () => {
                 </Fragment>
               )
             }
+            console.log(questionOne.options)
             return (
               <fieldset>
                 <InputRadioGroup
                   title={questionOne.question}
                   name="mass_employees"
                   outline
-                  defaultSelected="yes"
+                  defaultSelected={context.has_mass_employees ? 'yes' : 'no'}
                   errorMsg={questionOne.errorMsg}
                   radioButtons={questionOne.options}
                   onChange={(e) => {
-                    if(e.selected === 'yes') {
-                      context.updateState({ has_mass_employees: true })
-                    } else {
-                      context.updateState({ has_mass_employees: false })
-                    }
-                    questionOne.options.forEach(option => {
-                      if(option.value === e.selected){
-                        context.updateState({ 
-                          has_mass_employees_message: option.message,
-                          has_mass_employees_theme: option.theme
-                        })
-                      }
-                    })
+                    const hasEmp = e.selected === 'yes' ? true : false;
+                    context.updateState({
+                      has_mass_employees: hasEmp
+                    });
+                    onChangeMassEmp(hasEmp)
                   }}
                   />
                   <Collapse in={!has_mass_employees} dimension="height" className="ma__callout-alert">
                     <div className="ma__collapse">
-                      <CalloutAlert theme={context.has_mass_employees_theme}>
-                        <Paragraph text={context.has_mass_employees_message} />
+                      <CalloutAlert theme={questionOne.options[1].theme}>
+                        <Paragraph text={questionOne.options[1].message} />
                       </CalloutAlert>
                     </div>
                   </Collapse>
@@ -106,7 +108,15 @@ const Part1 = () => {
                     errorMsg={questionTwo.errorMsg}
                     defaultValue={context.employees_w2}
                     disabled={!context.has_mass_employees}
-                    onChange={(e) => onChange_employees_w2(e)}
+                    onChange={(e) => {
+                      const empW2 = e.target.value;
+                      onChangeW2(empW2)
+                      context.updateState({ 
+                        employees_w2: empW2,
+                        med_leave_cont: (empW2 + context.employees_1099 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                        fam_leave_cont: (empW2 + context.employees_1099 >= minEmployees) ? largeCompFamCont : smallCompFamCont 
+                      })
+                    }}
                     required={true}
                   />
                 </div>
@@ -122,7 +132,15 @@ const Part1 = () => {
                     errorMsg={questionThree.errorMsg}
                     defaultValue={context.employees_1099}
                     disabled={!context.has_mass_employees}
-                    onChange={(e) => onChange_employees_1099(e)}
+                    onChange={(e) => {
+                      const emp1099 = e.target.value;
+                      onChangeEmp1099(emp1099)
+                      context.updateState({ 
+                        employees_1099: emp1099,
+                        med_leave_cont: (emp1099 + context.employees_w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                        fam_leave_cont: (emp1099 + context.employees_w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont
+                      })
+                    }}
                     required={true}
                   />
                 </div>
@@ -142,5 +160,4 @@ const Part1 = () => {
     ); 
 }
 
-
-export default Part1;
+export default addUrlProps({ mapUrlToProps, mapUrlChangeHandlersToProps })(Part1);

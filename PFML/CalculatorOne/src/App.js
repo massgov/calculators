@@ -6,6 +6,7 @@ import HeaderSearchData from './data/HeaderSearch.data';
 import FooterLinksLiveData from './data/FooterLinksLive.json';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import Form from './components/Form';
+import history from './components/History';
 
 import './index.css';
 
@@ -25,6 +26,10 @@ class App extends Component {
       hideBackTo: true,
       siteLogoDomain: { url: { domain: 'https://www.mass.gov/' } }
     };
+  }
+  componentDidMount() {
+    // force an update if the URL changes
+    history.listen(() => this.forceUpdate());
   }
   render() {
     return (
