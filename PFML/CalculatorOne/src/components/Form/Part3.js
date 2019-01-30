@@ -41,7 +41,7 @@ class Part3 extends React.Component {
               {text: 'Quarter', value: 4},
               {text: 'Week', value: 52}
             ];
-            const totalPayroll = context.payroll_base === 'all' ? (payroll_w2 + (over50per ? payroll_1099 : 0)) : (payroll_wages > 132900 ? 132900 : payroll_wages);
+            const totalPayroll = context.payroll_base === 'all' ? (Number(payroll_w2) + (over50per ? Number(payroll_1099) : 0)) : (Number(payroll_wages) > 132900 ? 132900 : Number(payroll_wages));
             const medLeave = totalPayroll * medPercent;
             const famLeave = totalPayroll * famPercent;
 
