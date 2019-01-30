@@ -1,3 +1,5 @@
+@import "./node_modules/@massds/mayflower-react/es/components/styles/global";
+
 .ma__input-group {
   &--inline {
     display: flex;
@@ -47,4 +49,29 @@ fieldset > * {
 
 .ma__table .ma__td--group {
 	padding-left: 0px !important;
+}
+
+.ma__table-heading {
+	margin: 20px 0px 30px;;
+}
+.input-range {
+	margin-bottom: 50px;
+}
+
+.input-range__track--active {
+	background: $c-primary-lighter !important;
+}
+.input-range__slider {
+	border: 1px solid $c-white !important;
+	background: $c-primary !important;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+}
+
+.input-range__label--value {
+    top: -2rem !important;
+    .input-range__label-container {
+	    font-weight: 700;
+	    font-size: 1rem;
+	    color: $c-primary;
+    }
 }

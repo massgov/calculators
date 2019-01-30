@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import numbro from 'numbro';
-import { InputCurrency, InputRadioGroup, CalloutAlert, InputText, Collapse } from '@massds/mayflower-react';
+import { InputCurrency, InputRadioGroup, CalloutAlert, Collapse } from '@massds/mayflower-react';
 import { FormContext } from './context';
 
 import './index.css';
@@ -35,7 +35,7 @@ const Part2 = () => {
                   title="Which option are you calculating your contribution based upon? "
                   name="payroll_base"
                   outline
-                  defaultSelected="all"
+                  //defaultSelected="all"
                   errorMsg="You must selected your favorite plant."
                   radioButtons={[
                     {id: 'payroll_base_all',value: 'all',label: 'All Employees'},
@@ -59,15 +59,15 @@ const Part2 = () => {
                         maxlength={20}
                         placeholder="type something"
                         errorMsg="you did not type something"
-                        defaultText="0"
-                        max={1000000000}
+                        defaultValue={context.payroll_w2}
+                        //max={1000000000}
                         min={0}
                         format={{
                           mantissa: 2,
                           trimMantissa: false,
                           thousandSeparated: true
                         }}
-                        onChange={(e) => context.updateState({payroll_w2: e })}
+                        onChange={(e) => context.updateState({payroll_w2: e.target.value })}
                         required={true}
                         disabled = {!employeeCount}
                         />
@@ -81,15 +81,15 @@ const Part2 = () => {
                           maxlength={20}
                           placeholder="type something"
                           errorMsg="you did not type something"
-                          defaultText="0"
-                          max={1000000000}
+                          defaultValue={context.payroll_1099}
+                          //max={1000000000}
                           min={0}
                           format={{
                             mantissa: 2,
                             trimMantissa: false,
                             thousandSeparated: true
                           }}
-                          onChange={(e) => context.updateState({ payroll_1099: e })}
+                          onChange={(e)  => context.updateState({ payroll_1099: e.target.value })}
                           disabled = {!employeeCount}
                           required={true}
                           />
@@ -114,15 +114,15 @@ const Part2 = () => {
                       maxlength={20}
                       placeholder="type something"
                       errorMsg="you did not type something"
-                      defaultText="0"
-                      max={1000000000}
+                      defaultValue={context.payroll_wages}
+                      //max={1000000000}
                       min={0}
                       format={{
                         mantissa: 2,
                         trimMantissa: false,
                         thousandSeparated: true
                       }}
-                      onChange={(e) => context.updateState({ payroll_wages: e })}
+                      onChange={(e) => context.updateState({ payroll_wages: e.target.value })}
                       required={true}
                       />
                     </div>

@@ -1,3 +1,9 @@
+html {
+  box-sizing: border-box; }
+
+*, *::after, *::before {
+  box-sizing: inherit; }
+
 .ma__input-group--inline {
   display: flex;
   align-items: center;
@@ -33,3 +39,24 @@ fieldset > * {
 
 .ma__table .ma__td--group {
   padding-left: 0px !important; }
+
+.ma__table-heading {
+  margin: 20px 0px 30px; }
+
+.input-range {
+  margin-bottom: 50px; }
+
+.input-range__track--active {
+  background: #8AAAC7 !important; }
+
+.input-range__slider {
+  border: 1px solid white !important;
+  background: #14558f !important;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5); }
+
+.input-range__label--value {
+  top: -2rem !important; }
+  .input-range__label--value .input-range__label-container {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #14558f; }

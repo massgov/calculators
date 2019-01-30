@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { InputCurrency, InputRadioGroup, CalloutAlert, InputText } from '@massds/mayflower-react';
 import { FormContext } from './context';
 import Part1 from './Part1';
 import Part2 from './Part2';
@@ -13,8 +12,8 @@ class Form extends Component {
     super(props);
     this.state = {
       has_mass_employees: true,
-      employees_w2: null,
-      employees_1099: null,
+      employees_w2: 0,
+      employees_1099: 0,
       updateState: (newState) => this.setState(newState),
       payroll_base: 'all',
       payroll_w2: 0,

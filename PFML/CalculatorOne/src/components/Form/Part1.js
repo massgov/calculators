@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { InputCurrency, InputRadioGroup, CalloutAlert, InputNumber, Collapse } from '@massds/mayflower-react';
+import React, {  Fragment } from 'react';
+import { InputRadioGroup, CalloutAlert, InputNumber, Collapse } from '@massds/mayflower-react';
 import { FormContext } from './context';
 
 import './index.css';
@@ -11,16 +11,18 @@ const Part1 = () => {
         {
           (context) => {
             const onChange_employees_w2 = (e) => {
+              const empW2 = e.target.value;
               context.updateState({ 
-                employees_w2: e,
-                med_leave_cont: (e + context.employees_1099 >= 25) ? 0.6 : 0,
+                employees_w2: empW2,
+                med_leave_cont: (empW2 + context.employees_1099 >= 25) ? 0.6 : 0,
                 fam_leave_cont: 0 
               })
             }
             const onChange_employees_1099 = (e) => {
+              const emp1099 = e.target.value;
               context.updateState({ 
-                employees_1099: e,
-                med_leave_cont: (e + context.employees_w2 >= 25) ? 0.6 : 0,
+                employees_1099: emp1099,
+                med_leave_cont: (emp1099 + context.employees_w2 >= 25) ? 0.6 : 0,
                 fam_leave_cont: 0
               })
             }
@@ -61,7 +63,7 @@ const Part1 = () => {
                   title="Do you have any employees in Massachusetts?"
                   name="mass_employees"
                   outline
-                  defaultSelected="yes"
+                  //defaultSelected="yes"
                   errorMsg="You must selected your favorite plant."
                   radioButtons={[
                     {id: 'yes',value: 'yes',label: 'Yes'},
@@ -92,9 +94,9 @@ const Part1 = () => {
                     maxlength={0}
                     placeholder="0"
                     errorMsg="you did not type something"
-                    defaultText={context.employees_w2}
+                    defaultValue={context.employees_w2}
                     disabled={!context.has_mass_employees}
-                    onChange={onChange_employees_w2}
+                    onChange={(e) => onChange_employees_w2(e)}
                     required={true}
                   />
                 </div>
@@ -108,9 +110,9 @@ const Part1 = () => {
                     maxlength={0}
                     placeholder="0"
                     errorMsg="you did not type something"
-                    defaultText={context.employees_1099}
+                    defaultValue={context.employees_1099}
                     disabled={!context.has_mass_employees}
-                    onChange={onChange_employees_1099}
+                    onChange={(e) => onChange_employees_1099(e)}
                     required={true}
                   />
                 </div>

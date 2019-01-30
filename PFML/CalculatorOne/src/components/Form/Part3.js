@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { InputCurrency, InputRadioGroup, CalloutAlert, InputText, Collapse, SelectBox } from '@massds/mayflower-react';
+import React from 'react';
+import { SelectBox } from '@massds/mayflower-react';
 import { FormContext } from './context';
 import InputRange from 'react-input-range';
 import numbro from 'numbro';
@@ -41,7 +41,7 @@ class Part3 extends React.Component {
               {text: 'Quarter', value: 4},
               {text: 'Week', value: 52}
             ];
-            const totalPayroll = context.payroll_base === 'all' ? (payroll_w2 + (over50per ? payroll_1099 : 0)) : payroll_wages;
+            const totalPayroll = context.payroll_base === 'all' ? (payroll_w2 + (over50per ? payroll_1099 : 0)) : (payroll_wages > 132900 ? 132900 : payroll_wages);
             const medLeave = totalPayroll * medPercent;
             const famLeave = totalPayroll * famPercent;
 
@@ -57,12 +57,6 @@ class Part3 extends React.Component {
                 fam_leave_cont: famCont
               })
             }
-
-            const medLeaveComp = medLeave * context.med_leave_cont;
-            const famLeaveComp = famLeave * context.fam_leave_cont;
-            const medLeaveEmp = medLeave * (1-context.med_leave_cont);
-            const famLeaveEmp = famLeave * (1-context.fam_leave_cont);
-
             const getTimeValue = (text) => {
               let value;
               timePeriodOptions.forEach(period => {
@@ -72,111 +66,126 @@ class Part3 extends React.Component {
               })
               return value;
             }
-            
-            const disable = has_mass_employees && employees_w2 && employees_1099 && ((payroll_w2 && payroll_1099 && context.payroll_base === 'all') || (context.payroll_base === 'one' && payroll_wages)) ? false : true;
+
+            const medLeaveComp = medLeave * context.med_leave_cont;
+            const famLeaveComp = famLeave * context.fam_leave_cont;
+            const medLeaveEmp = medLeave * (1-context.med_leave_cont);
+            const famLeaveEmp = famLeave * (1-context.fam_leave_cont);
+            const disable = has_mass_employees && employees_w2 && (employees_1099 >= 0) && ((payroll_w2 && (over50per ? payroll_1099 > 0 : payroll_1099 >= 0) && context.payroll_base === 'all') || (context.payroll_base === 'one' && payroll_wages)) ? false : true;
+
             return (
               <React.Fragment>
-                <fieldset>
-                  <legend className="ma__label">How will you split liability with your employess?</legend>
-                  <label className="ma__label">Medical Leave</label>
-                  <InputRange
-                    maxValue={1}
-                    minValue={0}
-                    step={0.01}
-                    value={context.med_leave_cont >= minMed ? context.med_leave_cont : minMed}
-                    formatLabel={value => `${(value*100).toFixed(0)}%`}
-                    onChange={value => onMedChange(value)}
-                    disabled={disable}
-                  />
-                  <label className="ma__label">Family Leave</label>
-                  <InputRange
-                    maxValue={1}
-                    minValue={0}
-                    step={0.01}
-                    value={context.fam_leave_cont || 0}
-                    formatLabel={value => `${(value*100).toFixed(0)}%`}
-                    onChange={value => onFamChange(value)}
-                    disabled={disable}
-                  />  
-                </fieldset>
-                <SelectBox
-                    label="Paid Family Medical Leave By"
-                    stackLabel={false}
-                    required
-                    id="color-select"
-                    options={timePeriodOptions}
-                    selected={context.time_period || 'Year'}
-                    onChangeCallback={({selected}) => {
-                      context.updateState({ 
-                        time_period: selected,
-                        time_value: getTimeValue(selected)
-                      })
-                    }}
-                    className="ma__select-box js-dropdown"
-                  />
-                { !disable && context.payroll_base === 'all' && (
+                {!disable && (
+                  <React.Fragment>
+                    <fieldset>
+                      <legend className="ma__label">How will you split liability with your employess?</legend>
+                      <label className="ma__label">Medical Leave</label>
+                      <InputRange
+                        maxValue={1}
+                        minValue={0}
+                        step={0.01}
+                        value={context.med_leave_cont >= minMed ? context.med_leave_cont : minMed}
+                        formatLabel={value => `${(value*100).toFixed(0)}%`}
+                        onChange={value => onMedChange(value)}
+                        disabled={disable}
+                      />
+                      <label className="ma__label">Family Leave</label>
+                      <InputRange
+                        maxValue={1}
+                        minValue={0}
+                        step={0.01}
+                        value={context.fam_leave_cont || 0}
+                        formatLabel={value => `${(value*100).toFixed(0)}%`}
+                        onChange={value => onFamChange(value)}
+                        disabled={disable}
+                      />  
+                    </fieldset>
+                    <div className="ma__table-heading">
+                      <SelectBox
+                        label="Paid Family Medical Leave By"
+                        stackLabel={false}
+                        required
+                        id="color-select"
+                        options={timePeriodOptions}
+                        selected={context.time_period || 'Year'}
+                        onChangeCallback={({selected}) => {
+                            context.updateState({ 
+                            time_period: selected,
+                            time_value: getTimeValue(selected)
+                          })
+                        }}
+                        className="ma__select-box js-dropdown"
+                      />
+                    </div>
+                  </React.Fragment>
+                )}
+                {!disable && context.payroll_base === 'all' && (
                   <table className="ma__table">
-                    <tr>
-                      <th>Contribution</th>
-                      <th></th>
-                      <th>Medical Leave</th>
-                      <th>Family Leave</th>
-                      <th>Total</th>
-                    </tr>
-                    <tr>
-                      <th rowspan="2">You will pay:</th>
-                      <td className="ma__td--group">Total</td>
-                      <td>{this.toCurrency(medLeaveComp/context.time_value)}</td>
-                      <td>{this.toCurrency(famLeaveComp/context.time_value)}</td>
-                      <td>{this.toCurrency((medLeaveComp + famLeaveComp)/context.time_value)}</td>
-                    </tr>
-                    <tr>
-                      <td className="ma__td--group">Per Employee</td>
-                      <td>{this.toCurrency((medLeaveComp)/employeeCount)}</td>
-                      <td>{this.toCurrency((famLeaveComp)/employeeCount)}</td>
-                      <td>{this.toCurrency((medLeaveComp + famLeaveComp)/employeeCount/context.time_value)}</td>
-                    </tr> 
-                    <tr>
-                      <th rowspan="2">Your Employees will pay:</th>
-                      <td className="ma__td--group">Total</td>
-                      <td>{this.toCurrency(medLeaveEmp/context.time_value)}</td>
-                      <td>{this.toCurrency(famLeaveEmp/context.time_value)}</td>
-                      <td>{this.toCurrency((medLeaveEmp + famLeaveEmp)/context.time_value)}</td>
-                    </tr>
-                    <tr>
-                      <td className="ma__td--group">Per Employee</td>
-                      <td>{this.toCurrency(medLeaveEmp/employeeCount/context.time_value)}</td>
-                      <td>{this.toCurrency(famLeaveEmp/employeeCount/context.time_value)}</td>
-                      <td>{this.toCurrency((medLeaveEmp + famLeaveEmp)/employeeCount/context.time_value)}</td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <th>Contribution</th>
+                        <th></th>
+                        <th>Medical Leave</th>
+                        <th>Family Leave</th>
+                        <th>Total</th>
+                      </tr>
+                      <tr>
+                        <th rowspan="2">You will pay:</th>
+                        <td className="ma__td--group">Total</td>
+                        <td>{this.toCurrency(medLeaveComp/context.time_value)}</td>
+                        <td>{this.toCurrency(famLeaveComp/context.time_value)}</td>
+                        <td>{this.toCurrency((medLeaveComp + famLeaveComp)/context.time_value)}</td>
+                      </tr>
+                      <tr>
+                        <td className="ma__td--group">Per Employee</td>
+                        <td>{this.toCurrency((medLeaveComp)/employeeCount)}</td>
+                        <td>{this.toCurrency((famLeaveComp)/employeeCount)}</td>
+                        <td>{this.toCurrency((medLeaveComp + famLeaveComp)/employeeCount/context.time_value)}</td>
+                      </tr> 
+                      <tr>
+                        <th rowspan="2">Your Employees will pay:</th>
+                        <td className="ma__td--group">Total</td>
+                        <td>{this.toCurrency(medLeaveEmp/context.time_value)}</td>
+                        <td>{this.toCurrency(famLeaveEmp/context.time_value)}</td>
+                        <td>{this.toCurrency((medLeaveEmp + famLeaveEmp)/context.time_value)}</td>
+                      </tr>
+                      <tr>
+                        <td className="ma__td--group">Per Employee</td>
+                        <td>{this.toCurrency(medLeaveEmp/employeeCount/context.time_value)}</td>
+                        <td>{this.toCurrency(famLeaveEmp/employeeCount/context.time_value)}</td>
+                        <td>{this.toCurrency((medLeaveEmp + famLeaveEmp)/employeeCount/context.time_value)}</td>
+                      </tr>
+                    </tbody>
                   </table>
                 )}
                 { !disable && context.payroll_base === 'one' && (
                   <table className="ma__table">
-                    <tr>
-                      <th>Contribution</th>
-                      <th>Medical Leave</th>
-                      <th>Family Leave</th>
-                      <th>Total</th>
-                    </tr>
-                    <tr>
-                      <td>You will pay:</td>
-                      <td>{this.toCurrency(medLeaveComp/context.time_value)}</td>
-                      <td>{this.toCurrency(famLeaveComp/context.time_value)}</td>
-                      <td>{this.toCurrency((medLeaveComp + famLeaveComp)/context.time_value)}</td>
-                    </tr>
-                    <tr>
-                      <td>Your Employee will pay:</td>
-                      <td>{this.toCurrency(medLeaveEmp/context.time_value)}</td>
-                      <td>{this.toCurrency(famLeaveEmp/context.time_value)}</td>
-                      <td>{this.toCurrency((medLeaveEmp + famLeaveEmp)/context.time_value)}</td>
-                    </tr>
-                    <tr>
-                      <td className="ma__td--group">Total payment:</td>
-                      <td>{this.toCurrency(medLeave/context.time_value)}</td>
-                      <td>{this.toCurrency(famLeave/context.time_value)}</td>
-                      <td>{this.toCurrency((medLeave + famLeave)/context.time_value)}</td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <th>Contribution</th>
+                        <th>Medical Leave</th>
+                        <th>Family Leave</th>
+                        <th>Total</th>
+                      </tr>
+                      <tr>
+                        <td>You will pay:</td>
+                        <td>{this.toCurrency(medLeaveComp/context.time_value)}</td>
+                        <td>{this.toCurrency(famLeaveComp/context.time_value)}</td>
+                        <td>{this.toCurrency((medLeaveComp + famLeaveComp)/context.time_value)}</td>
+                      </tr>
+                      <tr>
+                        <td>Your Employee will pay:</td>
+                        <td>{this.toCurrency(medLeaveEmp/context.time_value)}</td>
+                        <td>{this.toCurrency(famLeaveEmp/context.time_value)}</td>
+                        <td>{this.toCurrency((medLeaveEmp + famLeaveEmp)/context.time_value)}</td>
+                      </tr>
+                      <tr>
+                        <td className="ma__td--group">Total payment:</td>
+                        <td>{this.toCurrency(medLeave/context.time_value)}</td>
+                        <td>{this.toCurrency(famLeave/context.time_value)}</td>
+                        <td>{this.toCurrency((medLeave + famLeave)/context.time_value)}</td>
+                      </tr>
+                    </tbody>
                   </table>
                 )}
               </React.Fragment>
