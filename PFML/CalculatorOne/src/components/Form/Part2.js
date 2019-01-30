@@ -15,27 +15,23 @@ const Part2 = () => {
       <FormContext.Consumer>
         {
           (context) => {
-            const onChange_employees_w2 = (e) => {
-              context.updateState({ employees_w2: e })
-            }
             const { employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages, payroll_base, has_mass_employees } = context;
             const over50per = (employees_1099/employees_w2) > 0.5; 
-            const employeeCount = +employees_w2 + (over50per ? +employees_1099 : 0);
+            const employeeCount = over50per ? (employees_w2 + employees_1099) : employees_w2;
             const over25 = employeeCount >= 25;
             const medPercent = over25 ? 0.0052 : 0.0031;
             const famPercent = 0.0011;
             const totalPercent = medPercent + famPercent;
-            const totalPayroll = payroll_w2 + (over50per ? payroll_1099 : 0)
+            const totalPayroll = over50per ? (Number(payroll_w2) + Number(payroll_1099)) : (Number(payroll_w2));
             const totalPayment = totalPayroll * totalPercent;
-            const totalPaymentEmp = over50per ? (totalPayment / employeeCount) : (totalPayment / employees_w2);
-            
+            const totalPaymentEmp = totalPayment / employeeCount;
             return (
               <fieldset>
                 <InputRadioGroup
                   title="Which option are you calculating your contribution based upon? "
                   name="payroll_base"
                   outline
-                  //defaultSelected="all"
+                  defaultSelected="all"
                   errorMsg="You must selected your favorite plant."
                   radioButtons={[
                     {id: 'payroll_base_all',value: 'all',label: 'All Employees'},
@@ -92,7 +88,7 @@ const Part2 = () => {
                           required={true}
                           />
                       </div>
-                      <Collapse in={has_mass_employees && payroll_w2 &&  payroll_1099} dimension="height" className="ma__callout-alert">
+                      <Collapse in={has_mass_employees && payroll_w2 && (over50per ? payroll_1099 > 0 : payroll_1099 >= 0)} dimension="height" className="ma__callout-alert">
                         <div className="ma__collapse">
                           <CalloutAlert theme="c-primary" icon={null}>
                             <p>Total estimated annual contribution for your company is <strong>{toCurrency(totalPayment)}</strong> (<strong>{toCurrency(totalPaymentEmp)}</strong> per employee).</p>
