@@ -9,7 +9,6 @@ import './index.css';
 
 const Part1 = () => {
     const { minEmployees, largeCompMedCont, smallCompMedCont, largeCompFamCont, smallCompFamCont, emp1099Fraction } = CalculatorOneVariables.baseVariables;
-    console.log(PartOneProps)
     const { questionOne, questionTwo, questionThree, output } = PartOneProps;
     return (
       <FormContext.Consumer>

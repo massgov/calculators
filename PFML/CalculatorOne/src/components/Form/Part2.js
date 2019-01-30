@@ -3,6 +3,7 @@ import numbro from 'numbro';
 import { InputCurrency, InputRadioGroup, CalloutAlert, Collapse } from '@massds/mayflower-react';
 import { FormContext } from './context';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
+import PartTwoProps from '../../data/PartTwo.json';
 
 import './index.css';
 
@@ -13,6 +14,7 @@ const toCurrency = (number) => {
 
 const Part2 = () => {
     const { minEmployees, emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, socialSecCap } = CalculatorOneVariables.baseVariables;
+    const { questionOne, questionTwo, questionThree, questionFour, output } = PartTwoProps;
     return (
       <FormContext.Consumer>
         {
@@ -32,15 +34,12 @@ const Part2 = () => {
               <fieldset>
                 <div className="ma_input-group--mobile-1">
                   <InputRadioGroup
-                    title="Which option are you calculating your contribution based upon? "
+                    title={questionOne.question}
                     name="payroll_base"
                     outline
                     defaultSelected="all"
-                    errorMsg="You must selected your favorite plant."
-                    radioButtons={[
-                      {id: 'payroll_base_all',value: 'all',label: 'All Employees'},
-                      {id: 'payroll_base_one',value: 'one',label: 'Individual Employee'}
-                    ]}
+                    errorMsg={questionOne.errorMsg}
+                    radioButtons={questionOne.options}
                     onChange={(e) => {
                         context.updateState({ payroll_base: e.selected })
                       }
@@ -51,15 +50,15 @@ const Part2 = () => {
               {
                 (payroll_base === 'all') ? (
                   <Fragment>
-                    <div class="ma__input-group--inline" key="payroll_w2">
+                    <div className="ma__input-group--inline" key="payroll_w2">
                       <InputCurrency
-                        labelText="What was your total payroll for W2 Employees last year?"
+                        labelText={questionTwo.question}
                         id="payroll_w2"
                         name="payroll_w2"
                         width={0}
-                        maxlength={20}
-                        placeholder="type something"
-                        errorMsg="you did not type something"
+                        maxlength={200}
+                        placeholder="e.g. $100,000"
+                        errorMsg={questionTwo.errorMsg}
                         defaultValue={context.payroll_w2}
                         min={0}
                         format={{
@@ -72,15 +71,15 @@ const Part2 = () => {
                         disabled = {!employeeCount}
                         />
                       </div>
-                      <div class="ma__input-group--inline" key="payroll_1099">
+                      <div className="ma__input-group--inline" key="payroll_1099">
                         <InputCurrency
-                          labelText="How much did you pay 1099 contractors last year?"
+                          labelText={questionThree.question}
                           id="payroll_1099"
                           name="payroll_1099"
                           width={0}
-                          maxlength={20}
-                          placeholder="type something"
-                          errorMsg="you did not type something"
+                          maxlength={200}
+                          placeholder="e.g. $100,000"
+                          errorMsg={questionThree.errorMsg}
                           defaultValue={context.payroll_1099}
                           min={0}
                           format={{
@@ -104,15 +103,15 @@ const Part2 = () => {
                     </Fragment>
                 ) : (
                 <Fragment>
-                  <div class="ma__input-group--inline" key="payroll_wages">
+                  <div className="ma__input-group--inline" key="payroll_wages">
                     <InputCurrency
-                      labelText="What was the employee’s gross wages last year?"
+                      labelText={questionFour.question}
                       id="payroll_wages"
                       name="payroll_wages"
                       width={0}
-                      maxlength={20}
-                      placeholder="type something"
-                      errorMsg="you did not type something"
+                      maxlength={200}
+                      placeholder="e.g. $100,000"
+                      errorMsg={questionFour.errorMsg}
                       defaultValue={context.payroll_wages}
                       min={0}
                       format={{
@@ -130,7 +129,7 @@ const Part2 = () => {
                           <p>Total estimated annual contribution for this employee is <strong>{toCurrency(payroll_wages_cap * totalPercent)}</strong> </p>
                           <p>Of this amount, <strong>{toCurrency(medPercent * payroll_wages_cap)}</strong> is for medical leave and <strong>{toCurrency(famPercent * payroll_wages_cap)}</strong> is for family leave.</p>
                           { payroll_wages > socialSecCap && (
-                            <p>Because the employess wages are over the social security cap, they do not contribute for income above <strong>{toCurrency(socialSecCap)}</strong></p>
+                            <p>Because the employess wages are over the social security cap, they do not contribute for income above <strong>{toCurrency(socialSecCap)}</strong>.</p>
                           )}
                         </CalloutAlert>
                       </div>
