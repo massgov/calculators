@@ -31,7 +31,7 @@ class App extends Component {
       <div className="App">
         <Header {...this.headerProps} />
           <main className="main-content">
-            <section className="main-content--two">
+            <section className="main-content main-content--two">
               <div className="ma__page-header__content">
                 <h1 className="ma__page-header__title">Paid Family Medical Leave Contribution Caculator</h1>
                 <div className="page-content">

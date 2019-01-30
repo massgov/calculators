@@ -1,47 +1,39 @@
 import React from 'react';
 import { SelectBox } from '@massds/mayflower-react';
 import { FormContext } from './context';
-import InputRange from 'react-input-range';
 import numbro from 'numbro';
-import 'react-input-range/lib/css/index.css';
 
+import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import './index.css';
 
+// to replace with react slider when lands
+import 'react-input-range/lib/css/index.css';
+import InputRange from 'react-input-range';
 
-class Part3 extends React.Component {
-  constructor(props) {
-    super(props);
-    /*this.state = {
-      activeTab: null,
-      activeContent: null,
-      // eslint-disable-next-line react/no-unused-state
-      setActiveTab: this.setActiveTab
-    };*/
-  }
-  
-  toCurrency = (number) => {
+const Part3 = () => {
+  const toCurrency = (number) => {
     const currency = numbro(number).formatCurrency({thousandSeparated: true, mantissa: 2, spaceSeparated: false})
     return currency;
   }
-  render(){
-    return (
+  const { minEmployees, emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, largeCompMedCont, smallCompMedCont, weeksPerYear, quartersPerYear, socialSecCap } = CalculatorOneVariables.baseVariables;
+  return (
       <FormContext.Consumer>
         {
           (context) => {
             const { has_mass_employees, employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages, med_leave_cont, fam_leave_cont } = context;
-            const over50per = (employees_1099/employees_w2) > 0.5; 
+            const over50per = (employees_1099/employees_w2) > emp1099Fraction; 
             const employeeCount = over50per ? (+employees_w2 + +employees_1099) : +employees_w2;
-            const over25 = employeeCount >= 25; 
-            const medPercent = over25 ? 0.0052 : 0.0031;
-            const famPercent = 0.0011;
+            const over25 = employeeCount >= minEmployees; 
+            const medPercent = over25 ? largeMedPercent : smallMedPercent;
+            const famPercent = over25 ? largeFamPercent : smallFamPercent;
             const totalPercent = medPercent + famPercent;
-            const minMed = over25 ? 0.6 : 0;
+            const minMed = over25 ? largeCompMedCont : smallCompMedCont;
             const timePeriodOptions = [
               {text: 'Year', value: 1},
-              {text: 'Quarter', value: 4},
-              {text: 'Week', value: 52}
+              {text: 'Quarter', value: quartersPerYear},
+              {text: 'Week', value: weeksPerYear}
             ];
-            const totalPayroll = context.payroll_base === 'all' ? (Number(payroll_w2) + (over50per ? Number(payroll_1099) : 0)) : (Number(payroll_wages) > 132900 ? 132900 : Number(payroll_wages));
+            const totalPayroll = context.payroll_base === 'all' ? (Number(payroll_w2) + (over50per ? Number(payroll_1099) : 0)) : (Number(payroll_wages) > socialSecCap ? socialSecCap : Number(payroll_wages));
             const medLeave = totalPayroll * medPercent;
             const famLeave = totalPayroll * famPercent;
 
@@ -132,28 +124,28 @@ class Part3 extends React.Component {
                       <tr>
                         <th rowspan="2">You will pay:</th>
                         <td className="ma__td--group">Total</td>
-                        <td>{this.toCurrency(medLeaveComp/context.time_value)}</td>
-                        <td>{this.toCurrency(famLeaveComp/context.time_value)}</td>
-                        <td>{this.toCurrency((medLeaveComp + famLeaveComp)/context.time_value)}</td>
+                        <td>{toCurrency(medLeaveComp/context.time_value)}</td>
+                        <td>{toCurrency(famLeaveComp/context.time_value)}</td>
+                        <td>{toCurrency((medLeaveComp + famLeaveComp)/context.time_value)}</td>
                       </tr>
                       <tr>
                         <td className="ma__td--group">Per Employee</td>
-                        <td>{this.toCurrency((medLeaveComp)/employeeCount)}</td>
-                        <td>{this.toCurrency((famLeaveComp)/employeeCount)}</td>
-                        <td>{this.toCurrency((medLeaveComp + famLeaveComp)/employeeCount/context.time_value)}</td>
+                        <td>{toCurrency((medLeaveComp)/employeeCount)}</td>
+                        <td>{toCurrency((famLeaveComp)/employeeCount)}</td>
+                        <td>{toCurrency((medLeaveComp + famLeaveComp)/employeeCount/context.time_value)}</td>
                       </tr> 
                       <tr>
                         <th rowspan="2">Your Employees will pay:</th>
                         <td className="ma__td--group">Total</td>
-                        <td>{this.toCurrency(medLeaveEmp/context.time_value)}</td>
-                        <td>{this.toCurrency(famLeaveEmp/context.time_value)}</td>
-                        <td>{this.toCurrency((medLeaveEmp + famLeaveEmp)/context.time_value)}</td>
+                        <td>{toCurrency(medLeaveEmp/context.time_value)}</td>
+                        <td>{toCurrency(famLeaveEmp/context.time_value)}</td>
+                        <td>{toCurrency((medLeaveEmp + famLeaveEmp)/context.time_value)}</td>
                       </tr>
                       <tr>
                         <td className="ma__td--group">Per Employee</td>
-                        <td>{this.toCurrency(medLeaveEmp/employeeCount/context.time_value)}</td>
-                        <td>{this.toCurrency(famLeaveEmp/employeeCount/context.time_value)}</td>
-                        <td>{this.toCurrency((medLeaveEmp + famLeaveEmp)/employeeCount/context.time_value)}</td>
+                        <td>{toCurrency(medLeaveEmp/employeeCount/context.time_value)}</td>
+                        <td>{toCurrency(famLeaveEmp/employeeCount/context.time_value)}</td>
+                        <td>{toCurrency((medLeaveEmp + famLeaveEmp)/employeeCount/context.time_value)}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -161,7 +153,7 @@ class Part3 extends React.Component {
                 { !disable && context.payroll_base === 'one' && (
                   <table className="ma__table">
                     <tbody>
-                      <tr>
+                      <tr className="ma__table-headers">
                         <th>Contribution</th>
                         <th>Medical Leave</th>
                         <th>Family Leave</th>
@@ -169,21 +161,21 @@ class Part3 extends React.Component {
                       </tr>
                       <tr>
                         <td>You will pay:</td>
-                        <td>{this.toCurrency(medLeaveComp/context.time_value)}</td>
-                        <td>{this.toCurrency(famLeaveComp/context.time_value)}</td>
-                        <td>{this.toCurrency((medLeaveComp + famLeaveComp)/context.time_value)}</td>
+                        <td>{toCurrency(medLeaveComp/context.time_value)}</td>
+                        <td>{toCurrency(famLeaveComp/context.time_value)}</td>
+                        <td>{toCurrency((medLeaveComp + famLeaveComp)/context.time_value)}</td>
                       </tr>
                       <tr>
                         <td>Your Employee will pay:</td>
-                        <td>{this.toCurrency(medLeaveEmp/context.time_value)}</td>
-                        <td>{this.toCurrency(famLeaveEmp/context.time_value)}</td>
-                        <td>{this.toCurrency((medLeaveEmp + famLeaveEmp)/context.time_value)}</td>
+                        <td>{toCurrency(medLeaveEmp/context.time_value)}</td>
+                        <td>{toCurrency(famLeaveEmp/context.time_value)}</td>
+                        <td>{toCurrency((medLeaveEmp + famLeaveEmp)/context.time_value)}</td>
                       </tr>
                       <tr>
                         <td className="ma__td--group">Total payment:</td>
-                        <td>{this.toCurrency(medLeave/context.time_value)}</td>
-                        <td>{this.toCurrency(famLeave/context.time_value)}</td>
-                        <td>{this.toCurrency((medLeave + famLeave)/context.time_value)}</td>
+                        <td>{toCurrency(medLeave/context.time_value)}</td>
+                        <td>{toCurrency(famLeave/context.time_value)}</td>
+                        <td>{toCurrency((medLeave + famLeave)/context.time_value)}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -193,8 +185,7 @@ class Part3 extends React.Component {
           }
         }
       </FormContext.Consumer>
-    ); 
-  }  
+    );   
 }
 
 

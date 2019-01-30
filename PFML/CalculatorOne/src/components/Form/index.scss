@@ -72,7 +72,7 @@ fieldset > * {
 
 
 .ma_input-group--mobile-1 {
-    @media ($bp-small-max) {
+    @media ($bp-large-max) {
 		.ma__input-group__item.item-2 {
 	    	width: calc(100% - 10px);
 		}

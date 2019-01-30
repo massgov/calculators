@@ -1,0 +1,17 @@
+{
+  "baseVariables": {
+  	"weeksPerYear": 52,
+  	"quartersPerYear": 4,
+  	"minEmployees": 25,
+  	"smallCompMedCont": 0,
+  	"smallCompFamCont": 0,
+  	"largeCompMedCont": 0.6,
+  	"largeCompFamCont": 0,
+  	"smallMedPercent": 0.0052,
+  	"largeMedPercent": 0.0031,
+  	"smallFamPercent": 0.0011,
+  	"largeFamPercent": 0.0011,
+  	"emp1099Fraction": 0.5,
+  	"socialSecCap": 132900
+  }
+}

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import numbro from 'numbro';
 import { InputCurrency, InputRadioGroup, CalloutAlert, Collapse } from '@massds/mayflower-react';
 import { FormContext } from './context';
+import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 
 import './index.css';
 
@@ -11,20 +12,22 @@ const toCurrency = (number) => {
 }
 
 const Part2 = () => {
+    const { minEmployees, emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, socialSecCap } = CalculatorOneVariables.baseVariables;
     return (
       <FormContext.Consumer>
         {
           (context) => {
             const { employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages, payroll_base, has_mass_employees } = context;
-            const over50per = (employees_1099/employees_w2) > 0.5; 
+            const over50per = (employees_1099/employees_w2) > emp1099Fraction; 
             const employeeCount = over50per ? (employees_w2 + employees_1099) : employees_w2;
-            const over25 = employeeCount >= 25;
-            const medPercent = over25 ? 0.0052 : 0.0031;
-            const famPercent = 0.0011;
+            const over25 = employeeCount >= minEmployees;
+            const medPercent = over25 ? largeMedPercent : smallMedPercent;
+            const famPercent = over25 ? largeFamPercent : smallFamPercent;
             const totalPercent = medPercent + famPercent;
             const totalPayroll = over50per ? (Number(payroll_w2) + Number(payroll_1099)) : (Number(payroll_w2));
             const totalPayment = totalPayroll * totalPercent;
             const totalPaymentEmp = totalPayment / employeeCount;
+            const payroll_wages_cap = context.payroll_wages > socialSecCap ? socialSecCap : payroll_wages;
             return (
               <fieldset>
                 <div className="ma_input-group--mobile-1">
@@ -111,7 +114,6 @@ const Part2 = () => {
                       placeholder="type something"
                       errorMsg="you did not type something"
                       defaultValue={context.payroll_wages}
-                      //max={1000000000}
                       min={0}
                       format={{
                         mantissa: 2,
@@ -125,8 +127,11 @@ const Part2 = () => {
                     <Collapse in={payroll_wages && payroll_wages > 0 && over25} dimension="height" className="ma__callout-alert">
                       <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
-                          <p>Total estimated annual contribution for this employee is <strong>{toCurrency(payroll_wages * totalPercent)}</strong> </p>
-                          <p>Of this amount, <strong>{toCurrency(medPercent * payroll_wages)}</strong> is for medical leave and <strong>{toCurrency(famPercent * payroll_wages)}</strong> is for family leave.</p>
+                          <p>Total estimated annual contribution for this employee is <strong>{toCurrency(payroll_wages_cap * totalPercent)}</strong> </p>
+                          <p>Of this amount, <strong>{toCurrency(medPercent * payroll_wages_cap)}</strong> is for medical leave and <strong>{toCurrency(famPercent * payroll_wages_cap)}</strong> is for family leave.</p>
+                          { payroll_wages > socialSecCap && (
+                            <p>Because the employess wages are over the social security cap, they do not contribute for income above <strong>{toCurrency(socialSecCap)}</strong></p>
+                          )}
                         </CalloutAlert>
                       </div>
                     </Collapse>

@@ -1,11 +1,13 @@
 import React, {  Fragment } from 'react';
 import { InputRadioGroup, CalloutAlert, InputNumber, Collapse } from '@massds/mayflower-react';
 import { FormContext } from './context';
+import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 
 import './index.css';
 
 
 const Part1 = () => {
+    const { minEmployees, largeCompMedCont, smallCompMedCont, largeCompFamCont, smallCompFamCont, emp1099Fraction } = CalculatorOneVariables.baseVariables;
     return (
       <FormContext.Consumer>
         {
@@ -14,22 +16,22 @@ const Part1 = () => {
               const empW2 = e.target.value;
               context.updateState({ 
                 employees_w2: empW2,
-                med_leave_cont: (empW2 + context.employees_1099 >= 25) ? 0.6 : 0,
-                fam_leave_cont: 0 
+                med_leave_cont: (empW2 + context.employees_1099 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                fam_leave_cont: (empW2 + context.employees_1099 >= minEmployees) ? largeCompFamCont : smallCompFamCont 
               })
             }
             const onChange_employees_1099 = (e) => {
               const emp1099 = e.target.value;
               context.updateState({ 
                 employees_1099: emp1099,
-                med_leave_cont: (emp1099 + context.employees_w2 >= 25) ? 0.6 : 0,
-                fam_leave_cont: 0
+                med_leave_cont: (emp1099 + context.employees_w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                fam_leave_cont: (emp1099 + context.employees_w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont
               })
             }
             const { has_mass_employees, employees_w2, employees_1099 } = context;
-            const over50per = (employees_1099/employees_w2) > 0.5; 
+            const over50per = (employees_1099/employees_w2) > emp1099Fraction; 
             const employeeCount = +employees_w2 + (over50per ? +employees_1099 : 0);
-            const over25 = employeeCount >= 25;
+            const over25 = employeeCount >= minEmployees;
             let message; 
             if(over25) {
               if(over50per) {
@@ -84,7 +86,7 @@ const Part1 = () => {
                       </CalloutAlert>
                     </div>
                   </Collapse>
-                <div class="ma__input-group--inline">
+                <div className="ma__input-group--inline">
                   <InputNumber
                     labelText="How many of your MA employees receive W2s?"
                     id="employees_w2"
@@ -100,7 +102,7 @@ const Part1 = () => {
                     required={true}
                   />
                 </div>
-                <div class="ma__input-group--inline">
+                <div className="ma__input-group--inline">
                   <InputNumber
                     labelText="How many 1099 contractors have you hired in the past year?"
                     name="employees_1099"

@@ -18,7 +18,7 @@ class Form extends Component {
       payroll_base: 'all',
       payroll_w2: 0,
       payroll_1099: 0,
-      pageroll_wages: 0,
+      payroll_wages: 0,
       time_value: 1
     }
   }
