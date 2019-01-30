@@ -45,7 +45,7 @@ const Part2 = () => {
                       context.updateState({ payroll_base: e.selected })
                     }
                   }
-                  disabled={!has_mass_employees}
+                  disabled={!has_mass_employees || !employeeCount}
                   />
               {
                 (payroll_base === 'all') ? (
@@ -60,14 +60,13 @@ const Part2 = () => {
                         placeholder="type something"
                         errorMsg="you did not type something"
                         defaultValue={context.payroll_w2}
-                        //max={1000000000}
                         min={0}
                         format={{
                           mantissa: 2,
                           trimMantissa: false,
                           thousandSeparated: true
                         }}
-                        onChange={(e) => context.updateState({payroll_w2: e.target.value })}
+                        onChange={(e, value) => context.updateState({payroll_w2: value })}
                         required={true}
                         disabled = {!employeeCount}
                         />
@@ -82,14 +81,13 @@ const Part2 = () => {
                           placeholder="type something"
                           errorMsg="you did not type something"
                           defaultValue={context.payroll_1099}
-                          //max={1000000000}
                           min={0}
                           format={{
                             mantissa: 2,
                             trimMantissa: false,
                             thousandSeparated: true
                           }}
-                          onChange={(e)  => context.updateState({ payroll_1099: e.target.value })}
+                          onChange={(e, value)  => context.updateState({ payroll_1099: value })}
                           disabled = {!employeeCount}
                           required={true}
                           />
