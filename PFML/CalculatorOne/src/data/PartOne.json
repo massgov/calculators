@@ -1,0 +1,47 @@
+{
+    "questionOne": {
+        "question": "Do you have any employees in Massachusetts?",
+        "errorMsg": "Please select yes or no.",
+        "options": [{
+            "label": "Yes",
+            "value": "yes",
+            "id": "yes",
+            "message": "",
+            "theme": "c-primary"
+        }, {
+            "label": "No",
+            "value": "no",
+            "id": "no",
+            "message": "You are <strong>not required</strong> to remit payment to the department starting 7/1.",
+            "theme": "c-error-red"
+        }]
+    },
+    "questionTwo": {
+        "question": "How many of your MA employees receive W2s?",
+        "errorMsg": "Please enter a value."
+    },
+    "questionThree": {
+        "question": "How many 1099 contractors have you hired in the past year?",
+        "errorMsg": "Please enter a value."
+    },
+    "output": {
+        "overMinEmpOver1099": [{
+            "paragraph": "<strong>You are required to remit payment to the department starting 7/1 and you are liable for a portion of your employees medical leave contribution</strong> because you have more than 25 total employees in Massachusetts."
+        }, {
+            "paragraph": "<strong>You are required to remit payment on behalf of your contractors.</strong> Employers with 50% or more of their workforce made up of 1099s need to consider these as full time employees under the new language."
+        }],
+        "overMinEmpUnder1099": [{
+            "paragraph": "<strong>You are required to remit payment to the department starting 7/1 and you are liable for a portion of your employees medical leave contribution</strong> because you have more than 25 total employees in Massachusetts."
+        }, {
+            "paragraph": "<strong>You are not required to remit payment on behalf of your contractors</strong> because you have less than 50% of contractors."
+        }],
+        "underMinEmpOver1099": [{
+            "paragraph": "<strong>You are not liable for medical leave payment for your employees</strong> because you have less than 25 total employees in Massachusetts."
+        }, {
+            "paragraph": "<strong>You are not required to remit payment on behalf of your contractors</strong> because you have less than 50% of contractors."
+        }],
+        "underMinEmpUnder1099": [{
+            "paragraph": "<strong>You are not required to remit payment to the department starting 7/1</strong> because you have less than 25 total employees in Massachusetts."
+        }]
+    }
+}

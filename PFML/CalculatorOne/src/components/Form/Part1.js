@@ -1,13 +1,16 @@
 import React, {  Fragment } from 'react';
-import { InputRadioGroup, CalloutAlert, InputNumber, Collapse } from '@massds/mayflower-react';
+import { InputRadioGroup, CalloutAlert, InputNumber, Collapse, Paragraph } from '@massds/mayflower-react';
 import { FormContext } from './context';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
+import PartOneProps from '../../data/PartOne.json';
 
 import './index.css';
 
 
 const Part1 = () => {
     const { minEmployees, largeCompMedCont, smallCompMedCont, largeCompFamCont, smallCompFamCont, emp1099Fraction } = CalculatorOneVariables.baseVariables;
+    console.log(PartOneProps)
+    const { questionOne, questionTwo, questionThree, output } = PartOneProps;
     return (
       <FormContext.Consumer>
         {
@@ -37,65 +40,71 @@ const Part1 = () => {
               if(over50per) {
                 message = (
                   <Fragment>
-                    <p><strong>You are required to remit payment to the department starting 7/1 and you are liable for a portion of your employees medical leave contribution</strong> because you have more than 25 total employees in Massachusetts. </p>
-                    <p><strong>You are required to remit payment on behalf of your contractors.</strong> Employers with 50% or more of their workforce made up of 1099s need to consider these as full time employees under the new language.</p>
+                    {output.overMinEmpOver1099.map(message => <Paragraph text={message.paragraph} />)}
                   </Fragment>
                 )
               } else {
                 message =  (
                   <Fragment>
-                    <p><strong>You are required to remit payment to the department starting 7/1 and you are liable for a portion of your employees medical leave contribution</strong> because you have more than 25 total employees in Massachusetts. </p>
-                    <p><strong>You are not required to remit payment on behalf of your contractors</strong> because you have less than 50% of contractors</p>
+                    {output.overMinEmpUnder1099.map(message => <Paragraph text={message.paragraph} />)}
                   </Fragment>
                 )
               }
             } else if (over50per) {
               message =  (
                 <Fragment>
-                  <p><strong>You are not liable for medical leave payment for your employees</strong> because you have less than 25 total employees in Massachusetts.</p>
-                  <p><strong>You are not required to remit payment on behalf of your contractors</strong> because you have less than 50% of contractors</p>
+                  {output.underMinEmpOver1099.map(message => <Paragraph text={message.paragraph} />)}
                 </Fragment>
               )
             } else {
-              message = (<p><strong>You are not required to remit payment to the department starting 7/1</strong> because you have less than 25 total employees in Massachusetts. </p>)
+              message = (
+                <Fragment>
+                  {output.underMinEmpUnder1099.map(message => <Paragraph text={message.paragraph} />)}
+                </Fragment>
+              )
             }
             return (
               <fieldset>
                 <InputRadioGroup
-                  title="Do you have any employees in Massachusetts?"
+                  title={questionOne.question}
                   name="mass_employees"
                   outline
                   defaultSelected="yes"
-                  errorMsg="You must selected your favorite plant."
-                  radioButtons={[
-                    {id: 'yes',value: 'yes',label: 'Yes'},
-                    {id: 'no',value: 'no',label: 'No'}
-                  ]}
+                  errorMsg={questionOne.errorMsg}
+                  radioButtons={questionOne.options}
                   onChange={(e) => {
                     if(e.selected === 'yes') {
                       context.updateState({ has_mass_employees: true })
                     } else {
                       context.updateState({ has_mass_employees: false })
                     }
+                    questionOne.options.forEach(option => {
+                      if(option.value === e.selected){
+                        context.updateState({ 
+                          has_mass_employees_message: option.message,
+                          has_mass_employees_theme: option.theme
+                        })
+                      }
+                    })
                   }}
                   />
                   <Collapse in={!has_mass_employees} dimension="height" className="ma__callout-alert">
                     <div className="ma__collapse">
-                      <CalloutAlert theme="c-error-red">
-                        <p>You are <strong>not required</strong> to remit payment to the department starting 7/1. </p>
+                      <CalloutAlert theme={context.has_mass_employees_theme}>
+                        <Paragraph text={context.has_mass_employees_message} />
                       </CalloutAlert>
                     </div>
                   </Collapse>
                 <div className="ma__input-group--inline">
                   <InputNumber
-                    labelText="How many of your MA employees receive W2s?"
+                    labelText={questionTwo.question}
                     id="employees_w2"
                     name="employees_w2"
                     type="number"
                     width={0}
                     maxlength={0}
                     placeholder="e.g. 50"
-                    errorMsg="you did not type something"
+                    errorMsg={questionTwo.errorMsg}
                     defaultValue={context.employees_w2}
                     disabled={!context.has_mass_employees}
                     onChange={(e) => onChange_employees_w2(e)}
@@ -104,14 +113,14 @@ const Part1 = () => {
                 </div>
                 <div className="ma__input-group--inline">
                   <InputNumber
-                    labelText="How many 1099 contractors have you hired in the past year?"
+                    labelText={questionThree.question}
                     name="employees_1099"
                     id="employees_1099"
                     type="number"
                     width={0}
                     maxlength={0}
                     placeholder="e.g. 50"
-                    errorMsg="you did not type something"
+                    errorMsg={questionThree.errorMsg}
                     defaultValue={context.employees_1099}
                     disabled={!context.has_mass_employees}
                     onChange={(e) => onChange_employees_1099(e)}
