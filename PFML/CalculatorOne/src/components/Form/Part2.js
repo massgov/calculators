@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
-import { InputCurrency, InputRadioGroup, CalloutAlert, Collapse } from '@massds/mayflower-react';
+import { InputCurrency, InputRadioGroup, CalloutAlert, Collapse, HelpTip } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { FormContext } from './context';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import PartTwoProps from '../../data/PartTwo.json';
-import { toCurrency } from '../../utils';
+import { toCurrency, toPercentage } from '../../utils';
 
 import './index.css';
 
@@ -35,6 +35,8 @@ const Part2 = (props) => {
             const over25 = employeeCount >= minEmployees;
             const medPercent = over25 ? largeMedPercent : smallMedPercent;
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
+            console.log(medPercent)
+            console.log(famPercent)
             const totalPercent = medPercent + famPercent;
             const totalPayroll = over50per ? (Number(payroll_w2) + Number(payroll_1099)) : (Number(payroll_w2));
             const totalPayment = totalPayroll * totalPercent;
@@ -114,8 +116,24 @@ const Part2 = (props) => {
                     <Collapse in={has_mass_employees && payroll_w2 && (over50per ? payroll_1099 > 0 : payroll_1099 >= 0)} dimension="height" className="ma__callout-alert">
                       <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
-                          <p>Total estimated annual contribution for your company is <strong>{toCurrency(totalPayment)}</strong> (<strong>{toCurrency(totalPaymentEmp)}</strong> per employee).</p>
-                          <p>Of this amount, <strong>{toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>{toCurrency(famPercent * totalPayroll)}</strong> is for family leave.</p>
+                          <HelpTip
+                            textBefore="Total estimated annual contribution for your company is "
+                            triggerText={`<strong>${toCurrency(totalPayment)}</strong> (<strong>${toCurrency(totalPaymentEmp)}</strong> per employee)`}
+                            textAfter="."
+                            id="help-tip-total-ann-cont"
+                            labelID="help-tip-total-ann-cont-label"
+                            helpText={<p className="ma__help-text">{toCurrency(totalPayment)} = {toCurrency(totalPayroll)} X {toPercentage(totalPercent,2)}</p>}
+                            theme="c-white"
+                          />
+                          <HelpTip
+                            textBefore="Of this amount, "
+                            triggerText={`<strong>${toCurrency(medPercent * totalPayroll)}</strong>  is for medical leave and <strong>${toCurrency(famPercent * totalPayroll)}</strong>  is for family leave`}
+                            textAfter="."
+                            id="help-tip-medfam-ann-cont"
+                            labelID="help-tip-medfam-ann-cont-label"
+                            helpText={<div className="ma__help-text"><p>Medical Leave: {toCurrency(medPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(medPercent,2)}</p><p>Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent,2)}</p></div>}
+                            theme="c-white"
+                          />
                         </CalloutAlert>
                       </div>
                     </Collapse>
@@ -149,11 +167,27 @@ const Part2 = (props) => {
                   <Collapse in={payroll_wages && payroll_wages > 0 && over25} dimension="height" className="ma__callout-alert">
                     <div className="ma__collapse">
                       <CalloutAlert theme="c-primary" icon={null}>
-                        <p>Total estimated annual contribution for this employee is <strong>{toCurrency(payroll_wages_cap * totalPercent)}</strong>.</p>
-                        <p>Of this amount, <strong>{toCurrency(medPercent * payroll_wages_cap)}</strong> is for medical leave and <strong>{toCurrency(famPercent * payroll_wages_cap)}</strong> is for family leave.</p>
-                          { payroll_wages > socialSecCap && (
-                            <p>Because the employess wages are over the social security cap, they do not contribute for income above <strong>{toCurrency(socialSecCap)}</strong>.</p>
-                          )}
+                        <HelpTip
+                          textBefore="Total estimated annual contribution for this employee is "
+                          triggerText={`<strong>${toCurrency(payroll_wages_cap * totalPercent)}</strong>`}
+                          textAfter="."
+                          id="help-tip-tot-emp-ann-cont"
+                          labelID="help-tip-tot-emp-cont-label"
+                          helpText={<p className="ma__help-text">{toCurrency(payroll_wages_cap * totalPercent)} = {toCurrency(payroll_wages_cap)} X {toPercentage(totalPercent,2)}</p>}
+                          theme="c-white"
+                        />
+                        <HelpTip
+                          textBefore="Of this amount, "
+                          triggerText={`<strong>${toCurrency(medPercent * payroll_wages_cap)}</strong> is for medical leave and <strong>${toCurrency(famPercent * payroll_wages_cap)}</strong> is for family leave`}
+                          textAfter="."
+                          id="help-tip-medfam-emp-ann-cont"
+                          labelID="help-tip-medfam-emp-cont-label"
+                          helpText={<div className="ma__help-text"><p>Medical Leave: {toCurrency(medPercent * payroll_wages_cap)} = {toCurrency(payroll_wages_cap)} X {toPercentage(medPercent,2)}</p><p>Family Leave: {toCurrency(famPercent * payroll_wages_cap)} = {toCurrency(payroll_wages_cap)} X {toPercentage(famPercent,2)}</p></div>}
+                          theme="c-white"
+                        />
+                        { payroll_wages > socialSecCap && (
+                          <p>Because the employess wages are over the social security cap, they do not contribute for income above <strong>{toCurrency(socialSecCap)}</strong>.</p>
+                        )}
                       </CalloutAlert>
                     </div>
                   </Collapse>
