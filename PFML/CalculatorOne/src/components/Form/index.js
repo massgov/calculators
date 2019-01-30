@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { decode, encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
+import { decode, addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import { FormContext } from './context';
 import Part1 from './Part1';
@@ -16,11 +16,19 @@ function mapUrlToProps(url, props) {
   return {
     massEmp: decode(UrlQueryParamTypes.boolean, url.massEmp),
     w2: decode(UrlQueryParamTypes.number, url.w2),
-    emp1099: decode(UrlQueryParamTypes.number, url.emp1099)
+    emp1099: decode(UrlQueryParamTypes.number, url.emp1099),
+    option: decode(UrlQueryParamTypes.string, url.option),
+    payW2: decode(UrlQueryParamTypes.number, url.payW2),
+    pay1099: decode(UrlQueryParamTypes.number, url.pay1099),
+    payWages: decode(UrlQueryParamTypes.number, url.payWages),
+    medCont: decode(UrlQueryParamTypes.number, url.medCont),
+    famCont:decode(UrlQueryParamTypes.number, url.famCont),
+    timeValue: decode(UrlQueryParamTypes.string, url.timeValue),
+    timePeriod: decode(UrlQueryParamTypes.string, url.timePeriod)
   };
 }
 
-const { minEmployees, largeCompMedCont, smallCompMedCont, largeCompFamCont, smallCompFamCont, emp1099Fraction } = CalculatorOneVariables.baseVariables;
+const { minEmployees, largeCompMedCont, smallCompMedCont, largeCompFamCont, smallCompFamCont } = CalculatorOneVariables.baseVariables;
 
 class Form extends Component {
   constructor(props) {
@@ -28,17 +36,18 @@ class Form extends Component {
     const med_leave_cont = (this.props.emp1099 + this.props.employees_w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont;
     const fam_leave_cont = (this.props.emp1099 + this.props.employees_w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont;
     this.state = {
-      has_mass_employees: this.props.massEmp,
-      employees_w2: this.props.w2,
-      employees_1099: this.props.emp1099,
-      med_leave_cont: med_leave_cont,
-      fam_leave_cont: fam_leave_cont,
+      has_mass_employees: this.props.massEmp || true,
+      employees_w2: this.props.w2 || '',
+      employees_1099: this.props.emp1099 || '',
+      payroll_base: this.props.option  || 'all',
+      med_leave_cont: med_leave_cont || '0',
+      fam_leave_cont: fam_leave_cont || '0',
+      payroll_w2: this.props.payW2 || '',
+      payroll_1099: this.props.pay1099 || '',
+      payroll_wages: this.props.payWages || '',
+      time_value: this.props.timeValue || 1,
+      time_period: this.props.timePeriod || 'Year',
       updateState: (newState) => this.setState(newState),
-      payroll_base: 'all',
-      payroll_w2: 0,
-      payroll_1099: 0,
-      payroll_wages: 0,
-      time_value: 1
     }
   }
   render() {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { SelectBox } from '@massds/mayflower-react';
+import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { FormContext } from './context';
-import numbro from 'numbro';
-
+import { toCurrency } from '../../utils';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import './index.css';
 
@@ -10,12 +10,22 @@ import './index.css';
 import 'react-input-range/lib/css/index.css';
 import InputRange from 'react-input-range';
 
-const Part3 = () => {
-  const toCurrency = (number) => {
-    const currency = numbro(number).formatCurrency({thousandSeparated: true, mantissa: 2, spaceSeparated: false})
-    return currency;
+/**
+ * Manually specify how to deal with changes to URL query param props.
+ * We do this since we are not using a urlPropsQueryConfig.
+ */
+function mapUrlChangeHandlersToProps(props) {
+  return {
+    onChangeMedCont: (value) => replaceInUrlQuery('medCont', encode(UrlQueryParamTypes.number, value)),
+    onChangeFamCont: (value) => replaceInUrlQuery('famCont', encode(UrlQueryParamTypes.number, value)),
+    onChangeTimePeriod: (value) => replaceInUrlQuery('timePeriod', encode(UrlQueryParamTypes.string, value)),
+    onChangeTimeValue: (value) => replaceInUrlQuery('timeValue', encode(UrlQueryParamTypes.number, value)),
   }
+}
+
+const Part3 = (props) => {
   const { minEmployees, emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, largeCompMedCont, smallCompMedCont, weeksPerYear, quartersPerYear, socialSecCap } = CalculatorOneVariables.baseVariables;
+  const { onChangeMedCont, onChangeFamCont, onChangeTimeValue, onChangeTimePeriod } = props;
   return (
       <FormContext.Consumer>
         {
@@ -42,12 +52,14 @@ const Part3 = () => {
               context.updateState({
                 med_leave_cont: medCont
               })
+              onChangeMedCont(medCont)
             }
             const onFamChange = (value) => {
               const famCont = value;
               context.updateState({
                 fam_leave_cont: famCont
               })
+              onChangeFamCont(value)
             }
             const getTimeValue = (text) => {
               let value;
@@ -101,10 +113,13 @@ const Part3 = () => {
                         options={timePeriodOptions}
                         selected={context.time_period || 'Year'}
                         onChangeCallback={({selected}) => {
-                            context.updateState({ 
+                          const value = getTimeValue(selected);
+                          context.updateState({ 
                             time_period: selected,
-                            time_value: getTimeValue(selected)
+                            time_value: value
                           })
+                          onChangeTimeValue(value)
+                          onChangeTimePeriod(selected)
                         }}
                         className="ma__select-box js-dropdown"
                       />
@@ -189,4 +204,4 @@ const Part3 = () => {
 }
 
 
-export default Part3;
+export default addUrlProps({ mapUrlChangeHandlersToProps })(Part3);

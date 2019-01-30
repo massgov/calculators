@@ -1,20 +1,30 @@
 import React, { Fragment } from 'react';
-import numbro from 'numbro';
 import { InputCurrency, InputRadioGroup, CalloutAlert, Collapse } from '@massds/mayflower-react';
+import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { FormContext } from './context';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import PartTwoProps from '../../data/PartTwo.json';
+import { toCurrency } from '../../utils';
 
 import './index.css';
 
-const toCurrency = (number) => {
-  const currency = numbro(number).formatCurrency({thousandSeparated: true, mantissa: 2, spaceSeparated: false})
-  return currency;
+/**
+ * Manually specify how to deal with changes to URL query param props.
+ * We do this since we are not using a urlPropsQueryConfig.
+ */
+function mapUrlChangeHandlersToProps(props) {
+  return {
+    onChangeOption: (value) => replaceInUrlQuery('option', encode(UrlQueryParamTypes.string, value)),
+    onChangePayW2: (value) => replaceInUrlQuery('payW2', encode(UrlQueryParamTypes.number, value)),
+    onChangePay1099: (value) => replaceInUrlQuery('pay1099', encode(UrlQueryParamTypes.number, value)),
+    onChangePayWages: (value) => replaceInUrlQuery('payWages', encode(UrlQueryParamTypes.number, value)),
+  }
 }
 
-const Part2 = () => {
+const Part2 = (props) => {
     const { minEmployees, emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, socialSecCap } = CalculatorOneVariables.baseVariables;
     const { questionOne, questionTwo, questionThree, questionFour, output } = PartTwoProps;
+    const { onChangeOption, onChangePayW2, onChangePay1099, onChangePayWages } = props;
     return (
       <FormContext.Consumer>
         {
@@ -37,11 +47,12 @@ const Part2 = () => {
                     title={questionOne.question}
                     name="payroll_base"
                     outline
-                    defaultSelected="all"
+                    defaultSelected={context.payroll_base}
                     errorMsg={questionOne.errorMsg}
                     radioButtons={questionOne.options}
                     onChange={(e) => {
                         context.updateState({ payroll_base: e.selected })
+                        onChangeOption(e.selected)
                       }
                     }
                     disabled={!has_mass_employees || !employeeCount}
@@ -66,7 +77,10 @@ const Part2 = () => {
                           trimMantissa: false,
                           thousandSeparated: true
                         }}
-                        onChange={(e, value) => context.updateState({payroll_w2: value })}
+                        onChange={(e, value) => {
+                          context.updateState({payroll_w2: value })
+                          onChangePayW2(value)
+                        }}
                         required={true}
                         disabled = {!employeeCount}
                         />
@@ -87,7 +101,10 @@ const Part2 = () => {
                             trimMantissa: false,
                             thousandSeparated: true
                           }}
-                          onChange={(e, value)  => context.updateState({ payroll_1099: value })}
+                          onChange={(e, value) => {
+                            context.updateState({ payroll_1099: value })
+                            onChangePay1099(value)
+                          }}
                           disabled = {!employeeCount}
                           required={true}
                           />
@@ -119,14 +136,17 @@ const Part2 = () => {
                         trimMantissa: false,
                         thousandSeparated: true
                       }}
-                      onChange={(e, value) => context.updateState({ payroll_wages: value })}
+                      onChange={(e, value) => {
+                        context.updateState({ payroll_wages: value })
+                        onChangePayWages(value)
+                      }}
                       required={true}
                       />
                     </div>
                     <Collapse in={payroll_wages && payroll_wages > 0 && over25} dimension="height" className="ma__callout-alert">
                       <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
-                          <p>Total estimated annual contribution for this employee is <strong>{toCurrency(payroll_wages_cap * totalPercent)}</strong> </p>
+                          <p>Total estimated annual contribution for this employee is <strong>{toCurrency(payroll_wages_cap * totalPercent)}</strong>.</p>
                           <p>Of this amount, <strong>{toCurrency(medPercent * payroll_wages_cap)}</strong> is for medical leave and <strong>{toCurrency(famPercent * payroll_wages_cap)}</strong> is for family leave.</p>
                           { payroll_wages > socialSecCap && (
                             <p>Because the employess wages are over the social security cap, they do not contribute for income above <strong>{toCurrency(socialSecCap)}</strong>.</p>
@@ -148,4 +168,4 @@ const Part2 = () => {
 }
 
 
-export default Part2;
+export default addUrlProps({ mapUrlChangeHandlersToProps })(Part2);

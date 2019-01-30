@@ -1,23 +1,11 @@
 import React, {  Fragment } from 'react';
 import { InputRadioGroup, CalloutAlert, InputNumber, Collapse, Paragraph } from '@massds/mayflower-react';
-import { decode, encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
+import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { FormContext } from './context';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import PartOneProps from '../../data/PartOne.json';
 
 import './index.css';
-
-/**
- * Map from url query params to props. The values in `url` will still be encoded
- * as strings since we did not pass a `urlPropsQueryConfig` to addUrlProps.
- */
-function mapUrlToProps(url, props) {
-  return {
-    massEmp: decode(UrlQueryParamTypes.boolean, url.massEmp),
-    w2: decode(UrlQueryParamTypes.number, url.w2),
-    emp1099: decode(UrlQueryParamTypes.number, url.emp1099)
-  };
-}
 
 /**
  * Manually specify how to deal with changes to URL query param props.
@@ -71,7 +59,6 @@ const Part1 = (props) => {
                 </Fragment>
               )
             }
-            console.log(questionOne.options)
             return (
               <fieldset>
                 <InputRadioGroup
@@ -160,4 +147,4 @@ const Part1 = (props) => {
     ); 
 }
 
-export default addUrlProps({ mapUrlToProps, mapUrlChangeHandlersToProps })(Part1);
+export default addUrlProps({ mapUrlChangeHandlersToProps })(Part1);
