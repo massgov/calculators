@@ -30,7 +30,7 @@ class App extends Component {
   }
   componentDidMount() {
     // force an update if the URL changes
-    history.listen(() => this.forceUpdate());
+    //history.listen(() => this.forceUpdate());
   }
   render() {
     return(

@@ -100,20 +100,17 @@ const Part1 = (props) => {
                   defaultValue={Number(context.value.employees_w2)}
                   disabled={!context.has_mass_employees}
                   required
+                  unit=""
                   onChange={(e, value) => {
                     const empW2 = value;
-                    onChangeW2(empW2);
-                    // Pull value from form for updating.
-                    const { value: contextValue } = context;
                     const updatedValue = {
-                      ...contextValue,
-                      employees_w2: Number(empW2),
-                      med_leave_cont: (empW2 + context.value.employees_1099 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                      payroll_base: 'all',
+                      med_leave_cont: ((empW2 + context.value.employees_1099) >= minEmployees) ? largeCompMedCont : smallCompMedCont,
                       fam_leave_cont: (empW2 + context.value.employees_1099 >= minEmployees) ? largeCompFamCont : smallCompFamCont
                     };
-                    updatedValue.employees_w2 = Number(empW2);
                     // Use updateState for updating many form values, otherwise use setValue for a single form id.
-                    context.updateState({ value: updatedValue, payroll_base: 'all' });
+                    context.updateState(updatedValue);
+                    onChangeW2(empW2);
                   }}
                 />
                 <InputNumber
@@ -129,6 +126,7 @@ const Part1 = (props) => {
                   defaultValue={Number(context.value.employees_1099)}
                   disabled={!context.has_mass_employees}
                   required
+                  unit=""
                   onChange={(e, value) => {
                     const emp1099 = value;
                     onChangeEmp1099(emp1099);

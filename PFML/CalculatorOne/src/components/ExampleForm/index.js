@@ -38,7 +38,6 @@ class ExampleForm extends Component {
     const {
       massEmp, w2, emp1099, option, payW2, pay1099, payWages, timeValue, timePeriod, famCont, medCont
     } = this.props;
-    console.log(this.props);
     const med_leave_cont = (emp1099 + w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont;
     const fam_leave_cont = (emp1099 + w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont;
     const validNumber = (num) => (num || (num !== null && num !== undefined));
@@ -49,15 +48,15 @@ class ExampleForm extends Component {
       value: {
         employees_w2: getDefaultNumber(w2),
         employees_1099: getDefaultNumber(emp1099),
-        med_leave_cont: getDefaultNumber(medCont),
-        fam_leave_cont: getDefaultNumber(famCont),
         payroll_w2: getDefaultCurrency(payW2),
         payroll_1099: getDefaultCurrency(pay1099),
         payroll_wages: getDefaultCurrency(payWages),
-        time_value: timeValue || 1,
-        time_period: timePeriod || 'Year',
       },
       setValue: this.setValue,
+      time_value: validNumber(timeValue) ? Number(timeValue) : 1,
+      time_period: (timePeriod && timePeriod.length > 0) ? timePeriod : 'Year',
+      fam_leave_cont: validNumber(famCont) ? famCont: fam_leave_cont,
+      med_leave_cont: validNumber(medCont) ? medCont : med_leave_cont,
       payroll_base: (option && option.length > 0) ? option : 'all',
       has_mass_employees: massEmp ? (massEmp === 'yes') : true,
       updateState: this.updateState
@@ -79,6 +78,7 @@ class ExampleForm extends Component {
               <Part2 />
             </div>
             <hr />
+            <Part3 />
           </FormContext.Provider>
         </form>
     );
@@ -88,4 +88,4 @@ class ExampleForm extends Component {
 
 ExampleForm.contextType = FormContext;
 
-export default addUrlProps({ mapUrlToProps })(ExampleForm);
+export default ExampleForm;
