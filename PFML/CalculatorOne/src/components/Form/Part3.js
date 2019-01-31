@@ -83,32 +83,34 @@ const Part3 = (props) => {
                   <React.Fragment>
                     <fieldset>
                       <legend className="ma__label">How will you split liability with your employess?</legend>
-                      <InputSlider
-                        labelText="Family Leave"
-                        id="text-input"
-                        required
-                        defaultValue="0"
-                        axis="x"
-                        max={1}
-                        min={0}
-                        step={0.01}
-                        ticks={[['0','0%'],['1','100%'],]}
-                        domain={[0,1]}
-                        onChange={value => console.log(value)}
-                      />
-                      <InputSlider
-                        labelText="Medical Leave"
-                        id="text-input"
-                        required
-                        defaultValue="0"
-                        axis="x"
-                        max={1}
-                        min={0}
-                        step={0.01}
-                        ticks={[['0','0%'],['1','100%'],['0.6','Minimum requirement']]}
-                        domain={[0,1]}
-                        onChange={value => onMedChange(value)}
-                      />
+                      <div className="ma__input-group--two">
+                        <InputSlider
+                          labelText="Family Leave"
+                          id="text-input"
+                          required
+                          defaultValue="0"
+                          axis="x"
+                          max={1}
+                          min={0}
+                          step={0.01}
+                          ticks={[['0','0%'],['1','100%'],]}
+                          domain={[0,1]}
+                          onChange={value => console.log(value)}
+                        />
+                        <InputSlider
+                          labelText="Medical Leave"
+                          id="text-input"
+                          required
+                          defaultValue="0"
+                          axis="x"
+                          max={1}
+                          min={0}
+                          step={0.01}
+                          ticks={[['0','0%'],['1','100%'],['0.6','Minimum requirement']]}
+                          domain={[0,1]}
+                          onChange={value => onMedChange(value)}
+                        />
+                      </div>
                     </fieldset>
                     <h2 className="ma__table-heading">
                       <SelectBox

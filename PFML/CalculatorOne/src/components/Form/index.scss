@@ -64,6 +64,16 @@ fieldset > * {
 		}
 	}
 }
+
+.ma__input-group--two{
+	display: flex;
+		flex-direction: row;
+		.ma__input-group {
+			width: 50%;
+		}
+}
+
+
 .input-range {
 	margin-bottom: 50px;
 }
