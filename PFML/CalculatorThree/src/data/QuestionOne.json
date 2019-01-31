@@ -1,14 +1,14 @@
 {
-	"question": "Are you leaving for one of the following reasons?",
+	"question": "For which of the following reasons are you planning to take leave?",
 	"options": [{
-	    "label": "Birth or Adoption of a Child",
+	    "label": "Birth, adoption, or fostering of a child",
 	    "value": "birth-adoption",
 	    "weeks": "12",
 	    "id": "birth-adoption",
 	    "message": "You can be covered <strong>up to 12 weeks</strong> by the Paid Family and Medical Leave Program.",
 	    "theme": "c-primary"
 	}, {
-	    "label": "Own Medical Condition",
+	    "label": "Personal medical condition",
 	    "value": "own-medical",
 	    "weeks": "20",
 	    "id": "own-medical",
@@ -17,12 +17,12 @@
 	}, {
 	    "label": "Caring for a Loved One",
 	    "value": "caring-loved-one",
-	    "weeks": "20",
+	    "weeks": "12",
 	    "id": "caring-loved-one",
-	    "message": "You can be covered <strong>up to 20 weeks</strong> by the Paid Family and Medical Leave Program.",
+	    "message": "You can be covered <strong>up to 12 weeks</strong> by the Paid Family and Medical Leave Program.",
 	    "theme": "c-primary"
 	}, {
-	    "label": "Active Duty",
+	    "label": "Family member called to active duty",
 	    "value": "active-duty",
 	    "weeks": "26",
 	    "id": "active-duty",

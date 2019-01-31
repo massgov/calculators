@@ -3,7 +3,7 @@
   	"maAvgYear": 66546.00,
   	"weeksPerYear": 52,
   	"maxBenefitWeek": 850.00,
-  	"lowBenefitFraction": 0.9,
+  	"lowBenefitFraction": 0.8,
   	"highBenefitFraction": 0.5,
   	"minSalary": 5000
   }
