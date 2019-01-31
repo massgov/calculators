@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
-import { InputRadioGroup, CalloutAlert, InputNumber, Collapse, Paragraph } from '@massds/mayflower-react';
+import { InputRadioGroup, CalloutAlert, InputNumber, Collapse, Paragraph, FormContext } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
-import { FormContext } from './context';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import PartOneProps from '../../data/PartOne.json';
 
@@ -31,7 +30,8 @@ const Part1 = (props) => {
     <FormContext.Consumer>
       {
           (context) => {
-            const { has_mass_employees, employees_w2, employees_1099 } = context;
+            const { employees_w2, employees_1099 } = context.value;
+            const { has_mass_employees } = context;
             const over50per = (employees_1099 / employees_w2) > emp1099Fraction;
             const employeeCount = +employees_w2 + (over50per ? +employees_1099 : 0);
             const over25 = employeeCount >= minEmployees;
@@ -40,26 +40,26 @@ const Part1 = (props) => {
               if (over50per) {
                 message = (
                   <Fragment>
-                    {output.overMinEmpOver1099.map((message) => <Paragraph text={message.paragraph} />)}
+                    {output.overMinEmpOver1099.map((message, messageIndex) => <Paragraph key={`Form.message.${messageIndex}`} text={message.paragraph} />)}
                   </Fragment>
                 );
               } else {
                 message = (
                   <Fragment>
-                    {output.overMinEmpUnder1099.map((message) => <Paragraph text={message.paragraph} />)}
+                    {output.overMinEmpUnder1099.map((message, messageIndex) => <Paragraph key={`Form.message.${messageIndex}`} text={message.paragraph} />)}
                   </Fragment>
                 );
               }
             } else if (over50per) {
               message = (
                 <Fragment>
-                  {output.underMinEmpOver1099.map((message) => <Paragraph text={message.paragraph} />)}
+                  {output.underMinEmpOver1099.map((message, messageIndex) => <Paragraph key={`Form.message.${messageIndex}`} text={message.paragraph} />)}
                 </Fragment>
               );
             } else {
               message = (
                 <Fragment>
-                  {output.underMinEmpUnder1099.map((message) => <Paragraph text={message.paragraph} />)}
+                  {output.underMinEmpUnder1099.map((message, messageIndex) => <Paragraph key={`Form.message.${messageIndex}`} text={message.paragraph} />)}
                 </Fragment>
               );
             }
@@ -69,7 +69,7 @@ const Part1 = (props) => {
                   title={questionOne.question}
                   name="mass_employees"
                   outline
-                  defaultSelected={context.has_mass_employees ? 'yes' : 'no'}
+                  defaultSelected={has_mass_employees ? 'yes' : 'no'}
                   errorMsg={questionOne.errorMsg}
                   radioButtons={questionOne.options}
                   onChange={(e) => {
@@ -97,18 +97,23 @@ const Part1 = (props) => {
                   maxlength={0}
                   placeholder="e.g. 50"
                   errorMsg={questionTwo.errorMsg}
-                  defaultValue={context.employees_w2}
+                  defaultValue={Number(context.value.employees_w2)}
                   disabled={!context.has_mass_employees}
-                  onChange={(e, value) => {
-                      const empW2 = value;
-                      onChangeW2(empW2);
-                      context.updateState({
-                        employees_w2: empW2,
-                        med_leave_cont: (empW2 + context.employees_1099 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                        fam_leave_cont: (empW2 + context.employees_1099 >= minEmployees) ? largeCompFamCont : smallCompFamCont
-                      });
-                    }}
                   required
+                  onChange={(e, value) => {
+                    const empW2 = value;
+                    onChangeW2(empW2);
+                    // Pull value from form for updating.
+                    const { value: contextValue } = context;
+                    const updatedValue = {
+                      ...contextValue,
+                      employees_w2: empW2,
+                      med_leave_cont: (empW2 + context.value.employees_1099 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                      fam_leave_cont: (empW2 + context.value.employees_1099 >= minEmployees) ? largeCompFamCont : smallCompFamCont
+                    };
+                    // Use updateState for updating many form values, otherwise use setValue for a single form id.
+                    context.updateState({ value: updatedValue });
+                  }}
                 />
                 <InputNumber
                   labelText={questionThree.question}
@@ -120,18 +125,23 @@ const Part1 = (props) => {
                   placeholder="e.g. 50"
                   inline
                   errorMsg={questionThree.errorMsg}
-                  defaultValue={context.employees_1099}
+                  defaultValue={Number(context.value.employees_1099)}
                   disabled={!context.has_mass_employees}
-                  onChange={(e, value) => {
-                      const emp1099 = value;
-                      onChangeEmp1099(emp1099);
-                      context.updateState({
-                        employees_1099: emp1099,
-                        med_leave_cont: (emp1099 + context.employees_w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                        fam_leave_cont: (emp1099 + context.employees_w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont
-                      });
-                    }}
                   required
+                  onChange={(e, value) => {
+                    const emp1099 = value;
+                    onChangeEmp1099(emp1099);
+                    // Pull value from form for updating.
+                    const { value: contextValue } = context;
+                    const updatedValue = {
+                      ...contextValue,
+                      employees_1099: Number(emp1099),
+                      med_leave_cont: (emp1099 + context.value.employees_w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                      fam_leave_cont: (emp1099 + context.value.employees_w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont
+                    };
+                    // Use updateState for updating many form values, otherwise use setValue for a single form id.
+                    context.updateState({ value: updatedValue });
+                  }}
                 />
                 <Collapse in={(has_mass_employees && employees_w2)} dimension="height" className="ma__callout-alert">
                   <div className="ma__collapse">

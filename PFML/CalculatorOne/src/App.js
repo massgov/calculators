@@ -6,6 +6,7 @@ import HeaderSearchData from './data/HeaderSearch.data';
 import FooterLinksLiveData from './data/FooterLinksLive.json';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import Form from './components/Form';
+import ExampleForm from './components/ExampleForm';
 import history from './components/History';
 
 import './index.css';
@@ -39,7 +40,7 @@ class App extends Component {
           <section className="main-content main-content--two">
             <div className="ma__page-header__content">
               <h1 className="ma__page-header__title">Paid Family Medical Leave Contribution Caculator</h1>
-              <Form />
+              <ExampleForm />
             </div>
           </section>
         </main>
