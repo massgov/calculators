@@ -24,6 +24,11 @@
             "partTwo": "(1/2 of the statewide average wage) during the last year, you are eligible to receive",
             "partThree": "of your weekly income, up to",
             "partFour": "per week."
+        },
+        "max": {
+            "partOne": "Because you earned over ",
+            "partTwo": "during the last year, you’re eligible to receive the maximum benefit of ",
+            "partThree": " per week"
         }
     }
 }

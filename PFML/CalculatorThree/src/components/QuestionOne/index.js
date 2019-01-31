@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { InputRadioGroup, CalloutAlert, Paragraph, Collapse } from '@massds/mayflower-react';
-import QuestionOneProps from '../../data/QuestionOne.json'
+import {
+  InputRadioGroup, CalloutAlert, Paragraph, Collapse
+} from '@massds/mayflower-react';
+import QuestionOneProps from '../../data/QuestionOne.json';
 import './index.css';
 
 class QuestionOne extends Component {
@@ -8,36 +10,36 @@ class QuestionOne extends Component {
     super(props);
     const message = this.getMessage(QuestionOneProps, props.defaultSelected);
     this.state = {
-      message: (message && message.message) ? message.message : "",
-      messageTheme: (message && message.messageTheme) ? message.messageTheme : "",
-      weeks: (message && message.weeks) ? message.weeks : ""
+      message: (message && message.message) ? message.message : '',
+      messageTheme: (message && message.messageTheme) ? message.messageTheme : '',
+      weeks: (message && message.weeks) ? message.weeks : ''
     };
   }
 
   getMessage = (qOneProps, selected) => {
     let message;
-    qOneProps.options.forEach(option => {
-      if(option.value === selected) {
-        message = { 
+    qOneProps.options.forEach((option) => {
+      if (option.value === selected) {
+        message = {
           message: option.message,
           messageTheme: option.theme,
-          weeks: option.weeks 
+          weeks: option.weeks
         };
       }
-    })
+    });
     return message;
   }
 
-  handleChange = ({selected, name, event}) => {
+  handleChange = ({ selected, name, event }) => {
     const message = this.getMessage(QuestionOneProps, selected);
-    this.setState({ 
+    this.setState({
       message: message.message,
       messageTheme: message.messageTheme,
-      weeks: message.weeks 
+      weeks: message.weeks
     });
     const maxWeeks = message.weeks;
-    if(typeof this.props.onChange == "function"){
-      this.props.onChange({selected, maxWeeks, event})
+    if (typeof this.props.onChange === 'function') {
+      this.props.onChange({ selected, maxWeeks, event });
     }
   }
 
@@ -45,23 +47,23 @@ class QuestionOne extends Component {
     const { question, options } = QuestionOneProps;
   	const radioGroupProps = {
   		title: question,
-  		name: "question-one",
+  		name: 'question-one',
   		outline: true,
   		inline: true,
   		error: this.props.error,
   		disabled: this.props.disabled,
   		defaultSelected: this.props.defaultSelected,
-  		onChange: this.handleChange, 
+  		onChange: this.handleChange,
   		radioButtons: options
-  	}
-  	const open = this.state.message ? true : false;
-  	console.log(open)
-    return (
+  	};
+  	const open = !!this.state.message;
+  	console.log(open);
+    return(
       <React.Fragment>
         <InputRadioGroup {...radioGroupProps} />
         <Collapse in={open} dimension="height" className="ma__callout-alert">
           <div className="ma__collapse">
-            <CalloutAlert theme={this.state.messageTheme} icon={{name: this.state.messageTheme === "c-error-red" ? "alert" : "",ariaHidden: true}} >
+            <CalloutAlert theme={this.state.messageTheme} icon={{ name: this.state.messageTheme === 'c-error-red' ? 'alert' : '', ariaHidden: true }}>
               <Paragraph text={this.state.message} />
             </CalloutAlert>
           </div>

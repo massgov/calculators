@@ -8,6 +8,7 @@ import SocialLinksLiveData from './data/SocialLinksLive.json';
 import QuestionOne from './components/QuestionOne';
 import QuestionTwo from './components/QuestionTwo';
 import Output from './components/Output';
+import CalculatorThreeVariables from './data/CalculatorThreeVariables.json';
 
 import './index.css';
 
@@ -16,9 +17,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      yearIncome: localStorage.getItem("yearIncome") || 0,
-      maxWeeks: localStorage.getItem("maxWeeks") || "",
-      leaveReason: localStorage.getItem("leaveReason") || ""
+      yearIncome: localStorage.getItem('yearIncome') || 0,
+      maxWeeks: localStorage.getItem('maxWeeks') || '',
+      leaveReason: localStorage.getItem('leaveReason') || '',
+      belowMinSalary: localStorage.getItem('belowMinSalary') || false
     };
     this.footerProps = {
       footerLinks: FooterLinksLiveData.footerLinks,
@@ -35,18 +37,17 @@ class App extends Component {
   }
 
   componentDidMount() {
-
     // add event listener to save state to localStorage
     // when user leaves/refreshes the page
     window.addEventListener(
-      "beforeunload",
+      'beforeunload',
       this.saveStateToLocalStorage.bind(this)
     );
   }
 
   componentWillUnmount() {
     window.removeEventListener(
-      "beforeunload",
+      'beforeunload',
       this.saveStateToLocalStorage.bind(this)
     );
 
@@ -56,7 +57,7 @@ class App extends Component {
 
   saveStateToLocalStorage() {
     // for every item in React state
-    for (let key in this.state) {
+    for (const key in this.state) {
       // save to localStorage
       localStorage.setItem(key, this.state[key]);
     }
@@ -65,11 +66,12 @@ class App extends Component {
   handleInput = (e, value) => {
     const numberValue = value;
     this.setState({
-      yearIncome: numberValue
+      yearIncome: numberValue,
+      belowMinSalary: numberValue < CalculatorThreeVariables.baseVariables.minSalary
     });
   };
 
-  handleRadio = ({selected, maxWeeks, event}) => {
+  handleRadio = ({ selected, maxWeeks, event }) => {
     this.setState({
       maxWeeks,
       leaveReason: selected
@@ -77,27 +79,27 @@ class App extends Component {
   }
 
   render() {
-    const { leaveReason, yearIncome, maxWeeks } = this.state;
+    const { leaveReason, yearIncome, maxWeeks, belowMinSalary } = this.state;
     const questTwoDisabled = !(maxWeeks > 0);
-    return (
+    return(
       <div className="App">
         <Header {...this.headerProps} />
-          <main className="main-content">
-            <section className="main-content--two">
-              <div className="ma__page-header__content">
-                <h1 className="ma__page-header__title">Paid Family Medical Leave Benefits Caculator</h1>
-              </div>
-              <QuestionOne error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
-              <QuestionTwo onChange={this.handleInput} disabled={questTwoDisabled} defaultValue={yearIncome} />
-              <hr />
-              {yearIncome > 0 && maxWeeks > 0 && (
-                <React.Fragment>
-                  <Output yearIncome={yearIncome} maxWeeks={maxWeeks}/>
-                  <Button type="submit" size="small" info="Learn more about filing a claim." text="Learn about how to file a claim" href="https://www.mass.gov/info-details/paid-family-medical-leave-for-employees-faq" />
-                </React.Fragment>
-              )}
-            </section>
-          </main>
+        <main className="main-content">
+          <section className="main-content--two">
+            <div className="ma__page-header__content">
+              <h1 className="ma__page-header__title">Paid Family Medical Leave Benefits Caculator</h1>
+            </div>
+            <QuestionOne error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
+            <QuestionTwo onChange={this.handleInput} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalary} />
+            <hr />
+            {yearIncome > 0 && maxWeeks > 0 && !belowMinSalary && (
+            <React.Fragment>
+              <Output yearIncome={yearIncome} maxWeeks={maxWeeks} />
+              <Button type="submit" size="small" info="Learn more about filing a claim." text="Learn about how to file a claim" href="https://www.mass.gov/info-details/paid-family-medical-leave-for-employees-faq" />
+            </React.Fragment>
+            )}
+          </section>
+        </main>
         <Footer {...this.footerProps} />
       </div>
     );
