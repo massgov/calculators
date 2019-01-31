@@ -84,6 +84,7 @@ const Part2 = (props) => {
                         required={true}
                         disabled={!employeeCount}
                         inline={true}
+                        step={1}
                       />
                     </div>
                     <div key="payroll_1099">
@@ -109,6 +110,7 @@ const Part2 = (props) => {
                         disabled = {!employeeCount}
                         required={true}
                         inline={true}
+                        step={1}
                       />
                     </div>
                     <Collapse in={has_mass_employees && payroll_w2 && (over50per ? payroll_1099 > 0 : payroll_1099 >= 0)} dimension="height" className="ma__callout-alert">
@@ -160,6 +162,7 @@ const Part2 = (props) => {
                       }}
                       required={true}
                       inline={true}
+                      step={1}
                     />
                   </div>
                   <Collapse in={payroll_wages && payroll_wages > 0 && over25} dimension="height" className="ma__callout-alert">
