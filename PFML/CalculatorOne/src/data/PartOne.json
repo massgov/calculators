@@ -1,6 +1,10 @@
 {
     "questionOne": {
-        "question": "Do you have any employees in Massachusetts?",
+        "question": {
+            "helpText": "A MA employee is anyone who works for a business or a state or federal government agency that is located in the Commonwealth.",
+            "triggerText": "Massachusetts employees",
+            "content": "Do you have Massachusetts employees?"
+        },
         "errorMsg": "Please select yes or no.",
         "options": [{
             "label": "Yes",
@@ -17,11 +21,15 @@
         }]
     },
     "questionTwo": {
-        "question": "How many of your MA employees receive W2s?",
+        "question": {
+            "content": "How many of your MA employees receive W2s?"
+        },
         "errorMsg": "Please enter a value."
     },
     "questionThree": {
-        "question": "How many 1099 contractors have you hired in the past year?",
+        "question": {
+            "content": "How many contractors (1099s) have you hired in the past year?"
+        },
         "errorMsg": "Please enter a value."
     },
     "output": {

@@ -4,6 +4,7 @@ import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'reac
 import { FormContext } from './context';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import PartOneProps from '../../data/PartOne.json';
+import { getHelpTip } from '../../utils';
 
 import './index.css';
 
@@ -66,7 +67,7 @@ const Part1 = (props) => {
             return(
               <fieldset>
                 <InputRadioGroup
-                  title={questionOne.question}
+                  title={questionOne.question.helpText ? getHelpTip(questionOne.question) : questionOne.question.content}
                   name="mass_employees"
                   outline
                   defaultSelected={context.has_mass_employees ? 'yes' : 'no'}
@@ -88,7 +89,7 @@ const Part1 = (props) => {
                   </div>
                 </Collapse>
                 <InputNumber
-                  labelText={questionTwo.question}
+                  labelText={questionTwo.question.helpText ? getHelpTip(questionTwo.question) : questionTwo.question.content}
                   id="employees_w2"
                   name="employees_w2"
                   type="number"
@@ -112,7 +113,7 @@ const Part1 = (props) => {
                   showButtons
                 />
                 <InputNumber
-                  labelText={questionThree.question}
+                  labelText={questionThree.question.helpText ? getHelpTip(questionThree.question) : questionThree.question.content}
                   name="employees_1099"
                   id="employees_1099"
                   type="number"
