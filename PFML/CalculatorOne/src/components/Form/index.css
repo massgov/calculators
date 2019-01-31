@@ -4,6 +4,10 @@ html {
 *, *::after, *::before {
   box-sizing: inherit; }
 
+html, body {
+  max-width: 100%;
+  overflow-x: hidden; }
+
 .ma__label--small {
   font-size: 1em; }
 
