@@ -107,12 +107,13 @@ const Part1 = (props) => {
                     const { value: contextValue } = context;
                     const updatedValue = {
                       ...contextValue,
-                      employees_w2: empW2,
+                      employees_w2: Number(empW2),
                       med_leave_cont: (empW2 + context.value.employees_1099 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
                       fam_leave_cont: (empW2 + context.value.employees_1099 >= minEmployees) ? largeCompFamCont : smallCompFamCont
                     };
+                    updatedValue.employees_w2 = Number(empW2);
                     // Use updateState for updating many form values, otherwise use setValue for a single form id.
-                    context.updateState({ value: updatedValue });
+                    context.updateState({ value: updatedValue, payroll_base: 'all' });
                   }}
                 />
                 <InputNumber
@@ -143,7 +144,7 @@ const Part1 = (props) => {
                     context.updateState({ value: updatedValue });
                   }}
                 />
-                <Collapse in={(has_mass_employees && employees_w2)} dimension="height" className="ma__callout-alert">
+                <Collapse in={!!(has_mass_employees && employees_w2)} dimension="height" className="ma__callout-alert">
                   <div className="ma__collapse">
                     <CalloutAlert theme="c-primary">
                       { message }

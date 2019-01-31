@@ -38,15 +38,27 @@ class ExampleForm extends Component {
     const {
       massEmp, w2, emp1099, option, payW2, pay1099, payWages, timeValue, timePeriod, famCont, medCont
     } = this.props;
+    console.log(this.props);
     const med_leave_cont = (emp1099 + w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont;
     const fam_leave_cont = (emp1099 + w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont;
+    const validNumber = (num) => (num || (num !== null && num !== undefined));
+    const getDefaultCurrency = (num) => (validNumber(num)) ? Number(num) : '0';
+    const getDefaultNumber = (num) => (validNumber(num)) ? Number(num) : null;
     this.state = {
       isActive: true,
       value: {
-        employees_w2: w2 || '',
-        employees_1099: emp1099 || '',
+        employees_w2: getDefaultNumber(w2),
+        employees_1099: getDefaultNumber(emp1099),
+        med_leave_cont: getDefaultNumber(medCont),
+        fam_leave_cont: getDefaultNumber(famCont),
+        payroll_w2: getDefaultCurrency(payW2),
+        payroll_1099: getDefaultCurrency(pay1099),
+        payroll_wages: getDefaultCurrency(payWages),
+        time_value: timeValue || 1,
+        time_period: timePeriod || 'Year',
       },
       setValue: this.setValue,
+      payroll_base: (option && option.length > 0) ? option : 'all',
       has_mass_employees: massEmp ? (massEmp === 'yes') : true,
       updateState: this.updateState
     };
@@ -64,6 +76,7 @@ class ExampleForm extends Component {
             <div className="page-content">
               <Part1 />
               <hr />
+              <Part2 />
             </div>
             <hr />
           </FormContext.Provider>

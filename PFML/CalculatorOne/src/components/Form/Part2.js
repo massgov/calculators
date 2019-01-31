@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import { InputCurrency, InputRadioGroup, CalloutAlert, Collapse, HelpTip } from '@massds/mayflower-react';
+import numbro from 'numbro';
+import { InputCurrency, InputRadioGroup, CalloutAlert, Collapse, HelpTip, FormContext } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
-import { FormContext } from './context';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import PartTwoProps from '../../data/PartTwo.json';
 import { toCurrency, toPercentage } from '../../utils';
@@ -35,19 +35,18 @@ const Part2 = (props) => {
     <FormContext.Consumer>
       {
           (context) => {
-            const {
- employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages, payroll_base, has_mass_employees
-} = context;
+            const { employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages } = context.value;
+            const { payroll_base, has_mass_employees } = context;
             const over50per = (employees_1099 / employees_w2) > emp1099Fraction;
             const employeeCount = over50per ? (employees_w2 + employees_1099) : employees_w2;
             const over25 = employeeCount >= minEmployees;
             const medPercent = over25 ? largeMedPercent : smallMedPercent;
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
             const totalPercent = medPercent + famPercent;
-            const totalPayroll = over50per ? (Number(payroll_w2) + Number(payroll_1099)) : (Number(payroll_w2));
+            const totalPayroll = over50per ? (numbro.unformat(payroll_w2) + numbro.unformat(payroll_1099)) : (numbro.unformat(payroll_w2));
             const totalPayment = totalPayroll * totalPercent;
             const totalPaymentEmp = totalPayment / employeeCount;
-            const payroll_wages_cap = context.payroll_wages > socialSecCap ? socialSecCap : payroll_wages;
+            const payroll_wages_cap = numbro.unformat(payroll_wages) > socialSecCap ? socialSecCap : numbro.unformat(payroll_wages);
             return(
               <fieldset>
                 <div className="ma_input-group--mobile-1">
@@ -55,7 +54,7 @@ const Part2 = (props) => {
                     title={questionOne.question}
                     name="payroll_base"
                     outline
-                    defaultSelected={context.payroll_base}
+                    defaultSelected={payroll_base}
                     errorMsg={questionOne.errorMsg}
                     radioButtons={questionOne.options}
                     onChange={(e) => {
@@ -78,7 +77,7 @@ const Part2 = (props) => {
                         maxlength={200}
                         placeholder="e.g. $100,000"
                         errorMsg={questionTwo.errorMsg}
-                        defaultValue={context.payroll_w2}
+                        defaultValue={numbro.unformat(payroll_w2)}
                         min={0}
                         format={{
                           mantissa: 2,
@@ -86,7 +85,6 @@ const Part2 = (props) => {
                           thousandSeparated: true
                         }}
                         onChange={(e, value) => {
-                          context.updateState({ payroll_w2: value });
                           onChangePayW2(value);
                         }}
                         required
@@ -104,7 +102,7 @@ const Part2 = (props) => {
                         maxlength={200}
                         placeholder="e.g. $100,000"
                         errorMsg={questionThree.errorMsg}
-                        defaultValue={context.payroll_1099}
+                        defaultValue={numbro.unformat(payroll_1099)}
                         min={0}
                         format={{
                           mantissa: 2,
@@ -112,7 +110,6 @@ const Part2 = (props) => {
                           thousandSeparated: true
                         }}
                         onChange={(e, value) => {
-                          context.updateState({ payroll_1099: value });
                           onChangePay1099(value);
                         }}
                         disabled={!employeeCount}
@@ -121,7 +118,7 @@ const Part2 = (props) => {
                         step={1}
                       />
                     </div>
-                    <Collapse in={has_mass_employees && payroll_w2 && (over50per ? payroll_1099 > 0 : payroll_1099 >= 0)} dimension="height" className="ma__callout-alert">
+                    <Collapse in={has_mass_employees && payroll_w2 && (over50per ? numbro.unformat(payroll_1099) > 0 : numbro.unformat(payroll_1099) >= 0)} dimension="height" className="ma__callout-alert">
                       <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
@@ -157,7 +154,7 @@ const Part2 = (props) => {
                         maxlength={200}
                         placeholder="e.g. $100,000"
                         errorMsg={questionFour.errorMsg}
-                        defaultValue={context.payroll_wages}
+                        defaultValue={numbro.unformat(payroll_wages)}
                         min={0}
                         format={{
                         mantissa: 2,
@@ -165,7 +162,6 @@ const Part2 = (props) => {
                         thousandSeparated: true
                       }}
                         onChange={(e, value) => {
-                        context.updateState({ payroll_wages: value });
                         onChangePayWages(value);
                       }}
                         required
@@ -173,9 +169,9 @@ const Part2 = (props) => {
                         step={1}
                       />
                     </div>
-                    <Collapse in={payroll_wages && payroll_wages > 0 && over25} dimension="height" className="ma__callout-alert">
+                    <Collapse in={(payroll_wages && numbro.unformat(payroll_wages) > 0 && over25)} dimension="height" className="ma__callout-alert">
                       <div className="ma__collapse">
-                        {payroll_wages && payroll_wages > 0 && over25 && (
+                        {payroll_wages && numbro.unformat(payroll_wages > 0) && over25 && (
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
                             textBefore="Total estimated annual contribution for this employee is "
@@ -195,8 +191,8 @@ const Part2 = (props) => {
                             helpText={<div className="ma__help-text"><p>Medical Leave: {toCurrency(medPercent * payroll_wages_cap)} = {toCurrency(payroll_wages_cap)} X {toPercentage(medPercent, 2)}</p><p>Family Leave: {toCurrency(famPercent * payroll_wages_cap)} = {toCurrency(payroll_wages_cap)} X {toPercentage(famPercent, 2)}</p></div>}
                             theme="c-white"
                           />
-                          { payroll_wages > socialSecCap && (
-                            <p>Because the employess wages are over the social security cap, they do not contribute for income above <strong>{toCurrency(socialSecCap)}</strong>.</p>
+                          { numbro.unformat(payroll_wages) > socialSecCap && (
+                            <p>Because the employee's wages are over the social security cap, they do not contribute for income above <strong>{toCurrency(socialSecCap)}</strong>.</p>
                           )}
                         </CalloutAlert>
                       )}
