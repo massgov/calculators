@@ -76,6 +76,8 @@ const Part3 = (props) => {
             const medLeaveEmp = medLeave * (1-context.med_leave_cont);
             const famLeaveEmp = famLeave * (1-context.fam_leave_cont);
             const disable = has_mass_employees && employees_w2 && (employees_1099 >= 0) && ((payroll_w2 && (over50per ? payroll_1099 > 0 : payroll_1099 >= 0) && context.payroll_base === 'all') || (context.payroll_base === 'one' && payroll_wages)) ? false : true;
+            const medMin = over25 ? 0.6 : 0;
+            const medTicks = over25? [['0','0%'],['1','100%'],['0.6','Minimum requirement']] : [['0','0%'],['1','100%']]
 
             return (
               <React.Fragment>
@@ -104,9 +106,9 @@ const Part3 = (props) => {
                           defaultValue="0"
                           axis="x"
                           max={1}
-                          min={0.6}
+                          min={medMin}
                           step={0.01}
-                          ticks={[['0','0%'],['1','100%'],['0.6','Minimum requirement']]}
+                          ticks={medTicks}
                           domain={[0,1]}
                           onChange={value => onMedChange(value)}
                         />
