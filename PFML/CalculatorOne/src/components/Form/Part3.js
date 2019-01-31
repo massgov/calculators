@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectBox, Input, InputSlider, CompoundSlider } from '@massds/mayflower-react';
+import { SelectBox, Input, InputSlider, CompoundSlider, InputNumber } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { FormContext } from './context';
 import { toCurrency } from '../../utils';
@@ -85,7 +85,39 @@ const Part3 = (props) => {
             const medMin = over25 ? 0.6 : 0;
             const medTicks = over25 ? [['0', '0%'], ['1', '100%'], ['0.6', 'Minimum requirement']] : [['0', '0%'], ['1', '100%']];
 
+            const familyLeaveSliderProps = {
+              labelText: 'Family Leave',
+              id: 'text-input',
+              required: true,
+              defaultValue: '0',
+              axis: 'x',
+              max: 1,
+              min: 0,
+              step: 0.01,
+              // ticks: {
+              //   "0": "0%",
+              //   "1": "100%"
+              // },
+              domain: [0, 1],
+              onChange: (value) => onFamChange(value)
+            };
 
+            const medLeaveSliderProps = {
+              labelText: "Medical Leave",
+              id: "medical-leave",
+              required: true,
+              defaultValue: '0',
+              axis: 'x',
+              max: 1,
+              min: medMin,
+              step: 0.01,
+              // ticks: {
+              //   "0": "0%",
+              //   "1": "100%"
+              // },
+              domain: [0, 1],
+              onChange: (value) => onMedChange(value)
+            }
             return(
               <React.Fragment>
                 {!disable && (
@@ -93,32 +125,70 @@ const Part3 = (props) => {
                     <fieldset>
                       <legend className="ma__label">How will you split liability with your employess?</legend>
                       <div className="ma__input-group--two">
-                        <InputSlider
-                          labelText="Family Leave"
-                          id="family-leave"
-                          required
-                          defaultValue="0"
-                          axis="x"
-                          max={1}
-                          min={0}
-                          step={0.01}
-                          ticks={[['0', '0%'], ['1', '100%']]}
-                          domain={[0, 1]}
-                          onChange={(value) => onFamChange(value)}
-                        />
-                        <InputSlider
-                          labelText="Medical Leave"
-                          id="medical-leave"
-                          required
-                          defaultValue="0"
-                          axis="x"
-                          max={1}
-                          min={medMin}
-                          step={0.01}
-                          ticks={medTicks}
-                          domain={[0, 1]}
-                          onChange={(value) => onMedChange(value)}
-                        />
+                        <Input {...familyLeaveSliderProps}>
+                          <div className="ma__input-group--ends">
+                            <InputNumber
+                              labelText="Employer Contribution"
+                              name="famEmployerCont"
+                              id="famEmployerCont"
+                              type="number"
+                              width={0}
+                              maxlength={0}
+                              placeholder="e.g. 50"
+                              inline={false}
+                              defaultValue={0}
+                              unit="%"
+                              required
+                            />
+                            <InputNumber
+                              labelText="Employer Contribution"
+                              name="famEmployeeCont"
+                              id="famEmployeeCont"
+                              type="number"
+                              width={0}
+                              maxlength={0}
+                              placeholder="e.g. 50"
+                              inline={false}
+                              defaultValue={0}
+                              unit="%"
+                              required
+                              disabled
+                            />
+                          </div>
+                          <CompoundSlider {...familyLeaveSliderProps} />
+                        </Input>
+                        <Input {...medLeaveSliderProps}>
+                          <div className="ma__input-group--ends">
+                            <InputNumber
+                              labelText="Employer Contribution"
+                              name="famEmployerCont"
+                              id="famEmployerCont"
+                              type="number"
+                              width={0}
+                              maxlength={0}
+                              placeholder="e.g. 50"
+                              inline={false}
+                              defaultValue={0}
+                              unit="%"
+                              required
+                            />
+                            <InputNumber
+                              labelText="Employer Contribution"
+                              name="famEmployeeCont"
+                              id="famEmployeeCont"
+                              type="number"
+                              width={0}
+                              maxlength={0}
+                              placeholder="e.g. 50"
+                              inline={false}
+                              defaultValue={0}
+                              unit="%"
+                              required
+                              disabled
+                            />
+                          </div>
+                          <CompoundSlider {...medLeaveSliderProps} />
+                        </Input>
                       </div>
                     </fieldset>
                     <h2 className="ma__table-heading">

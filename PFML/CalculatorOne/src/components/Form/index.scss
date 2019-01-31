@@ -90,9 +90,20 @@ fieldset > * {
 	}
 		@media ($bp-medium-min) {
 			flex-direction: row;
+			justify-content: space-between;
 			.ma__input-group {
-				width: 50%;
+				width: 45%;
 			}
+		}
+}
+
+.ma__input-group--ends{
+	display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		.ma__input-group:nth-child(2){
+			text-align: right;
 		}
 }
 
@@ -121,4 +132,8 @@ fieldset > * {
 
 .ma__help-text {
 	padding: 10px;
+}
+
+#famEmployerCont, #famEmployeeCont{
+	width: 60px;
 }

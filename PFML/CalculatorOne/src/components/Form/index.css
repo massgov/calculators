@@ -67,9 +67,17 @@ fieldset > * {
     width: 100%; }
   @media (min-width: 781px) {
     .ma__input-group--two {
-      flex-direction: row; }
+      flex-direction: row;
+      justify-content: space-between; }
       .ma__input-group--two .ma__input-group {
-        width: 50%; } }
+        width: 45%; } }
+
+.ma__input-group--ends {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; }
+  .ma__input-group--ends .ma__input-group:nth-child(2) {
+    text-align: right; }
 
 .input-range {
   margin-bottom: 50px; }
@@ -91,3 +99,6 @@ fieldset > * {
 
 .ma__help-text {
   padding: 10px; }
+
+#famEmployerCont, #famEmployeeCont {
+  width: 60px; }
