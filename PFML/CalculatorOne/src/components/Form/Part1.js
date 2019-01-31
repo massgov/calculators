@@ -28,10 +28,10 @@ const Part1 = (props) => {
         {
           (context) => {
             const { has_mass_employees, employees_w2, employees_1099 } = context;
-            const over50per = (employees_1099/employees_w2) > emp1099Fraction; 
+            const over50per = (employees_1099/employees_w2) > emp1099Fraction;
             const employeeCount = +employees_w2 + (over50per ? +employees_1099 : 0);
             const over25 = employeeCount >= minEmployees;
-            let message; 
+            let message;
             if(over25) {
               if(over50per) {
                 message = (
@@ -95,13 +95,13 @@ const Part1 = (props) => {
                     errorMsg={questionTwo.errorMsg}
                     defaultValue={context.employees_w2}
                     disabled={!context.has_mass_employees}
-                    onChange={(e) => {
-                      const empW2 = e.target.value;
+                    onChange={(e, value) => {
+                      const empW2 = value;
                       onChangeW2(empW2)
-                      context.updateState({ 
+                      context.updateState({
                         employees_w2: empW2,
                         med_leave_cont: (empW2 + context.employees_1099 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                        fam_leave_cont: (empW2 + context.employees_1099 >= minEmployees) ? largeCompFamCont : smallCompFamCont 
+                        fam_leave_cont: (empW2 + context.employees_1099 >= minEmployees) ? largeCompFamCont : smallCompFamCont
                       })
                     }}
                     required={true}
@@ -118,10 +118,10 @@ const Part1 = (props) => {
                     errorMsg={questionThree.errorMsg}
                     defaultValue={context.employees_1099}
                     disabled={!context.has_mass_employees}
-                    onChange={(e) => {
-                      const emp1099 = e.target.value;
+                    onChange={(e, value) => {
+                      const emp1099 = value;
                       onChangeEmp1099(emp1099)
-                      context.updateState({ 
+                      context.updateState({
                         employees_1099: emp1099,
                         med_leave_cont: (emp1099 + context.employees_w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
                         fam_leave_cont: (emp1099 + context.employees_w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont
@@ -139,10 +139,10 @@ const Part1 = (props) => {
               </fieldset>
             )
           }
-          
+
         }
       </FormContext.Consumer>
-    ); 
+    );
 }
 
 export default addUrlProps({ mapUrlChangeHandlersToProps })(Part1);
