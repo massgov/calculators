@@ -103,8 +103,8 @@ const Part3 = (props) => {
             };
 
             const medLeaveSliderProps = {
-              labelText: "Medical Leave",
-              id: "medical-leave",
+              labelText: 'Medical Leave',
+              id: 'medical-leave',
               required: true,
               defaultValue: '0',
               axis: 'x',
@@ -117,7 +117,7 @@ const Part3 = (props) => {
               // },
               domain: [0, 1],
               onChange: (value) => onMedChange(value)
-            }
+            };
             return(
               <React.Fragment>
                 {!disable && (
