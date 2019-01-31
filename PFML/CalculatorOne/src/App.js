@@ -32,17 +32,17 @@ class App extends Component {
     history.listen(() => this.forceUpdate());
   }
   render() {
-    return (
+    return(
       <div className="App">
         <Header {...this.headerProps} />
-          <main className="main-content">
-            <section className="main-content main-content--two">
-              <div className="ma__page-header__content">
-                <h1 className="ma__page-header__title">Paid Family Medical Leave Contribution Caculator</h1>
-                  <Form />
-              </div>
-            </section>
-          </main>
+        <main className="main-content">
+          <section className="main-content main-content--two">
+            <div className="ma__page-header__content">
+              <h1 className="ma__page-header__title">Paid Family Medical Leave Contribution Caculator</h1>
+              <Form />
+            </div>
+          </section>
+        </main>
         <Footer {...this.footerProps} />
       </div>
     );
