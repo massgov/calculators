@@ -28,7 +28,7 @@ const QuestionTwo = (props) => {
         inline
         step={1}
       />
-      <Collapse in={belowMinSalary} dimension="height" className="ma__callout-alert">
+      <Collapse in={belowMinSalary && !disabled} dimension="height" className="ma__callout-alert">
         <div className="ma__collapse">
           <CalloutAlert theme={messageTheme} icon={{ name: messageTheme === 'c-error-red' ? 'alert' : '', ariaHidden: true }}>
             <Paragraph text={message} />
