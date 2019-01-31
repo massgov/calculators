@@ -15,7 +15,7 @@
 	    "message": "You can be covered <strong>up to 20 weeks</strong> by the Paid Family and Medical Leave Program.",
 	    "theme": "c-primary"
 	}, {
-	    "label": "Caring for a Loved One",
+	    "label": "Caring for a family member",
 	    "value": "caring-loved-one",
 	    "weeks": "12",
 	    "id": "caring-loved-one",
