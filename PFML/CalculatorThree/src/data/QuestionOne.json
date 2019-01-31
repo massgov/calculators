@@ -5,28 +5,28 @@
 	    "value": "birth-adoption",
 	    "weeks": "12",
 	    "id": "birth-adoption",
-	    "message": "You can be covered <strong>up to 12 weeks</strong> by the Paid Family and Medical Leave Program.",
+	    "message": "You can be covered <strong>up to 12 weeks</strong> by the Paid Family and Medical Leave Program. This benefit will be available starting <strong>January 1, 2021</strong>.",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Personal medical condition",
 	    "value": "own-medical",
 	    "weeks": "20",
 	    "id": "own-medical",
-	    "message": "You can be covered <strong>up to 20 weeks</strong> by the Paid Family and Medical Leave Program.",
+	    "message": "You can be covered <strong>up to 20 weeks</strong> by the Paid Family and Medical Leave Program. This benefit will be available starting <strong>January 1, 2021</strong>.",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Caring for a family member",
 	    "value": "caring-loved-one",
 	    "weeks": "12",
 	    "id": "caring-loved-one",
-	    "message": "You can be covered <strong>up to 12 weeks</strong> by the Paid Family and Medical Leave Program.",
+	    "message": "You can be covered <strong>up to 12 weeks</strong> by the Paid Family and Medical Leave Program. This benefit will be available starting <strong>July 1, 2021</strong>.",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Family member called to active duty",
 	    "value": "active-duty",
 	    "weeks": "26",
 	    "id": "active-duty",
-	    "message": "You can be <strong>covered up to 26 weeks</strong> by the Paid Family and Medical Leave Program.",
+	    "message": "You can be <strong>covered up to 26 weeks</strong> by the Paid Family and Medical Leave Program. This benefit will be available starting <strong>January 1, 2021</strong>.",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Other",
