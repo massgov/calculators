@@ -95,7 +95,7 @@ const Part3 = (props) => {
                           step={0.01}
                           ticks={[['0','0%'],['1','100%'],]}
                           domain={[0,1]}
-                          onChange={value => console.log(value)}
+                          onChange={value => onFamChange(value)}
                         />
                         <InputSlider
                           labelText="Medical Leave"
@@ -104,7 +104,7 @@ const Part3 = (props) => {
                           defaultValue="0"
                           axis="x"
                           max={1}
-                          min={0}
+                          min={0.6}
                           step={0.01}
                           ticks={[['0','0%'],['1','100%'],['0.6','Minimum requirement']]}
                           domain={[0,1]}

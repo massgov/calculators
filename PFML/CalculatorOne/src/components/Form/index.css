@@ -50,13 +50,21 @@ fieldset > * {
     width: calc(100% - 10px); } }
 
 .main-content--two .page-content {
-  float: none !important; }
+  float: left; }
+  @media (min-width: 911px) {
+    .main-content--two .page-content {
+      float: none !important; } }
 
 .ma__input-group--two {
   display: flex;
-  flex-direction: row; }
+  flex-direction: column; }
   .ma__input-group--two .ma__input-group {
-    width: 50%; }
+    width: 100%; }
+  @media (min-width: 781px) {
+    .ma__input-group--two {
+      flex-direction: row; }
+      .ma__input-group--two .ma__input-group {
+        width: 50%; } }
 
 .input-range {
   margin-bottom: 50px; }

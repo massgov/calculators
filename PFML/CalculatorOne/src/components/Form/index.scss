@@ -68,15 +68,24 @@ fieldset > * {
 
 .main-content--two {
 	.page-content {
-		float: none !important;
+		float: left;
+		@media ($bp-large-min) {
+			float: none !important;
+		}
 	}
 }
 
 .ma__input-group--two{
 	display: flex;
-		flex-direction: row;
-		.ma__input-group {
-			width: 50%;
+		flex-direction: column;
+	.ma__input-group {
+		width: 100%;
+	}
+		@media ($bp-medium-min) {
+			flex-direction: row;
+			.ma__input-group {
+				width: 50%;
+			}
 		}
 }
 
