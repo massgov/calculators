@@ -111,13 +111,11 @@ const Part3 = (props) => {
               max: 1,
               min: medMin,
               step: 0.01,
-              // ticks: {
-              //   "0": "0%",
-              //   "1": "100%"
-              // },
+              //ticks: medTicks,
               domain: [0, 1],
               onChange: (value) => onMedChange(value)
             };
+            
             return(
               <React.Fragment>
                 {!disable && (
@@ -136,7 +134,7 @@ const Part3 = (props) => {
                               maxlength={0}
                               placeholder="e.g. 50"
                               inline={false}
-                              defaultValue={0}
+                              defaultValue={context.fam_leave_cont * 100}
                               unit="%"
                               required
                             />
@@ -168,7 +166,7 @@ const Part3 = (props) => {
                               maxlength={0}
                               placeholder="e.g. 50"
                               inline={false}
-                              defaultValue={0}
+                              defaultValue={context.med_leave_cont * 100}
                               unit="%"
                               required
                             />
