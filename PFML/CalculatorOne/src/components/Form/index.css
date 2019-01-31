@@ -83,6 +83,9 @@ fieldset {
   .ma__input-group--ends .ma__input-group:nth-child(2) {
     text-align: right; }
 
+.ma__input-slider-x {
+  height: unset; }
+
 .input-range {
   margin-bottom: 50px; }
 
