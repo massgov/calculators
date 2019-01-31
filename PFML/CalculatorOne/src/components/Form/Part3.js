@@ -138,6 +138,7 @@ const Part3 = (props) => {
                               unit="%"
                               required
                               onChange={(e, value) => onFamChange(value/100)}
+                              showButtons
                             />
                             <InputNumber
                               labelText="Employee Contribution"
@@ -152,7 +153,6 @@ const Part3 = (props) => {
                               unit="%"
                               required
                               disabled
-                              hasButtons={false}
                             />
                           </div>
                           <CompoundSlider {...familyLeaveSliderProps} />
@@ -172,6 +172,8 @@ const Part3 = (props) => {
                               unit="%"
                               required
                               onChange={(e, value) => onMedChange(value/100)}
+                              max={100}
+                              showButtons
                             />
                             <InputNumber
                               labelText="Employee Contribution"
@@ -186,7 +188,6 @@ const Part3 = (props) => {
                               unit="%"
                               required
                               disabled
-                              hasButtons={false}
                             />
                           </div>
                           <CompoundSlider {...medLeaveSliderProps} />

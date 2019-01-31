@@ -109,6 +109,7 @@ const Part1 = (props) => {
                       });
                     }}
                   required
+                  showButtons
                 />
                 <InputNumber
                   labelText={questionThree.question}
@@ -132,6 +133,7 @@ const Part1 = (props) => {
                       });
                     }}
                   required
+                  showButtons
                 />
                 <Collapse in={(has_mass_employees && employees_w2)} dimension="height" className="ma__callout-alert">
                   <div className="ma__collapse">
