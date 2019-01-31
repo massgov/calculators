@@ -66,9 +66,13 @@ class App extends Component {
   handleInput = (e, value) => {
     const numberValue = value;
     this.setState({
-      yearIncome: numberValue,
-      belowMinSalary: numberValue < CalculatorThreeVariables.baseVariables.minSalary
+      yearIncome: numberValue
     });
+    if (numberValue > CalculatorThreeVariables.baseVariables.minSalary) {
+      this.setState({
+        belowMinSalary: false
+      });
+    }
   };
 
   handleRadio = ({ selected, maxWeeks, event }) => {
@@ -78,8 +82,23 @@ class App extends Component {
     });
   }
 
+  handleBlur = (numberValue) => {
+    if (numberValue < CalculatorThreeVariables.baseVariables.minSalary) {
+      this.setState({
+        belowMinSalary: true
+      });
+    }
+  }
+
   render() {
-    const { leaveReason, yearIncome, maxWeeks, belowMinSalary } = this.state;
+    const {
+      leaveReason, yearIncome, maxWeeks, belowMinSalary
+    } = this.state;
+    let belowMinSalaryConv;
+    if (typeof belowMinSalary === 'string') {
+      belowMinSalaryConv = belowMinSalary === 'true';
+    } else { belowMinSalaryConv = belowMinSalary; }
+
     const questTwoDisabled = !(maxWeeks > 0);
     return(
       <div className="App">
@@ -90,7 +109,7 @@ class App extends Component {
               <h1 className="ma__page-header__title">Paid Family Medical Leave Benefits Caculator</h1>
             </div>
             <QuestionOne error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
-            <QuestionTwo onChange={this.handleInput} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalary} />
+            <QuestionTwo onChange={this.handleInput} onBlur={this.handleBlur} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalaryConv} />
             <hr />
             {yearIncome > 0 && maxWeeks > 0 && !belowMinSalary && (
             <React.Fragment>

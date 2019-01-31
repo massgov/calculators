@@ -1,11 +1,17 @@
 import React from 'react';
-import { InputCurrency, Collapse, CalloutAlert, Paragraph } from '@massds/mayflower-react';
+import {
+  InputCurrency, Collapse, CalloutAlert, Paragraph
+} from '@massds/mayflower-react';
 import QuestionTwoProps from '../../data/QuestionTwo.json';
 import './index.css';
 
 const QuestionTwo = (props) => {
-  const { defaultValue, onChange, disabled, belowMinSalary } = props
-  const { question, errorMsg, message, messageTheme } = QuestionTwoProps;
+  const {
+    defaultValue, onChange, disabled, belowMinSalary, onBlur
+  } = props;
+  const {
+    question, errorMsg, message, messageTheme
+  } = QuestionTwoProps;
   return(
     <React.Fragment>
       <InputCurrency
@@ -27,6 +33,7 @@ const QuestionTwo = (props) => {
         disabled={disabled}
         inline
         step={1}
+        onBlur={onBlur}
       />
       <Collapse in={belowMinSalary && !disabled} dimension="height" className="ma__callout-alert">
         <div className="ma__collapse">

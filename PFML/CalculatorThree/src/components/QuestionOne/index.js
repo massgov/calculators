@@ -57,7 +57,6 @@ class QuestionOne extends Component {
   		radioButtons: options
   	};
   	const open = !!this.state.message;
-  	console.log(open);
     return(
       <React.Fragment>
         <InputRadioGroup {...radioGroupProps} />
