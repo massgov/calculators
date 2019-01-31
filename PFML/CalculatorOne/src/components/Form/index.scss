@@ -65,6 +65,13 @@ fieldset > * {
 	}
 }
 
+
+.main-content--two {
+	.page-content {
+		float: none;
+	}
+}
+
 .ma__input-group--two{
 	display: flex;
 		flex-direction: row;

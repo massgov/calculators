@@ -54,9 +54,11 @@ class Form extends Component {
     return (
       <FormContext.Provider value={this.state}>
         <form class="ma__form-page" action="#">
+          <div className="page-content">
           <Part1 />
           <hr />
           <Part2 />
+          </div>
           <hr />
           <Part3 />
         </form>

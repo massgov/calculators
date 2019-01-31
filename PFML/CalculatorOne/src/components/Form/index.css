@@ -49,6 +49,9 @@ fieldset > * {
   .ma_input-group--mobile-1 .ma__input-group__item.item-2 {
     width: calc(100% - 10px); } }
 
+.main-content--two .page-content {
+  float: none; }
+
 .ma__input-group--two {
   display: flex;
   flex-direction: row; }
