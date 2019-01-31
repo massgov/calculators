@@ -13,7 +13,7 @@ import './index.css';
  */
 function mapUrlChangeHandlersToProps(props) {
   return {
-    onChangeMassEmp: (value) => replaceInUrlQuery('massEmp', encode(UrlQueryParamTypes.boolean, value)),
+    onChangeMassEmp: (value) => replaceInUrlQuery('massEmp', encode(UrlQueryParamTypes.string, value)),
     onChangeW2: (value) => replaceInUrlQuery('w2', encode(UrlQueryParamTypes.number, value)),
     onChangeEmp1099: (value) => replaceInUrlQuery('emp1099', encode(UrlQueryParamTypes.number, value))
   }
@@ -73,7 +73,7 @@ const Part1 = (props) => {
                     context.updateState({
                       has_mass_employees: hasEmp
                     });
-                    onChangeMassEmp(hasEmp)
+                    onChangeMassEmp(e.selected)
                   }}
                   />
                   <Collapse in={!has_mass_employees} dimension="height" className="ma__callout-alert">

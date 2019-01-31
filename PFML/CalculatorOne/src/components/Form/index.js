@@ -14,7 +14,7 @@ import './index.css';
  */
 function mapUrlToProps(url, props) {
   return {
-    massEmp: decode(UrlQueryParamTypes.boolean, url.massEmp),
+    massEmp: decode(UrlQueryParamTypes.string, url.massEmp),
     w2: decode(UrlQueryParamTypes.number, url.w2),
     emp1099: decode(UrlQueryParamTypes.number, url.emp1099),
     option: decode(UrlQueryParamTypes.string, url.option),
@@ -33,20 +33,21 @@ const { minEmployees, largeCompMedCont, smallCompMedCont, largeCompFamCont, smal
 class Form extends Component {
   constructor(props) {
     super(props);
-    const med_leave_cont = (this.props.emp1099 + this.props.employees_w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont;
-    const fam_leave_cont = (this.props.emp1099 + this.props.employees_w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont;
+    const { massEmp, w2, emp1099, option, payW2, pay1099, payWages, timeValue, timePeriod } = this.props;
+    const med_leave_cont = (emp1099 + w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont;
+    const fam_leave_cont = (emp1099 + w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont;
     this.state = {
-      has_mass_employees: this.props.massEmp || true,
-      employees_w2: this.props.w2 || '',
-      employees_1099: this.props.emp1099 || '',
-      payroll_base: this.props.option  || 'all',
+      has_mass_employees: massEmp ? (massEmp === 'yes' ? true : false) : true,
+      employees_w2: w2 || '',
+      employees_1099: emp1099 || '',
+      payroll_base: option  || 'all',
       med_leave_cont: med_leave_cont || '0',
       fam_leave_cont: fam_leave_cont || '0',
-      payroll_w2: this.props.payW2 || '',
-      payroll_1099: this.props.pay1099 || '',
-      payroll_wages: this.props.payWages || '',
-      time_value: this.props.timeValue || 1,
-      time_period: this.props.timePeriod || 'Year',
+      payroll_w2: payW2 || '',
+      payroll_1099: pay1099 || '',
+      payroll_wages: payWages || '',
+      time_value: timeValue || 1,
+      time_period: timePeriod || 'Year',
       updateState: (newState) => this.setState(newState),
     }
   }
