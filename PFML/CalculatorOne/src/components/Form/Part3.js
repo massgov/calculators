@@ -152,6 +152,7 @@ const Part3 = (props) => {
                               unit="%"
                               required
                               disabled
+                              hasButtons={false}
                             />
                           </div>
                           <CompoundSlider {...familyLeaveSliderProps} />
@@ -185,6 +186,7 @@ const Part3 = (props) => {
                               unit="%"
                               required
                               disabled
+                              hasButtons={false}
                             />
                           </div>
                           <CompoundSlider {...medLeaveSliderProps} />
