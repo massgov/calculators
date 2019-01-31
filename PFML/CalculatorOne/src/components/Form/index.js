@@ -36,7 +36,7 @@ class Form extends Component {
   constructor(props) {
     super(props);
     const {
-      massEmp, w2, emp1099, option, payW2, pay1099, payWages, timeValue, timePeriod
+      massEmp, w2, emp1099, option, payW2, pay1099, payWages, timeValue, timePeriod, famCont, medCont
     } = this.props;
     const med_leave_cont = (emp1099 + w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont;
     const fam_leave_cont = (emp1099 + w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont;
@@ -45,8 +45,8 @@ class Form extends Component {
       employees_w2: w2 || '',
       employees_1099: emp1099 || '',
       payroll_base: option || 'all',
-      med_leave_cont: med_leave_cont || '0',
-      fam_leave_cont: fam_leave_cont || '0',
+      med_leave_cont: medCont || '0',
+      fam_leave_cont: famCont || '0',
       payroll_w2: payW2 || '',
       payroll_1099: pay1099 || '',
       payroll_wages: payWages || '',

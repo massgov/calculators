@@ -89,7 +89,7 @@ const Part3 = (props) => {
               labelText: 'Family Leave',
               id: 'text-input',
               required: true,
-              defaultValue: '0',
+              defaultValue: context.fam_leave_cont,
               axis: 'x',
               max: 1,
               min: 0,
@@ -106,7 +106,7 @@ const Part3 = (props) => {
               labelText: 'Medical Leave',
               id: 'medical-leave',
               required: true,
-              defaultValue: '0',
+              defaultValue: context.med_leave_cont,
               axis: 'x',
               max: 1,
               min: medMin,
@@ -115,7 +115,7 @@ const Part3 = (props) => {
               domain: [0, 1],
               onChange: (value) => onMedChange(value)
             };
-            
+
             return(
               <React.Fragment>
                 {!disable && (
@@ -139,7 +139,7 @@ const Part3 = (props) => {
                               required
                             />
                             <InputNumber
-                              labelText="Employer Contribution"
+                              labelText="Employee Contribution"
                               name="famEmployeeCont"
                               id="famEmployeeCont"
                               type="number"
@@ -147,7 +147,7 @@ const Part3 = (props) => {
                               maxlength={0}
                               placeholder="e.g. 50"
                               inline={false}
-                              defaultValue={0}
+                              defaultValue=''
                               unit="%"
                               required
                               disabled
@@ -171,7 +171,7 @@ const Part3 = (props) => {
                               required
                             />
                             <InputNumber
-                              labelText="Employer Contribution"
+                              labelText="Employee Contribution"
                               name="famEmployeeCont"
                               id="famEmployeeCont"
                               type="number"
@@ -179,7 +179,7 @@ const Part3 = (props) => {
                               maxlength={0}
                               placeholder="e.g. 50"
                               inline={false}
-                              defaultValue={0}
+                              defaultValue=''
                               unit="%"
                               required
                               disabled
