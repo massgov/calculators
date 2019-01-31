@@ -43,7 +43,8 @@ fieldset > * {
 
 .ma__table-heading {
   margin: 20px 0px 30px;
-  text-align: center; }
+  text-align: center;
+  font-size: 1.5rem; }
 
 @media (max-width: 910px) {
   .ma_input-group--mobile-1 .ma__input-group__item.item-2 {

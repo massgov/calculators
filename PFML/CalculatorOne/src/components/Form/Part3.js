@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectBox, Input, InputSlider } from '@massds/mayflower-react';
+import { SelectBox, Input, InputSlider, CompoundSlider } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { FormContext } from './context';
 import { toCurrency } from '../../utils';
@@ -79,6 +79,7 @@ const Part3 = (props) => {
             const medMin = over25 ? 0.6 : 0;
             const medTicks = over25? [['0','0%'],['1','100%'],['0.6','Minimum requirement']] : [['0','0%'],['1','100%']]
 
+
             return (
               <React.Fragment>
                 {!disable && (
@@ -88,20 +89,20 @@ const Part3 = (props) => {
                       <div className="ma__input-group--two">
                         <InputSlider
                           labelText="Family Leave"
-                          id="text-input"
+                          id="family-leave"
                           required
                           defaultValue="0"
                           axis="x"
                           max={1}
                           min={0}
                           step={0.01}
-                          ticks={[['0','0%'],['1','100%'],]}
+                          ticks={[['0','0%'],['1','100%']]}
                           domain={[0,1]}
                           onChange={value => onFamChange(value)}
                         />
                         <InputSlider
                           labelText="Medical Leave"
-                          id="text-input"
+                          id="medical-leave"
                           required
                           defaultValue="0"
                           axis="x"
@@ -116,7 +117,7 @@ const Part3 = (props) => {
                     </fieldset>
                     <h2 className="ma__table-heading">
                       <SelectBox
-                        label="Paid Family Medical Leave By"
+                        label="Paid Family Medical Leave by"
                         stackLabel={false}
                         required
                         id="color-select"
