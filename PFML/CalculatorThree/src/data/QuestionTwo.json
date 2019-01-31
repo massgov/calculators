@@ -1,6 +1,6 @@
 {
 	"question": "How much did you earn in the last year?",
 	"errorMsg": "Please enter a value.",
-	"message": "Based on your entry, you may not have enough earnings to be financially eligible to receive benefits.",
+	"message": "Based on your entry, you may not have enough earnings to be financially eligible.",
 	"messageTheme": "c-error-red"
 }
