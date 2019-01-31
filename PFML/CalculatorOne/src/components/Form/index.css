@@ -50,7 +50,7 @@ fieldset > * {
     width: calc(100% - 10px); } }
 
 .main-content--two .page-content {
-  float: none; }
+  float: none !important; }
 
 .ma__input-group--two {
   display: flex;
