@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectBox } from '@massds/mayflower-react';
+import { SelectBox, Input, InputSlider } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { FormContext } from './context';
 import { toCurrency } from '../../utils';
@@ -31,9 +31,9 @@ const Part3 = (props) => {
         {
           (context) => {
             const { has_mass_employees, employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages, med_leave_cont, fam_leave_cont } = context;
-            const over50per = (employees_1099/employees_w2) > emp1099Fraction; 
+            const over50per = (employees_1099/employees_w2) > emp1099Fraction;
             const employeeCount = over50per ? (+employees_w2 + +employees_1099) : +employees_w2;
-            const over25 = employeeCount >= minEmployees; 
+            const over25 = employeeCount >= minEmployees;
             const medPercent = over25 ? largeMedPercent : smallMedPercent;
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
             const totalPercent = medPercent + famPercent;
@@ -83,26 +83,32 @@ const Part3 = (props) => {
                   <React.Fragment>
                     <fieldset>
                       <legend className="ma__label">How will you split liability with your employess?</legend>
-                      <label className="ma__label">Medical Leave</label>
-                      <InputRange
-                        maxValue={1}
-                        minValue={0}
+                      <InputSlider
+                        labelText="Family Leave"
+                        id="text-input"
+                        required
+                        defaultValue="0"
+                        axis="x"
+                        max={1}
+                        min={0}
                         step={0.01}
-                        value={context.med_leave_cont >= minMed ? context.med_leave_cont : minMed}
-                        formatLabel={value => `${(value*100).toFixed(0)}%`}
-                        onChange={value => onMedChange(value)}
-                        disabled={disable}
+                        ticks={[['0','0%'],['1','100%'],]}
+                        domain={[0,1]}
+                        onChange={value => console.log(value)}
                       />
-                      <label className="ma__label">Family Leave</label>
-                      <InputRange
-                        maxValue={1}
-                        minValue={0}
+                      <InputSlider
+                        labelText="Medical Leave"
+                        id="text-input"
+                        required
+                        defaultValue="0"
+                        axis="x"
+                        max={1}
+                        min={0}
                         step={0.01}
-                        value={context.fam_leave_cont || 0}
-                        formatLabel={value => `${(value*100).toFixed(0)}%`}
-                        onChange={value => onFamChange(value)}
-                        disabled={disable}
-                      />  
+                        ticks={[['0','0%'],['1','100%'],['0.6','Minimum requirement']]}
+                        domain={[0,1]}
+                        onChange={value => onMedChange(value)}
+                      />
                     </fieldset>
                     <h2 className="ma__table-heading">
                       <SelectBox
@@ -114,7 +120,7 @@ const Part3 = (props) => {
                         selected={context.time_period || 'Year'}
                         onChangeCallback={({selected}) => {
                           const value = getTimeValue(selected);
-                          context.updateState({ 
+                          context.updateState({
                             time_period: selected,
                             time_value: value
                           })
@@ -148,7 +154,7 @@ const Part3 = (props) => {
                         <td>{toCurrency((medLeaveComp)/employeeCount)}</td>
                         <td>{toCurrency((famLeaveComp)/employeeCount)}</td>
                         <td>{toCurrency((medLeaveComp + famLeaveComp)/employeeCount/context.time_value)}</td>
-                      </tr> 
+                      </tr>
                       <tr>
                         <th rowspan="2">Your Employees will pay:</th>
                         <td className="ma__td--group">Total</td>
@@ -200,7 +206,7 @@ const Part3 = (props) => {
           }
         }
       </FormContext.Consumer>
-    );   
+    );
 }
 
 
