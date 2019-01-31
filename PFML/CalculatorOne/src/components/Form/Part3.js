@@ -137,6 +137,7 @@ const Part3 = (props) => {
                               defaultValue={context.fam_leave_cont * 100}
                               unit="%"
                               required
+                              onChange={(e, value) => onFamChange(value/100)}
                             />
                             <InputNumber
                               labelText="Employee Contribution"
@@ -147,7 +148,7 @@ const Part3 = (props) => {
                               maxlength={0}
                               placeholder="e.g. 50"
                               inline={false}
-                              defaultValue=''
+                              defaultValue={(1 - context.fam_leave_cont) * 100}
                               unit="%"
                               required
                               disabled
@@ -169,6 +170,7 @@ const Part3 = (props) => {
                               defaultValue={context.med_leave_cont * 100}
                               unit="%"
                               required
+                              onChange={(e, value) => onMedChange(value/100)}
                             />
                             <InputNumber
                               labelText="Employee Contribution"
@@ -179,7 +181,7 @@ const Part3 = (props) => {
                               maxlength={0}
                               placeholder="e.g. 50"
                               inline={false}
-                              defaultValue=''
+                              defaultValue={(1 - context.med_leave_cont) * 100}
                               unit="%"
                               required
                               disabled
