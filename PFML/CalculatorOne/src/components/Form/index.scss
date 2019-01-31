@@ -5,14 +5,30 @@ html, body {
   overflow-x: hidden;
 }
 
+.main-content--two {
+	.page-content {
+		float: left;
+		@media ($bp-large-min) {
+			float: none !important;
+		}
+    
+    & > * {
+      margin-top: 0 !important;
+    }
+	}
+}
+
+fieldset {
+  margin-top: 30px;
+  & > *:not(:first-child) {
+    margin-top: 20px;
+  }
+}
 
 .ma__label--small {
 	font-size: 1em;
 }
 
-fieldset > * {
-  margin-top: 20px;
-}
 
 .ma__collapse {
 	margin: 20px 0px;
@@ -73,14 +89,6 @@ fieldset > * {
 }
 
 
-.main-content--two {
-	.page-content {
-		float: left;
-		@media ($bp-large-min) {
-			float: none !important;
-		}
-	}
-}
 
 .ma__input-group--two{
 	display: flex;
