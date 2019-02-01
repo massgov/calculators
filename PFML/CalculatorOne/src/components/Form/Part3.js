@@ -100,7 +100,8 @@ const Part3 = (props) => {
               //   "1": "100%"
               // },
               domain: [0, 1],
-              onChange: (value) => onFamChange(value)
+              onChange: (value) => onFamChange(value),
+              skipped: true
             };
 
             const medLeaveSliderProps = {
@@ -114,7 +115,8 @@ const Part3 = (props) => {
               step: 0.01,
               //ticks: medTicks,
               domain: [0, 1],
-              onChange: (value) => onMedChange(value)
+              onChange: (value) => onMedChange(value),
+              skipped: true
             };
 
             return(
