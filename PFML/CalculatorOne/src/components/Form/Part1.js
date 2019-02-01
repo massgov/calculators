@@ -134,11 +134,14 @@ const Part1 = (props) => {
                     const value = { ...context.value };
                     value.payroll_base = 'all';
                     value.employees_w2 = empW2;
-                    value.med_leave_cont = ((empW2 + context.value.employees_1099) >= minEmployees) ? largeCompMedCont : smallCompMedCont;
-                    value.fam_leave_cont = (empW2 + context.value.employees_1099 >= minEmployees) ? largeCompFamCont : smallCompFamCont;
+                    const employeeCount = empW2 + (context.value.employees_1099/(context.value.employees_1099 + empW2) >= emp1099Fraction ? context.value.employees_1099 : 0);
                     // Use updateState for updating many form values, otherwise use setValue for a single form id.
                     onChangeW2(empW2);
-                    context.updateState({ value });
+                    context.updateState({ 
+                      value,
+                      med_leave_cont: (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                      fam_leave_cont: (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
+                    });
                   }}
                   showButtons
                 />
@@ -160,10 +163,12 @@ const Part1 = (props) => {
                     // Pull value from form for updating.
                     const value = { ...context.value };
                     value.employees_1099 = emp1099;
-                    value.med_leave_cont = (emp1099 + context.value.employees_w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont;
-                    value.fam_leave_cont = (emp1099 + context.value.employees_w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont;
-                    // Use updateState for updating many form values, otherwise use setValue for a single form id.
-                    context.updateState({ value });
+                    const employeeCount = context.value.employees_w2 + (emp1099/(emp1099 + context.value.employees_w2) >= emp1099Fraction ? emp1099 : 0)
+                    context.updateState({ 
+                      value,
+                      med_leave_cont: (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                      fam_leave_cont: (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
+                    });
                     onChangeEmp1099(emp1099);
                   }}
                   showButtons
