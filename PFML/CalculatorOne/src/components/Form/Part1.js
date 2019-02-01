@@ -168,7 +168,7 @@ const Part1 = (props) => {
                   }}
                   showButtons
                 />
-                <Collapse in={!!(has_mass_employees && !Number.isNaN(employees_w2))} dimension="height" className="ma__callout-alert">
+                <Collapse in={has_mass_employees && employees_w2 > 0} dimension="height" className="ma__callout-alert">
                   <div className="ma__collapse">
                     <CalloutAlert theme="c-primary">
                       { message }

@@ -118,7 +118,7 @@ const Part2 = (props) => {
                         inline
                       />
                     </div>
-                    <Collapse in={!!(has_mass_employees && payroll_w2 && (over50per ? numbro.unformat(payroll_1099) > 0 : numbro.unformat(payroll_1099) >= 0))} dimension="height" className="ma__callout-alert">
+                    <Collapse in={has_mass_employees && numbro.unformat(payroll_w2) > 0 && (over50per ? numbro.unformat(payroll_1099) > 0 : true)} dimension="height" className="ma__callout-alert">
                       <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip

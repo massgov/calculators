@@ -100,7 +100,12 @@ const Part3 = (props) => {
             const famLeaveComp = famLeave * fam_leave_cont;
             const medLeaveEmp = medLeave * (1 - med_leave_cont);
             const famLeaveEmp = famLeave * (1 - fam_leave_cont);
-            const disable = !(has_mass_employees && employees_w2 && (employees_1099 >= 0) && ((payroll_w2 && (over50per ? numbro.unformat(payroll_1099) > 0 : numbro.unformat(payroll_1099) >= 0) && payroll_base === 'all') || (payroll_base === 'one' && payroll_wages)));
+            const disable = has_mass_employees && employees_w2 > 0 && (
+              payroll_base === 'all' && payroll_w2 && numbro.unformat(payroll_w2) > 0 && (over50per ? numbro.unformat(payroll_1099) > 0 : true)
+            ) || (
+              payroll_base === 'one' && payroll_wages && numbro.unformat(payroll_wages) > 0
+            );
+            console.log(numbro.unformat(payroll_w2))
             const famTicks = minFamPer === 0 ? [[0, '0%'],[100, '100%']] : [[0, '0%'],[minFamPer,'Min Employer Contribution'],[100, '100%']]
             const medTicks = minMedPer === 0 ? [[0, '0%'],[100, '100%']] : [[0, '0%'],[minMedPer,'Min Employer Contribution'],[100, '100%']]
             
@@ -133,7 +138,7 @@ const Part3 = (props) => {
 
             return(
               <React.Fragment>
-                {!disable && (
+                {disable && (
                   <React.Fragment>
                     <fieldset>
                       <legend className="ma__label">
@@ -252,7 +257,7 @@ const Part3 = (props) => {
                     </h2>
                   </React.Fragment>
                 )}
-                {!disable && payroll_base === 'all' && (
+                {disable && payroll_base === 'all' && (
                   <table className="ma__table">
                     <tbody>
                       <tr className="ma__table-headers">
@@ -291,7 +296,7 @@ const Part3 = (props) => {
                     </tbody>
                   </table>
                 )}
-                { !disable && payroll_base === 'one' && (
+                {disable && payroll_base === 'one' && (
                   <table className="ma__table">
                     <tbody>
                       <tr className="ma__table-headers">
