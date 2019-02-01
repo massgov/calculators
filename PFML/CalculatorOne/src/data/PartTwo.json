@@ -17,7 +17,7 @@
         "errorMsg": "Please enter a value."
     },
     "questionThree": {
-        "question": "How much did you pay 1099 contractors last year?",
+        "question": "How much did you pay your contractors (1099-MISCs) last year?",
         "errorMsg": "Please enter a value."
     },
     "questionFour": {

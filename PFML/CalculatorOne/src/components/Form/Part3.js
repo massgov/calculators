@@ -2,8 +2,9 @@ import React from 'react';
 import numbro from 'numbro';
 import { SelectBox, Input, InputSlider, InputNumber, FormContext } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
-import { toCurrency } from '../../utils';
+import { toCurrency, getHelpTip } from '../../utils';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
+import PartThreeProps from '../../data/PartThree.json';
 
 import '../../css/index.css';
 
@@ -28,6 +29,7 @@ const Part3 = (props) => {
   const {
     minEmployees, emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, largeCompFamCont, smallCompFamCont, largeCompMedCont, smallCompMedCont, weeksPerYear, quartersPerYear, socialSecCap
   } = CalculatorOneVariables.baseVariables;
+  const { questionOne } = PartThreeProps;
   const {
     onChangeMedCont, onChangeFamCont, onChangeTimeValue, onChangeTimePeriod
   } = props;
@@ -134,7 +136,9 @@ const Part3 = (props) => {
                 {!disable && (
                   <React.Fragment>
                     <fieldset>
-                      <legend className="ma__label">How will you split liability with your employees?</legend>
+                      <legend className="ma__label">
+                        {over25 ? getHelpTip(questionOne.over25) : getHelpTip(questionOne.under25)}
+                      </legend>
                       <div className="ma__input-group--two">
                         <Input labelText="Family Leave" required={true}>
                           <div className="ma__input-group--ends">

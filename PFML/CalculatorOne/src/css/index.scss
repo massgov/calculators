@@ -77,6 +77,9 @@ fieldset {
 	margin: 30px 0px 30px;
 	text-align: center;
 	font-size: 1.5rem;
+	@media ($bp-large-max) {
+	  margin-top: 70px;
+	}
 }
 
 
@@ -149,10 +152,36 @@ fieldset {
 	padding: 10px;
 }
 
+.ma__callout-alert__content {
+	.ma__help-tip__text.ma__help-tip__text--c-white {
+	    @media ($bp-large-min) {
+		    border: 2px solid $c-gray-light;
+		}
+	}
+}
+
+.ma__help-tip__text { 
+    .ma__help-tip__text-direct {
+	    @media ($bp-large-min) {
+	      margin-right: 20px !important;
+	      margin-left: 5px !important;
+	    }
+	}
+	
+	&--c-white {
+	    .ma__help-text {
+	        @media ($bp-large-min) {
+		        border: 2px solid $c-gray-light;
+		    }
+		}
+	}
+}
+
+
 .ma__slider-tick--bottom {
 	label {
-	  width: 50%;
-	  margin-left: 25%;
+	  width: 70%;
+	  margin-left: 17.5%;
 	  left: 0%;
 	}
 }
