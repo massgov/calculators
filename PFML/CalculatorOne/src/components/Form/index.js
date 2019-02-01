@@ -51,8 +51,8 @@ class Form extends Component {
       payroll_w2: payW2 || '',
       payroll_1099: pay1099 || '',
       payroll_wages: payWages || '',
-      time_value: timeValue || 1,
-      time_period: timePeriod || 'Year',
+      time_value: timeValue || 4,
+      time_period: timePeriod || 'Quarter',
       updateState: (newState) => this.setState(newState)
     };
   }
