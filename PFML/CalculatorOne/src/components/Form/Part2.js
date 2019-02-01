@@ -92,6 +92,7 @@ const Part2 = (props) => {
                         required
                         disabled={!employeeCount}
                         inline
+                        step={1}
                       />
                     </div>
                     <div key="payroll_1099">
@@ -116,6 +117,7 @@ const Part2 = (props) => {
                         disabled={!employeeCount}
                         required
                         inline
+                        step={1}
                       />
                     </div>
                     <Collapse in={has_mass_employees && numbro.unformat(payroll_w2) > 0 && (over50per ? numbro.unformat(payroll_1099) > 0 : true)} dimension="height" className="ma__callout-alert">

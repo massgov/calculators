@@ -56,8 +56,8 @@ class ExampleForm extends Component {
         payroll_wages: getDefaultCurrency(payWages)
       },
       setValue: this.setValue,
-      time_value: validNumber(timeValue) ? Number(timeValue) : 1,
-      time_period: (timePeriod && timePeriod.length > 0) ? timePeriod : 'Year',
+      time_value: validNumber(timeValue) ? Number(timeValue) : 4,
+      time_period: (timePeriod && timePeriod.length > 0) ? timePeriod : 'Quarter',
       fam_leave_cont: validNumber(famCont) ? famCont : fam_leave_cont,
       med_leave_cont: validNumber(medCont) ? medCont : med_leave_cont,
       payroll_base: (option && option.length > 0) ? option : 'all',
