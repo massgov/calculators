@@ -42,6 +42,7 @@ const Part3 = (props) => {
             const {
               has_mass_employees, payroll_base, fam_leave_cont, med_leave_cont, time_value, time_period
             } = context;
+
             const over50per = (Number(employees_1099) / (Number(employees_w2) + Number(employees_1099))) >= emp1099Fraction;
             const employeeCount = over50per ? (Number(employees_w2) + Number(employees_1099)) : Number(employees_w2);
             const over25 = employeeCount >= minEmployees;
@@ -54,6 +55,7 @@ const Part3 = (props) => {
               { text: 'Quarter', value: String(quartersPerYear) },
               { text: 'Week', value: String(weeksPerYear) }
             ];
+
             const totalPayroll = payroll_base === 'all' ? (numbro.unformat(payroll_w2) + (over50per ? numbro.unformat(payroll_1099) : 0)) : (numbro.unformat(payroll_wages) > socialSecCap ? socialSecCap : numbro.unformat(payroll_wages));
             const medLeave = totalPayroll * medPercent;
             const famLeave = totalPayroll * famPercent;
@@ -69,6 +71,16 @@ const Part3 = (props) => {
               onChangeMedCont(fracNum);
             };
             const onFamChange = (event, value) => {
+              const fracNum = value > minFamPer ? value/100 : minFam;
+              context.updateState({ fam_leave_cont: fracNum });
+              onChangeFamCont(fracNum);
+            };
+            const onMedSliderChange = (value) => {
+              const fracNum = value > minMedPer ? value/100 : minMed;
+              context.updateState({med_leave_cont: fracNum });
+              onChangeMedCont(fracNum);
+            };
+            const onFamSliderChange = (value) => {
               const fracNum = value > minFamPer ? value/100 : minFam;
               context.updateState({ fam_leave_cont: fracNum });
               onChangeFamCont(fracNum);
@@ -96,7 +108,7 @@ const Part3 = (props) => {
               defaultValue: String(Math.round(fam_leave_cont*100)),
               axis: 'x',
               max: 100,
-              min: 0,
+              min: minFamPer,
               step: 1,
               ticks: [
                 [0, '0%'],
@@ -105,9 +117,8 @@ const Part3 = (props) => {
               ],
               domain: [0, 100],
               skipped: true,
-              onChange: (event, value) => onFamChange(event,value)
+              onChange: (value) => onFamSliderChange(value)
             };
-
             const medLeaveSliderProps = {
               labelText: 'Medical Leave',
               id: 'medical-leave',
@@ -115,15 +126,16 @@ const Part3 = (props) => {
               defaultValue: String(Math.round(med_leave_cont*100)),
               axis: 'x',
               max: 100,
-              min: 0,
+              min: minMedPer,
               step: 1,
+              domain: [0, 100],
               ticks: [
                 [0, '0%'],
                 [minMedPer,'Minimum Employer Contribution'],
                 [100, '100%']
               ],
               skipped: true,
-              onChange: (event,value) => onMedChange(event,value)
+              onChange: (value) => onMedSliderChange(value)
             };
 
             return(
@@ -212,7 +224,7 @@ const Part3 = (props) => {
                             onChange={(event,value) => onMedChange(event,value)}
                           />
                         </div>
-                        <InputSlider {...medLeaveSliderProps} />
+                        
                       </div>
                     </fieldset>
                     <h2 className="ma__table-heading">
