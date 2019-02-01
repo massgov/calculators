@@ -8,11 +8,21 @@ html, body {
   max-width: 100%;
   overflow-x: hidden; }
 
+.main-content--two .page-content {
+  float: left; }
+  @media (min-width: 911px) {
+    .main-content--two .page-content {
+      float: none !important; } }
+  .main-content--two .page-content > * {
+    margin-top: 0 !important; }
+
+fieldset {
+  margin-top: 30px; }
+  fieldset > *:not(:first-child) {
+    margin-top: 20px; }
+
 .ma__label--small {
   font-size: 1em; }
-
-fieldset > * {
-  margin-top: 20px; }
 
 .ma__collapse {
   margin: 20px 0px; }
@@ -54,12 +64,6 @@ fieldset > * {
   .ma_input-group--mobile-1 .ma__input-group__item.item-2 {
     width: calc(100% - 10px); } }
 
-.main-content--two .page-content {
-  float: left; }
-  @media (min-width: 911px) {
-    .main-content--two .page-content {
-      float: none !important; } }
-
 .ma__input-group--two {
   display: flex;
   flex-direction: column; }
@@ -78,6 +82,9 @@ fieldset > * {
   justify-content: space-between; }
   .ma__input-group--ends .ma__input-group:nth-child(2) {
     text-align: right; }
+
+.ma__input-slider-x {
+  height: unset; }
 
 .input-range {
   margin-bottom: 50px; }

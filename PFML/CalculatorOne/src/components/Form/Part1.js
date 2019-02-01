@@ -4,6 +4,7 @@ import { InputRadioGroup, CalloutAlert, InputNumber, Collapse, Paragraph, FormCo
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import PartOneProps from '../../data/PartOne.json';
+import { getHelpTip } from '../../utils';
 
 import './index.css';
 
@@ -33,41 +34,68 @@ const Part1 = (props) => {
           (context) => {
             const { employees_w2, employees_1099 } = context.value;
             const { has_mass_employees } = context;
-            const over50per = (employees_1099 / employees_w2) > emp1099Fraction;
-            const employeeCount = +employees_w2 + (over50per ? +employees_1099 : 0);
+            const over50per = (Number(employees_1099) / (Number(employees_w2) + Number(employees_1099))) >= emp1099Fraction;
+            const employeeCount = over50per ? (Number(employees_w2) + Number(employees_1099)) : Number(employees_w2);
             const over25 = employeeCount >= minEmployees;
             let message;
-            if (over25) {
-              if (over50per) {
-                message = (
-                  <Fragment>
-                    {output.overMinEmpOver1099.map((message, messageIndex) => <Paragraph key={`Form.message.${messageIndex}`} text={message.paragraph} />)}
-                  </Fragment>
-                );
-              } else {
-                message = (
-                  <Fragment>
-                    {output.overMinEmpUnder1099.map((message, messageIndex) => <Paragraph key={`Form.message.${messageIndex}`} text={message.paragraph} />)}
-                  </Fragment>
-                );
-              }
-            } else if (over50per) {
+            if(over25 && over50per){
               message = (
                 <Fragment>
-                  {output.underMinEmpOver1099.map((message, messageIndex) => <Paragraph key={`Form.message.${messageIndex}`} text={message.paragraph} />)}
+                  {output.overMinEmpOver1099.map((message, messageIndex) => (
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white',{`overMinEmpOver1099-${messageIndex}`}) : <Paragraph key={`overMinEmpOver1099-${messageIndex}`} text={message.paragraph.content} />
+                  ))}
                 </Fragment>
               );
-            } else {
+            }
+            if(over25 && !over50per && employees_1099 && employees_1099 > 0) {
               message = (
                 <Fragment>
-                  {output.underMinEmpUnder1099.map((message, messageIndex) => <Paragraph key={`Form.message.${messageIndex}`} text={message.paragraph} />)}
+                  {output.overMinEmpUnder1099.map((message, messageIndex) => (
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', {`overMinEmpUnder1099-${messageIndex}`}) : <Paragraph key={`overMinEmpUnder1099-${messageIndex}`} text={message.paragraph.content} />
+                  ))}
+                </Fragment>
+              );
+            }
+            if(over25 && !over50per && (!employees_1099 || Number(employees_1099) <= 0 || employees_1099 === 'NaN')) {
+              message = (
+                <Fragment>
+                  {output.overMinEmpNo1099.map((message, messageIndex) => (
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', {`overMinEmpNo1099-${messageIndex}`}) : <Paragraph key={`overMinEmpNo1099-${messageIndex}`} text={message.paragraph.content} />
+                  ))}
+                </Fragment>
+              );
+            }
+            if(!over25 && over50per) {
+              message = (
+                <Fragment>
+                  {output.underMinEmpOver1099.map((message, messageIndex) => (
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', {`underMinEmpOver1099-${messageIndex}`}) : <Paragraph key={`underMinEmpOver1099-${messageIndex}`} text={message.paragraph.content} />
+                  ))}
+                </Fragment>
+              );
+            } 
+            if(!over25 && !over50per && employees_1099 && employees_1099 > 0) {
+              message = (
+                <Fragment>
+                  {output.underMinEmpUnder1099.map((message, messageIndex) => (
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', {`underMinEmpUnder1099-${messageIndex}`}) : <Paragraph key={`underMinEmpUnder1099-${messageIndex}`} text={message.paragraph.content} />
+                  ))}
+                </Fragment>
+              );
+            }
+            if(!over25 && !over50per && (Number(employees_1099) <= 0 || !employees_1099 || employees_1099 === 'NaN')) {
+              message = (
+                <Fragment>
+                  {output.underMinEmpNo1099.map((message, messageIndex) => (
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', {`underMinEmpNo1099-${messageIndex}`}) : <Paragraph key={`underMinEmpNo1099-${messageIndex}`} text={message.paragraph.content} />
+                  ))}
                 </Fragment>
               );
             }
             return(
               <fieldset>
                 <InputRadioGroup
-                  title={questionOne.question}
+                  title={questionOne.question.helpText ? getHelpTip(questionOne.question) : questionOne.question.content}
                   name="mass_employees"
                   outline
                   defaultSelected={has_mass_employees ? 'yes' : 'no'}
@@ -89,7 +117,7 @@ const Part1 = (props) => {
                   </div>
                 </Collapse>
                 <InputNumber
-                  labelText={questionTwo.question}
+                  labelText={questionTwo.question.helpText ? getHelpTip(questionTwo.question) : questionTwo.question.content}
                   id="employees_w2"
                   name="employees_w2"
                   type="number"
@@ -116,7 +144,7 @@ const Part1 = (props) => {
                   showButtons
                 />
                 <InputNumber
-                  labelText={questionThree.question}
+                  labelText={questionThree.question.helpText ? getHelpTip(questionThree.question) : questionThree.question.content}
                   name="employees_1099"
                   id="employees_1099"
                   type="number"

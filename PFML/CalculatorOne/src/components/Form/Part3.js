@@ -3,6 +3,7 @@ import numbro from 'numbro';
 import { SelectBox, Input, InputSlider, CompoundSlider, InputNumber, FormContext } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { toCurrency } from '../../utils';
+import InputPercentage from '../InputPercentage';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import './index.css';
 
@@ -40,8 +41,8 @@ const Part3 = (props) => {
             const familyLeave = Number(context.value['family-leave']);
             const medicalLeave = Number(context.value['medical-leave']);
             const { has_mass_employees, payroll_base, fam_leave_cont, med_leave_cont, time_value, time_period } = context;
-            const over50per = (employees_1099 / employees_w2) > emp1099Fraction;
-            const employeeCount = over50per ? (employees_w2 + employees_1099) : employees_w2;
+            const over50per = (Number(employees_1099) / (Number(employees_w2) + Number(employees_1099))) >= emp1099Fraction;
+            const employeeCount = over50per ? (Number(employees_w2) + Number(employees_1099)) : Number(employees_w2);
             const over25 = employeeCount >= minEmployees;
             const medPercent = over25 ? largeMedPercent : smallMedPercent;
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
@@ -101,6 +102,7 @@ const Part3 = (props) => {
                 [100, '100%']
               ],
               domain: [0, 100],
+              skipped: true
             };
 
             const medLeaveSliderProps = {
@@ -117,7 +119,7 @@ const Part3 = (props) => {
                 [100, '100%']
               ],
               //ticks: medTicks,
-              domain: [0, 100],
+              skipped: true
             };
 
             return(
