@@ -42,7 +42,7 @@ const Part1 = (props) => {
               message = (
                 <Fragment>
                   {output.overMinEmpOver1099.map((message, messageIndex) => (
-                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white',{`overMinEmpOver1099-${messageIndex}`}) : <Paragraph key={`overMinEmpOver1099-${messageIndex}`} text={message.paragraph.content} />
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white',`overMinEmpOver1099-${messageIndex}`) : <Paragraph key={`overMinEmpOver1099-${messageIndex}`} text={message.paragraph.content} />
                   ))}
                 </Fragment>
               );
@@ -51,7 +51,7 @@ const Part1 = (props) => {
               message = (
                 <Fragment>
                   {output.overMinEmpUnder1099.map((message, messageIndex) => (
-                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', {`overMinEmpUnder1099-${messageIndex}`}) : <Paragraph key={`overMinEmpUnder1099-${messageIndex}`} text={message.paragraph.content} />
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', `overMinEmpUnder1099-${messageIndex}`) : <Paragraph key={`overMinEmpUnder1099-${messageIndex}`} text={message.paragraph.content} />
                   ))}
                 </Fragment>
               );
@@ -60,7 +60,7 @@ const Part1 = (props) => {
               message = (
                 <Fragment>
                   {output.overMinEmpNo1099.map((message, messageIndex) => (
-                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', {`overMinEmpNo1099-${messageIndex}`}) : <Paragraph key={`overMinEmpNo1099-${messageIndex}`} text={message.paragraph.content} />
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', `overMinEmpNo1099-${messageIndex}`) : <Paragraph key={`overMinEmpNo1099-${messageIndex}`} text={message.paragraph.content} />
                   ))}
                 </Fragment>
               );
@@ -69,7 +69,7 @@ const Part1 = (props) => {
               message = (
                 <Fragment>
                   {output.underMinEmpOver1099.map((message, messageIndex) => (
-                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', {`underMinEmpOver1099-${messageIndex}`}) : <Paragraph key={`underMinEmpOver1099-${messageIndex}`} text={message.paragraph.content} />
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', `underMinEmpOver1099-${messageIndex}`) : <Paragraph key={`underMinEmpOver1099-${messageIndex}`} text={message.paragraph.content} />
                   ))}
                 </Fragment>
               );
@@ -78,7 +78,7 @@ const Part1 = (props) => {
               message = (
                 <Fragment>
                   {output.underMinEmpUnder1099.map((message, messageIndex) => (
-                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', {`underMinEmpUnder1099-${messageIndex}`}) : <Paragraph key={`underMinEmpUnder1099-${messageIndex}`} text={message.paragraph.content} />
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', `underMinEmpUnder1099-${messageIndex}`) : <Paragraph key={`underMinEmpUnder1099-${messageIndex}`} text={message.paragraph.content} />
                   ))}
                 </Fragment>
               );
@@ -87,7 +87,7 @@ const Part1 = (props) => {
               message = (
                 <Fragment>
                   {output.underMinEmpNo1099.map((message, messageIndex) => (
-                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', {`underMinEmpNo1099-${messageIndex}`}) : <Paragraph key={`underMinEmpNo1099-${messageIndex}`} text={message.paragraph.content} />
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white', `underMinEmpNo1099-${messageIndex}`) : <Paragraph key={`underMinEmpNo1099-${messageIndex}`} text={message.paragraph.content} />
                   ))}
                 </Fragment>
               );
