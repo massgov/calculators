@@ -33,8 +33,8 @@ const Part1 = (props) => {
       {
           (context) => {
             const { has_mass_employees, employees_w2, employees_1099 } = context;
-            const over50per = (Number(employees_1099) / Number(employees_w2)) > emp1099Fraction;
-            const employeeCount = Number(employees_w2) + (over50per ? Number(employees_1099) : 0);
+            const over50per = (Number(employees_1099) / (Number(employees_w2) + Number(employees_1099))) >= emp1099Fraction;
+            const employeeCount = over50per ? (Number(employees_w2) + Number(employees_1099)) : Number(employees_w2);
             const over25 = employeeCount >= minEmployees;
             let message;
             if(over25 && over50per){
