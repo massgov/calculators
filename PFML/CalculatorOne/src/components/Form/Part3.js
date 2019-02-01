@@ -3,7 +3,6 @@ import numbro from 'numbro';
 import { SelectBox, Input, InputSlider, InputNumber, FormContext } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { toCurrency } from '../../utils';
-import InputPercentage from '../InputPercentage';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 
 import '../../css/index.css';
@@ -102,7 +101,6 @@ const Part3 = (props) => {
             const disable = !(has_mass_employees && employees_w2 && (employees_1099 >= 0) && ((payroll_w2 && (over50per ? numbro.unformat(payroll_1099) > 0 : numbro.unformat(payroll_1099) >= 0) && payroll_base === 'all') || (payroll_base === 'one' && payroll_wages)));
             
             const familyLeaveSliderProps = {
-              labelText: 'Family Leave',
               id: 'family-leave',
               required: true,
               defaultValue: String(Math.round(fam_leave_cont*100)),
@@ -120,7 +118,6 @@ const Part3 = (props) => {
               onChange: (value) => onFamSliderChange(value)
             };
             const medLeaveSliderProps = {
-              labelText: 'Medical Leave',
               id: 'medical-leave',
               required: true,
               defaultValue: String(Math.round(med_leave_cont*100)),
@@ -145,86 +142,94 @@ const Part3 = (props) => {
                     <fieldset>
                       <legend className="ma__label">How will you split liability with your employees?</legend>
                       <div className="ma__input-group--two">
-                        <div className="ma__input-group--ends">
-                          <InputNumber
-                            labelText="Employer Contribution"
-                            name="famEmployerCont"
-                            id="famEmployerCont"
-                            type="number"
-                            width={0}
-                            maxlength={0}
-                            placeholder="e.g. 50"
-                            inline={false}
-                            defaultValue={Math.round(fam_leave_cont*100)}
-                            unit="%"
-                            required
-                            max={100}
-                            min={0}
-                            step={1}
-                            showButtons
-                            onChange={(event,value) => onFamChange(event,value)}
-                          />
-                          <InputNumber
-                            labelText="Employee Contribution"
-                            name="famEmployeeCont"
-                            id="famEmployeeCont"
-                            type="number"
-                            width={0}
-                            maxlength={0}
-                            placeholder="e.g. 50"
-                            inline={false}
-                            step={1}
-                            max={100}
-                            min={0}
-                            defaultValue={Math.round((1-fam_leave_cont)*100)}
-                            unit="%"
-                            required
-                            disabled
-                            showButtons
-                            onChange={(event,value) => onFamChange(event,value)}
-                          />
-                        </div>
-                        <InputSlider {...familyLeaveSliderProps} />
-                        <div className="ma__input-group--ends">
-                          <InputNumber
-                            labelText="Employer Contribution"
-                            name="medEmployerCont"
-                            id="medEmployerCont"
-                            type="number"
-                            width={0}
-                            maxlength={0}
-                            placeholder="e.g. 50"
-                            inline={false}
-                            max={100}
-                            min={0}
-                            defaultValue={Math.round(med_leave_cont*100)}
-                            unit="%"
-                            required
-                            step={1}
-                            showButtons
-                            onChange={(event,value) => onMedChange(event,value)}
-                          />
-                          <InputNumber
-                            labelText="Employee Contribution"
-                            name="medEmployeeCont"
-                            id="medEmployeeCont"
-                            type="number"
-                            width={0}
-                            maxlength={0}
-                            placeholder="e.g. 50"
-                            inline={false}
-                            max={100}
-                            min={0}
-                            defaultValue={Math.round((1-med_leave_cont)*100)}
-                            unit="%"
-                            required
-                            disabled
-                            showButtons
-                            step={1}
-                            onChange={(event,value) => onMedChange(event,value)}
-                          />
-                        </div>
-                        <InputSlider {...medLeaveSliderProps} />
+                        <Input labelText="Family Leave" required={true}>
+                          <div className="ma__input-group--ends">
+                            <InputNumber
+                              labelText="Employer Contribution"
+                              name="famEmployerCont"
+                              id="famEmployerCont"
+                              type="number"
+                              width={0}
+                              maxlength={0}
+                              placeholder="e.g. 50"
+                              inline={false}
+                              defaultValue={Math.round(fam_leave_cont*100)}
+                              unit="%"
+                              required
+                              max={100}
+                              min={0}
+                              step={1}
+                              showButtons
+                              onChange={(event,value) => onFamChange(event,value)}
+                              key={Math.random()}
+                            />
+                            <InputNumber
+                              labelText="Employee Contribution"
+                              name="famEmployeeCont"
+                              id="famEmployeeCont"
+                              type="number"
+                              width={0}
+                              maxlength={0}
+                              placeholder="e.g. 50"
+                              inline={false}
+                              step={1}
+                              max={100}
+                              min={0}
+                              defaultValue={Math.round((1-fam_leave_cont)*100)}
+                              unit="%"
+                              required
+                              disabled
+                              showButtons
+                              onChange={(event,value) => onFamChange(event,value)}
+                              key={Math.random()}
+                            />
+                          </div>
+                          <InputSlider {...familyLeaveSliderProps} />
+                        </Input>
+                        <Input labelText="Medical Leave" required={true}>
+                          <div className="ma__input-group--ends">
+                            <InputNumber
+                              labelText="Employer Contribution"
+                              name="medEmployerCont"
+                              id="medEmployerCont"
+                              type="number"
+                              width={0}
+                              maxlength={0}
+                              placeholder="e.g. 50"
+                              inline={false}
+                              max={100}
+                              min={0}
+                              defaultValue={Math.round(med_leave_cont*100)}
+                              unit="%"
+                              required
+                              step={1}
+                              showButtons
+                              onChange={(event,value) => onMedChange(event,value)}
+                              key={Math.random()}
+                            />
+                            <InputNumber
+                              labelText="Employee Contribution"
+                              name="medEmployeeCont"
+                              id="medEmployeeCont"
+                              type="number"
+                              width={0}
+                              maxlength={0}
+                              placeholder="e.g. 50"
+                              inline={false}
+                              max={100}
+                              min={0}
+                              defaultValue={Math.round((1-med_leave_cont)*100)}
+                              unit="%"
+                              required
+                              disabled
+                              showButtons
+                              step={1}
+                              onChange={(event,value) => onMedChange(event,value)}
+                              key={Math.random()}
+                            />
+                          </div>
+                          <InputSlider {...medLeaveSliderProps} />
+                        </Input>
                       </div>
                     </fieldset>
                     <h2 className="ma__table-heading">
