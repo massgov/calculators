@@ -3,6 +3,7 @@ import { SelectBox, Input, InputSlider, CompoundSlider, InputNumber } from '@mas
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { FormContext } from './context';
 import { toCurrency } from '../../utils';
+import InputPercentage from '../InputPercentage';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import './index.css';
 
@@ -125,7 +126,7 @@ const Part3 = (props) => {
                       <div className="ma__input-group--two">
                         <Input {...familyLeaveSliderProps}>
                           <div className="ma__input-group--ends">
-                            <InputNumber
+                            <InputPercentage
                               labelText="Employer Contribution"
                               name="famEmployerCont"
                               id="famEmployerCont"
@@ -140,7 +141,7 @@ const Part3 = (props) => {
                               onChange={(e, value) => onFamChange(value/100)}
                               showButtons
                             />
-                            <InputNumber
+                            <InputPercentage
                               labelText="Employee Contribution"
                               name="famEmployeeCont"
                               id="famEmployeeCont"
@@ -159,7 +160,7 @@ const Part3 = (props) => {
                         </Input>
                         <Input {...medLeaveSliderProps}>
                           <div className="ma__input-group--ends">
-                            <InputNumber
+                            <InputPercentage
                               labelText="Employer Contribution"
                               name="famEmployerCont"
                               id="famEmployerCont"
@@ -175,7 +176,7 @@ const Part3 = (props) => {
                               max={100}
                               showButtons
                             />
-                            <InputNumber
+                            <InputPercentage
                               labelText="Employee Contribution"
                               name="famEmployeeCont"
                               id="famEmployeeCont"
