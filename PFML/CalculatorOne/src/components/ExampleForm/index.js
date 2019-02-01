@@ -53,11 +53,7 @@ class ExampleForm extends Component {
         employees_1099: getDefaultNumber(emp1099),
         payroll_w2: getDefaultCurrency(payW2),
         payroll_1099: getDefaultCurrency(pay1099),
-        payroll_wages: getDefaultCurrency(payWages),
-        famEmployerCont: 0,
-        famEmployeeCont: 0,
-        medEmployerCont: 0,
-        medEmployeeCont: 0
+        payroll_wages: getDefaultCurrency(payWages)
       },
       setValue: this.setValue,
       time_value: validNumber(timeValue) ? Number(timeValue) : 1,

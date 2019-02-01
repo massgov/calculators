@@ -224,7 +224,7 @@ const Part3 = (props) => {
                             onChange={(event,value) => onMedChange(event,value)}
                           />
                         </div>
-                        
+                        <InputSlider {...medLeaveSliderProps} />
                       </div>
                     </fieldset>
                     <h2 className="ma__table-heading">
