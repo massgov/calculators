@@ -99,6 +99,8 @@ const Part3 = (props) => {
             const medLeaveEmp = medLeave * (1 - med_leave_cont);
             const famLeaveEmp = famLeave * (1 - fam_leave_cont);
             const disable = !(has_mass_employees && employees_w2 && (employees_1099 >= 0) && ((payroll_w2 && (over50per ? numbro.unformat(payroll_1099) > 0 : numbro.unformat(payroll_1099) >= 0) && payroll_base === 'all') || (payroll_base === 'one' && payroll_wages)));
+            const famTicks = minFamPer === 0 ? [[0, '0%'],[100, '100%']] : [[0, '0%'],[minFamPer,'Min Employer Contribution'],[100, '100%']]
+            const medTicks = minMedPer === 0 ? [[0, '0%'],[100, '100%']] : [[0, '0%'],[minMedPer,'Min Employer Contribution'],[100, '100%']]
             
             const familyLeaveSliderProps = {
               id: 'family-leave',
@@ -108,11 +110,7 @@ const Part3 = (props) => {
               max: 100,
               min: minFamPer,
               step: 1,
-              ticks: [
-                [0, '0%'],
-                [minFamPer,'Minimum Employer Contribution'],
-                [100, '100%']
-              ],
+              ticks: famTicks,
               domain: [0, 100],
               skipped: true,
               onChange: (value) => onFamSliderChange(value)
@@ -126,11 +124,7 @@ const Part3 = (props) => {
               min: minMedPer,
               step: 1,
               domain: [0, 100],
-              ticks: [
-                [0, '0%'],
-                [minMedPer,'Minimum Employer Contribution'],
-                [100, '100%']
-              ],
+              ticks: medTicks,
               skipped: true,
               onChange: (value) => onMedSliderChange(value)
             };
