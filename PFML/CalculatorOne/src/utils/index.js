@@ -13,7 +13,7 @@ export const toPercentage = (number, decimal) => {
   return percent;
 };
 
-export const getHelpTip = ( question ) => {
+export const getHelpTip = ( question, theme ) => {
     const text = (question.content).split(question.triggerText);
     return(
       <HelpTip
@@ -22,6 +22,7 @@ export const getHelpTip = ( question ) => {
         textAfter={text[1]}
         id={`help-tip-${question.triggerText}`}
         labelID={`help-tip-${question.triggerText}-label`}
+        theme={theme || 'c-primary'}
       ><Paragraph text={question.helpText} /></HelpTip>
     )
   }

@@ -33,34 +33,61 @@ const Part1 = (props) => {
       {
           (context) => {
             const { has_mass_employees, employees_w2, employees_1099 } = context;
-            const over50per = (employees_1099 / employees_w2) > emp1099Fraction;
-            const employeeCount = +employees_w2 + (over50per ? +employees_1099 : 0);
+            const over50per = (Number(employees_1099) / Number(employees_w2)) > emp1099Fraction;
+            const employeeCount = Number(employees_w2) + (over50per ? Number(employees_1099) : 0);
             const over25 = employeeCount >= minEmployees;
             let message;
-            if (over25) {
-              if (over50per) {
-                message = (
-                  <Fragment>
-                    {output.overMinEmpOver1099.map((message) => <Paragraph text={message.paragraph} />)}
-                  </Fragment>
-                );
-              } else {
-                message = (
-                  <Fragment>
-                    {output.overMinEmpUnder1099.map((message) => <Paragraph text={message.paragraph} />)}
-                  </Fragment>
-                );
-              }
-            } else if (over50per) {
+            if(over25 && over50per){
               message = (
                 <Fragment>
-                  {output.underMinEmpOver1099.map((message) => <Paragraph text={message.paragraph} />)}
+                  {output.overMinEmpOver1099.map((message) => (
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white') : <Paragraph text={message.paragraph.content} />
+                  ))}
                 </Fragment>
               );
-            } else {
+            }
+            if(over25 && !over50per && employees_1099 && employees_1099 > 0) {
               message = (
                 <Fragment>
-                  {output.underMinEmpUnder1099.map((message) => <Paragraph text={message.paragraph} />)}
+                  {output.overMinEmpUnder1099.map((message) => (
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white') : <Paragraph text={message.paragraph.content} />
+                  ))}
+                </Fragment>
+              );
+            }
+            if(over25 && !over50per && (!employees_1099 || Number(employees_1099) <= 0 || employees_1099 === 'NaN')) {
+              message = (
+                <Fragment>
+                  {output.overMinEmpNo1099.map((message) => (
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white') : <Paragraph text={message.paragraph.content} />
+                  ))}
+                </Fragment>
+              );
+            }
+            if(!over25 && over50per) {
+              message = (
+                <Fragment>
+                  {output.underMinEmpOver1099.map((message) => (
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white') : <Paragraph text={message.paragraph.content} />
+                  ))}
+                </Fragment>
+              );
+            } 
+            if(!over25 && !over50per && employees_1099 && employees_1099 > 0) {
+              message = (
+                <Fragment>
+                  {output.underMinEmpUnder1099.map((message) => (
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white') : <Paragraph text={message.paragraph.content} />
+                  ))}
+                </Fragment>
+              );
+            }
+            if(!over25 && !over50per && (Number(employees_1099) <= 0 || !employees_1099 || employees_1099 === 'NaN')) {
+              message = (
+                <Fragment>
+                  {output.underMinEmpNo1099.map((message) => (
+                    message.paragraph.helpText  ? getHelpTip(message.paragraph, 'c-white') : <Paragraph text={message.paragraph.content} />
+                  ))}
                 </Fragment>
               );
             }
