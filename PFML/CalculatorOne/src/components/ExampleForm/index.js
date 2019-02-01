@@ -29,7 +29,7 @@ function mapUrlToProps(url, props) {
 }
 
 const {
-  minEmployees, largeCompMedCont, smallCompMedCont, largeCompFamCont, smallCompFamCont
+  minEmployees, largeCompMedCont, smallCompMedCont, largeCompFamCont, smallCompFamCont, emp1099Fraction
 } = CalculatorOneVariables.baseVariables;
 
 class ExampleForm extends Component {
@@ -38,8 +38,11 @@ class ExampleForm extends Component {
     const {
       massEmp, w2, emp1099, option, payW2, pay1099, payWages, timeValue, timePeriod, famCont, medCont
     } = this.props;
-    const med_leave_cont = (emp1099 + w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont;
-    const fam_leave_cont = (emp1099 + w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont;
+    const over50per = (Number(emp1099) / (Number(w2) + Number(emp1099))) >= emp1099Fraction;
+    const employeeCount = over50per ? (Number(w2) + Number(emp1099)) : Number(w2);
+            const over25 = employeeCount >= minEmployees;
+    const med_leave_cont = (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont;
+    const fam_leave_cont = (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont;
     const validNumber = (num) => (num || (num !== null && num !== undefined));
     const getDefaultCurrency = (num) => (validNumber(num)) ? Number(num) : '0';
     const getDefaultNumber = (num) => (validNumber(num)) ? Number(num) : 0;
@@ -94,4 +97,4 @@ class ExampleForm extends Component {
 
 ExampleForm.contextType = FormContext;
 
-export default ExampleForm;
+export default addUrlProps({ mapUrlToProps })(ExampleForm);
