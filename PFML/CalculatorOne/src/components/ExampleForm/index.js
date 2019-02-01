@@ -6,7 +6,7 @@ import Part1 from '../Form/Part1';
 import Part2 from '../Form/Part2';
 import Part3 from '../Form/Part3';
 
-import '../Form/index.css';
+import '../../css/index.css';
 
 /**
  * Map from url query params to props. The values in `url` will still be encoded
@@ -40,12 +40,12 @@ class ExampleForm extends Component {
     } = this.props;
     const over50per = (Number(emp1099) / (Number(w2) + Number(emp1099))) >= emp1099Fraction;
     const employeeCount = over50per ? (Number(w2) + Number(emp1099)) : Number(w2);
-            const over25 = employeeCount >= minEmployees;
+    const over25 = employeeCount >= minEmployees;
     const med_leave_cont = (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont;
     const fam_leave_cont = (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont;
     const validNumber = (num) => (num || (num !== null && num !== undefined));
-    const getDefaultCurrency = (num) => (validNumber(num)) ? Number(num) : '0';
-    const getDefaultNumber = (num) => (validNumber(num)) ? Number(num) : 0;
+    const getDefaultCurrency = (num) => ((validNumber(num)) ? Number(num) : '0');
+    const getDefaultNumber = (num) => ((validNumber(num)) ? Number(num) : 0);
     this.state = {
       isActive: true,
       value: {
@@ -54,8 +54,6 @@ class ExampleForm extends Component {
         payroll_w2: getDefaultCurrency(payW2),
         payroll_1099: getDefaultCurrency(pay1099),
         payroll_wages: getDefaultCurrency(payWages),
-        'family-leave': '0',
-        'medical-leave': '0',
         famEmployerCont: 0,
         famEmployeeCont: 0,
         medEmployerCont: 0,
@@ -64,7 +62,7 @@ class ExampleForm extends Component {
       setValue: this.setValue,
       time_value: validNumber(timeValue) ? Number(timeValue) : 1,
       time_period: (timePeriod && timePeriod.length > 0) ? timePeriod : 'Year',
-      fam_leave_cont: validNumber(famCont) ? famCont: fam_leave_cont,
+      fam_leave_cont: validNumber(famCont) ? famCont : fam_leave_cont,
       med_leave_cont: validNumber(medCont) ? medCont : med_leave_cont,
       payroll_base: (option && option.length > 0) ? option : 'all',
       has_mass_employees: massEmp ? (massEmp === 'yes') : true,
@@ -76,20 +74,20 @@ class ExampleForm extends Component {
     value[input.id] = input.value;
     this.setState({ value });
   };
-  updateState = (newState) => {console.table(newState); this.setState(newState);};
+  updateState = (newState) => { this.setState(newState); };
   render() {
     return(
-        <form className="ma__form-page" action="#">
-          <FormContext.Provider value={this.state}>
-            <div className="page-content">
-              <Part1 />
-              <hr />
-              <Part2 />
-            </div>
+      <form className="ma__form-page" action="#">
+        <FormContext.Provider value={this.state}>
+          <div className="page-content">
+            <Part1 />
             <hr />
-            <Part3 />
-          </FormContext.Provider>
-        </form>
+            <Part2 />
+          </div>
+          <hr />
+          <Part3 />
+        </FormContext.Provider>
+      </form>
     );
   }
 }

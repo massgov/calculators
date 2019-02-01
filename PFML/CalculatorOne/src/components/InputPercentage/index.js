@@ -19,12 +19,12 @@ class InputPercentage extends React.Component {
   }
 
   render() {
-    console.log(this.state.defaultValue)
+    console.log(this.state.defaultValue);
     const inputNumberProps = {
       defaultValue: this.state.defaultValue,
       ...this.otherProps
     };
-    return<InputNumber {...inputNumberProps} key={Math.random()}/>;
+    return<InputNumber {...inputNumberProps} key={Math.random()} />;
   }
 }
 

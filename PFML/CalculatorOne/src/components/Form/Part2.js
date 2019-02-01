@@ -6,7 +6,7 @@ import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import PartTwoProps from '../../data/PartTwo.json';
 import { toCurrency, toPercentage } from '../../utils';
 
-import './index.css';
+import '../../css/index.css';
 
 /**
  * Manually specify how to deal with changes to URL query param props.
@@ -35,7 +35,9 @@ const Part2 = (props) => {
     <FormContext.Consumer>
       {
           (context) => {
-            const { employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages } = context.value;
+            const {
+ employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages
+} = context.value;
             const { payroll_base, has_mass_employees } = context;
             const over50per = (Number(employees_1099) / (Number(employees_w2) + Number(employees_1099))) >= emp1099Fraction;
             const employeeCount = over50per ? (Number(employees_w2) + Number(employees_1099)) : Number(employees_w2);
@@ -162,13 +164,13 @@ const Part2 = (props) => {
                         defaultValue={numbro.unformat(payroll_wages)}
                         min={0}
                         format={{
-                        mantissa: 2,
-                        trimMantissa: false,
-                        thousandSeparated: true
-                      }}
+                          mantissa: 2,
+                          trimMantissa: false,
+                          thousandSeparated: true
+                        }}
                         onChange={(e, value) => {
-                        onChangePayWages(value);
-                      }}
+                          onChangePayWages(value);
+                        }}
                         required
                         inline
                         step={1}
@@ -214,6 +216,5 @@ const Part2 = (props) => {
     </FormContext.Consumer>
   );
 };
-
 
 export default addUrlProps({ mapUrlChangeHandlersToProps })(Part2);
