@@ -90,7 +90,6 @@ const Part2 = (props) => {
                         required
                         disabled={!employeeCount}
                         inline
-                        step={1}
                       />
                     </div>
                     <div key="payroll_1099">
@@ -115,10 +114,9 @@ const Part2 = (props) => {
                         disabled={!employeeCount}
                         required
                         inline
-                        step={1}
                       />
                     </div>
-                    <Collapse in={has_mass_employees && payroll_w2 && (over50per ? numbro.unformat(payroll_1099) > 0 : numbro.unformat(payroll_1099) >= 0)} dimension="height" className="ma__callout-alert">
+                    <Collapse in={!!(has_mass_employees && payroll_w2 && (over50per ? numbro.unformat(payroll_1099) > 0 : numbro.unformat(payroll_1099) >= 0))} dimension="height" className="ma__callout-alert">
                       <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
@@ -127,18 +125,25 @@ const Part2 = (props) => {
                             textAfter="."
                             id="help-tip-total-ann-cont"
                             labelID="help-tip-total-ann-cont-label"
-                            helpText={<p className="ma__help-text">{toCurrency(totalPayment)} = {toCurrency(totalPayroll)} X {toPercentage(totalPercent, 2)}</p>}
                             theme="c-white"
-                          />
+                          >
+                            <p className="ma__help-text">{toCurrency(totalPayment)} = {toCurrency(totalPayroll)} X {toPercentage(totalPercent, 2)}</p>
+
+                          </HelpTip>
                           <HelpTip
                             textBefore="Of this amount, "
                             triggerText={`<strong>${toCurrency(medPercent * totalPayroll)}</strong>  is for medical leave and <strong>${toCurrency(famPercent * totalPayroll)}</strong>  is for family leave`}
                             textAfter="."
                             id="help-tip-medfam-ann-cont"
                             labelID="help-tip-medfam-ann-cont-label"
-                            helpText={<div className="ma__help-text"><p>Medical Leave: {toCurrency(medPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(medPercent, 2)}</p><p>Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent, 2)}</p></div>}
                             theme="c-white"
-                          />
+                          >
+                            <div className="ma__help-text">
+                              <p>Medical Leave: {toCurrency(medPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(medPercent, 2)}</p>
+                              <p>Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent, 2)}</p>
+                            </div>
+
+                          </HelpTip>
                         </CalloutAlert>
                       </div>
                     </Collapse>

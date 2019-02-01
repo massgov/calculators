@@ -35,9 +35,11 @@ const Part3 = (props) => {
       {
           (context) => {
             const {
-              employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages, med_leave_cont
+              employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages
             } = context.value;
-            const { has_mass_employees, payroll_base, fam_leave_cont, time_value, time_period } = context;
+            const familyLeave = Number(context.value['family-leave']);
+            const medicalLeave = Number(context.value['medical-leave']);
+            const { has_mass_employees, payroll_base, fam_leave_cont, med_leave_cont, time_value, time_period } = context;
             const over50per = (employees_1099 / employees_w2) > emp1099Fraction;
             const employeeCount = over50per ? (employees_w2 + employees_1099) : employees_w2;
             const over25 = employeeCount >= minEmployees;
@@ -54,14 +56,19 @@ const Part3 = (props) => {
             const medLeave = totalPayroll * medPercent;
             const famLeave = totalPayroll * famPercent;
 
-            const onMedChange = (value) => {
-              const medCont = value > minMed ? value : minMed;
-              context.updateState({med_leave_cont: medCont });
-              onChangeMedCont(medCont);
+            const onMedChange = (med) => {
+              const medCont = med.value > minMed ? med.value : minMed;
+              context.setValue({id: med.id, value: medCont});
+              //context.updateState({med_leave_cont: medCont });
+              //onChangeMedCont(medCont);
             };
             const onFamChange = (fam) => {
-              context.updateState({fam_leave_cont: fam.value });
-              onChangeFamCont(fam.value);
+              const value = {...context.value};
+              value[fam.id] = fam.value;
+              context.setValue(fam);
+              //console.table(context);
+              //context.updateState({ fam_leave_cont: fam.value });
+              //onChangeFamCont(fam.value);
             };
             const getTimeValue = (text) => {
               let value;
@@ -78,41 +85,39 @@ const Part3 = (props) => {
             const medLeaveEmp = medLeave * (1 - med_leave_cont);
             const famLeaveEmp = famLeave * (1 - fam_leave_cont);
             const disable = !(has_mass_employees && employees_w2 && (employees_1099 >= 0) && ((payroll_w2 && (over50per ? numbro.unformat(payroll_1099) > 0 : numbro.unformat(payroll_1099) >= 0) && payroll_base === 'all') || (payroll_base === 'one' && payroll_wages)));
-            const medMin = over25 ? 0.6 : 0;
+            const medMin = over25 ? 60 : 0;
             const medTicks = over25 ? [['0', '0%'], ['1', '100%'], ['0.6', 'Minimum requirement']] : [['0', '0%'], ['1', '100%']];
 
             const familyLeaveSliderProps = {
               labelText: 'Family Leave',
               id: 'family-leave',
-              defaultValue: String(fam_leave_cont),
+              defaultValue: String(familyLeave),
               axis: 'x',
-              max: 1,
+              max: 100,
               min: 0,
-              step: 0.01,
+              step: 1,
               ticks: [
                 [0, '0%'],
-                [1, '100%']
+                [100, '100%']
               ],
-              domain: [0, 1],
-              onChange: (value) => onFamChange({id: 'fam_leave_cont', value: Number(value) })
+              domain: [0, 100],
             };
 
             const medLeaveSliderProps = {
               labelText: 'Medical Leave',
               id: 'medical-leave',
               required: true,
-              defaultValue: String(med_leave_cont),
+              defaultValue: String(medicalLeave),
               axis: 'x',
-              max: 1,
+              max: 100,
               min: medMin,
-              step: 0.01,
+              step: 1,
               ticks: [
                 [0, '0%'],
-                [1, '100%']
+                [100, '100%']
               ],
               //ticks: medTicks,
-              domain: [0, 1],
-              onChange: (value) => onMedChange(value)
+              domain: [0, 100],
             };
 
             return(
@@ -132,11 +137,13 @@ const Part3 = (props) => {
                             maxlength={0}
                             placeholder="e.g. 50"
                             inline={false}
-                            defaultValue={Number.parseFloat(fam_leave_cont * 100).toFixed(2)}
+                            defaultValue={0}
                             unit="%"
                             required
-                            step={0.01}
-                            onChange={(e, value) => onFamChange({id: 'fam_leave_cont', value: value/100})}
+                            max={100}
+                            min={0}
+                            step={1}
+                            showButtons
                           />
                           <InputNumber
                             labelText="Employee Contribution"
@@ -147,41 +154,52 @@ const Part3 = (props) => {
                             maxlength={0}
                             placeholder="e.g. 50"
                             inline={false}
-                            defaultValue={(1 - fam_leave_cont) * 100}
+                            step={1}
+                            max={100}
+                            min={0}
+                            defaultValue={0}
                             unit="%"
                             required
                             disabled
+                            showButtons
                           />
                         </div>
                         <InputSlider {...familyLeaveSliderProps} />
                         <div className="ma__input-group--ends">
                           <InputNumber
                             labelText="Employer Contribution"
-                            name="famEmployerCont"
-                            id="famEmployerCont"
+                            name="medEmployerCont"
+                            id="medEmployerCont"
                             type="number"
                             width={0}
                             maxlength={0}
                             placeholder="e.g. 50"
                             inline={false}
-                            defaultValue={med_leave_cont * 100}
+                            max={100}
+                            min={0}
+                            defaultValue={0}
                             unit="%"
                             required
-                            onChange={(e, value) => onMedChange(value/100)}
+                            step={1}
+                            showButtons
                           />
                           <InputNumber
                             labelText="Employee Contribution"
-                            name="famEmployeeCont"
-                            id="famEmployeeCont"
+                            name="medEmployeeCont"
+                            id="medEmployeeCont"
                             type="number"
                             width={0}
                             maxlength={0}
                             placeholder="e.g. 50"
                             inline={false}
-                            defaultValue={(1 - med_leave_cont) * 100}
+                            max={100}
+                            min={0}
+                            defaultValue={0}
                             unit="%"
                             required
                             disabled
+                            showButtons
+                            step={1}
                           />
                         </div>
                         <InputSlider {...medLeaveSliderProps} />
@@ -287,4 +305,4 @@ const Part3 = (props) => {
 };
 
 
-export default addUrlProps({ mapUrlChangeHandlersToProps })(Part3);
+export default Part3;

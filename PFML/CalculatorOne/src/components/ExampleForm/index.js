@@ -42,7 +42,7 @@ class ExampleForm extends Component {
     const fam_leave_cont = (emp1099 + w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont;
     const validNumber = (num) => (num || (num !== null && num !== undefined));
     const getDefaultCurrency = (num) => (validNumber(num)) ? Number(num) : '0';
-    const getDefaultNumber = (num) => (validNumber(num)) ? Number(num) : null;
+    const getDefaultNumber = (num) => (validNumber(num)) ? Number(num) : 0;
     this.state = {
       isActive: true,
       value: {
@@ -51,6 +51,12 @@ class ExampleForm extends Component {
         payroll_w2: getDefaultCurrency(payW2),
         payroll_1099: getDefaultCurrency(pay1099),
         payroll_wages: getDefaultCurrency(payWages),
+        'family-leave': '0',
+        'medical-leave': '0',
+        famEmployerCont: 0,
+        famEmployeeCont: 0,
+        medEmployerCont: 0,
+        medEmployeeCont: 0
       },
       setValue: this.setValue,
       time_value: validNumber(timeValue) ? Number(timeValue) : 1,
@@ -67,7 +73,7 @@ class ExampleForm extends Component {
     value[input.id] = input.value;
     this.setState({ value });
   };
-  updateState = (newState) => this.setState(newState);
+  updateState = (newState) => {console.table(newState); this.setState(newState);};
   render() {
     return(
         <form className="ma__form-page" action="#">

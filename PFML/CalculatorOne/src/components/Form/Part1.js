@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import numbro from 'numbro';
 import { InputRadioGroup, CalloutAlert, InputNumber, Collapse, Paragraph, FormContext } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
@@ -97,21 +98,22 @@ const Part1 = (props) => {
                   maxlength={0}
                   placeholder="e.g. 50"
                   errorMsg={questionTwo.errorMsg}
-                  defaultValue={Number(context.value.employees_w2)}
+                  defaultValue={Number(employees_w2)}
                   disabled={!context.has_mass_employees}
                   required
                   unit=""
-                  onChange={(e, value) => {
-                    const empW2 = value;
-                    const updatedValue = {
-                      payroll_base: 'all',
-                      med_leave_cont: ((empW2 + context.value.employees_1099) >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                      fam_leave_cont: (empW2 + context.value.employees_1099 >= minEmployees) ? largeCompFamCont : smallCompFamCont
-                    };
+                  onChange={(e, inputValue) => {
+                    const empW2 = Number(inputValue);
+                    const value = {...context.value};
+                    value.payroll_base = 'all';
+                    value.employees_w2 = empW2;
+                    value.med_leave_cont = ((empW2 + context.value.employees_1099) >= minEmployees) ? largeCompMedCont : smallCompMedCont;
+                    value.fam_leave_cont = (empW2 + context.value.employees_1099 >= minEmployees) ? largeCompFamCont : smallCompFamCont;
                     // Use updateState for updating many form values, otherwise use setValue for a single form id.
-                    context.updateState(updatedValue);
-                    onChangeW2(empW2);
+                    context.updateState({value});
+                    //onChangeW2(empW2);
                   }}
+                  showButtons
                 />
                 <InputNumber
                   labelText={questionThree.question}
@@ -126,23 +128,20 @@ const Part1 = (props) => {
                   defaultValue={Number(context.value.employees_1099)}
                   disabled={!context.has_mass_employees}
                   required
-                  unit=""
-                  onChange={(e, value) => {
-                    const emp1099 = value;
-                    onChangeEmp1099(emp1099);
+                  onChange={(e, inputValue) => {
+                    const emp1099 = Number(inputValue);
                     // Pull value from form for updating.
-                    const { value: contextValue } = context;
-                    const updatedValue = {
-                      ...contextValue,
-                      employees_1099: Number(emp1099),
-                      med_leave_cont: (emp1099 + context.value.employees_w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                      fam_leave_cont: (emp1099 + context.value.employees_w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont
-                    };
+                    const value = {...context.value};
+                    value.employees_1099 = emp1099;
+                    value.med_leave_cont = (emp1099 + context.value.employees_w2 >= minEmployees) ? largeCompMedCont : smallCompMedCont;
+                    value.fam_leave_cont = (emp1099 + context.value.employees_w2 >= minEmployees) ? largeCompFamCont : smallCompFamCont;
                     // Use updateState for updating many form values, otherwise use setValue for a single form id.
-                    context.updateState({ value: updatedValue });
+                    context.updateState({ value });
+                    //onChangeEmp1099(emp1099);
                   }}
+                  showButtons
                 />
-                <Collapse in={!!(has_mass_employees && employees_w2)} dimension="height" className="ma__callout-alert">
+                <Collapse in={!!(has_mass_employees && !Number.isNaN(employees_w2))} dimension="height" className="ma__callout-alert">
                   <div className="ma__collapse">
                     <CalloutAlert theme="c-primary">
                       { message }
@@ -158,4 +157,4 @@ const Part1 = (props) => {
   );
 };
 
-export default addUrlProps({ mapUrlChangeHandlersToProps })(Part1);
+export default Part1;
