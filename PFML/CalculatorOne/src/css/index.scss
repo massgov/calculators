@@ -104,7 +104,11 @@ fieldset {
 			}
 		}
 }
-
+.ma__input-group-right {
+	.ma__input-group {
+	   width: 100%;
+	}
+}
 .ma__input-group--ends{
 	display: flex;
 		flex-direction: row;
@@ -148,3 +152,7 @@ fieldset {
 #famEmployerCont, #famEmployeeCont{
 	width: 60px;
 }
+#medEmployerCont, #medEmployeeCont{
+	width: 60px;
+}
+
