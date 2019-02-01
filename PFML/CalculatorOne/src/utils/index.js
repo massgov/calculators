@@ -23,6 +23,7 @@ export const getHelpTip = ( question, theme ) => {
         id={`help-tip-${question.triggerText}`}
         labelID={`help-tip-${question.triggerText}-label`}
         theme={theme || 'c-primary'}
-      ><Paragraph text={question.helpText} /></HelpTip>
+        helpText={question.helpText}
+      />
     )
   }
