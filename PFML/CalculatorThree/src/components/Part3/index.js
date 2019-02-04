@@ -24,8 +24,8 @@ const Part3 = (props) => {
   const { more, less, max } = paragraphThree;
 
   const benefitBreak = maAvgYear * 0.5;
-  const benefitBreakWeek = benefitBreak / weeksPerYear * lowBenefitFraction;
-  const maxBenefit = (maxBenefitWeek - benefitBreakWeek) * weeksPerYear * 2 + benefitBreak;
+  const benefitBreakWeek = (benefitBreak / weeksPerYear) * lowBenefitFraction;
+  const maxBenefit = ((maxBenefitWeek - benefitBreakWeek) * weeksPerYear * 2) + benefitBreak;
   const maxBenefitDelta = maxBenefit - benefitBreak;
 
   let estBenefit;
