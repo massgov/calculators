@@ -1,0 +1,36 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+
+version: 2
+jobs:
+  pfml-cal-1:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10.10.0
+    parallelism: 2
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: cd PFML/CalculatorOne
+      - run: npm install --no-optional
+      - run: npm run lint
+      - run: npm run build
+  pfml-cal-3:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10.10.0
+    parallelism: 2
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: cd PFML/CalculatorThree
+      - run: npm install --no-optional
+      - run: npm run lint
+      - run: npm run build
+workflows:
+  version: 2
+  test:
+    jobs:
+      - pfml-cal-1
+      - pfml-cal-3
