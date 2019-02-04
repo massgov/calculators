@@ -17,7 +17,7 @@ jobs:
           command: cd PFML/CalculatorOne && npm install
       - run: 
           name: 'PFML Cal One Lint'
-          command: cd PFML/CalculatorOne && npm run lint
+          command: cd PFML/CalculatorOne && npm run build-css && npm run lint
       - run: 
           name: 'PFML Cal One Build App'
           command: cd PFML/CalculatorOne && npm run build
@@ -34,7 +34,7 @@ jobs:
           command: cd PFML/CalculatorThree && npm install
       - run: 
           name: 'PFML Cal Three Lint'
-          command: cd PFML/CalculatorThree && npm run lint
+          command: cd PFML/CalculatorThree && npm run build-css && npm run lint
       - run: 
           name: 'PFML Cal Three Build App'
           command: cd PFML/CalculatorThree && npm run build
