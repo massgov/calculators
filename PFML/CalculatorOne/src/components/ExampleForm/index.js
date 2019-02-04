@@ -41,14 +41,15 @@ class ExampleForm extends Component {
     } = this.props;
     const over50per = (Number(emp1099) / (Number(w2) + Number(emp1099))) >= emp1099Fraction;
     const employeeCount = over50per ? (Number(w2) + Number(emp1099)) : Number(w2);
-    const over25 = employeeCount >= minEmployees;
     const medLeaveCont = (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont;
     const famLeaveCont = (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont;
     const validNumber = (num) => (num || (num !== null && num !== undefined));
     const getDefaultCurrency = (num) => ((validNumber(num)) ? Number(num) : '0');
     const getDefaultNumber = (num) => ((validNumber(num)) ? Number(num) : 0);
+    /* eslint-disable react/no-unused-state */
     this.state = {
       isActive: true,
+
       value: {
         employeesW2: getDefaultNumber(w2),
         employees1099: getDefaultNumber(emp1099),
@@ -65,6 +66,7 @@ class ExampleForm extends Component {
       hasMassEmployees: massEmp ? (massEmp === 'yes') : true,
       updateState: this.updateState
     };
+    /* eslint-enable react/no-unused-state */
   }
   setValue = (input) => {
     const { value } = this.state;

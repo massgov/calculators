@@ -27,7 +27,7 @@ const Part2 = (props) => {
     minEmployees, emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, socialSecCap
   } = CalculatorOneVariables.baseVariables;
   const {
-    questionOne, questionTwo, questionThree, questionFour, output
+    questionOne, questionTwo, questionThree, questionFour
   } = PartTwoProps;
   const {
     onChangeOption, onChangePayW2, onChangePay1099, onChangePayWages

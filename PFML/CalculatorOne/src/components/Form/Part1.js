@@ -37,56 +37,62 @@ const Part1 = (props) => {
             const over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
             const employeeCount = over50per ? (Number(employeesW2) + Number(employees1099)) : Number(employeesW2);
             const over25 = employeeCount >= minEmployees;
-            let message;
+            let outputMessage;
             if (over25 && over50per) {
-              message = (
+              outputMessage = (
                 <Fragment>
                   {output.overMinEmpOver1099.map((message, messageIndex) => (
+                    // eslint-disable-next-line react/no-array-index-key
                     message.paragraph.helpText ? getHelpTip(message.paragraph, 'c-white', `overMinEmpOver1099-${messageIndex}`) : <Paragraph key={`overMinEmpOver1099-${messageIndex}`} text={message.paragraph.content} />
                   ))}
                 </Fragment>
               );
             }
             if (over25 && !over50per && employees1099 && employees1099 > 0) {
-              message = (
+              outputMessage = (
                 <Fragment>
                   {output.overMinEmpUnder1099.map((message, messageIndex) => (
+                    // eslint-disable-next-line react/no-array-index-key
                     message.paragraph.helpText ? getHelpTip(message.paragraph, 'c-white', `overMinEmpUnder1099-${messageIndex}`) : <Paragraph key={`overMinEmpUnder1099-${messageIndex}`} text={message.paragraph.content} />
                   ))}
                 </Fragment>
               );
             }
             if (over25 && !over50per && (!employees1099 || Number(employees1099) <= 0 || employees1099 === 'NaN')) {
-              message = (
+              outputMessage = (
                 <Fragment>
                   {output.overMinEmpNo1099.map((message, messageIndex) => (
+                    // eslint-disable-next-line react/no-array-index-key
                     message.paragraph.helpText ? getHelpTip(message.paragraph, 'c-white', `overMinEmpNo1099-${messageIndex}`) : <Paragraph key={`overMinEmpNo1099-${messageIndex}`} text={message.paragraph.content} />
                   ))}
                 </Fragment>
               );
             }
             if (!over25 && over50per) {
-              message = (
+              outputMessage = (
                 <Fragment>
                   {output.underMinEmpOver1099.map((message, messageIndex) => (
+                    // eslint-disable-next-line react/no-array-index-key
                     message.paragraph.helpText ? getHelpTip(message.paragraph, 'c-white', `underMinEmpOver1099-${messageIndex}`) : <Paragraph key={`underMinEmpOver1099-${messageIndex}`} text={message.paragraph.content} />
                   ))}
                 </Fragment>
               );
             }
             if (!over25 && !over50per && employees1099 && employees1099 > 0) {
-              message = (
+              outputMessage = (
                 <Fragment>
                   {output.underMinEmpUnder1099.map((message, messageIndex) => (
+                    // eslint-disable-next-line react/no-array-index-key
                     message.paragraph.helpText ? getHelpTip(message.paragraph, 'c-white', `underMinEmpUnder1099-${messageIndex}`) : <Paragraph key={`underMinEmpUnder1099-${messageIndex}`} text={message.paragraph.content} />
                   ))}
                 </Fragment>
               );
             }
             if (!over25 && !over50per && (Number(employees1099) <= 0 || !employees1099 || employees1099 === 'NaN')) {
-              message = (
+              outputMessage = (
                 <Fragment>
                   {output.underMinEmpNo1099.map((message, messageIndex) => (
+                    // eslint-disable-next-line react/no-array-index-key
                     message.paragraph.helpText ? getHelpTip(message.paragraph, 'c-white', `underMinEmpNo1099-${messageIndex}`) : <Paragraph key={`underMinEmpNo1099-${messageIndex}`} text={message.paragraph.content} />
                   ))}
                 </Fragment>
@@ -135,13 +141,13 @@ const Part1 = (props) => {
                     const value = { ...context.value };
                     value.payrollBase = 'all';
                     value.employeesW2 = empW2;
-                    const employeeCount = empW2 + (context.value.employees1099 / (context.value.employees1099 + empW2) >= emp1099Fraction ? context.value.employees1099 : 0);
+                    const empCount = empW2 + (context.value.employees1099 / (context.value.employees1099 + empW2) >= emp1099Fraction ? context.value.employees1099 : 0);
                     // Use updateState for updating many form values, otherwise use setValue for a single form id.
                     onChangeW2(empW2);
                     context.updateState({
                       value,
-                      medLeaveCont: (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                      famLeaveCont: (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
+                      medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                      famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
                     });
                   }}
                   showButtons
@@ -164,11 +170,11 @@ const Part1 = (props) => {
                     // Pull value from form for updating.
                     const value = { ...context.value };
                     value.employees1099 = emp1099;
-                    const employeeCount = context.value.employeesW2 + (emp1099 / (emp1099 + context.value.employeesW2) >= emp1099Fraction ? emp1099 : 0);
+                    const empCount = context.value.employeesW2 + (emp1099 / (emp1099 + context.value.employeesW2) >= emp1099Fraction ? emp1099 : 0);
                     context.updateState({
                       value,
-                      medLeaveCont: (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                      famLeaveCont: (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
+                      medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                      famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
                     });
                     onChangeEmp1099(emp1099);
                   }}
@@ -177,7 +183,7 @@ const Part1 = (props) => {
                 <Collapse in={hasMassEmployees && employeesW2 > 0} dimension="height" className="ma__callout-alert">
                   <div className="ma__collapse">
                     <CalloutAlert theme="c-primary">
-                      { message }
+                      { outputMessage }
                     </CalloutAlert>
                   </div>
                 </Collapse>
