@@ -26,12 +26,18 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:10.10.0
     parallelism: 2
-    working_directory: ~/PFML/CalculatorThree
+    working_directory: ~/repo
     steps:
       - checkout
-      - run: npm install
-      - run: npm run lint
-      - run: npm run build
+      - run: 
+        - name: 'PFML Cal Three Install Packages'
+        - command: cd PFML/CalculatorThree && npm install
+      - run: 
+        - name: 'PFML Cal Three Lint'
+        - command: cd PFML/CalculatorThree && npm run lint
+      - run: 
+        - name: 'PFML Cal Three Build App'
+        - command: cd PFML/CalculatorThree && npm run build
 workflows:
   version: 2
   test:
