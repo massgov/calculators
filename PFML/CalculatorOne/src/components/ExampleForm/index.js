@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { decode, addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import { FormContext } from '@massds/mayflower-react';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
@@ -41,27 +42,27 @@ class ExampleForm extends Component {
     const over50per = (Number(emp1099) / (Number(w2) + Number(emp1099))) >= emp1099Fraction;
     const employeeCount = over50per ? (Number(w2) + Number(emp1099)) : Number(w2);
     const over25 = employeeCount >= minEmployees;
-    const med_leave_cont = (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont;
-    const fam_leave_cont = (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont;
+    const medLeaveCont = (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont;
+    const famLeaveCont = (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont;
     const validNumber = (num) => (num || (num !== null && num !== undefined));
     const getDefaultCurrency = (num) => ((validNumber(num)) ? Number(num) : '0');
     const getDefaultNumber = (num) => ((validNumber(num)) ? Number(num) : 0);
     this.state = {
       isActive: true,
       value: {
-        employees_w2: getDefaultNumber(w2),
-        employees_1099: getDefaultNumber(emp1099),
-        payroll_w2: getDefaultCurrency(payW2),
-        payroll_1099: getDefaultCurrency(pay1099),
-        payroll_wages: getDefaultCurrency(payWages)
+        employeesW2: getDefaultNumber(w2),
+        employees1099: getDefaultNumber(emp1099),
+        payrollW2: getDefaultCurrency(payW2),
+        payroll1099: getDefaultCurrency(pay1099),
+        payrollWages: getDefaultCurrency(payWages)
       },
       setValue: this.setValue,
-      time_value: validNumber(timeValue) ? Number(timeValue) : 4,
-      time_period: (timePeriod && timePeriod.length > 0) ? timePeriod : 'Quarter',
-      fam_leave_cont: validNumber(famCont) ? famCont : fam_leave_cont,
-      med_leave_cont: validNumber(medCont) ? medCont : med_leave_cont,
-      payroll_base: (option && option.length > 0) ? option : 'all',
-      has_mass_employees: massEmp ? (massEmp === 'yes') : true,
+      timeValue: validNumber(timeValue) ? Number(timeValue) : 4,
+      timePeriod: (timePeriod && timePeriod.length > 0) ? timePeriod : 'Quarter',
+      famLeaveCont: validNumber(famCont) ? famCont : famLeaveCont,
+      medLeaveCont: validNumber(medCont) ? medCont : medLeaveCont,
+      payrollBase: (option && option.length > 0) ? option : 'all',
+      hasMassEmployees: massEmp ? (massEmp === 'yes') : true,
       updateState: this.updateState
     };
   }
@@ -88,7 +89,18 @@ class ExampleForm extends Component {
   }
 }
 
-
-ExampleForm.contextType = FormContext;
+ExampleForm.propTypes = {
+  massEmp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  w2: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  emp1099: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  option: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  payW2: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  pay1099: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  payWages: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  timeValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  timePeriod: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  famCont: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  medCont: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+};
 
 export default addUrlProps({ mapUrlToProps })(ExampleForm);

@@ -1,12 +1,12 @@
 import React from 'react';
 
 export const FormContext = React.createContext({
-  has_mass_employees: true,
-  employees_w2: 0,
-  employees_1099: 0,
-  med_leave_cont: 0,
-  fam_leave_cont: 0,
-  time_period: 'Year',
+  hasMassEmployees: true,
+  employeesW2: 0,
+  employees1099: 0,
+  medLeaveCont: 0,
+  famLeaveCont: 0,
+  timePeriod: 'Year',
   med_leave: 0,
   fam_leave: 0,
   mass_employees: 'yes'

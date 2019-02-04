@@ -1,6 +1,6 @@
 import React from 'react';
 import numbro from 'numbro';
-import { HelpTip, Paragraph } from '@massds/mayflower-react';
+import { HelpTip } from '@massds/mayflower-react';
 
 export const toCurrency = (number) => {
   const currency = numbro(number).formatCurrency({ thousandSeparated: true, mantissa: 2, spaceSeparated: false });

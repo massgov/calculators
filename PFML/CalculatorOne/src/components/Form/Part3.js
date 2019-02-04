@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import numbro from 'numbro';
 import { SelectBox, Input, InputSlider, InputNumber, FormContext } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
@@ -7,10 +8,6 @@ import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import PartThreeProps from '../../data/PartThree.json';
 
 import '../../css/index.css';
-
-// to replace with react slider when lands
-import 'react-input-range/lib/css/index.css';
-import InputRange from 'react-input-range';
 
 /**
  * Manually specify how to deal with changes to URL query param props.
@@ -38,52 +35,51 @@ const Part3 = (props) => {
       {
           (context) => {
             const {
-              employees_w2, employees_1099, payroll_w2, payroll_1099, payroll_wages
+              employeesW2, employees1099, payrollW2, payroll1099, payrollWages
             } = context.value;
             const {
-              has_mass_employees, payroll_base, fam_leave_cont, med_leave_cont, time_value, time_period
+              hasMassEmployees, payrollBase, famLeaveCont, medLeaveCont, timeValue, timePeriod
             } = context;
 
-            const over50per = (Number(employees_1099) / (Number(employees_w2) + Number(employees_1099))) >= emp1099Fraction;
-            const employeeCount = over50per ? (Number(employees_w2) + Number(employees_1099)) : Number(employees_w2);
+            const over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
+            const employeeCount = over50per ? (Number(employeesW2) + Number(employees1099)) : Number(employeesW2);
             const over25 = employeeCount >= minEmployees;
             const medPercent = over25 ? largeMedPercent : smallMedPercent;
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
-            const totalPercent = medPercent + famPercent;
-            
+
             const timePeriodOptions = [
               { text: 'Year', value: '1' },
               { text: 'Quarter', value: String(quartersPerYear) },
               { text: 'Week', value: String(weeksPerYear) }
             ];
 
-            const totalPayroll = payroll_base === 'all' ? (numbro.unformat(payroll_w2) + (over50per ? numbro.unformat(payroll_1099) : 0)) : (numbro.unformat(payroll_wages) > socialSecCap ? socialSecCap : numbro.unformat(payroll_wages));
+            const totalPayroll = payrollBase === 'all' ? (numbro.unformat(payrollW2) + (over50per ? numbro.unformat(payroll1099) : 0)) : (numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages));
             const medLeave = totalPayroll * medPercent;
             const famLeave = totalPayroll * famPercent;
 
             const minMed = over25 ? largeCompMedCont : smallCompMedCont;
             const minFam = over25 ? largeCompFamCont : smallCompFamCont;
-            const minMedPer = Math.round(minMed*100);
-            const minFamPer = Math.round(minFam*100);
+            const minMedPer = Math.round(minMed * 100);
+            const minFamPer = Math.round(minFam * 100);
 
             const onMedChange = (event, value) => {
-              const fracNum = value > minMedPer ? value/100 : minMed;
-              context.updateState({med_leave_cont: fracNum });
+              const fracNum = value > minMedPer ? value / 100 : minMed;
+              context.updateState({ medLeaveCont: fracNum });
               onChangeMedCont(fracNum);
             };
             const onFamChange = (event, value) => {
-              const fracNum = value > minFamPer ? value/100 : minFam;
-              context.updateState({ fam_leave_cont: fracNum });
+              const fracNum = value > minFamPer ? value / 100 : minFam;
+              context.updateState({ famLeaveCont: fracNum });
               onChangeFamCont(fracNum);
             };
             const onMedSliderChange = (value) => {
-              const fracNum = value > minMedPer ? value/100 : minMed;
-              context.updateState({med_leave_cont: fracNum });
+              const fracNum = value > minMedPer ? value / 100 : minMed;
+              context.updateState({ medLeaveCont: fracNum });
               onChangeMedCont(fracNum);
             };
             const onFamSliderChange = (value) => {
-              const fracNum = value > minFamPer ? value/100 : minFam;
-              context.updateState({ fam_leave_cont: fracNum });
+              const fracNum = value > minFamPer ? value / 100 : minFam;
+              context.updateState({ famLeaveCont: fracNum });
               onChangeFamCont(fracNum);
             };
             const getTimeValue = (text) => {
@@ -96,23 +92,22 @@ const Part3 = (props) => {
               return value;
             };
 
-            const medLeaveComp = medLeave * med_leave_cont;
-            const famLeaveComp = famLeave * fam_leave_cont;
-            const medLeaveEmp = medLeave * (1 - med_leave_cont);
-            const famLeaveEmp = famLeave * (1 - fam_leave_cont);
-            const disable = has_mass_employees && employees_w2 > 0 && (
-              payroll_base === 'all' && payroll_w2 && numbro.unformat(payroll_w2) > 0 && (over50per ? numbro.unformat(payroll_1099) > 0 : true)
+            const medLeaveComp = medLeave * medLeaveCont;
+            const famLeaveComp = famLeave * famLeaveCont;
+            const medLeaveEmp = medLeave * (1 - medLeaveCont);
+            const famLeaveEmp = famLeave * (1 - famLeaveCont);
+            const disable = hasMassEmployees && employeesW2 > 0 && (
+              payrollBase === 'all' && payrollW2 && numbro.unformat(payrollW2) > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true)
             ) || (
-              payroll_base === 'one' && payroll_wages && numbro.unformat(payroll_wages) > 0
+              payrollBase === 'one' && payrollWages && numbro.unformat(payrollWages) > 0
             );
-            console.log(numbro.unformat(payroll_w2))
-            const famTicks = minFamPer === 0 ? [[0, '0%'],[100, '100%']] : [[0, '0%'],[minFamPer,'Min Employer Contribution'],[100, '100%']]
-            const medTicks = minMedPer === 0 ? [[0, '0%'],[100, '100%']] : [[0, '0%'],[minMedPer,'Min Employer Contribution'],[100, '100%']]
-            
+            const famTicks = minFamPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minFamPer, 'Min Employer Contribution'], [100, '100%']];
+            const medTicks = minMedPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minMedPer, 'Min Employer Contribution'], [100, '100%']];
+
             const familyLeaveSliderProps = {
               id: 'family-leave',
               required: true,
-              defaultValue: String(Math.round(fam_leave_cont*100)),
+              defaultValue: String(Math.round(famLeaveCont * 100)),
               axis: 'x',
               max: 100,
               min: minFamPer,
@@ -125,7 +120,7 @@ const Part3 = (props) => {
             const medLeaveSliderProps = {
               id: 'medical-leave',
               required: true,
-              defaultValue: String(Math.round(med_leave_cont*100)),
+              defaultValue: String(Math.round(medLeaveCont * 100)),
               axis: 'x',
               max: 100,
               min: minMedPer,
@@ -145,7 +140,7 @@ const Part3 = (props) => {
                         {over25 ? getHelpTip(questionOne.over25) : getHelpTip(questionOne.under25)}
                       </legend>
                       <div className="ma__input-group--two">
-                        <Input labelText="Family Leave" required={true}>
+                        <Input labelText="Family Leave" required>
                           <div className="ma__input-group--ends">
                             <InputNumber
                               labelText="Employer Contribution"
@@ -156,14 +151,14 @@ const Part3 = (props) => {
                               maxlength={0}
                               placeholder="e.g. 50"
                               inline={false}
-                              defaultValue={Math.round(fam_leave_cont*100)}
+                              defaultValue={Math.round(famLeaveCont * 100)}
                               unit="%"
                               required
                               max={100}
                               min={0}
                               step={1}
                               showButtons
-                              onChange={(event,value) => onFamChange(event,value)}
+                              onChange={(event, value) => onFamChange(event, value)}
                               key={Math.random()}
                             />
                             <InputNumber
@@ -178,18 +173,18 @@ const Part3 = (props) => {
                               step={1}
                               max={100}
                               min={0}
-                              defaultValue={Math.round((1-fam_leave_cont)*100)}
+                              defaultValue={Math.round((1 - famLeaveCont) * 100)}
                               unit="%"
                               required
                               disabled
                               showButtons
-                              onChange={(event,value) => onFamChange(event,value)}
+                              onChange={(event, value) => onFamChange(event, value)}
                               key={Math.random()}
                             />
                           </div>
                           <InputSlider {...familyLeaveSliderProps} />
                         </Input>
-                        <Input labelText="Medical Leave" required={true}>
+                        <Input labelText="Medical Leave" required>
                           <div className="ma__input-group--ends">
                             <InputNumber
                               labelText="Employer Contribution"
@@ -202,12 +197,12 @@ const Part3 = (props) => {
                               inline={false}
                               max={100}
                               min={0}
-                              defaultValue={Math.round(med_leave_cont*100)}
+                              defaultValue={Math.round(medLeaveCont * 100)}
                               unit="%"
                               required
                               step={1}
                               showButtons
-                              onChange={(event,value) => onMedChange(event,value)}
+                              onChange={(event, value) => onMedChange(event, value)}
                               key={Math.random()}
                             />
                             <InputNumber
@@ -221,13 +216,13 @@ const Part3 = (props) => {
                               inline={false}
                               max={100}
                               min={0}
-                              defaultValue={Math.round((1-med_leave_cont)*100)}
+                              defaultValue={Math.round((1 - medLeaveCont) * 100)}
                               unit="%"
                               required
                               disabled
                               showButtons
                               step={1}
-                              onChange={(event,value) => onMedChange(event,value)}
+                              onChange={(event, value) => onMedChange(event, value)}
                               key={Math.random()}
                             />
                           </div>
@@ -242,12 +237,12 @@ const Part3 = (props) => {
                         required
                         id="color-select"
                         options={timePeriodOptions}
-                        selected={time_period || 'Year'}
+                        selected={timePeriod || 'Year'}
                         onChangeCallback={({ selected }) => {
                           const value = getTimeValue(selected);
                           context.updateState({
-                            time_period: selected,
-                            time_value: value
+                            timePeriod: selected,
+                            timeValue: value
                           });
                           onChangeTimeValue(value);
                           onChangeTimePeriod(selected);
@@ -257,7 +252,7 @@ const Part3 = (props) => {
                     </h2>
                   </React.Fragment>
                 )}
-                {disable && payroll_base === 'all' && (
+                {disable && payrollBase === 'all' && (
                   <table className="ma__table">
                     <tbody>
                       <tr className="ma__table-headers">
@@ -270,33 +265,33 @@ const Part3 = (props) => {
                       <tr>
                         <th rowSpan="2">You will pay:</th>
                         <td className="ma__td--group">Total</td>
-                        <td>{toCurrency(medLeaveComp / time_value)}</td>
-                        <td>{toCurrency(famLeaveComp / time_value)}</td>
-                        <td>{toCurrency((medLeaveComp + famLeaveComp) / time_value)}</td>
+                        <td>{toCurrency(medLeaveComp / timeValue)}</td>
+                        <td>{toCurrency(famLeaveComp / timeValue)}</td>
+                        <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
                       </tr>
                       <tr>
                         <td className="ma__td--group">Per Employee</td>
-                        <td>{toCurrency((medLeaveComp) / employeeCount / time_value )}</td>
-                        <td>{toCurrency((famLeaveComp) / employeeCount / time_value)}</td>
-                        <td>{toCurrency((medLeaveComp + famLeaveComp) / employeeCount / time_value)}</td>
+                        <td>{toCurrency((medLeaveComp) / employeeCount / timeValue)}</td>
+                        <td>{toCurrency((famLeaveComp) / employeeCount / timeValue)}</td>
+                        <td>{toCurrency((medLeaveComp + famLeaveComp) / employeeCount / timeValue)}</td>
                       </tr>
                       <tr>
                         <th rowSpan="2">Your Employees will pay:</th>
                         <td className="ma__td--group">Total</td>
-                        <td>{toCurrency(medLeaveEmp / time_value)}</td>
-                        <td>{toCurrency(famLeaveEmp / time_value)}</td>
-                        <td>{toCurrency((medLeaveEmp + famLeaveEmp) / time_value)}</td>
+                        <td>{toCurrency(medLeaveEmp / timeValue)}</td>
+                        <td>{toCurrency(famLeaveEmp / timeValue)}</td>
+                        <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
                       </tr>
                       <tr>
                         <td className="ma__td--group">Per Employee</td>
-                        <td>{toCurrency(medLeaveEmp / employeeCount / time_value)}</td>
-                        <td>{toCurrency(famLeaveEmp / employeeCount / time_value)}</td>
-                        <td>{toCurrency((medLeaveEmp + famLeaveEmp) / employeeCount / time_value)}</td>
+                        <td>{toCurrency(medLeaveEmp / employeeCount / timeValue)}</td>
+                        <td>{toCurrency(famLeaveEmp / employeeCount / timeValue)}</td>
+                        <td>{toCurrency((medLeaveEmp + famLeaveEmp) / employeeCount / timeValue)}</td>
                       </tr>
                     </tbody>
                   </table>
                 )}
-                {disable && payroll_base === 'one' && (
+                {disable && payrollBase === 'one' && (
                   <table className="ma__table">
                     <tbody>
                       <tr className="ma__table-headers">
@@ -307,21 +302,21 @@ const Part3 = (props) => {
                       </tr>
                       <tr>
                         <td>You will pay:</td>
-                        <td>{toCurrency(medLeaveComp / time_value)}</td>
-                        <td>{toCurrency(famLeaveComp / time_value)}</td>
-                        <td>{toCurrency((medLeaveComp + famLeaveComp) / time_value)}</td>
+                        <td>{toCurrency(medLeaveComp / timeValue)}</td>
+                        <td>{toCurrency(famLeaveComp / timeValue)}</td>
+                        <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
                       </tr>
                       <tr>
                         <td>Your Employee will pay:</td>
-                        <td>{toCurrency(medLeaveEmp / time_value)}</td>
-                        <td>{toCurrency(famLeaveEmp / time_value)}</td>
-                        <td>{toCurrency((medLeaveEmp + famLeaveEmp) / time_value)}</td>
+                        <td>{toCurrency(medLeaveEmp / timeValue)}</td>
+                        <td>{toCurrency(famLeaveEmp / timeValue)}</td>
+                        <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
                       </tr>
                       <tr>
                         <td className="ma__td--group">Total payment:</td>
-                        <td>{toCurrency(medLeave / time_value)}</td>
-                        <td>{toCurrency(famLeave / time_value)}</td>
-                        <td>{toCurrency((medLeave + famLeave) / time_value)}</td>
+                        <td>{toCurrency(medLeave / timeValue)}</td>
+                        <td>{toCurrency(famLeave / timeValue)}</td>
+                        <td>{toCurrency((medLeave + famLeave) / timeValue)}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -334,5 +329,12 @@ const Part3 = (props) => {
   );
 };
 
+Part3.propTypes = {
+  /** Functions that push changed context props to the url. */
+  onChangeMedCont: PropTypes.func,
+  onChangeFamCont: PropTypes.func,
+  onChangeTimePeriod: PropTypes.func,
+  onChangeTimeValue: PropTypes.func
+};
 
 export default addUrlProps({ mapUrlChangeHandlersToProps })(Part3);
