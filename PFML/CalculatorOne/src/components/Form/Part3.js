@@ -66,11 +66,29 @@ const Part3 = (props) => {
             const minFamPer = Math.round(minFam * 100);
 
             const onMedChange = (event, value) => {
-              const fracNum = value > minMedPer ? value / 100 : minMed;
+              // If statement should be removed after porting form context in.
+              if (event.target.type === 'button') {
+                const fracNum = value > minMedPer ? value / 100 : minMed;
+                context.updateState({ medLeaveCont: fracNum });
+                onChangeMedCont(fracNum);
+              }
+            };
+            // Remove this function after integrating form context.
+            const onMedBlur = (event, value) => {
+              const fracNum = value > minFamPer ? value / 100 : minMed;
               context.updateState({ medLeaveCont: fracNum });
-              onChangeMedCont(fracNum);
+              onChangeFamCont(fracNum);
             };
             const onFamChange = (event, value) => {
+              // If statement should be removed after porting form context in.
+              if (event.target.type === 'button') {
+                const fracNum = value > minFamPer ? value / 100 : minFam;
+                context.updateState({ famLeaveCont: fracNum });
+                onChangeFamCont(fracNum);
+              }
+            };
+            // Remove this function after integrating form context.
+            const onFamBlur = (event, value) => {
               const fracNum = value > minFamPer ? value / 100 : minFam;
               context.updateState({ famLeaveCont: fracNum });
               onChangeFamCont(fracNum);
@@ -162,7 +180,10 @@ const Part3 = (props) => {
                               step={1}
                               showButtons
                               onChange={(event, value) => onFamChange(event, value)}
-                              key={Math.random()}
+                              // Remove onBlur event after integration of form context
+                              onBlur={(event, value) => onFamBlur(event, value)}
+                              // Remove key after integration of form context
+                              key={`family-leave-input-number-${famLeaveCont}`}
                             />
                             <InputNumber
                               labelText="Employee Contribution"
@@ -206,7 +227,10 @@ const Part3 = (props) => {
                               step={1}
                               showButtons
                               onChange={(event, value) => onMedChange(event, value)}
-                              key={Math.random()}
+                              // Remove onBlur event after integration of form context
+                              onBlur={(event, value) => onMedBlur(event, value)}
+                              // Remove key after integration of form context.
+                              key={`medical-leave-input-number-${medLeaveCont}`}
                             />
                             <InputNumber
                               labelText="Employee Contribution"
