@@ -183,7 +183,7 @@ const Part3 = (props) => {
                               // Remove onBlur event after integration of form context
                               onBlur={(event, value) => onFamBlur(event, value)}
                               // Remove key after integration of form context
-                              key={famLeaveCont < minFam ? `family-leave-input-number-${famLeaveCont}-${Math.random()}` :`family-leave-input-number-${famLeaveCont}`}
+                              key={famLeaveCont < minFam ? `family-leave-input-number-${famLeaveCont}-${Math.random()}` : `family-leave-input-number-${famLeaveCont}`}
                             />
                             <InputNumber
                               labelText="Employee Contribution"
@@ -230,7 +230,7 @@ const Part3 = (props) => {
                               // Remove onBlur event after integration of form context
                               onBlur={(event, value) => onMedBlur(event, value)}
                               // Remove key after integration of form context.
-                              key={medLeaveCont < minMed ? `medical-leave-input-number-${medLeaveCont}-${Math.random()}` :`medical-leave-input-number-${medLeaveCont}`}
+                              key={medLeaveCont < minMed ? `medical-leave-input-number-${medLeaveCont}-${Math.random()}` : `medical-leave-input-number-${medLeaveCont}`}
                             />
                             <InputNumber
                               labelText="Employee Contribution"
