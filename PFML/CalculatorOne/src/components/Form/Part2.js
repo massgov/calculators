@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import numbro from 'numbro';
-import { InputCurrency, InputRadioGroup, CalloutAlert, Collapse, HelpTip, FormContext } from '@massds/mayflower-react';
+import { InputCurrency, InputRadioGroup, CalloutAlert, Collapse, HelpTip, FormContext, Paragraph } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import CalculatorOneVariables from '../../data/CalculatorOneVariables.json';
 import PartTwoProps from '../../data/PartTwo.json';
@@ -13,14 +13,12 @@ import '../../css/index.css';
  * Manually specify how to deal with changes to URL query param props.
  * We do this since we are not using a urlPropsQueryConfig.
  */
-function mapUrlChangeHandlersToProps(props) {
-  return{
-    onChangeOption: (value) => replaceInUrlQuery('option', encode(UrlQueryParamTypes.string, value)),
-    onChangePayW2: (value) => replaceInUrlQuery('payW2', encode(UrlQueryParamTypes.number, value)),
-    onChangePay1099: (value) => replaceInUrlQuery('pay1099', encode(UrlQueryParamTypes.number, value)),
-    onChangePayWages: (value) => replaceInUrlQuery('payWages', encode(UrlQueryParamTypes.number, value))
-  };
-}
+const mapUrlChangeHandlersToProps = () => ({
+  onChangeOption: (value) => replaceInUrlQuery('option', encode(UrlQueryParamTypes.string, value)),
+  onChangePayW2: (value) => replaceInUrlQuery('payW2', encode(UrlQueryParamTypes.number, value)),
+  onChangePay1099: (value) => replaceInUrlQuery('pay1099', encode(UrlQueryParamTypes.number, value)),
+  onChangePayWages: (value) => replaceInUrlQuery('payWages', encode(UrlQueryParamTypes.number, value))
+});
 
 const Part2 = (props) => {
   const {
@@ -50,6 +48,7 @@ const Part2 = (props) => {
             const totalPayment = totalPayroll * totalPercent;
             const totalPaymentEmp = totalPayment / employeeCount;
             const payrollWagesCap = numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages);
+            const disableInput = !hasMassEmployees || !employeeCount;
             return(
               <fieldset>
                 <div className="ma_input-group--mobile-1">
@@ -65,7 +64,7 @@ const Part2 = (props) => {
                         onChangeOption(e.selected);
                       }
                     }
-                    disabled={!hasMassEmployees || !employeeCount}
+                    disabled={disableInput}
                   />
                 </div>
                 {
@@ -91,7 +90,7 @@ const Part2 = (props) => {
                           onChangePayW2(value);
                         }}
                         required
-                        disabled={!employeeCount}
+                        disabled={disableInput}
                         inline
                         step={1}
                       />
@@ -115,7 +114,7 @@ const Part2 = (props) => {
                         onChange={(e, value) => {
                           onChangePay1099(value);
                         }}
-                        disabled={!employeeCount}
+                        disabled={disableInput}
                         required
                         inline
                         step={1}
@@ -177,11 +176,12 @@ const Part2 = (props) => {
                         required
                         inline
                         step={1}
+                        disabled={disableInput}
                       />
                     </div>
-                    <Collapse in={(payrollWages && numbro.unformat(payrollWages) > 0 && over25)} dimension="height" className="ma__callout-alert">
+                    <Collapse in={(payrollWages && numbro.unformat(payrollWages) > 0 && over25)} dimension="height">
                       <div className="ma__collapse">
-                        {payrollWages && numbro.unformat(payrollWages > 0) && over25 && (
+                        {payrollWages && (
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
                             textBefore="Total estimated annual contribution for this employee is "
@@ -189,7 +189,7 @@ const Part2 = (props) => {
                             textAfter="."
                             id="help-tip-tot-emp-ann-cont"
                             labelID="help-tip-tot-emp-cont-label"
-                            helpText={<p className="ma__help-text">{toCurrency(payrollWagesCap * totalPercent)} = {toCurrency(payrollWagesCap)} X {toPercentage(totalPercent, 2)}</p>}
+                            helpText={`${toCurrency(payrollWagesCap * totalPercent)} = ${toCurrency(payrollWagesCap)} X ${toPercentage(totalPercent, 2)}`}
                             theme="c-white"
                           />
                           <HelpTip
@@ -198,11 +198,11 @@ const Part2 = (props) => {
                             textAfter="."
                             id="help-tip-medfam-emp-ann-cont"
                             labelID="help-tip-medfam-emp-cont-label"
-                            helpText={<div className="ma__help-text"><p>Medical Leave: {toCurrency(medPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(medPercent, 2)}</p><p>Family Leave: {toCurrency(famPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}</p></div>}
+                            helpText={<div><p>Medical Leave: {toCurrency(medPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(medPercent, 2)}</p><p>Family Leave: {toCurrency(famPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}</p></div>}
                             theme="c-white"
                           />
                           { numbro.unformat(payrollWages) > socialSecCap && (
-                            <p>Because the employee's wages are over the social security cap, they do not contribute for income above <strong>{toCurrency(socialSecCap)}</strong>.</p>
+                            <Paragraph text={`Because the employee's wages are over the social security cap, they do not contribute for income above <strong>${toCurrency(socialSecCap)}</strong>.`} />
                           )}
                         </CalloutAlert>
                       )}

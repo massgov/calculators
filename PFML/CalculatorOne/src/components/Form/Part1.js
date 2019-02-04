@@ -12,13 +12,11 @@ import '../../css/index.css';
  * Manually specify how to deal with changes to URL query param props.
  * We do this since we are not using a urlPropsQueryConfig.
  */
-function mapUrlChangeHandlersToProps(props) {
-  return{
-    onChangeMassEmp: (value) => replaceInUrlQuery('massEmp', encode(UrlQueryParamTypes.string, value)),
-    onChangeW2: (value) => replaceInUrlQuery('w2', encode(UrlQueryParamTypes.number, value)),
-    onChangeEmp1099: (value) => replaceInUrlQuery('emp1099', encode(UrlQueryParamTypes.number, value))
-  };
-}
+const mapUrlChangeHandlersToProps = () => ({
+  onChangeMassEmp: (value) => replaceInUrlQuery('massEmp', encode(UrlQueryParamTypes.string, value)),
+  onChangeW2: (value) => replaceInUrlQuery('w2', encode(UrlQueryParamTypes.number, value)),
+  onChangeEmp1099: (value) => replaceInUrlQuery('emp1099', encode(UrlQueryParamTypes.number, value))
+});
 
 const Part1 = (props) => {
   const {

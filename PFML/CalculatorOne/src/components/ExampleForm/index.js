@@ -13,21 +13,19 @@ import '../../css/index.css';
  * Map from url query params to props. The values in `url` will still be encoded
  * as strings since we did not pass a `urlPropsQueryConfig` to addUrlProps.
  */
-function mapUrlToProps(url, props) {
-  return{
-    massEmp: decode(UrlQueryParamTypes.string, url.massEmp),
-    w2: decode(UrlQueryParamTypes.number, url.w2),
-    emp1099: decode(UrlQueryParamTypes.number, url.emp1099),
-    option: decode(UrlQueryParamTypes.string, url.option),
-    payW2: decode(UrlQueryParamTypes.number, url.payW2),
-    pay1099: decode(UrlQueryParamTypes.number, url.pay1099),
-    payWages: decode(UrlQueryParamTypes.number, url.payWages),
-    medCont: decode(UrlQueryParamTypes.number, url.medCont),
-    famCont: decode(UrlQueryParamTypes.number, url.famCont),
-    timeValue: decode(UrlQueryParamTypes.string, url.timeValue),
-    timePeriod: decode(UrlQueryParamTypes.string, url.timePeriod)
-  };
-}
+const mapUrlToProps = (url) => ({
+  massEmp: decode(UrlQueryParamTypes.string, url.massEmp),
+  w2: decode(UrlQueryParamTypes.number, url.w2),
+  emp1099: decode(UrlQueryParamTypes.number, url.emp1099),
+  option: decode(UrlQueryParamTypes.string, url.option),
+  payW2: decode(UrlQueryParamTypes.number, url.payW2),
+  pay1099: decode(UrlQueryParamTypes.number, url.pay1099),
+  payWages: decode(UrlQueryParamTypes.number, url.payWages),
+  medCont: decode(UrlQueryParamTypes.number, url.medCont),
+  famCont: decode(UrlQueryParamTypes.number, url.famCont),
+  timeValue: decode(UrlQueryParamTypes.string, url.timeValue),
+  timePeriod: decode(UrlQueryParamTypes.string, url.timePeriod)
+});
 
 const {
   minEmployees, largeCompMedCont, smallCompMedCont, largeCompFamCont, smallCompFamCont, emp1099Fraction

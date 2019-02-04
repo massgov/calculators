@@ -13,14 +13,12 @@ import '../../css/index.css';
  * Manually specify how to deal with changes to URL query param props.
  * We do this since we are not using a urlPropsQueryConfig.
  */
-function mapUrlChangeHandlersToProps(props) {
-  return{
-    onChangeMedCont: (value) => replaceInUrlQuery('medCont', encode(UrlQueryParamTypes.number, value)),
-    onChangeFamCont: (value) => replaceInUrlQuery('famCont', encode(UrlQueryParamTypes.number, value)),
-    onChangeTimePeriod: (value) => replaceInUrlQuery('timePeriod', encode(UrlQueryParamTypes.string, value)),
-    onChangeTimeValue: (value) => replaceInUrlQuery('timeValue', encode(UrlQueryParamTypes.number, value))
-  };
-}
+const mapUrlChangeHandlersToProps = () => ({
+  onChangeMedCont: (value) => replaceInUrlQuery('medCont', encode(UrlQueryParamTypes.number, value)),
+  onChangeFamCont: (value) => replaceInUrlQuery('famCont', encode(UrlQueryParamTypes.number, value)),
+  onChangeTimePeriod: (value) => replaceInUrlQuery('timePeriod', encode(UrlQueryParamTypes.string, value)),
+  onChangeTimeValue: (value) => replaceInUrlQuery('timeValue', encode(UrlQueryParamTypes.number, value))
+});
 
 const Part3 = (props) => {
   const {
@@ -53,7 +51,12 @@ const Part3 = (props) => {
               { text: 'Week', value: String(weeksPerYear) }
             ];
 
-            const totalPayroll = payrollBase === 'all' ? (numbro.unformat(payrollW2) + (over50per ? numbro.unformat(payroll1099) : 0)) : (numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages));
+            let totalPayroll;
+            if (payrollBase === 'all') {
+              totalPayroll = over50per ? (numbro.unformat(payroll1099) + numbro.unformat(payrollW2)) : numbro.unformat(payrollW2);
+            } else {
+              totalPayroll = numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages);
+            }
             const medLeave = totalPayroll * medPercent;
             const famLeave = totalPayroll * famPercent;
 
@@ -96,11 +99,11 @@ const Part3 = (props) => {
             const famLeaveComp = famLeave * famLeaveCont;
             const medLeaveEmp = medLeave * (1 - medLeaveCont);
             const famLeaveEmp = famLeave * (1 - famLeaveCont);
-            const disable = hasMassEmployees && employeesW2 > 0 && (
-              payrollBase === 'all' && payrollW2 && numbro.unformat(payrollW2) > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true)
-            ) || (
-              payrollBase === 'one' && payrollWages && numbro.unformat(payrollWages) > 0
-            );
+
+            const disableAll = payrollBase === 'all' && payrollW2 && numbro.unformat(payrollW2) > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true);
+            const disableOne = payrollBase === 'one' && payrollWages && numbro.unformat(payrollWages) > 0;
+            const disable = hasMassEmployees && (employeeCount > 0) && (disableOne || disableAll);
+
             const famTicks = minFamPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minFamPer, 'Min Employer Contribution'], [100, '100%']];
             const medTicks = minMedPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minMedPer, 'Min Employer Contribution'], [100, '100%']];
 
