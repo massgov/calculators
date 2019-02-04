@@ -9,11 +9,10 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:10.10.0
     parallelism: 2
-    working_directory: ~/repo
+    working_directory: ~/PFML/CalculatorOne
     steps:
       - checkout
-      - run: cd PFML/CalculatorOne
-      - run: npm install --no-optional
+      - run: npm install
       - run: npm run lint
       - run: npm run build
   pfml-cal-3:
@@ -21,11 +20,10 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:10.10.0
     parallelism: 2
-    working_directory: ~/repo
+    working_directory: ~/PFML/CalculatorThree
     steps:
       - checkout
-      - run: cd PFML/CalculatorThree
-      - run: npm install --no-optional
+      - run: npm install
       - run: npm run lint
       - run: npm run build
 workflows:
