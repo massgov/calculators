@@ -100,8 +100,8 @@ const Part3 = (props) => {
             const medLeaveEmp = medLeave * (1 - medLeaveCont);
             const famLeaveEmp = famLeave * (1 - famLeaveCont);
 
-            const disableAll = payrollBase === 'all' && payrollW2 && numbro.unformat(payrollW2) > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true);
-            const disableOne = payrollBase === 'one' && payrollWages && numbro.unformat(payrollWages) > 0;
+            const disableAll = payrollBase === 'all' && numbro.unformat(payrollW2) > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true);
+            const disableOne = payrollBase === 'one' && numbro.unformat(payrollWages) > 0;
             const disable = hasMassEmployees && (employeeCount > 0) && (disableOne || disableAll);
 
             const famTicks = minFamPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minFamPer, 'Min Employer Contribution'], [100, '100%']];

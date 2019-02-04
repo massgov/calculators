@@ -67,8 +67,7 @@ const Part2 = (props) => {
                     disabled={disableInput}
                   />
                 </div>
-                {
-                (payrollBase === 'all') ? (
+                {payrollBase === 'all' && (
                   <Fragment>
                     <div key="payrollW2">
                       <InputCurrency
@@ -114,7 +113,7 @@ const Part2 = (props) => {
                         onChange={(e, value) => {
                           onChangePay1099(value);
                         }}
-                        disabled={disableInput}
+                        disabled={disableInput || Number(employees1099) <= 0}
                         required
                         inline
                         step={1}
@@ -152,7 +151,8 @@ const Part2 = (props) => {
                       </div>
                     </Collapse>
                   </Fragment>
-                ) : (
+                )}
+                {payrollBase === 'one' && (
                   <Fragment>
                     <div key="payrollWages">
                       <InputCurrency
@@ -179,7 +179,7 @@ const Part2 = (props) => {
                         disabled={disableInput}
                       />
                     </div>
-                    <Collapse in={(payrollWages && numbro.unformat(payrollWages) > 0 && over25)} dimension="height">
+                    <Collapse in={(payrollWages && (employeeCount > 0) && (numbro.unformat(payrollWages) > 0))} dimension="height">
                       <div className="ma__collapse">
                         {payrollWages && (
                         <CalloutAlert theme="c-primary" icon={null}>
@@ -209,8 +209,7 @@ const Part2 = (props) => {
                       </div>
                     </Collapse>
                   </Fragment>
-                )
-              }
+                )}
               </fieldset>
             );
           }
