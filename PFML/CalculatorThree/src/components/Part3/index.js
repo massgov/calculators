@@ -1,21 +1,26 @@
-import React from 'react';
-import { Paragraph, CalloutAlert, HelpTip } from '@massds/mayflower-react';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import {
+  Paragraph, CalloutAlert, HelpTip, Button
+} from '@massds/mayflower-react';
 import numbro from 'numbro';
 import CalculatorThreeVariables from '../../data/CalculatorThreeVariables.json';
-import OutputProps from '../../data/Output.json';
+import PartThreeProps from '../../data/PartThree.json';
 import EmpSpan from '../EmpSpan';
 
 import './index.css';
 
 
-const Output = (props) => {
+const Part3 = (props) => {
   // Base variables provided in the base variable json.
   const {
     maAvgYear, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction
   } = CalculatorThreeVariables.baseVariables;
   // Inputs from question 1 and 2.
   const { yearIncome, maxWeeks } = props;
-  const { paragraphOne, paragraphTwo, paragraphThree } = OutputProps;
+  const {
+    paragraphOne, paragraphTwo, paragraphThree, buttonLink
+  } = PartThreeProps;
   const { more, less, max } = paragraphThree;
 
   const benefitBreak = maAvgYear * 0.5;
@@ -56,42 +61,52 @@ const Output = (props) => {
   const getHelpText = () => (
     <CalloutAlert theme="c-primary" icon={{ name: '', ariaHidden: true }}>
       { yearIncome < benefitBreak ? (
-        <React.Fragment>
+        <Fragment>
           <Paragraph text={`${less.partOne} ${toCurrency(benefitBreak)} ${less.partTwo} ${toPercentage(lowBenefitFraction)} ${less.partThree} ${toCurrency(benefitBreakWeek)} ${less.partFour}`} />
           <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = (${toCurrency(yearIncome)} x ${toPercentage(lowBenefitFraction)}) / ${weeksPerYear} weeks per year`} /></div>
-        </React.Fragment>
+        </Fragment>
 
       ) : (
-        yearIncome < maxBenefit ? (
-          <React.Fragment>
-            <Paragraph text={`${more.partOne} ${toCurrency(benefitBreak)} ${more.partTwo} ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreak)} ${more.partFive} ${toCurrency(maxBenefit)}${more.partSix} ${toCurrency(maxBenefitWeek)} ${more.partSeven}`} />
-            <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${yearIncome > maxBenefit ? toCurrency(maxBenefit) : toCurrency(yearIncome)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <Paragraph text={`${max.partOne} ${toCurrency(maxBenefit)} ${max.partTwo} ${toCurrency(maxBenefitWeek)} ${max.partThree}`} />
-            <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${yearIncome > maxBenefit ? toCurrency(maxBenefit) : toCurrency(yearIncome)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
-          </React.Fragment>
-        )
+        <Fragment>
+          {yearIncome < maxBenefit ? (
+            <Fragment>
+              <Paragraph text={`${more.partOne} ${toCurrency(benefitBreak)} ${more.partTwo} ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreak)} ${more.partFive} ${toCurrency(maxBenefit)}${more.partSix} ${toCurrency(maxBenefitWeek)} ${more.partSeven}`} />
+              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${yearIncome > maxBenefit ? toCurrency(maxBenefit) : toCurrency(yearIncome)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Paragraph text={`${max.partOne} ${toCurrency(maxBenefit)} ${max.partTwo} ${toCurrency(maxBenefitWeek)} ${max.partThree}`} />
+              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${yearIncome > maxBenefit ? toCurrency(maxBenefit) : toCurrency(yearIncome)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
+            </Fragment>
+          )}
+        </Fragment>
       )}
     </CalloutAlert>
   );
   return(
-    <div className="ma__output">
-      <HelpTip textBefore={`${paragraphOne.partOne} `} triggerText={`<span class=${empClass} >${toCurrency(estWeeklyBenefit)}</span>`} textAfter={`${paragraphOne.partTwo} <span class=${empClass} >${toPercentage(percentWeeklyIncome)}</span> ${paragraphOne.partThree}`} id="help-tip-benefits" labelID="help-tip-benefits-label">{getHelpText()}</HelpTip>
-      <p>
-        {paragraphTwo.partOne}
-        {' '}
-        {<EmpSpan text={toCurrency(totBenefit)} />}
-        {paragraphTwo.partTwo}
-        {' '}
-        {<EmpSpan text={toPercentage(percentIncome)} />}
-        {' '}
-        {paragraphTwo.partThree}
-      </p>
-    </div>
+    <Fragment>
+      <div className="ma__output">
+        <HelpTip textBefore={`${paragraphOne.partOne} `} triggerText={`<span class=${empClass} >${toCurrency(estWeeklyBenefit)}</span>`} textAfter={`${paragraphOne.partTwo} <span class=${empClass} >${toPercentage(percentWeeklyIncome)}</span> ${paragraphOne.partThree}`} id="help-tip-benefits" labelID="help-tip-benefits-label">{getHelpText()}</HelpTip>
+        <p>
+          {paragraphTwo.partOne}
+          {' '}
+          {<EmpSpan text={toCurrency(totBenefit)} />}
+          {paragraphTwo.partTwo}
+          {' '}
+          {<EmpSpan text={toPercentage(percentIncome)} />}
+          {' '}
+          {paragraphTwo.partThree}
+        </p>
+      </div>
+      <Button type="submit" size="small" info={buttonLink.text} text={buttonLink.text} href={buttonLink.link} />
+    </Fragment>
   );
 };
 
+Part3.propTypes = {
+  yearIncome: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  maxWeeks: PropTypes.func
+};
 
-export default Output;
+
+export default Part3;
