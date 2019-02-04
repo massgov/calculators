@@ -1,6 +1,6 @@
 {
   "name": "Mayflower-react-starter",
-  "homepage": "",
+  "homepage": "http://calculator.digital.mass.gov.s3-website-us-east-1.amazonaws.com/pfml/contribution/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
