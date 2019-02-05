@@ -34,17 +34,16 @@ The most common commands can be found in the package.json's ``scripts`` section:
 - The text powering Part 1 of the calculator is found in the data file [PartOne.json](./src/data/PartOne.json).
 <img src="./documentation/images/Part1-02052019.png" width="500">
 
-### [Part 2](./src/components/Part2)
+### Part 2
 - [Part 2 source code](./src/components/Part2)
 - The text powering Part 2 of the calculator is found in the data file [PartTwo.json](./src/data/PartTwo.json)
 <img src="./documentation/images/Part2-02052019.png" width="500">
 
-### [Part 3](./src/components/Part3)
+### Part 3
 - [Part 3 source code](./src/components/Part3)
 - The text powering Part 3 of the calculator is found in the data file [PartThree.json](./src/data/PartThree.json)
 <img src="./documentation/images/Part3-02052019.png" width="500">
 
-### [Base Variables](./src/data/CalculatorThreeVariables.json)
-
-The base variables that power the logic behind the calculators messaging and calculations are located in the base variables json.
+### Base Variables
+- The [Base Variables](./src/data/CalculatorThreeVariables.json) that power the logic behind the calculators messaging and calculations are located in the base variables json.
 
