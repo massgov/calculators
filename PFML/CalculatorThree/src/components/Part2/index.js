@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import {
   InputCurrency, Collapse, CalloutAlert, Paragraph
 } from '@massds/mayflower-react';
-import QuestionTwoProps from '../../data/QuestionTwo.json';
+import PartTwoProps from '../../data/PartTwo.json';
 import './index.css';
 
-const QuestionTwo = (props) => {
+const Part2 = (props) => {
   const {
     defaultValue, onChange, disabled, belowMinSalary, onBlur
   } = props;
   const {
     question, errorMsg, message, messageTheme
-  } = QuestionTwoProps;
+  } = PartTwoProps;
   return(
-    <React.Fragment>
+    <Fragment>
       <InputCurrency
         labelText={question}
         id="question-2"
@@ -26,7 +27,7 @@ const QuestionTwo = (props) => {
           thousandSeparated: true,
           negative: 'parenthesis',
           output: 'currency'
-    		}}
+        }}
         errorMsg={errorMsg}
         onChange={onChange}
         required
@@ -42,8 +43,17 @@ const QuestionTwo = (props) => {
           </CalloutAlert>
         </div>
       </Collapse>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
-export default QuestionTwo;
+
+Part2.propTypes = {
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  disabled: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  belowMinSalary: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
+};
+
+export default Part2;
