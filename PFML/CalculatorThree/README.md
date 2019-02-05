@@ -1,6 +1,6 @@
-# Paid Family and Medical Leave Benefits Calculator (Calculator 3)
+# PFML: Your Benefits Calculator (Calculator 3)
 
-Welcome to the Commonwealth of Massachusetts' PFML Benefits Calculatr Single Page Application (SPA). This is a static website built with React, [Mayflower React](https://github.com/massgov/mayflower/) (Commonwealth's Design System), and our [Mayflower React Starter](https://github.com/massgov/mayflower-react-starter/). The [Mayflower React Starter](https://github.com/massgov/mayflower-react-starter/) is a customized instance of [Facebook's Create React App](https://github.com/facebook/create-react-app).
+Welcome to the Commonwealth of Massachusetts' Single Page Application (SPA), powering the Paid Family Medical Leave Benefits Calculator" . This is a static website built with React, [Mayflower React](https://github.com/massgov/mayflower/) (Commonwealth's Design System), and our [Mayflower React Starter](https://github.com/massgov/mayflower-react-starter/). The [Mayflower React Starter](https://github.com/massgov/mayflower-react-starter/) is a customized instance of [Facebook's Create React App](https://github.com/facebook/create-react-app).
 
 ## Quick start
 
