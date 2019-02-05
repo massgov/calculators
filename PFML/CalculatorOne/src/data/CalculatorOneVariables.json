@@ -1,7 +1,5 @@
 {
   "baseVariables": {
-  	"weeksPerYear": 52,
-  	"quartersPerYear": 4,
   	"minEmployees": 25,
   	"smallCompMedCont": 0,
   	"smallCompFamCont": 0,

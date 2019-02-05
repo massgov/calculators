@@ -9,6 +9,29 @@
             "content": "How will you <strong>split liability with your employees</strong>?",
             "triggerText": "<strong>split liability with your employees</strong>",
             "helpText": "Because you less than 25 or more employees, you are not required to pay the employer share of medical and family leave."
+        },
+        "left": {
+            "main": "Family Leave",
+            "left": "Employer Contribution",
+            "right": "Employee Contribution"
+        },
+        "right": {
+            "main": "Medical Leave",
+            "left": "Employer Contribution",
+            "right": "Employee Contribution"
         }
+    },
+    "questionTwo": {
+        "question": "Paid Family Medical Leave by",
+        "options": [{
+            "text": "Year",
+            "value": "1"
+        }, {
+            "text": "Quarter",
+            "value": "4"
+        }, {
+            "text": "Week",
+            "value": "52"
+        }]
     }
 }

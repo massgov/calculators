@@ -22,9 +22,9 @@ const mapUrlChangeHandlersToProps = () => ({
 
 const Part3 = (props) => {
   const {
-    minEmployees, emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, largeCompFamCont, smallCompFamCont, largeCompMedCont, smallCompMedCont, weeksPerYear, quartersPerYear, socialSecCap
+    minEmployees, emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, largeCompFamCont, smallCompFamCont, largeCompMedCont, smallCompMedCont, socialSecCap
   } = CalculatorOneVariables.baseVariables;
-  const { questionOne } = PartThreeProps;
+  const { questionOne, questionTwo } = PartThreeProps;
   const {
     onChangeMedCont, onChangeFamCont, onChangeTimeValue, onChangeTimePeriod
   } = props;
@@ -44,12 +44,6 @@ const Part3 = (props) => {
             const over25 = employeeCount >= minEmployees;
             const medPercent = over25 ? largeMedPercent : smallMedPercent;
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
-
-            const timePeriodOptions = [
-              { text: 'Year', value: '1' },
-              { text: 'Quarter', value: String(quartersPerYear) },
-              { text: 'Week', value: String(weeksPerYear) }
-            ];
 
             let totalPayroll;
             if (payrollBase === 'all') {
@@ -105,7 +99,7 @@ const Part3 = (props) => {
             };
             const getTimeValue = (text) => {
               let value;
-              timePeriodOptions.forEach((period) => {
+              questionTwo.options.forEach((period) => {
                 if (period.text === text) {
                   value = period.value;
                 }
@@ -161,10 +155,10 @@ const Part3 = (props) => {
                         {over25 ? getHelpTip(questionOne.over25) : getHelpTip(questionOne.under25)}
                       </legend>
                       <div className="ma__input-group--two">
-                        <Input labelText="Family Leave" required>
+                        <Input labelText={questionOne.left.main} required>
                           <div className="ma__input-group--ends">
                             <InputNumber
-                              labelText="Employer Contribution"
+                              labelText={questionOne.left.left}
                               name="famEmployerCont"
                               id="famEmployerCont"
                               type="number"
@@ -186,7 +180,7 @@ const Part3 = (props) => {
                               key={famLeaveCont < minFam ? `family-leave-input-number-${famLeaveCont}-${Math.random()}` : `family-leave-input-number-${famLeaveCont}`}
                             />
                             <InputNumber
-                              labelText="Employee Contribution"
+                              labelText={questionOne.left.right}
                               name="famEmployeeCont"
                               id="famEmployeeCont"
                               type="number"
@@ -208,10 +202,10 @@ const Part3 = (props) => {
                           </div>
                           <InputSlider {...familyLeaveSliderProps} />
                         </Input>
-                        <Input labelText="Medical Leave" required>
+                        <Input labelText={questionOne.right.main} required>
                           <div className="ma__input-group--ends">
                             <InputNumber
-                              labelText="Employer Contribution"
+                              labelText={questionOne.right.left}
                               name="medEmployerCont"
                               id="medEmployerCont"
                               type="number"
@@ -233,7 +227,7 @@ const Part3 = (props) => {
                               key={medLeaveCont < minMed ? `medical-leave-input-number-${medLeaveCont}-${Math.random()}` : `medical-leave-input-number-${medLeaveCont}`}
                             />
                             <InputNumber
-                              labelText="Employee Contribution"
+                              labelText={questionOne.right.right}
                               name="medEmployeeCont"
                               id="medEmployeeCont"
                               type="number"
@@ -259,11 +253,11 @@ const Part3 = (props) => {
                     </fieldset>
                     <h2 className="ma__table-heading">
                       <SelectBox
-                        label="Paid Family Medical Leave by"
+                        label={questionTwo.question}
                         stackLabel={false}
                         required
                         id="color-select"
-                        options={timePeriodOptions}
+                        options={questionTwo.options}
                         selected={timePeriod || 'Year'}
                         onChangeCallback={({ selected }) => {
                           const value = getTimeValue(selected);
