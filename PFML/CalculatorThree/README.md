@@ -29,20 +29,20 @@ The most common commands can be found in the package.json's ``scripts`` section:
 
 ## Structure
 
-### [Part 1](./src/components/Part1)
-
-The text powering Part 1 of the calculator is found in the data file [PartOne.json](./src/data/PartOne.json).
-![Part 1](./documentation/images/Part1-02052019.png?raw=true "Part 1")
+### Part 1
+- [Part 1 source code](./src/components/Part1)
+- The text powering Part 1 of the calculator is found in the data file [PartOne.json](./src/data/PartOne.json).
+<img src="./documentation/images/Part1-02052019.png" width="500">
 
 ### [Part 2](./src/components/Part2)
-
-The text powering Part 2 of the calculator is found in the data file [PartTwo.json](./src/data/PartTwo.json)
-![Part 2](./documentation/images/Part2-02052019.png?raw=true "Part 2")
+- [Part 2 source code](./src/components/Part2)
+- The text powering Part 2 of the calculator is found in the data file [PartTwo.json](./src/data/PartTwo.json)
+<img src="./documentation/images/Part2-02052019.png" width="500">
 
 ### [Part 3](./src/components/Part3)
-
-The text powering Part 3 of the calculator is found in the data file [PartThree.json](./src/data/PartThree.json)
-![Part 3](./documentation/images/Part3-02052019.png?raw=true "Part 3")
+- [Part 3 source code](./src/components/Part3)
+- The text powering Part 3 of the calculator is found in the data file [PartThree.json](./src/data/PartThree.json)
+<img src="./documentation/images/Part3-02052019.png" width="500">
 
 ### [Base Variables](./src/data/CalculatorThreeVariables.json)
 
