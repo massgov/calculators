@@ -1,5 +1,5 @@
 {
-  "title": "Paid Family Medical Leave Contribution Caculator",
+  "title": "Paid Family Medical Leave Contribution Calculator",
   "baseVariables": {
   	"minEmployees": 25,
   	"smallCompMedCont": 0,
