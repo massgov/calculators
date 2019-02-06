@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { decode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery, encode } from 'react-url-query';
 import { Header, Footer } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
@@ -13,16 +14,42 @@ import CalculatorThreeVariables from './data/CalculatorThreeVariables.json';
 import './index.css';
 
 
+/**
+ * Map from url query params to props. The values in `url` will still be encoded
+ * as strings since we did not pass a `urlPropsQueryConfig` to addUrlProps.
+ */
+const mapUrlToProps = (url) => ({
+  yearIncome: decode(UrlQueryParamTypes.number, url.yearIncome),
+  maxWeeks: decode(UrlQueryParamTypes.number, url.maxWeeks),
+  leaveReason: decode(UrlQueryParamTypes.string, url.leaveReason),
+  belowMinSalary: decode(UrlQueryParamTypes.boolean, url.belowMinSalary)
+});
+
+/**
+ * Manually specify how to deal with changes to URL query param props.
+ * We do this since we are not using a urlPropsQueryConfig.
+ */
+const mapUrlChangeHandlersToProps = () => ({
+  onChangeBelowMinSalary: (value) => replaceInUrlQuery('belowMinSalary', encode(UrlQueryParamTypes.boolean, value)),
+  onChangeYearIncome: (value) => replaceInUrlQuery('yearIncome', encode(UrlQueryParamTypes.string, value)),
+  onChangeMaxWeeks: (value) => replaceInUrlQuery('maxWeeks', encode(UrlQueryParamTypes.number, value)),
+  onChangeLeaveReason: (value) => replaceInUrlQuery('leaveReason', encode(UrlQueryParamTypes.string, value))
+});
+
+const validNumber = (num) => (num || (num !== null && num !== undefined));
+const getDefaultNumber = (num) => ((validNumber(num)) ? Number(num) : 0);
+
 class App extends Component {
   constructor(props) {
     super(props);
-    const hasLocalStore = typeof localStorage !== 'undefined';
+    // const hasLocalStore = typeof localStorage !== 'undefined';
+    const { yearIncome, maxWeeks, leaveReason, belowMinSalary } = props;
     /* eslint-disable no-undef */
     this.state = {
-      yearIncome: (hasLocalStore) ? localStorage.getItem('yearIncome') : 0,
-      maxWeeks: (hasLocalStore) ? localStorage.getItem('maxWeeks') : '',
-      leaveReason: (hasLocalStore) ? localStorage.getItem('leaveReason') : '',
-      belowMinSalary: (hasLocalStore) ? localStorage.getItem('belowMinSalary') : false
+      yearIncome: getDefaultNumber(yearIncome),
+      maxWeeks,
+      leaveReason,
+      belowMinSalary
     };
     /* eslint-enable react/no-unused-state */
     this.footerProps = {
@@ -39,38 +66,40 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    // add event listener to save state to localStorage
-    // when user leaves/refreshes the page
-    if (typeof window !== 'undefined') {
-      window.addEventListener(
-        'beforeunload',
-        this.saveStateToLocalStorage.bind(this)
-      );
-    }
-  }
-
-  componentWillUnmount() {
-    if (typeof window !== 'undefined') {
-      window.removeEventListener(
-        'beforeunload',
-        this.saveStateToLocalStorage.bind(this)
-      );
-    }
-
-    // saves if component has a chance to unmount
-    this.saveStateToLocalStorage();
-  }
+  // componentDidMount() {
+  //   // add event listener to save state to localStorage
+  //   // when user leaves/refreshes the page
+  //   if (typeof window !== 'undefined') {
+  //     window.addEventListener(
+  //       'beforeunload',
+  //       this.saveStateToLocalStorage.bind(this)
+  //     );
+  //   }
+  // }
+  //
+  // componentWillUnmount() {
+  //   if (typeof window !== 'undefined') {
+  //     window.removeEventListener(
+  //       'beforeunload',
+  //       this.saveStateToLocalStorage.bind(this)
+  //     );
+  //   }
+  //
+  //   // saves if component has a chance to unmount
+  //   this.saveStateToLocalStorage();
+  // }
 
   handleInput = (e, value) => {
     const numberValue = value;
     this.setState({
       yearIncome: numberValue
     });
+    this.props.onChangeYearIncome(value);
     if (numberValue > CalculatorThreeVariables.baseVariables.minSalary) {
       this.setState({
         belowMinSalary: false
       });
+      this.props.onChangeBelowMinSalary(false);
     }
   };
 
@@ -79,6 +108,8 @@ class App extends Component {
       maxWeeks,
       leaveReason: selected
     });
+    this.props.onChangeMaxWeeks(maxWeeks);
+    this.props.onChangeLeaveReason(selected);
   }
 
   handleBlur = (numberValue) => {
@@ -86,19 +117,20 @@ class App extends Component {
       this.setState({
         belowMinSalary: true
       });
+      this.props.onChangeBelowMinSalary(true);
     }
   }
 
-  saveStateToLocalStorage() {
-    // for every item in React state
-    if (typeof localStorage !== 'undefined') {
-      Object.keys(this.state).forEach(function (key) {
-        // save to localStorage
-        // eslint-disable-next-line react/destructuring-assignment
-        localStorage.setItem(key, this.state[key]);
-      });
-    }
-  }
+  // saveStateToLocalStorage() {
+  //   // for every item in React state
+  //   if (typeof localStorage !== 'undefined') {
+  //     Object.keys(this.state).forEach(function (key) {
+  //       // save to localStorage
+  //       // eslint-disable-next-line react/destructuring-assignment
+  //       localStorage.setItem(key, this.state[key]);
+  //     });
+  //   }
+  // }
 
   render() {
     const {
@@ -132,4 +164,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default addUrlProps({ mapUrlToProps, mapUrlChangeHandlersToProps })(App);
