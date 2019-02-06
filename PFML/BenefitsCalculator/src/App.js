@@ -9,6 +9,7 @@ import SocialLinksLiveData from './data/SocialLinksLive.json';
 import Part1 from './components/Part1';
 import Part2 from './components/Part2';
 import Part3 from './components/Part3';
+import history from './components/History';
 import CalculatorThreeVariables from './data/CalculatorThreeVariables.json';
 
 import './index.css';
@@ -64,6 +65,11 @@ class App extends Component {
       hideBackTo: true,
       siteLogoDomain: { url: { domain: 'https://www.mass.gov/' } }
     };
+  }
+
+  componentDidMount() {
+    // force an update if the URL changes
+    history.listen(() => this.forceUpdate());
   }
 
   // componentDidMount() {
