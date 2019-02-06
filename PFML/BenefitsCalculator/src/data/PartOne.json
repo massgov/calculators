@@ -3,6 +3,7 @@
 	"options": [{
 	    "label": "Birth, adoption, or fostering of a child",
 	    "value": "birth-adoption",
+			"class": "col-large-1",
 	    "weeks": "12",
 	    "id": "birth-adoption",
 	    "message": "You can be covered <strong>up to 12 weeks</strong> by the Paid Family and Medical Leave Program. This benefit will be available starting <strong>January 1, 2021</strong>.",
@@ -10,6 +11,7 @@
 	}, {
 	    "label": "Personal medical condition",
 	    "value": "own-medical",
+			"class": "col-large-1",
 	    "weeks": "20",
 	    "id": "own-medical",
 	    "message": "You can be covered <strong>up to 20 weeks</strong> by the Paid Family and Medical Leave Program. This benefit will be available starting <strong>January 1, 2021</strong>.",
@@ -17,6 +19,7 @@
 	}, {
 	    "label": "Caring for a family member",
 	    "value": "caring-loved-one",
+			"class": "col-large-1",
 	    "weeks": "12",
 	    "id": "caring-loved-one",
 	    "message": "You can be covered <strong>up to 12 weeks</strong> by the Paid Family and Medical Leave Program. This benefit will be available starting <strong>July 1, 2021</strong>.",
@@ -24,6 +27,7 @@
 	}, {
 	    "label": "Family member called to active duty",
 	    "value": "active-duty",
+			"class": "col-large-1",
 	    "weeks": "26",
 	    "id": "active-duty",
 	    "message": "You can be <strong>covered up to 26 weeks</strong> by the Paid Family and Medical Leave Program. This benefit will be available starting <strong>January 1, 2021</strong>.",
@@ -31,6 +35,7 @@
 	}, {
 	    "label": "Other",
 	    "value": "other",
+			"class": "col-large-1",
 	    "weeks": "0",
 	    "id": "other",
 	    "message": "You <strong>may not be covered</strong> by the Paid Family and Medical Leave Program, for more information go here.",

@@ -4,7 +4,7 @@
 
 version: 2
 jobs:
-  pfml-cal-1:
+  pfml-cal-benefits:
     docker:
       # specify the version you desire here
       - image: circleci/node:10.10.0
@@ -13,15 +13,15 @@ jobs:
     steps:
       - checkout
       - run:
-          name: 'PFML Cal One Install Packages'
-          command: cd PFML/CalculatorOne && npm install
-      - run: 
-          name: 'PFML Cal One Lint'
-          command: cd PFML/CalculatorOne && npm run build-css && npm run lint
-      - run: 
-          name: 'PFML Cal One Build App'
-          command: cd PFML/CalculatorOne && npm run build
-  pfml-cal-3:
+          name: 'PFML Benefits Calculator Install Packages'
+          command: cd PFML/BenefitsCalculator && npm install
+      - run:
+          name: 'PFML Benefits Calculator Lint'
+          command: cd PFML/BenefitsCalculator && npm run build-css && npm run lint
+      - run:
+          name: 'PFML Benefits Calculator Build App'
+          command: cd PFML/BenefitsCalculator && npm run build
+  pfml-cal-contribution:
     docker:
       # specify the version you desire here
       - image: circleci/node:10.10.0
@@ -29,18 +29,18 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: 
-          name: 'PFML Cal Three Install Packages'
-          command: cd PFML/CalculatorThree && npm install
-      - run: 
-          name: 'PFML Cal Three Lint'
-          command: cd PFML/CalculatorThree && npm run build-css && npm run lint
-      - run: 
-          name: 'PFML Cal Three Build App'
-          command: cd PFML/CalculatorThree && npm run build
+      - run:
+          name: 'PFML Contribution Calculator Install Packages'
+          command: cd PFML/ContributionCalculator && npm install
+      - run:
+          name: 'PFML Contribution Calculator Lint'
+          command: cd PFML/ContributionCalculator && npm run build-css && npm run lint
+      - run:
+          name: 'PFML Contribution Calculator Build App'
+          command: cd PFML/ContributionCalculator && npm run build
 workflows:
   version: 2
   test:
     jobs:
-      - pfml-cal-1
-      - pfml-cal-3
+      - pfml-cal-benefits
+      - pfml-cal-contribution
