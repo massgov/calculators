@@ -1,6 +1,17 @@
 form {
   margin: 40px 0 !important;
 }
-.ma__input-group {
+.ma__input-group:not(:first-child) {
   margin-bottom: 30px;
+}
+
+.input_apply-all{
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin-bottom: 30px;
+  
+  label {
+    font-weight: 300;
+  }
 }

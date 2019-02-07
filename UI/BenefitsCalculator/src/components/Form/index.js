@@ -16,7 +16,8 @@ class Form extends Component {
         quarter3: '',
         quarter4: ''
       },
-      submitted: false
+      submitted: false,
+      applyAll: false
     };
     const format = 'MMM YYYY';
     const quarter1 = moment().quarter() + 1;
@@ -47,6 +48,8 @@ class Form extends Component {
     const {
       quarter1, quarter2, quarter3, quarter4
     } = stateValue;
+    const { applyAll } = this.state;
+    console.log(applyAll, quarter1, quarter2)
     const inputCurrencyProps = {
       placeholder: 'e.g. $100,000',
       format: {
@@ -74,12 +77,31 @@ class Form extends Component {
               this.setState({ value: newStateValue });
             }}
           />
+          <div className="input_apply-all">
+            <input
+              type="checkbox"
+              id="apply-all"
+              onChange={(e) => {
+                this.setState({
+                  applyAll: e.target.checked,
+                  value: {
+                    quarter1,
+                    quarter2: quarter1,
+                    quarter3: quarter1,
+                    quarter4: quarter1
+                  }
+                });
+              }}
+            />
+            <label for="apply-all">Apply this quarter's earnings to the all quarters.</label>
+          </div>
           <InputCurrency
             {... inputCurrencyProps}
             labelText={`${this.q2Start} – ${this.q2End} earnings:`}
             id="quarter2"
             name="quarter2"
             defaultValue={quarter2}
+            disabled={applyAll}
             onChange={(e, value) => {
               const newStateValue = { ...stateValue };
               newStateValue.quarter2 = value;
@@ -92,6 +114,7 @@ class Form extends Component {
             id="quarter3"
             name="quarter3"
             defaultValue={quarter3}
+            disabled={applyAll}
             onChange={(e, value) => {
               const newStateValue = { ...stateValue };
               newStateValue.quarter3 = value;
@@ -104,6 +127,7 @@ class Form extends Component {
             id="quarter4"
             name="quarter4"
             defaultValue={quarter4}
+            disabled={applyAll}
             onChange={(e, value) => {
               const newStateValue = { ...stateValue };
               newStateValue.quarter4 = value;
