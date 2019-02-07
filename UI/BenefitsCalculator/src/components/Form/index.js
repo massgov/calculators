@@ -72,6 +72,12 @@ class Form extends Component {
             defaultValue={quarter1}
             onChange={(e, value) => {
               const newStateValue = { ...stateValue };
+              if (applyAll) {
+                newStateValue.quarter1 = value;
+                newStateValue.quarter2 = value;
+                newStateValue.quarter3 = value;
+                newStateValue.quarter4 = value;
+              }
               newStateValue.quarter1 = value;
               this.setState({ value: newStateValue });
             }}
