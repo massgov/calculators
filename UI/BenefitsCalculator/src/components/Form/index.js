@@ -48,8 +48,7 @@ class Form extends Component {
     const {
       quarter1, quarter2, quarter3, quarter4
     } = stateValue;
-    const { applyAll } = this.state;
-    console.log(applyAll, quarter1, quarter2);
+    const { applyAll, submitted } = this.state;
     const inputCurrencyProps = {
       placeholder: 'e.g. $100,000',
       format: {
@@ -140,7 +139,7 @@ class Form extends Component {
           />
         </form>
         {
-          this.state.submitted && (
+          submitted && (
             <Output {...stateValue} />
           )
         }

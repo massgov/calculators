@@ -14,8 +14,9 @@ const Output = (props) => {
   const quartersCount = quartersHaveValue.length;
 
   // qualification
+  const quartersSumThreshhold = 4700;
   const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
-  const qualified = !(quartersSum < 4700);
+  const qualified = !(quartersSum < quartersSumThreshhold);
 
   // weekly benefit
   let topQuarters;
@@ -39,6 +40,19 @@ const Output = (props) => {
   // benefit duration
   const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
 
+  const getHelpText = () => (
+    <div className="ma__help-text">
+      { weeklyBenefit > weeklyBenefitMax ? (
+        <Paragraph text={`Your weekly benefit is capped at ${toCurrency(weeklyBenefitMax)}.`} />
+      ) : (
+        <Fragment>
+          <Paragraph text="Your weekly benefit is half of the sum of the highest quarters divided by the number of weeks in the combined quarters:" />
+          <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)}/ ${weeksInTopQuarters} weeks in the combined quarters`} /></div>
+        </Fragment>
+      )}
+    </div>
+  );
+
   return(
     <Fragment>
       {
@@ -52,10 +66,7 @@ const Output = (props) => {
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
           >
-            <div className="ma__help-text">
-              <Paragraph text="Your weekly benefit is half of the sum of the highest quarters divided by the number of weeks in the combined quarters:" />
-              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)}/ ${weeksInTopQuarters} weeks in the combined quarters`} /></div>
-            </div>
+            { getHelpText() }
           </HelpTip>
         </CalloutAlert>
       ) : (
@@ -68,7 +79,9 @@ const Output = (props) => {
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
           >
-            <p>You must have earned at least $4,700 during the last 4 completed calendar quarters to be eligible</p>
+          <div className="ma__help-text">
+            <Paragraph text={`You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible`} />
+          </div>
           </HelpTip>
         </CalloutAlert>
       )
