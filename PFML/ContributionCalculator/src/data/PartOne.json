@@ -22,13 +22,13 @@
     },
     "questionTwo": {
         "question": {
-            "content": "How many W2 employees have you hired in the past year?"
+            "content": "How many W2 employees have you hired in the last 12 months?"
         },
         "errorMsg": "Please enter a value."
     },
     "questionThree": {
         "question": {
-            "content": "How many 1099-MISC contractors have you paid to perform work for your business in the past year?"
+            "content": "How many 1099-MISC contractors have you paid to perform work for your business in the last 12 months?"
         },
         "errorMsg": "Please enter a value."
     },
