@@ -20,26 +20,18 @@ class Form extends Component {
       applyAll: false
     };
     const format = 'MMM YYYY';
-    const quarter1 = moment().quarter() + 1;
-    this.q1End = moment().subtract({ months: quarter1 }).endOf('month');
-    this.q1Start = this.q1End.clone().subtract({ months: 3 }).startOf('month');
-    this.q1End = moment(this.q1End).format(format);
-    this.q1Start = moment(this.q1Start).format(format);
-    const quarter2 = moment().quarter() + 4;
-    this.q2End = moment().subtract({ months: quarter2 }).endOf('month');
-    this.q2Start = this.q2End.clone().subtract({ months: 3 }).startOf('month');
-    this.q2End = moment(this.q2End).format(format);
-    this.q2Start = moment(this.q2Start).format(format);
-    const quarter3 = moment().quarter() + 7;
-    this.q3End = moment().subtract({ months: quarter3 }).endOf('month');
-    this.q3Start = this.q3End.clone().subtract({ months: 3 }).startOf('month');
-    this.q3End = moment(this.q3End).format(format);
-    this.q3Start = moment(this.q3Start).format(format);
-    const quarter4 = moment().quarter() + 10;
-    this.q4End = moment().subtract({ months: quarter4 }).endOf('month');
-    this.q4Start = this.q4End.clone().subtract({ months: 3 }).startOf('month');
-    this.q4End = moment(this.q4End).format(format);
-    this.q4Start = moment(this.q4Start).format(format);
+    const quarter = moment().quarter() + 1;
+    const quarterDateRange = (quartersAgo, startOffset) => {
+      let qEnd = moment().subtract({ months: quarter + (quartersAgo - 1) * 3 }).endOf('month');
+      let qStart = qEnd.clone().subtract({ months: startOffset }).startOf('month');
+      qEnd = moment(qEnd).format(format);
+      qStart = moment(qStart).format(format);
+      return{ qEnd, qStart };
+    };
+    this.q1 = quarterDateRange(1, 3);
+    this.q2 = quarterDateRange(2, 2);
+    this.q3 = quarterDateRange(3, 2);
+    this.q4 = quarterDateRange(4, 2);
   }
 
   render() {
@@ -66,7 +58,7 @@ class Form extends Component {
         <form className="ma__form-page" action="#">
           <InputCurrency
             {... inputCurrencyProps}
-            labelText={`${this.q1Start} – ${this.q1End} earnings:`}
+            labelText={`${this.q1.qStart} – ${this.q1.qEnd} earnings:`}
             id="quarter1"
             name="quarter1"
             defaultValue={quarter1}
@@ -102,7 +94,7 @@ class Form extends Component {
           </div>
           <InputCurrency
             {... inputCurrencyProps}
-            labelText={`${this.q2Start} – ${this.q2End} earnings:`}
+            labelText={`${this.q2.qStart} – ${this.q2.qEnd} earnings:`}
             id="quarter2"
             name="quarter2"
             defaultValue={quarter2}
@@ -115,7 +107,7 @@ class Form extends Component {
           />
           <InputCurrency
             {... inputCurrencyProps}
-            labelText={`${this.q3Start} – ${this.q3End} earnings:`}
+            labelText={`${this.q3.qStart} – ${this.q3.qEnd} earnings:`}
             id="quarter3"
             name="quarter3"
             defaultValue={quarter3}
@@ -128,7 +120,7 @@ class Form extends Component {
           />
           <InputCurrency
             {... inputCurrencyProps}
-            labelText={`${this.q4Start} – ${this.q4End} earnings:`}
+            labelText={`${this.q4.qStart} – ${this.q4.qEnd} earnings:`}
             id="quarter4"
             name="quarter4"
             defaultValue={quarter4}
@@ -141,6 +133,7 @@ class Form extends Component {
           />
           <Button
             text="See Benefits"
+            disabled={submitted}
             onClick={() => this.setState({ submitted: true })}
           />
         </form>
