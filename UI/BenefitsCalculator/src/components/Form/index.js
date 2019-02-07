@@ -91,7 +91,7 @@ class Form extends Component {
           text="See Benefits"
         />
       </form>
-      <Output />
+      <Output { ...stateValue }/>
       </Fragment>
     );
   }
