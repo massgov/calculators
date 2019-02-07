@@ -112,19 +112,19 @@ class App extends Component {
     const questTwoDisabled = !(maxWeeks > 0);
     return(
       <div className="App">
-        <Header {...this.headerProps} />
+        {/*<Header {...this.headerProps} />
         <main className="main-content">
           <PageHeader title={CalculatorThreeVariables.title} subTitle={CalculatorThreeVariables.subTitle} />
-          <section className="main-content--two">
+          <section className="main-content--two">*/}
             <Part1 error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
             <hr />
             <Part2 onChange={this.handleInput} onBlur={this.handleBlur} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalaryConv} />
             {yearIncome > 0 && maxWeeks > 0 && !belowMinSalaryConv && (
               <Part3 yearIncome={yearIncome} maxWeeks={maxWeeks} />
             )}
-          </section>
+          {/*</section>
         </main>
-        <Footer {...this.footerProps} />
+        <Footer {...this.footerProps} />*/}
       </div>
     );
   }
