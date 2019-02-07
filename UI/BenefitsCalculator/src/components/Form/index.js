@@ -49,7 +49,7 @@ class Form extends Component {
       quarter1, quarter2, quarter3, quarter4
     } = stateValue;
     const { applyAll } = this.state;
-    console.log(applyAll, quarter1, quarter2)
+    console.log(applyAll, quarter1, quarter2);
     const inputCurrencyProps = {
       placeholder: 'e.g. $100,000',
       format: {
@@ -93,7 +93,7 @@ class Form extends Component {
                 });
               }}
             />
-            <label for="apply-all">Apply this quarter's earnings to the all quarters.</label>
+            <label htmlFor="apply-all">Apply this quarter's earnings to the all quarters.</label>
           </div>
           <InputCurrency
             {... inputCurrencyProps}

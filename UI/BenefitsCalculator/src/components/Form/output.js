@@ -1,6 +1,7 @@
-import React from 'react';
-import { CalloutAlert, HelpTip } from '@massds/mayflower-react';
-import { toCurrency } from '../../util';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
+import { toCurrency, toPercentage } from '../../util';
 
 const sum = (a, b) => a + b;
 
@@ -9,9 +10,14 @@ const Output = (props) => {
     quarter1, quarter2, quarter3, quarter4
   } = props;
 
-  // weekly benefit
   const quartersHaveValue = [quarter1, quarter2, quarter3, quarter4].filter((q) => typeof q === 'number' && q > 0);
   const quartersCount = quartersHaveValue.length;
+
+  // qualification
+  const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
+  const qualified = !(quartersSum < 4700);
+
+  // weekly benefit
   let topQuarters;
   let weeksInTopQuarters = 26;
   if (quartersCount > 2) {
@@ -27,24 +33,55 @@ const Output = (props) => {
 
   // max benefit credit
   const maxBenefitOption1 = 30 * weeklyBenefitFinal;
-  const maxBenefitOption2 = quartersHaveValue.reduce(sum) * 0.36;
+  const maxBenefitOption2 = quartersSum * 0.36;
   const maxBenefitFinal = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption2 : maxBenefitOption1;
 
   // benefit duration
   const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
 
   return(
-    <CalloutAlert theme="c-primary" icon={null}>
-      <HelpTip
-        theme="c-white"
-        textBefore="You would be eligible to receive "
-        triggerText={`<span>${toCurrency(weeklyBenefitFinal)} for ${parseInt(benefitDuration, 10)} weeks</span>`}
-        textAfter={`, based on your maximum benefit credit of ${toCurrency(maxBenefitFinal)}.`}
-        id="help-tip-benefits"
-        labelID="help-tip-benefits-label"
-      />
-    </CalloutAlert>
+    <Fragment>
+      {
+      qualified ? (
+        <CalloutAlert theme="c-primary" icon={null}>
+          <HelpTip
+            theme="c-white"
+            textBefore="You would be eligible to receive "
+            triggerText={`<span>${toCurrency(weeklyBenefitFinal)} for ${parseInt(benefitDuration, 10)} weeks</span>`}
+            textAfter={`, based on your maximum benefit credit of ${toCurrency(maxBenefitFinal)}.`}
+            id="help-tip-benefits"
+            labelID="help-tip-benefits-label"
+          >
+            <div className="ma__help-text">
+              <Paragraph text="Your weekly benefit is half of the sum of the highest quarters divided by the number of weeks in the combined quarters:" />
+              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)}/ ${weeksInTopQuarters} weeks in the combined quarters`} /></div>
+            </div>
+          </HelpTip>
+        </CalloutAlert>
+      ) : (
+        <CalloutAlert theme="c-error-red" icon={null}>
+          <HelpTip
+            theme="c-white"
+            textBefore="You are "
+            triggerText={'<span>not eligible</span>'}
+            textAfter="for unemployment benefits."
+            id="help-tip-benefits"
+            labelID="help-tip-benefits-label"
+          >
+            <p>You must have earned at least $4,700 during the last 4 completed calendar quarters to be eligible</p>
+          </HelpTip>
+        </CalloutAlert>
+      )
+    }
+    </Fragment>
   );
+};
+
+Output.propTypes = {
+  quarter1: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  quarter2: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  quarter3: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  quarter4: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export default Output;

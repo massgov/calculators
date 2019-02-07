@@ -10,8 +10,12 @@ form {
   flex-direction: row;
   align-items: baseline;
   margin-bottom: 30px;
-  
+
   label {
     font-weight: 300;
   }
+}
+
+.ma__help-text {
+	padding: 15px;
 }
