@@ -6,11 +6,12 @@ import './index.css';
 
 class Form extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
+
   render() {
     const inputCurrencyProps = {
-      placeholder: "e.g. $100,000",
+      placeholder: 'e.g. $100,000',
       format: {
         mantissa: 2,
         trimMantissa: false,
@@ -20,12 +21,12 @@ class Form extends Component {
       inline: true,
       min: 0,
       step: 0.01
-    }
-    return (
+    };
+    return(
       <form className="ma__form-page" action="#">
         <InputCurrency
-          { ... inputCurrencyProps }
-          labelText='October 2018 – December 2018 earnings:'
+          {... inputCurrencyProps}
+          labelText="October 2018 – December 2018 earnings:"
           id="quarter1"
           name="quarter1"
           defaultValue={100}
@@ -34,8 +35,8 @@ class Form extends Component {
           }}
         />
         <InputCurrency
-          { ... inputCurrencyProps }
-          labelText='October 2018 – December 2018 earnings:'
+          {... inputCurrencyProps}
+          labelText="October 2018 – December 2018 earnings:"
           id="quarter2"
           name="quarter2"
           defaultValue={100}
@@ -44,8 +45,8 @@ class Form extends Component {
           }}
         />
         <InputCurrency
-          { ... inputCurrencyProps }
-          labelText='October 2018 – December 2018 earnings:'
+          {... inputCurrencyProps}
+          labelText="October 2018 – December 2018 earnings:"
           id="quarter3"
           name="quarter3"
           defaultValue={100}
@@ -54,8 +55,8 @@ class Form extends Component {
           }}
         />
         <InputCurrency
-          { ... inputCurrencyProps }
-          labelText='October 2018 – December 2018 earnings:'
+          {... inputCurrencyProps}
+          labelText="October 2018 – December 2018 earnings:"
           id="quarter4"
           name="quarter4"
           defaultValue={100}
@@ -65,7 +66,7 @@ class Form extends Component {
         />
         <Button text="See Benefits" />
       </form>
-    )
+    );
   }
 }
 

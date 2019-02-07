@@ -35,7 +35,9 @@ class App extends Component {
           <section className="main-content main-content--two">
             <div className="ma__page-header__content">
               <h1 className="ma__page-header__title">UI Claimants Benefits Calculator</h1>
-              <Form />
+              <div className="page-content">
+                <Form />
+              </div>
             </div>
           </section>
         </main>
