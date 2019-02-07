@@ -1,5 +1,6 @@
 {
   "title": "Paid Family Medical Leave Contribution Calculator",
+  "subTitle": "Under the PFML law, employers are responsible for sending family and medical leave contributions on behalf of their W2 employees and 1099-MISC contractors to the Department of Family and Medical Leave. If you’re a Massachusetts employer, use the calculator below to estimate the required contributions you will need to send.",
   "baseVariables": {
   	"minEmployees": 25,
   	"smallCompMedCont": 0,

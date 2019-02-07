@@ -113,7 +113,7 @@ const Part2 = (props) => {
                         onChange={(e, value) => {
                           onChangePay1099(value);
                         }}
-                        disabled={disableInput || Number(employees1099) <= 0}
+                        disabled={disableInput || !over50per}
                         required
                         inline
                         step={1}
@@ -123,8 +123,8 @@ const Part2 = (props) => {
                       <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
-                            textBefore="Total estimated annual contribution for your company is "
-                            triggerText={`<strong>${toCurrency(totalPayment)}</strong> (<strong>${toCurrency(totalPaymentEmp)}</strong> per employee)`}
+                            textBefore="The total estimated annual contribution for your company is "
+                            triggerText={`<strong>${toCurrency(totalPayment)}</strong>`}
                             textAfter="."
                             id="help-tip-total-ann-cont"
                             labelID="help-tip-total-ann-cont-label"
@@ -135,7 +135,7 @@ const Part2 = (props) => {
                           </HelpTip>
                           <HelpTip
                             textBefore="Of this amount, "
-                            triggerText={`<strong>${toCurrency(medPercent * totalPayroll)}</strong>  is for medical leave and <strong>${toCurrency(famPercent * totalPayroll)}</strong>  is for family leave`}
+                            triggerText={`<strong>${toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave.`}
                             textAfter="."
                             id="help-tip-medfam-ann-cont"
                             labelID="help-tip-medfam-ann-cont-label"
@@ -184,7 +184,7 @@ const Part2 = (props) => {
                         {payrollWages && (
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
-                            textBefore="Total estimated annual contribution for this employee is "
+                            textBefore="The total estimated annual contribution for this qualifying worker is "
                             triggerText={`<strong>${toCurrency(payrollWagesCap * totalPercent)}</strong>`}
                             textAfter="."
                             id="help-tip-tot-emp-ann-cont"
@@ -202,7 +202,7 @@ const Part2 = (props) => {
                             theme="c-white"
                           />
                           { numbro.unformat(payrollWages) > socialSecCap && (
-                            <Paragraph text={`Because the employee's wages are over the social security cap, they do not contribute for income above <strong>${toCurrency(socialSecCap)}</strong>.`} />
+                            <Paragraph text={`Required contributions are capped at the Social Security cap, which is updated annually. It is <strong>${toCurrency(socialSecCap)}</strong> for 2019.`} />
                           )}
                         </CalloutAlert>
                       )}

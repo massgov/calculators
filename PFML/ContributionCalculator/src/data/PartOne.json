@@ -1,9 +1,9 @@
 {
     "questionOne": {
         "question": {
-            "helpText": "A MA employee is anyone who works for a business or a state or federal government agency that is located in the Commonwealth.",
-            "triggerText": "Massachusetts employees",
-            "content": "Do you have Massachusetts employees?"
+            "helpText": "The statute distinguishes the two because…",
+            "triggerText": "W2 employees or 1099-MISC",
+            "content": "Do you have any W2 employees or 1099-MISC contractors performing services in Massachusetts? "
         },
         "errorMsg": "Please select yes or no.",
         "options": [{
@@ -16,103 +16,120 @@
             "label": "No",
             "value": "no",
             "id": "no",
-            "message": "You are <strong>not required</strong> to remit payment to the department starting 7/1.",
+            "message": "You are <strong>not required</strong> to participate in the PFML <strong>program</strong>.",
             "theme": "c-error-red"
         }]
     },
     "questionTwo": {
         "question": {
-            "content": "How many of your MA employees receive W2s?"
+            "content": "How many W2 employees have you hired in the past year?"
         },
         "errorMsg": "Please enter a value."
     },
     "questionThree": {
         "question": {
-            "content": "How many contractors (1099-MISCs) have you hired in the past year?"
+            "content": "How many 1099-MISC contractors have you paid to perform work for your business in the past year?"
         },
         "errorMsg": "Please enter a value."
     },
     "output": {
         "overMinEmpOver1099": [{
             "paragraph": {
-                "content": "You are required to send the employee share of the contribution on behalf of your <strong>employees</strong> and <strong>contractors</strong> to the department starting <strong>July 1, 2019</strong>.",
-                "triggerText": "<strong>contractors</strong>",
-                "helpText": "Employers that contract more than half of their workforce using IRS Form 1099-MISC are required to consider these individuals as full time employees."
+                "content": "Based on the makeup of your workforce, all your <strong>W2 employees and 1099-MISC contractors</strong> are eligible for PFML benefits and will be referred to as “qualifying workers.”",
+                "triggerText": "<strong>W2 employees and 1099-MISC contractors</strong>",
+                "helpText": "If 1099-MISC contractors make up more than half of your workforce, they are considered qualifying workers and you are responsible for sending contributions on their behalf."
+            }
+        }, {
+            "paragraph": {
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send the employee share of the contribution every quarter to the Department of Family and Medical Leave for each of your W2 employees and 1099-MISC contractors. "
             }
         }, {
             "paragraph": {
                 "content": "You are also <strong>required to pay the employer share</strong> of the contribution for medical leave.",
                 "triggerText": "<strong>required to pay the employer share</strong>",
-                "helpText": "If you have 25 or more workers, you need to pay the employer share"
+                "helpText": "If you have 25 or more qualifying workers, you are required to pay the employer share."
             }
         }],
         "overMinEmpUnder1099": [{
             "paragraph": {
-                "content": "You are <strong>required</strong> to send the employee share of the contribution on behalf of your employees (W2s) to the department <strong>starting July 1, 2019</strong>."
+                "content": "Based on the makeup of your workforce, <strong>only your W2 employees</strong> are eligible for PFML benefits and will be referred to as “qualifying workers.”",
+                "triggerText": "<strong>only your W2 employees</strong>",
+                "helpText": "If 1099-MISC contractors make up less than half of your workforce, they are not considered qualifying workers and you are not responsible for sending contributions on their behalf."
+            }
+        }, {
+            "paragraph": {
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send the employee share of the contribution every quarter to the Department of Family and Medical Leave for each of your W2 employees."
             }
         }, {
             "paragraph": {
                 "content": "You are also <strong>required to pay the employer share</strong> of the contribution for medical leave.",
                 "triggerText": "<strong>required to pay the employer share</strong>",
-                "helpText": "If you have 25 or more workers, you need to pay the employer share."
-            }
-        }, {
-            "paragraph": {
-                "content": "You are not required to contribute on behalf of your contractors.",
-                "triggerText": "not required to contribute",
-                "helpText": "Employers that contract more than half of their workforce using IRS Form 1099-MISC are required to consider these individuals as full time employees."
+                "helpText": "If you have 25 or more qualifying workers, you need to pay the employer share."
             }
         }],
         "underMinEmpOver1099": [{
             "paragraph": {
-                "content": "You are required to send the employee share of the contribution on behalf of your <strong>employees</strong> and <strong>contractors</strong> to the department starting July 1, 2019.",
-                "triggerText": "<strong>contractors</strong>",
-                "helpText": "Employers that contract more than half of their workforce using IRS Form 1099-MISC are required to consider these individuals as full time employees."
+                "content": "Based on the makeup of your workforce, <strong>all your W2 employees and 1099-MISC contractors</strong> are eligible for PFML benefits and will be referred to as “qualifying workers.”",
+                "triggerText": "<strong>all your W2 employees and 1099-MISC contractors</strong>",
+                "helpText": "If 1099-MISC contractors make up more than half of your workforce, they are considered qualifying workers and you are responsible for sending contributions on their behalf."
             }
         }, {
             "paragraph": {
-                "content": "You are not required to pay the employer share of the contribution for family and medical leave.",
-                "triggerText": "not required to pay the employer share",
-                "helpText": "If you have less than 25 workers, you do not need to pay the employer share."
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send the employee share of the contribution every quarter to the Department of Family and Medical Leave for each of your qualified workers."
+            }
+        }, {
+            "paragraph": {
+                "content": "You are <strong>not required to pay the employer share</strong> of the contribution for family or medical leave.",
+                "triggerText": "<strong>not required to pay the employer share</strong>",
+                "helpText": "If you have fewer than 25 qualifying workers, you do not need to pay the employer share."
             }
         }],
         "underMinEmpUnder1099": [{
             "paragraph": {
-                "content": "You are required to send the employee (W2s) share of the contribution <strong>starting July 1, 2019.</strong>"
+                "content": "Based on the makeup of your workforce, <strong>only your W2 employees</strong> are eligible for PFML benefits and will be referred to as “qualifying workers.”",
+                "triggerText": "<strong>only your W2 employees</strong>",
+                "helpText": "If 1099-MISC contractors make up less than half of your workforce, they are not considered qualifying workers and you are not responsible for sending contributions on their behalf."
             }
         }, {
             "paragraph": {
-                "content": "You are <strong>not required</strong> to pay the employer share of the contribution for family and medical leave.",
-                "triggerText": "<strong>not required</strong> to pay the employer share",
-                "helpText": "If you have less than 25 workers, you do not need to pay the employer share"
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send the employee share of the contribution every quarter to the Department of Family and Medical Leave for each of your W2 employees."
             }
         }, {
             "paragraph": {
-                "content": "You are <strong>not required</strong> to contribute on behalf of your contractors.",
-                "triggerText": "<strong>not required</strong> to contribute",
-                "helpText": "Employers that contract more than half of their workforce using IRS Form 1099-MISC are required to consider these individuals as full time employees."
-            } 
+                "content": "You are <strong>not required to pay the employer share</strong> of the contribution for family or medical leave.",
+                "triggerText": "<strong>not required to pay the employer share</strong>",
+                "helpText": " If you have fewer than 25 qualifying workers, you do not need to pay the employer share."
+            }
         }],
         "underMinEmpNo1099": [{
             "paragraph": {
-                "content": "You are <strong>required</strong> to send the employee share of the contribution <strong>starting July 1, 2019</strong>."
+                "content": "Based on the makeup of your workforce, all your W2 employees are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”"
             }
         }, {
             "paragraph": {
-                "content": "You are <strong>not required to pay the employer share</strong> of the contribution for family and medical leave.",
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send the employee share of the contribution every quarter to the Department of Family and Medical Leave for each of your W2 employees. "
+            }
+        },
+        {
+            "paragraph": {
+                "content": "You are <strong>not required to pay the employer share</strong> of the contribution for family or medical leave.",
                 "triggerText": "<strong>not required to pay the employer share</strong>",
-                "helpText": "If you have less than 25 employees, you do not need to pay the employer share."
+                "helpText": "If you have fewer than 25 qualifying workers, you do not need to pay the employer share."
             }
         }],
         "overMinEmpNo1099": [{
             "paragraph": {
-                "content": "You are <strong>required</strong> to send the employee share of the contribution <strong>starting July 1, 2019</strong>."
+                "content": "Based on the makeup of your workforce, all your W2 employees are eligible for PFML benefits and will be referred to as “qualifying workers.”"
             }
         }, {
             "paragraph": {
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send the employee share of the contribution every quarter to the Department of Family and Medical Leave for each of ¬¬your W2 employees."
+            }
+        },{
+            "paragraph": {
                 "content": "You are also <strong>required to pay the employer share</strong> of the contribution for medical leave.",
                 "triggerText": "<strong>required to pay the employer share</strong>",
-                "helpText": "If you have 25 or more employees, you need to pay the employer share."
+                "helpText": "If you have 25 or more qualifying workers, you need to pay the employer share."
             }
         }]
     }

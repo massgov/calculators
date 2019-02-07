@@ -26,6 +26,8 @@ const Part1 = (props) => {
     questionOne, questionTwo, questionThree, output
   } = PartOneProps;
   const { onChangeMassEmp, onChangeW2, onChangeEmp1099 } = props;
+  const calloutParagraphClass = 'ma__help-tip-many';
+  const getDangerousParagraph = (text, key) => (<p className={calloutParagraphClass} dangerouslySetInnerHTML={{ __html: text }} key={key} />);
   return(
     <FormContext.Consumer>
       {
@@ -41,7 +43,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.overMinEmpOver1099.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? getHelpTip(message.paragraph, 'c-white', `overMinEmpOver1099-${messageIndex}`) : <Paragraph key={`overMinEmpOver1099-${messageIndex}`} text={message.paragraph.content} />
+                    message.paragraph.helpText ? <p className={calloutParagraphClass}>{getHelpTip(message.paragraph, 'c-white', `overMinEmpOver1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `overMinEmpOver1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );
@@ -51,7 +53,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.overMinEmpUnder1099.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? getHelpTip(message.paragraph, 'c-white', `overMinEmpUnder1099-${messageIndex}`) : <Paragraph key={`overMinEmpUnder1099-${messageIndex}`} text={message.paragraph.content} />
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `overMinEmpUnder1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `overMinEmpUnder1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );
@@ -61,7 +63,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.overMinEmpNo1099.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? getHelpTip(message.paragraph, 'c-white', `overMinEmpNo1099-${messageIndex}`) : <Paragraph key={`overMinEmpNo1099-${messageIndex}`} text={message.paragraph.content} />
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `overMinEmpNo1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `overMinEmpNo1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );
@@ -71,7 +73,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.underMinEmpOver1099.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? getHelpTip(message.paragraph, 'c-white', `underMinEmpOver1099-${messageIndex}`) : <Paragraph key={`underMinEmpOver1099-${messageIndex}`} text={message.paragraph.content} />
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpOver1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpOver1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );
@@ -81,7 +83,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.underMinEmpUnder1099.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? getHelpTip(message.paragraph, 'c-white', `underMinEmpUnder1099-${messageIndex}`) : <Paragraph key={`underMinEmpUnder1099-${messageIndex}`} text={message.paragraph.content} />
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpUnder1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpUnder1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );
@@ -91,7 +93,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.underMinEmpNo1099.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? getHelpTip(message.paragraph, 'c-white', `underMinEmpNo1099-${messageIndex}`) : <Paragraph key={`underMinEmpNo1099-${messageIndex}`} text={message.paragraph.content} />
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpNo1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpNo1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );

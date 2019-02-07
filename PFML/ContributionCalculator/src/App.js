@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Footer } from '@massds/mayflower-react';
+import { Header, Footer, PageHeader } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
@@ -37,11 +37,9 @@ class App extends Component {
       <div className="App">
         <Header {...this.headerProps} />
         <main className="main-content">
+          <PageHeader title={CalculatorOneVariables.title} subTitle={CalculatorOneVariables.subTitle} />
           <section className="main-content main-content--two">
-            <div className="ma__page-header__content">
-              <h1 className="ma__page-header__title">{CalculatorOneVariables.title}</h1>
-              <ExampleForm />
-            </div>
+            <ExampleForm />
           </section>
         </main>
         <Footer {...this.footerProps} />
