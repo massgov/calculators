@@ -1,28 +1,32 @@
 {
-	"question": "For which of the following reasons are you planning to take leave?",
+	"question": {
+		"content": "For which of the following reasons are you planning to take leave?",
+		"triggerText": "following reasons",
+		"helpText": "For more information on the qualifications listed below, please visit hyperlink to a benefits page"
+	},
 	"options": [{
 	    "label": "Birth, adoption, or fostering of a child",
 	    "value": "birth-adoption",
 			"class": "col-large-1",
 	    "weeks": "12",
 	    "id": "birth-adoption",
-	    "message": "You can be covered <strong>up to 12 weeks</strong> by the Paid Family and Medical Leave Program. This benefit will be available starting <strong>January 1, 2021</strong>.",
+	    "message": "You can be covered <strong>up to 12 weeks</strong> by the PFML program. This benefit will be available starting <strong>January 1, 2021</strong>.",
 	    "theme": "c-primary"
 	}, {
-	    "label": "Personal medical condition",
+	    "label": "Personal serious health condition",
 	    "value": "own-medical",
 			"class": "col-large-1",
 	    "weeks": "20",
 	    "id": "own-medical",
-	    "message": "You can be covered <strong>up to 20 weeks</strong> by the Paid Family and Medical Leave Program. This benefit will be available starting <strong>January 1, 2021</strong>.",
+	    "message": "You can be covered <strong>up to 20 weeks</strong> by the PFML program. This benefit will be available starting <strong>January 1, 2021</strong>.",
 	    "theme": "c-primary"
 	}, {
-	    "label": "Caring for a family member",
+	    "label": "Caring for a family member with a serious health condition",
 	    "value": "caring-loved-one",
 			"class": "col-large-1",
 	    "weeks": "12",
 	    "id": "caring-loved-one",
-	    "message": "You can be covered <strong>up to 12 weeks</strong> by the Paid Family and Medical Leave Program. This benefit will be available starting <strong>July 1, 2021</strong>.",
+	    "message": "You can be covered <strong>up to 12 weeks</strong> by the PFML program. This benefit will be available starting <strong>July 1, 2021</strong>.",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Family member called to active duty",
@@ -30,7 +34,7 @@
 			"class": "col-large-1",
 	    "weeks": "26",
 	    "id": "active-duty",
-	    "message": "You can be <strong>covered up to 26 weeks</strong> by the Paid Family and Medical Leave Program. This benefit will be available starting <strong>January 1, 2021</strong>.",
+	    "message": "You can be covered <strong>up to 26 weeks</strong> by the PFML program. This benefit will be available starting <strong>January 1, 2021</strong>.",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Other",
@@ -38,7 +42,7 @@
 			"class": "col-large-1",
 	    "weeks": "0",
 	    "id": "other",
-	    "message": "You <strong>may not be covered</strong> by the Paid Family and Medical Leave Program, for more information go here.",
+	    "message": "You <strong>may not be covered</strong> by the PFML Program. For more information please visit hyperlink to a benefits page.",
 	    "theme": "c-error-red"
 	}]
 }

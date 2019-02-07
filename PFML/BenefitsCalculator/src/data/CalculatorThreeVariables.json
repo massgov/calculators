@@ -1,4 +1,6 @@
 {
+  "title": "Paid Family Medical Leave Benefits Calculator",
+  "subTitle": "",
   "baseVariables": {
   	"maAvgYear": 66546.00,
   	"weeksPerYear": 52,

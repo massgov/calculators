@@ -5,6 +5,7 @@ import {
 } from '@massds/mayflower-react';
 import PartOneProps from '../../data/PartOne.json';
 import './index.css';
+import { getHelpTip } from '../../utils';
 
 class Part1 extends Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class Part1 extends Component {
     const { question, options } = PartOneProps;
     const { error, disabled, defaultSelected } = this.props;
     const radioGroupProps = {
-      title: question,
+      title: getHelpTip(question, 'c-primary', 'question-1-helptip'),
       name: 'question-one',
       outline: true,
       inline: true,
