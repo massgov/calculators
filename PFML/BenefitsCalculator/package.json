@@ -1,6 +1,6 @@
 {
   "name": "Mayflower-react-starter",
-  "homepage": "http://calculator.digital.mass.gov.s3-website-us-east-1.amazonaws.com/pfml/yourbenefitsnoheader/",
+  "homepage": "http://massgov.github.io/calculators/pfml/BenefitsCalculator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,13 +14,14 @@
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
-    "react-scripts": "2.1.3",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-json": "^1.3.2",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.1",
-    "eslint-plugin-json": "^1.3.2",
-    "prettier": "1.14.2"
+    "gh-pages": "^2.0.1",
+    "prettier": "1.14.2",
+    "react-scripts": "2.1.3"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./node_modules/ --include-path ./node_modules/@massds/mayflower-react/es/assets/scss/ src/ -o src/",
@@ -32,7 +33,9 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/eslint .",
-    "lint-fix": "./node_modules/.bin/eslint --fix .; exit 0"
+    "lint-fix": "./node_modules/.bin/eslint --fix .; exit 0",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": [
     ">0.2%",
