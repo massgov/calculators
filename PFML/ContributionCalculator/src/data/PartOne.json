@@ -1,8 +1,8 @@
 {
     "questionOne": {
         "question": {
-            "helpText": "The statute distinguishes the two because…",
-            "triggerText": "W2 employees or 1099-MISC",
+            "helpText": "",
+            "triggerText": "",
             "content": "Do you have any W2 employees or 1099-MISC contractors performing services in Massachusetts? "
         },
         "errorMsg": "Please select yes or no.",
@@ -35,7 +35,7 @@
     "output": {
         "overMinEmpOver1099": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, all your <strong>W2 employees and 1099-MISC contractors</strong> are eligible for PFML benefits and will be referred to as “qualifying workers.”",
+                "content": "Based on the makeup of your workforce, all your <strong>W2 employees and 1099-MISC contractors</strong> are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”",
                 "triggerText": "<strong>W2 employees and 1099-MISC contractors</strong>",
                 "helpText": "If 1099-MISC contractors make up more than half of your workforce, they are considered qualifying workers and you are responsible for sending contributions on their behalf."
             }
@@ -52,7 +52,7 @@
         }],
         "overMinEmpUnder1099": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, <strong>only your W2 employees</strong> are eligible for PFML benefits and will be referred to as “qualifying workers.”",
+                "content": "Based on the makeup of your workforce, <strong>only your W2 employees</strong> are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”",
                 "triggerText": "<strong>only your W2 employees</strong>",
                 "helpText": "If 1099-MISC contractors make up less than half of your workforce, they are not considered qualifying workers and you are not responsible for sending contributions on their behalf."
             }
@@ -69,7 +69,7 @@
         }],
         "underMinEmpOver1099": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, <strong>all your W2 employees and 1099-MISC contractors</strong> are eligible for PFML benefits and will be referred to as “qualifying workers.”",
+                "content": "Based on the makeup of your workforce, <strong>all your W2 employees and 1099-MISC contractors</strong> are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”",
                 "triggerText": "<strong>all your W2 employees and 1099-MISC contractors</strong>",
                 "helpText": "If 1099-MISC contractors make up more than half of your workforce, they are considered qualifying workers and you are responsible for sending contributions on their behalf."
             }
@@ -86,7 +86,7 @@
         }],
         "underMinEmpUnder1099": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, <strong>only your W2 employees</strong> are eligible for PFML benefits and will be referred to as “qualifying workers.”",
+                "content": "Based on the makeup of your workforce, <strong>only your W2 employees</strong> are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”",
                 "triggerText": "<strong>only your W2 employees</strong>",
                 "helpText": "If 1099-MISC contractors make up less than half of your workforce, they are not considered qualifying workers and you are not responsible for sending contributions on their behalf."
             }
@@ -119,7 +119,7 @@
         }],
         "overMinEmpNo1099": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, all your W2 employees are eligible for PFML benefits and will be referred to as “qualifying workers.”"
+                "content": "Based on the makeup of your workforce, all your W2 employees are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”"
             }
         }, {
             "paragraph": {

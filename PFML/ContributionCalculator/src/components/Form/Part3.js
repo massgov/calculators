@@ -278,36 +278,21 @@ const Part3 = (props) => {
                     <tbody>
                       <tr className="ma__table-headers">
                         <th>Contribution</th>
-                        <th />
                         <th>Medical Leave</th>
                         <th>Family Leave</th>
                         <th>Total</th>
                       </tr>
                       <tr>
-                        <th rowSpan="2">You will pay:</th>
-                        <td className="ma__td--group">Total</td>
+                        <th rowSpan="1">You will pay:</th>
                         <td>{toCurrency(medLeaveComp / timeValue)}</td>
                         <td>{toCurrency(famLeaveComp / timeValue)}</td>
                         <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
                       </tr>
                       <tr>
-                        <td className="ma__td--group">Per Employee</td>
-                        <td>{toCurrency((medLeaveComp) / employeeCount / timeValue)}</td>
-                        <td>{toCurrency((famLeaveComp) / employeeCount / timeValue)}</td>
-                        <td>{toCurrency((medLeaveComp + famLeaveComp) / employeeCount / timeValue)}</td>
-                      </tr>
-                      <tr>
-                        <th rowSpan="2">Your Employees will pay:</th>
-                        <td className="ma__td--group">Total</td>
+                        <th rowSpan="1">Your Employees will pay:</th>
                         <td>{toCurrency(medLeaveEmp / timeValue)}</td>
                         <td>{toCurrency(famLeaveEmp / timeValue)}</td>
                         <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
-                      </tr>
-                      <tr>
-                        <td className="ma__td--group">Per Employee</td>
-                        <td>{toCurrency(medLeaveEmp / employeeCount / timeValue)}</td>
-                        <td>{toCurrency(famLeaveEmp / employeeCount / timeValue)}</td>
-                        <td>{toCurrency((medLeaveEmp + famLeaveEmp) / employeeCount / timeValue)}</td>
                       </tr>
                     </tbody>
                   </table>
