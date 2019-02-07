@@ -1,6 +1,6 @@
 {
     "questionOne": {
-        "question": "Choose the option you would like to calculate your contribution based on",
+        "question": "Toggle between the options below to estimate the total contribution for your entire workforce or for an individual qualifying worker.",
         "errorMsg": "Please select an option.",
         "options": [{
             "id": "payroll_base_all",
