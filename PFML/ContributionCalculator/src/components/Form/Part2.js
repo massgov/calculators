@@ -46,7 +46,6 @@ const Part2 = (props) => {
             const totalPercent = medPercent + famPercent;
             const totalPayroll = over50per ? (numbro.unformat(payrollW2) + numbro.unformat(payroll1099)) : (numbro.unformat(payrollW2));
             const totalPayment = totalPayroll * totalPercent;
-            const totalPaymentEmp = totalPayment / employeeCount;
             const payrollWagesCap = numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages);
             const disableInput = !hasMassEmployees || !employeeCount;
             return(
