@@ -5,6 +5,7 @@ import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
 import FooterLinksLiveData from './data/FooterLinksLive.json';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
+import Form from './components/Form';
 
 import './index.css';
 
@@ -31,9 +32,10 @@ class App extends Component {
       <div className="App">
         <Header {...this.headerProps} />
         <main className="main-content">
-          <section className="main-content--two">
+          <section className="main-content main-content--two">
             <div className="ma__page-header__content">
-              <h1 className="ma__page-header__title">Mayflower Starter Template</h1>
+              <h1 className="ma__page-header__title">UI Claimants Benefits Calculator</h1>
+              <Form />
             </div>
           </section>
         </main>
