@@ -79,9 +79,9 @@ const Output = (props) => {
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
           >
-          <div className="ma__help-text">
-            <Paragraph text={`You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible`} />
-          </div>
+            <div className="ma__help-text">
+              <Paragraph text={`You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible`} />
+            </div>
           </HelpTip>
         </CalloutAlert>
       )

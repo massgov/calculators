@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import moment from 'moment';
-import { InputCurrency, Button } from '@massds/mayflower-react';
+import {
+  InputCurrency, Button, FormProvider, Form
+} from '@massds/mayflower-react';
 import Output from './output';
 
 import './index.css';
 
 
-class Form extends Component {
+class Calculator extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,97 +56,103 @@ class Form extends Component {
       step: 0.01
     };
     return(
-      <Fragment>
-        <form className="ma__form-page" action="#">
-          <InputCurrency
-            {... inputCurrencyProps}
-            labelText={`${this.q1.qStart} – ${this.q1.qEnd} earnings:`}
-            id="quarter1"
-            name="quarter1"
-            defaultValue={quarter1}
-            onChange={(e, value) => {
-              const newStateValue = { ...stateValue };
-              if (applyAll) {
-                newStateValue.quarter1 = value;
-                newStateValue.quarter2 = value;
-                newStateValue.quarter3 = value;
-                newStateValue.quarter4 = value;
-              }
-              newStateValue.quarter1 = value;
-              this.setState({ value: newStateValue });
-            }}
-          />
-          <div className="input_apply-all">
-            <input
-              type="checkbox"
-              id="apply-all"
-              onChange={(e) => {
-                this.setState({
-                  applyAll: e.target.checked,
-                  value: {
-                    quarter1,
-                    quarter2: quarter1,
-                    quarter3: quarter1,
-                    quarter4: quarter1
-                  }
-                });
-              }}
-            />
-            <label htmlFor="apply-all">Apply this quarter's earnings to the all quarters.</label>
-          </div>
-          <InputCurrency
-            {... inputCurrencyProps}
-            labelText={`${this.q2.qStart} – ${this.q2.qEnd} earnings:`}
-            id="quarter2"
-            name="quarter2"
-            defaultValue={quarter2}
-            disabled={applyAll}
-            onChange={(e, value) => {
-              const newStateValue = { ...stateValue };
-              newStateValue.quarter2 = value;
-              this.setState({ value: newStateValue });
-            }}
-          />
-          <InputCurrency
-            {... inputCurrencyProps}
-            labelText={`${this.q3.qStart} – ${this.q3.qEnd} earnings:`}
-            id="quarter3"
-            name="quarter3"
-            defaultValue={quarter3}
-            disabled={applyAll}
-            onChange={(e, value) => {
-              const newStateValue = { ...stateValue };
-              newStateValue.quarter3 = value;
-              this.setState({ value: newStateValue });
-            }}
-          />
-          <InputCurrency
-            {... inputCurrencyProps}
-            labelText={`${this.q4.qStart} – ${this.q4.qEnd} earnings:`}
-            id="quarter4"
-            name="quarter4"
-            defaultValue={quarter4}
-            disabled={applyAll}
-            onChange={(e, value) => {
-              const newStateValue = { ...stateValue };
-              newStateValue.quarter4 = value;
-              this.setState({ value: newStateValue });
-            }}
-          />
-          <Button
-            text="See Benefits"
-            disabled={submitted}
-            onClick={() => this.setState({ submitted: true })}
-          />
-        </form>
+      <FormProvider>
+        <Form>
+          {
+          (formContext) => {
+            console.log(formContext);
+            return(
+              <Fragment>
+                <InputCurrency
+                  {... inputCurrencyProps}
+                  labelText={`${this.q1.qStart} – ${this.q1.qEnd} earnings:`}
+                  id="quarter1"
+                  name="quarter1"
+                // defaultValue={quarter1}
+                  onChange={(value, id) => {
+                    formContext.setValue({ id, value });
+                    if (applyAll) {
+                      formContext.setValue({ id: 'quarter2', value });
+                      formContext.setValue({ id: 'quarter3', value });
+                      formContext.setValue({ id: 'quarter4', value });
+                    }
+                  }}
+                />
+                <div className="input_apply-all">
+                  <input
+                    type="checkbox"
+                    id="apply-all"
+                    onChange={(e) => {
+                      this.setState({
+                        applyAll: e.target.checked,
+                        value: {
+                          quarter1,
+                          quarter2: quarter1,
+                          quarter3: quarter1,
+                          quarter4: quarter1
+                        }
+                      });
+                    }}
+                  />
+                  <label htmlFor="apply-all">Apply this quarter's earnings to the all quarters.</label>
+                </div>
+                <InputCurrency
+                  {... inputCurrencyProps}
+                  labelText={`${this.q2.qStart} – ${this.q2.qEnd} earnings:`}
+                  id="quarter2"
+                  name="quarter2"
+                // defaultValue={quarter2}
+                  disabled={applyAll}
+                  onChange={(e, value) => {
+                    const newStateValue = { ...stateValue };
+                    newStateValue.quarter2 = value;
+                    this.setState({ value: newStateValue });
+                  }}
+                />
+                <InputCurrency
+                  {... inputCurrencyProps}
+                  labelText={`${this.q3.qStart} – ${this.q3.qEnd} earnings:`}
+                  id="quarter3"
+                  name="quarter3"
+                // defaultValue={quarter3}
+                  disabled={applyAll}
+                  onChange={(e, value) => {
+                    const newStateValue = { ...stateValue };
+                    newStateValue.quarter3 = value;
+                    this.setState({ value: newStateValue });
+                  }}
+                />
+                <InputCurrency
+                  {... inputCurrencyProps}
+                  labelText={`${this.q4.qStart} – ${this.q4.qEnd} earnings:`}
+                  id="quarter4"
+                  name="quarter4"
+                // defaultValue={quarter4}
+                  disabled={applyAll}
+                  onChange={(e, value) => {
+                    const newStateValue = { ...stateValue };
+                    newStateValue.quarter4 = value;
+                    this.setState({ value: newStateValue });
+                  }}
+                />
+                <Button
+                  text="See Benefits"
+                  disabled={submitted}
+                  onClick={() => this.setState({ submitted: true })}
+                />
+              </Fragment>
+            );
+          }
+        }
+        </Form>
         {
           submitted && (
             <Output {...stateValue} />
           )
         }
-      </Fragment>
+      </FormProvider>
     );
   }
 }
 
-export default Form;
+export default Calculator;
