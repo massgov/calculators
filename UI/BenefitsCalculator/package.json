@@ -1,5 +1,6 @@
 {
   "name": "Mayflower-react-starter",
+  "homepage": "http://calculator.digital.mass.gov.s3-website-us-east-1.amazonaws.com/ui/yourbenefits/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
