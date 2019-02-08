@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Footer } from '@massds/mayflower-react';
+import { Header, Footer, PageHeader } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
@@ -32,12 +32,16 @@ class App extends Component {
       <div className="App">
         <Header {...this.headerProps} />
         <main className="main-content">
+          <PageHeader
+            title="UI Claimants Benefits Calculator"
+            optionalContents={[{paragraph: {text:
+              'If you are eligible to receive unemployment benefits, you will receive a weekly benefit amount of approximately 50% of your average weekly wage, up to the maximum set by law. As of October 2018, the maximum weekly benefit amount is $795 per week. Enter your earnings below to estimate your benefits.'
+            }}]}
+          />
           <section className="main-content main-content--two">
-            <div className="ma__page-header__content">
-              <h1 className="ma__page-header__title">UI Claimants Benefits Calculator</h1>
-              <div className="page-content">
-                <Form />
-              </div>
+            <div className="page-content">
+              <hr />
+              <Form />
             </div>
           </section>
         </main>
