@@ -61,8 +61,8 @@ const Output = (props) => {
           <HelpTip
             theme="c-white"
             textBefore="You would be eligible to receive "
-            triggerText={`<span>${toCurrency(weeklyBenefitFinal)} for ${parseInt(benefitDuration, 10)} weeks</span>`}
-            textAfter={`, based on your maximum benefit credit of ${toCurrency(maxBenefitFinal)}.`}
+            triggerText={`<strong>${toCurrency(weeklyBenefitFinal)} for ${parseInt(benefitDuration, 10)} weeks</strong>`}
+            textAfter={`, based on your maximum benefit credit of <strong>${toCurrency(maxBenefitFinal)}</strong>.`}
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
           >
