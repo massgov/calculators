@@ -59,7 +59,7 @@ const Part3 = (props) => {
   };
   const empClass = 'ma__output-emphasized';
   const getHelpText = () => (
-    <CalloutAlert theme="c-primary" icon={{ name: '', ariaHidden: true }}>
+    <div className="ma__help-text">
       { yearIncome < benefitBreak ? (
         <Fragment>
           <Paragraph text={`${less.partOne} ${toCurrency(benefitBreak)} ${less.partTwo} ${toPercentage(lowBenefitFraction)} ${less.partThree} ${toCurrency(benefitBreakWeek)} ${less.partFour}`} />
@@ -81,12 +81,21 @@ const Part3 = (props) => {
           )}
         </Fragment>
       )}
-    </CalloutAlert>
+    </div>
   );
   return(
     <Fragment>
-      <div className="ma__output">
-        <HelpTip textBefore={`${paragraphOne.partOne} `} triggerText={`<span class=${empClass} >${toCurrency(estWeeklyBenefit)}</span>`} textAfter={`${paragraphOne.partTwo} <span class=${empClass} >${toPercentage(percentWeeklyIncome)}</span> ${paragraphOne.partThree}`} id="help-tip-benefits" labelID="help-tip-benefits-label">{getHelpText()}</HelpTip>
+      <CalloutAlert theme="c-primary" icon={{ name: '', ariaHidden: true }}>
+        <HelpTip
+          theme="c-white"
+          textBefore={`${paragraphOne.partOne} `}
+          triggerText={`<span class=${empClass} >${toCurrency(estWeeklyBenefit)}</span>`}
+          textAfter={`${paragraphOne.partTwo} <span class=${empClass} >${toPercentage(percentWeeklyIncome)}</span> ${paragraphOne.partThree}`}
+          id="help-tip-benefits"
+          labelID="help-tip-benefits-label"
+        >
+          {getHelpText()}
+        </HelpTip>
         <p>
           {paragraphTwo.partOne}
           {' '}
@@ -97,7 +106,7 @@ const Part3 = (props) => {
           {' '}
           {paragraphTwo.partThree}
         </p>
-      </div>
+      </CalloutAlert>
       <Button type="submit" size="small" info={buttonLink.text} text={buttonLink.text} href={buttonLink.link} />
     </Fragment>
   );

@@ -1,0 +1,6 @@
+node_modules/
+public
+documentation/
+build
+*/registerServiceWorker.js
+*/App.test.js

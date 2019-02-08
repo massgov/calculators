@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
-  InputCurrency, Collapse, CalloutAlert, Paragraph
+  InputCurrency, CalloutAlert, Paragraph
 } from '@massds/mayflower-react';
 import PartTwoProps from '../../data/PartTwo.json';
 import './index.css';
@@ -36,13 +36,13 @@ const Part2 = (props) => {
         step={1}
         onBlur={onBlur}
       />
-      <Collapse in={belowMinSalary && !disabled} dimension="height" className="ma__callout-alert">
-        <div className="ma__collapse">
+      {
+        belowMinSalary && !disabled && (
           <CalloutAlert theme={messageTheme} icon={{ name: messageTheme === 'c-error-red' ? 'alert' : '', ariaHidden: true }}>
             <Paragraph text={message} />
           </CalloutAlert>
-        </div>
-      </Collapse>
+        )
+      }
     </Fragment>
   );
 };

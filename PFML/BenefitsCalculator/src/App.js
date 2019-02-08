@@ -157,8 +157,8 @@ class App extends Component {
               <h1 className="ma__page-header__title">Paid Family Medical Leave Benefits Caculator</h1>
             </div>
             <Part1 error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
-            <Part2 onChange={this.handleInput} onBlur={this.handleBlur} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalaryConv} />
             <hr />
+            <Part2 onChange={this.handleInput} onBlur={this.handleBlur} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalaryConv} />
             {yearIncome > 0 && maxWeeks > 0 && !belowMinSalaryConv && (
               <Part3 yearIncome={yearIncome} maxWeeks={maxWeeks} />
             )}
