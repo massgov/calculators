@@ -1,15 +1,20 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import numbro from 'numbro';
 import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
 import { toCurrency, toPercentage } from '../../util';
 
 const sum = (a, b) => a + b;
 
 const Output = (props) => {
-  const {
+  let {
     quarter1, quarter2, quarter3, quarter4
   } = props;
 
+  quarter1 = numbro.unformat(quarter1);
+  quarter2 = numbro.unformat(quarter2);
+  quarter3 = numbro.unformat(quarter3);
+  quarter4 = numbro.unformat(quarter4);
   const quartersHaveValue = [quarter1, quarter2, quarter3, quarter4].filter((q) => typeof q === 'number' && q > 0);
   const quartersCount = quartersHaveValue.length;
 
