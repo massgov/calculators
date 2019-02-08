@@ -12,12 +12,6 @@ class Calculator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: {
-        quarter1: '',
-        quarter2: '',
-        quarter3: '',
-        quarter4: ''
-      },
       submitted: false,
       applyAll: false
     };
@@ -37,11 +31,6 @@ class Calculator extends Component {
   }
 
   render() {
-    // eslint-disable-next-line react/destructuring-assignment
-    const stateValue = this.state.value;
-    const {
-      quarter1, quarter2, quarter3, quarter4
-    } = stateValue;
     const { applyAll, submitted } = this.state;
     const inputCurrencyProps = {
       placeholder: 'e.g. $100,000',
@@ -60,7 +49,8 @@ class Calculator extends Component {
         <Form>
           {
           (formContext) => {
-            console.log(formContext);
+            //console.log(formContext.getValues());
+            console.log(applyAll)
             return(
               <Fragment>
                 <InputCurrency
@@ -68,7 +58,7 @@ class Calculator extends Component {
                   labelText={`${this.q1.qStart} – ${this.q1.qEnd} earnings:`}
                   id="quarter1"
                   name="quarter1"
-                // defaultValue={quarter1}
+                  defaultValue={0}
                   onChange={(value, id) => {
                     formContext.setValue({ id, value });
                     if (applyAll) {
@@ -84,14 +74,12 @@ class Calculator extends Component {
                     id="apply-all"
                     onChange={(e) => {
                       this.setState({
-                        applyAll: e.target.checked,
-                        value: {
-                          quarter1,
-                          quarter2: quarter1,
-                          quarter3: quarter1,
-                          quarter4: quarter1
-                        }
+                        applyAll: e.target.checked
                       });
+                      const { quarter1 } = formContext.getValues();
+                      formContext.setValue({ id: 'quarter2', value: quarter1 });
+                      formContext.setValue({ id: 'quarter3', value: quarter1 });
+                      formContext.setValue({ id: 'quarter4', value: quarter1 });
                     }}
                   />
                   <label htmlFor="apply-all">Apply this quarter's earnings to the all quarters.</label>
@@ -101,12 +89,10 @@ class Calculator extends Component {
                   labelText={`${this.q2.qStart} – ${this.q2.qEnd} earnings:`}
                   id="quarter2"
                   name="quarter2"
-                // defaultValue={quarter2}
+                  defaultValue={0}
                   disabled={applyAll}
-                  onChange={(e, value) => {
-                    const newStateValue = { ...stateValue };
-                    newStateValue.quarter2 = value;
-                    this.setState({ value: newStateValue });
+                  onChange={(value, id) => {
+                    formContext.setValue({ id, value });
                   }}
                 />
                 <InputCurrency
@@ -114,12 +100,10 @@ class Calculator extends Component {
                   labelText={`${this.q3.qStart} – ${this.q3.qEnd} earnings:`}
                   id="quarter3"
                   name="quarter3"
-                // defaultValue={quarter3}
+                  defaultValue={0}
                   disabled={applyAll}
-                  onChange={(e, value) => {
-                    const newStateValue = { ...stateValue };
-                    newStateValue.quarter3 = value;
-                    this.setState({ value: newStateValue });
+                  onChange={(value, id) => {
+                    formContext.setValue({ id, value });
                   }}
                 />
                 <InputCurrency
@@ -127,12 +111,10 @@ class Calculator extends Component {
                   labelText={`${this.q4.qStart} – ${this.q4.qEnd} earnings:`}
                   id="quarter4"
                   name="quarter4"
-                // defaultValue={quarter4}
+                  defaultValue={0}
                   disabled={applyAll}
-                  onChange={(e, value) => {
-                    const newStateValue = { ...stateValue };
-                    newStateValue.quarter4 = value;
-                    this.setState({ value: newStateValue });
+                  onChange={(value, id) => {
+                    formContext.setValue({ id, value });
                   }}
                 />
                 <Button
@@ -146,9 +128,9 @@ class Calculator extends Component {
         }
         </Form>
         {
-          submitted && (
-            <Output {...stateValue} />
-          )
+          // submitted && (
+          //   <Output {...stateValue} />
+          // )
         }
       </FormProvider>
     );
