@@ -7,15 +7,14 @@ import { toCurrency, toPercentage } from '../../util';
 const sum = (a, b) => a + b;
 
 const Output = (props) => {
-  let {
+  const {
     quarter1, quarter2, quarter3, quarter4
   } = props;
 
-  quarter1 = numbro.unformat(quarter1);
-  quarter2 = numbro.unformat(quarter2);
-  quarter3 = numbro.unformat(quarter3);
-  quarter4 = numbro.unformat(quarter4);
-  const quartersHaveValue = [quarter1, quarter2, quarter3, quarter4].filter((q) => typeof q === 'number' && q > 0);
+  let quartersArray = [quarter1, quarter2, quarter3, quarter4];
+  quartersArray = quartersArray.map((q) => ((typeof q === 'string') ? numbro.unformat(q) : q));
+
+  const quartersHaveValue = quartersArray.filter((q) => typeof q === 'number' && q > 0);
   const quartersCount = quartersHaveValue.length;
 
   // qualification
