@@ -72,29 +72,6 @@ class App extends Component {
     history.listen(() => this.forceUpdate());
   }
 
-  // componentDidMount() {
-  //   // add event listener to save state to localStorage
-  //   // when user leaves/refreshes the page
-  //   if (typeof window !== 'undefined') {
-  //     window.addEventListener(
-  //       'beforeunload',
-  //       this.saveStateToLocalStorage.bind(this)
-  //     );
-  //   }
-  // }
-  //
-  // componentWillUnmount() {
-  //   if (typeof window !== 'undefined') {
-  //     window.removeEventListener(
-  //       'beforeunload',
-  //       this.saveStateToLocalStorage.bind(this)
-  //     );
-  //   }
-  //
-  //   // saves if component has a chance to unmount
-  //   this.saveStateToLocalStorage();
-  // }
-
   handleInput = (e, value) => {
     const numberValue = value;
     this.setState({
@@ -126,17 +103,6 @@ class App extends Component {
       this.props.onChangeBelowMinSalary(true);
     }
   }
-
-  // saveStateToLocalStorage() {
-  //   // for every item in React state
-  //   if (typeof localStorage !== 'undefined') {
-  //     Object.keys(this.state).forEach(function (key) {
-  //       // save to localStorage
-  //       // eslint-disable-next-line react/destructuring-assignment
-  //       localStorage.setItem(key, this.state[key]);
-  //     });
-  //   }
-  // }
 
   render() {
     const {
