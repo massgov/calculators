@@ -44,7 +44,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     // const hasLocalStore = typeof localStorage !== 'undefined';
-    const { yearIncome, maxWeeks, leaveReason, belowMinSalary } = props;
+    const {
+      yearIncome, maxWeeks, leaveReason, belowMinSalary
+    } = props;
     /* eslint-disable no-undef */
     this.state = {
       yearIncome: getDefaultNumber(yearIncome),
