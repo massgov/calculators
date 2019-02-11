@@ -70,6 +70,11 @@ class App extends Component {
     history.listen(() => this.forceUpdate());
   }
 
+  componentWillUnmount() {
+    // remove force update on URL changes
+    history.listen();
+  }
+
   handleInput = (e, value) => {
     const numberValue = value;
     this.setState({
