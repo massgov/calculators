@@ -37,7 +37,10 @@ class App extends Component {
       <div className="App">
         <Header {...this.headerProps} />
         <main className="main-content">
-          <PageHeader title={CalculatorOneVariables.title} subTitle={CalculatorOneVariables.subTitle} />
+          <PageHeader
+            title={CalculatorOneVariables.title}
+            optionalContents={[{ paragraph: { text: CalculatorOneVariables.subTitle } }]}
+          />
           <section className="main-content main-content--two">
             <ExampleForm />
           </section>
