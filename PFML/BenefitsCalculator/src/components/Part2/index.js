@@ -37,7 +37,7 @@ const Part2 = (props) => {
         onBlur={onBlur}
       />
       {
-        belowMinSalary && !disabled && (
+        belowMinSalary && !disabled && defaultValue > 0 && (
           <CalloutAlert theme={messageTheme} icon={{ name: messageTheme === 'c-error-red' ? 'alert' : '', ariaHidden: true }}>
             <Paragraph text={message} />
           </CalloutAlert>
