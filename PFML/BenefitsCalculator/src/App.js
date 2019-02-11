@@ -21,9 +21,7 @@ import './index.css';
  */
 const mapUrlToProps = (url) => ({
   yearIncome: decode(UrlQueryParamTypes.number, url.yearIncome),
-  maxWeeks: decode(UrlQueryParamTypes.number, url.maxWeeks),
-  leaveReason: decode(UrlQueryParamTypes.string, url.leaveReason),
-  belowMinSalary: decode(UrlQueryParamTypes.boolean, url.belowMinSalary)
+  leaveReason: decode(UrlQueryParamTypes.string, url.leaveReason)
 });
 
 /**
@@ -31,9 +29,7 @@ const mapUrlToProps = (url) => ({
  * We do this since we are not using a urlPropsQueryConfig.
  */
 const mapUrlChangeHandlersToProps = () => ({
-  onChangeBelowMinSalary: (value) => replaceInUrlQuery('belowMinSalary', encode(UrlQueryParamTypes.boolean, value)),
   onChangeYearIncome: (value) => replaceInUrlQuery('yearIncome', encode(UrlQueryParamTypes.string, value)),
-  onChangeMaxWeeks: (value) => replaceInUrlQuery('maxWeeks', encode(UrlQueryParamTypes.number, value)),
   onChangeLeaveReason: (value) => replaceInUrlQuery('leaveReason', encode(UrlQueryParamTypes.string, value))
 });
 
@@ -84,7 +80,6 @@ class App extends Component {
       this.setState({
         belowMinSalary: false
       });
-      this.props.onChangeBelowMinSalary(false);
     }
   };
 
@@ -93,7 +88,6 @@ class App extends Component {
       maxWeeks,
       leaveReason: selected
     });
-    this.props.onChangeMaxWeeks(maxWeeks);
     this.props.onChangeLeaveReason(selected);
   }
 
@@ -102,7 +96,6 @@ class App extends Component {
       this.setState({
         belowMinSalary: true
       });
-      this.props.onChangeBelowMinSalary(true);
     }
   }
 
