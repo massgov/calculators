@@ -11,6 +11,7 @@ import Part2 from './components/Part2';
 import Part3 from './components/Part3';
 import history from './components/History';
 import BenefitsVariables from './data/BenefitsVariables.json';
+import PartOneProps from './data/PartOne.json';
 
 import './index.css';
 
@@ -36,6 +37,16 @@ const mapUrlChangeHandlersToProps = () => ({
 const validNumber = (num) => (num || (num !== null && num !== undefined));
 const getDefaultNumber = (num) => ((validNumber(num)) ? Number(num) : 0);
 
+const getWeeks = (qOneProps, selected) => {
+  let maxWeeks;
+  qOneProps.options.forEach((option) => {
+    if (option.value === selected) {
+      maxWeeks = option.weeks;
+    }
+  });
+  return maxWeeks;
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -46,7 +57,7 @@ class App extends Component {
     /* eslint-disable no-undef */
     this.state = {
       yearIncome: getDefaultNumber(yearIncome),
-      maxWeeks: null,
+      maxWeeks: getWeeks(PartOneProps, leaveReason),
       leaveReason,
       belowMinSalary: getDefaultNumber(yearIncome) < BenefitsVariables.baseVariables.minSalary || false
     };
