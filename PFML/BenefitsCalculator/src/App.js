@@ -41,14 +41,14 @@ class App extends Component {
     super(props);
     // const hasLocalStore = typeof localStorage !== 'undefined';
     const {
-      yearIncome, maxWeeks, leaveReason, belowMinSalary
+      yearIncome, leaveReason
     } = props;
     /* eslint-disable no-undef */
     this.state = {
       yearIncome: getDefaultNumber(yearIncome),
-      maxWeeks,
+      maxWeeks: null,
       leaveReason,
-      belowMinSalary
+      belowMinSalary: getDefaultNumber(yearIncome) < CalculatorThreeVariables.baseVariables.minSalary || false
     };
     /* eslint-enable react/no-unused-state */
     this.footerProps = {
