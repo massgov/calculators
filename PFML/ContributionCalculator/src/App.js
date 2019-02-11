@@ -39,7 +39,7 @@ class App extends Component {
         <main className="main-content">
           <PageHeader
             title={CalculatorOneVariables.title}
-            optionalContents={[{ paragraph: { text: CalculatorOneVariables.subTitle } }]}
+            optionalContents={[{ paragraph: { text: CalculatorOneVariables.description } }]}
           />
           <section className="main-content main-content--two">
             <ExampleForm />
