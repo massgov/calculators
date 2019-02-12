@@ -60,7 +60,6 @@ jobs:
             - ./node_modules
       - run:
           name: 'PFML Benefits Calculator Deploy Prod App'
-          command: cd PFML/BenefitsCalculator && npm run build
           command: |
             if [ "$CIRCLE_BRANCH" == "DP-12695--auto-deploy" ];
               then
