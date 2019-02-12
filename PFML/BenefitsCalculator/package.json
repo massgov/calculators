@@ -32,7 +32,7 @@
     "start-js": "react-scripts start",
     "build-js": "react-scripts build",
     "start": "npm-run-all -p watch-css start-js",
-    "build-menus": "node src/utils/buildMainNav.js",
+    "build-menus": "node src/utils/buildMainNav.js src/utils/buildFooter.js",
     "build": "npm-run-all build-menus build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
