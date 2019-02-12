@@ -78,13 +78,15 @@ jobs:
 
 workflows:
   version: 2
+  
   test:
     jobs:
       - pfml-cal-benefits
       - pfml-cal-contribution
+
   deploy-prod:
     jobs:
-      - pfml-cal-benefits-deploy-prod
+      - pfml-cal-benefits-deploy-prod:
           branches:
             only:
               - DP-12695--auto-deploy
