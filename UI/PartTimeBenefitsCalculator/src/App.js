@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Footer } from '@massds/mayflower-react';
+import { Header, Footer, PageHeader } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
@@ -7,6 +7,7 @@ import FooterLinksLiveData from './data/FooterLinksLive.json';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 
 import './index.css';
+import Calculator from './components/Calculator';
 
 
 class App extends Component {
@@ -31,9 +32,15 @@ class App extends Component {
       <div className="App">
         <Header {...this.headerProps} />
         <main className="main-content">
+          <PageHeader
+            title="UI Benefits Calculator for Part-time Workers"
+            optionalContents={[{paragraph: {text:
+                'If you work part time, you may still qualify for unemployment benefits. The weekly benefit amount you receive may be adjusted based on how much you earn from your part-time job.'
+              }}]}
+          />
           <section className="main-content--two">
             <div className="ma__page-header__content">
-              <h1 className="ma__page-header__title">Mayflower Starter Template</h1>
+              <Calculator />
             </div>
           </section>
         </main>
