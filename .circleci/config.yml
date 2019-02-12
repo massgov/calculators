@@ -38,9 +38,45 @@ jobs:
       - run:
           name: 'PFML Contribution Calculator Build App'
           command: cd PFML/ContributionCalculator && npm run build
+  ui-cal-benefits:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10.10.0
+    parallelism: 2
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: 'UI Benefits Calculator Install Packages'
+          command: cd UI/BenefitsCalculator && npm install
+      - run:
+          name: 'UI Benefits Calculator Lint'
+          command: cd UI/BenefitsCalculator && npm run build-css && npm run lint
+      - run:
+          name: 'UI Benefits Calculator Build App'
+          command: cd UI/BenefitsCalculator && npm run build
+  ui-cal-part-time-benefits:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10.10.0
+    parallelism: 2
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: 'UI Part Time Benefits Calculator Install Packages'
+          command: cd PFML/PartTimeBenefitsCalculator && npm install
+      - run:
+          name: 'UI Part Time Benefits Calculator Lint'
+          command: cd PFML/PartTimeBenefitsCalculator && npm run build-css && npm run lint
+      - run:
+          name: 'UI Part Time Benefits Calculator Build App'
+          command: cd PFML/PartTimeBenefitsCalculator && npm run build
 workflows:
   version: 2
   test:
     jobs:
       - pfml-cal-benefits
       - pfml-cal-contribution
+      - ui-cal-benefits
+      - ui-cal-part-time-benefits
