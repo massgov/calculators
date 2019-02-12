@@ -67,7 +67,8 @@ jobs:
             if [ "$CIRCLE_BRANCH" == "DP-12695--auto-deploy" ]; then
               cd PFML/BenefitsCalculator && npm run build
               aws s3 sync build s3://calculator.digital.mass.gov/test/pfml/yourbenefits/ --delete
-  
+            fi
+
 workflows:
   version: 2
   test:
