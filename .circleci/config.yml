@@ -50,13 +50,17 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      # Install AWS cli
-      - run: |
-          # Only sync to S3 for stable tags.
-          if [ "$CIRCLE_BRANCH" == "DP-12695--auto-deploy" ]; then
-            sudo apt-get install python-dev python-pip
-            sudo pip install awscli
-          fi
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "package.json" }}
+      - run: 
+          name: 'Install awscli'
+          command: |
+            # Only sync to S3 for stable tags.
+            if [ "$CIRCLE_BRANCH" == "DP-12695--auto-deploy" ]; then
+              sudo apt-get install python-dev python-pip
+              sudo pip install awscli
+            fi
       - run:
           name: 'PFML Benefits Calculator Install Packages'
           command: cd PFML/BenefitsCalculator && npm install
@@ -80,4 +84,7 @@ workflows:
       - pfml-cal-contribution
   deploy-prod:
     jobs:
+      branches:
+        only:
+          - DP-12695--auto-deploy
       - pfml-cal-benefits-deploy-prod
