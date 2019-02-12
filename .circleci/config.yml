@@ -3,6 +3,11 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 
 version: 2
+
+references:
+  install_aws: &install_aws
+    run: {name: 'Install AWS CLI', command: 'sudo apt-get -y -qq install awscli'}
+
 jobs:
   pfml-cal-benefits:
     docker:
@@ -38,9 +43,38 @@ jobs:
       - run:
           name: 'PFML Contribution Calculator Build App'
           command: cd PFML/ContributionCalculator && npm run build
-workflows:
+  pfml-cal-benefits-deploy-prod:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10.10.0
+    parallelism: 2
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: 'PFML Benefits Calculator Install Packages'
+          command: cd PFML/BenefitsCalculator && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: 'PFML Benefits Calculator Deploy Prod App'
+          command: cd PFML/BenefitsCalculator && npm run build
+          command: |
+            if [ "$CIRCLE_BRANCH" == "DP-12695--auto-deploy" ];
+              then
+                cd PFML/BenefitsCalculator && npm run build
+                aws s3 sync build s3://calculator.digital.mass.gov/test/pfml/yourbenefits/ --delete
+              fi
+               cd PFML/BenefitsCalculator && npm run build
+  
+  workflows:
   version: 2
   test:
     jobs:
       - pfml-cal-benefits
       - pfml-cal-contribution
+  deploy-prod:
+    jobs:
+      - pfml-cal-benefits-deploy-prod
