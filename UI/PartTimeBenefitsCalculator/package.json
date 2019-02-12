@@ -1,5 +1,5 @@
 {
-  "name": "Mayflower-react-starter",
+  "name": "ui-part-time-benefits-calculator",
   "homepage": "http://calculator.digital.mass.gov.s3-website-us-east-1.amazonaws.com/ui/parttimebenefits/",
   "version": "0.1.0",
   "private": true,
@@ -26,7 +26,8 @@
     "start-js": "react-scripts start",
     "build-js": "react-scripts build",
     "start": "npm-run-all -p watch-css start-js",
-    "build": "npm-run-all build-css build-js",
+    "build-menus": "node src/build/buildMainNav.js",
+    "build": "npm-run-all build-menus build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/eslint .",
