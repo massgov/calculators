@@ -53,6 +53,7 @@ jobs:
     parallelism: 2
     working_directory: ~/repo
     steps:
+      - *install_aws
       - checkout
       - run:
           name: 'PFML Benefits Calculator Install Packages'
