@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import numbro from 'numbro';
 import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
-import { toCurrency, toPercentage } from '../../util';
+import { toCurrency, toPercentage } from '../../utils';
 
 const sum = (a, b) => a + b;
 
