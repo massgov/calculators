@@ -65,13 +65,13 @@ jobs:
       - checkout
       - run:
           name: 'UI Part Time Benefits Calculator Install Packages'
-          command: cd PFML/PartTimeBenefitsCalculator && npm install
+          command: cd UI/PartTimeBenefitsCalculator && npm install
       - run:
           name: 'UI Part Time Benefits Calculator Lint'
-          command: cd PFML/PartTimeBenefitsCalculator && npm run build-css && npm run lint
+          command: cd UI/PartTimeBenefitsCalculator && npm run build-css && npm run lint
       - run:
           name: 'UI Part Time Benefits Calculator Build App'
-          command: cd PFML/PartTimeBenefitsCalculator && npm run build
+          command: cd UI/PartTimeBenefitsCalculator && npm run build
 workflows:
   version: 2
   test:
