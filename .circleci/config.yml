@@ -87,7 +87,6 @@ workflows:
   deploy-prod:
     jobs:
       - pfml-cal-benefits-deploy-prod:
-          branches:
-            only:
-              - DP-12695--auto-deploy
+          filters:
+            branches: { only: DP-12695--auto-deploy }
       
