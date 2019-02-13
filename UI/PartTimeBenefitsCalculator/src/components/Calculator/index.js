@@ -1,12 +1,17 @@
 import React, { Fragment } from 'react';
-import { Form, FormProvider, InputCurrency, CalloutAlert, HelpTip, Input, InputContext } from '@massds/mayflower-react';
+import { Form, FormProvider, InputCurrency, CalloutAlert, HelpTip, Input, InputContext, Paragraph } from '@massds/mayflower-react';
 import numbro from 'numbro';
+import './style.css';
 
 const toCurrency = (val) => {
   if (typeof val === 'string' && val.length === 0) {
     return NaN;
   }
   return numbro(val).formatCurrency({ mantissa: 2 });
+};
+const displayCurrency = (val) => {
+  const currency = toCurrency(val);
+  return `<span class="ma__show-currency">${currency}</span>`;
 };
 const toNumber = (val) => {
   if (typeof val === 'string' && val.length === 0) {
@@ -75,16 +80,16 @@ const Calculator = () => {
             };
             return(
               <Fragment>
-                <div>
+                <div className="form-item">
                   <QuestionOne handleChange={handleChange} />
                 </div>
-                <div>
+                <div className="form-item">
                   <QuestionTwo handleChange={handleChange} />
                 </div>
-                <div>
+                <div className="form-item">
                   <ScenarioOne formContext={formContext} />
                 </div>
-                <div>
+                <div className="form-item">
                   <ScenarioTwo formContext={formContext} />
                 </div>
               </Fragment>
@@ -176,17 +181,20 @@ const ScenarioOne = (props) => {
             && !Number.isNaN(weeklyBenefits)
             && !Number.isNaN(weeklyEarnings)) {
             return (
-              <CalloutAlert theme="c-primary" icon={null}>
-                <HelpTip
-                  theme="c-white"
-                  triggerText="not affected"
-                  textBefore="Your weekly benefits are "
-                  textAfter="."
-                  id="help-tip-scenario-one"
-                  labelID="help-tip-scenario-one-label"
-                >As you make less than a third of your weekly benefits through your part time employment, your weekly benefit stays the same.</HelpTip>
-                <p>{`You take home ${toCurrency(weeklyBenefits)} from UI benefits and ${toCurrency(weeklyEarnings)} from your income, a total amount of ${toCurrency(toNumber(weeklyBenefits)+ toNumber(weeklyEarnings))} weekly.`}</p>
-              </CalloutAlert>
+              <Fragment>
+                <hr />
+                <CalloutAlert theme="c-primary" icon={null}>
+                  <HelpTip
+                    theme="c-white"
+                    triggerText={'<strong>not affected</strong>'}
+                    textBefore="Your weekly benefits are "
+                    textAfter="."
+                    id="help-tip-scenario-one"
+                    labelID="help-tip-scenario-one-label"
+                  >As you make less than a third of your weekly benefits through your part time employment, your weekly benefit stays the same.</HelpTip>
+                  <Paragraph text={`You take home ${displayCurrency(weeklyBenefits)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(toNumber(weeklyBenefits)+ toNumber(weeklyEarnings))} weekly.`} />
+                </CalloutAlert>
+              </Fragment>
             );
           }
           return null;
@@ -225,17 +233,20 @@ const ScenarioTwo = (props) => {
             && !Number.isNaN(earningsOverDis)
             && !Number.isNaN(earningsDisregard)) {
             return (
-              <CalloutAlert theme="c-primary" icon={null}>
-                <HelpTip
-                  theme="c-white"
-                  triggerText={toCurrency(reducedBenefit)}
-                  textBefore="Your reduced weekly benefit amount is "
-                  textAfter="."
-                  id="help-tip-scenario-two"
-                  labelID="help-tip-scenario-two-label"
-                >{`Earnings over earnings disregard: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyBenefits)} - ${toCurrency(earningsDisregard)}`}</HelpTip>
-                <p>{`You will take home ${toCurrency(reducedBenefit)} from UI benefits and ${toCurrency(weeklyBenefits)} from your income, a total amount of ${toCurrency(toNumber(reducedBenefit) + toNumber(weeklyBenefits))} weekly. `}</p>
-              </CalloutAlert>
+              <Fragment>
+                <hr />
+                <CalloutAlert theme="c-primary" icon={null}>
+                  <HelpTip
+                    theme="c-white"
+                    triggerText={toCurrency(reducedBenefit)}
+                    textBefore="Your reduced weekly benefit amount is "
+                    textAfter="."
+                    id="help-tip-scenario-two"
+                    labelID="help-tip-scenario-two-label"
+                  >{`Earnings over earnings disregard: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyBenefits)} - ${toCurrency(earningsDisregard)}`}</HelpTip>
+                  <Paragraph text={`You will take home ${displayCurrency(reducedBenefit)} from UI benefits and ${displayCurrency(weeklyBenefits)} from your income, a total amount of ${displayCurrency(toNumber(reducedBenefit) + toNumber(weeklyBenefits))} weekly. `} />
+                </CalloutAlert>
+              </Fragment>
             );
           }
           return null;
