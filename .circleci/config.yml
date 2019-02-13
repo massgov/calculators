@@ -5,7 +5,6 @@
 version: 2
 
 jobs:
-  
   pfml-cal-benefits:
     docker:
       # specify the version you desire here
@@ -23,7 +22,6 @@ jobs:
       - run:
           name: 'PFML Benefits Calculator Build App'
           command: cd PFML/BenefitsCalculator && npm run build
-  
   pfml-cal-contribution:
     docker:
       # specify the version you desire here
@@ -41,7 +39,6 @@ jobs:
       - run:
           name: 'PFML Contribution Calculator Build App'
           command: cd PFML/ContributionCalculator && npm run build
-  
   pfml-cal-benefits-deploy-prod:
     docker:
       # specify the version you desire here
@@ -74,7 +71,6 @@ jobs:
               cd PFML/BenefitsCalculator && npm run build
               aws s3 sync build s3://calculator.digital.mass.gov/pfml/yourbenefits/ --delete
             fi
-
   pfml-cal-contribution-deploy-prod:
     docker:
       # specify the version you desire here
@@ -110,12 +106,10 @@ jobs:
 
 workflows:
   version: 2
-  
   test:
     jobs:
       - pfml-cal-benefits
       - pfml-cal-contribution
-
   deploy-prod:
     jobs:
       - pfml-cal-benefits-deploy-prod:
