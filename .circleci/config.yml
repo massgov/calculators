@@ -52,12 +52,11 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "package.json" }}
+            - dependency-cache-{{ checksum "PFML/BenefitsCalculator/package.json" }}
       - run: 
           name: 'Install awscli'
           command: |
-            # Only sync to S3 for stable tags.
-            if [ "$CIRCLE_BRANCH" == "DP-12695--auto-deploy" ]; then
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
               sudo apt-get install python-dev python-pip
               sudo pip install awscli
             fi
@@ -65,15 +64,48 @@ jobs:
           name: 'PFML Benefits Calculator Install Packages'
           command: cd PFML/BenefitsCalculator && npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "PFML/BenefitsCalculator/package.json" }}
           paths:
             - ./node_modules
       - run:
           name: 'PFML Benefits Calculator Deploy Prod App'
           command: |
-            if [ "$CIRCLE_BRANCH" == "DP-12695--auto-deploy" ]; then
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
               cd PFML/BenefitsCalculator && npm run build
-              aws s3 sync build s3://calculator.digital.mass.gov/test/pfml/yourbenefits/ --delete
+              aws s3 sync build s3://calculator.digital.mass.gov/pfml/yourbenefits/ --delete
+            fi
+
+  pfml-cal-contribution-deploy-prod:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10.10.0
+    parallelism: 2
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "PFML/ContributionCalculator/package.json" }}
+      - run: 
+          name: 'Install awscli'
+          command: |
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
+              sudo apt-get install python-dev python-pip
+              sudo pip install awscli
+            fi
+      - run:
+          name: 'PFML Benefits Calculator Install Packages'
+          command: cd PFML/ContributionCalculator && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "PFML/ContributionCalculator/package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: 'PFML Benefits Calculator Deploy Prod App'
+          command: |
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
+              cd PFML/ContributionCalculator && npm run build
+              aws s3 sync build s3://calculator.digital.mass.gov/pfml/contribution/ --delete
             fi
 
 workflows:
@@ -88,5 +120,8 @@ workflows:
     jobs:
       - pfml-cal-benefits-deploy-prod:
           filters:
-            branches: { only: DP-12695--auto-deploy }
+            branches: { only: master }
+      - pfml-cal-contribution-deploy-prod:
+          filters:
+            branches: { only: master }
       
