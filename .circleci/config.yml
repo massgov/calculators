@@ -53,7 +53,7 @@ jobs:
       - run: 
           name: 'Install awscli'
           command: |
-            if [ "$CIRCLE_BRANCH" == "DP-12695--auto-deploy" ]; then
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
               sudo apt-get install python-dev python-pip
               sudo pip install awscli
             fi
@@ -67,7 +67,7 @@ jobs:
       - run:
           name: 'PFML Benefits Calculator Deploy Prod App'
           command: |
-            if [ "$CIRCLE_BRANCH" == "DP-12695--auto-deploy" ]; then
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
               cd PFML/BenefitsCalculator && npm run build
               aws s3 sync build s3://calculator.digital.mass.gov/pfml/yourbenefits/ --delete
             fi
@@ -85,7 +85,7 @@ jobs:
       - run: 
           name: 'Install awscli'
           command: |
-            if [ "$CIRCLE_BRANCH" == "DP-12695--auto-deploy" ]; then
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
               sudo apt-get install python-dev python-pip
               sudo pip install awscli
             fi
@@ -99,7 +99,7 @@ jobs:
       - run:
           name: 'PFML Benefits Calculator Deploy Prod App'
           command: |
-            if [ "$CIRCLE_BRANCH" == "DP-12695--auto-deploy" ]; then
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
               cd PFML/ContributionCalculator && npm run build
               aws s3 sync build s3://calculator.digital.mass.gov/pfml/contribution/ --delete
             fi
@@ -114,8 +114,8 @@ workflows:
     jobs:
       - pfml-cal-benefits-deploy-prod:
           filters:
-            branches: { only: DP-12695--auto-deploy }
+            branches: { only: master }
       - pfml-cal-contribution-deploy-prod:
           filters:
-            branches: { only: DP-12695--auto-deploy }
+            branches: { only: master }
       
