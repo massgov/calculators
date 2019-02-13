@@ -245,10 +245,10 @@ workflows:
             branches: { only: develop }
       - ui-cal-benefits-deploy-dev:
           filters:
-            branches: { only: DP-12695--auto-deploy }
+            branches: { only: develop }
       - ui-cal-parttime-deploy-dev:
           filters:
-            branches: { only: develop }
+            branches: { only: DP-12695--auto-deploy }
   deploy-prod:
     jobs:
       - pfml-cal-benefits-deploy-prod:
