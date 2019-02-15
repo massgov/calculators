@@ -1,8 +1,8 @@
 {
     "questionOne": {
         "question": {
-            "helpText": "",
-            "triggerText": "",
+            "helpText": "Employees or contractors who you would issue Massachusetts W2 or 1099-MISC to.",
+            "triggerText": "Massachusetts W2 employees or 1099-MISC contractors",
             "content": "Do you have any Massachusetts W2 employees or 1099-MISC contractors?"
         },
         "errorMsg": "Please select yes or no.",
