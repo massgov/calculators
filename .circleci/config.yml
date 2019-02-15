@@ -3,13 +3,16 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 
 version: 2
-jobs:
-  pfml-cal-benefits:
+
+defaults: &defaults
     docker:
-      # specify the version you desire here
       - image: circleci/node:10.10.0
     parallelism: 2
     working_directory: ~/repo
+    
+jobs:
+  pfml-cal-benefits:
+    <<: *defaults
     steps:
       - checkout
       - run:
@@ -22,11 +25,7 @@ jobs:
           name: 'PFML Benefits Calculator Build App'
           command: cd PFML/BenefitsCalculator && npm run build
   pfml-cal-contribution:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:10.10.0
-    parallelism: 2
-    working_directory: ~/repo
+    <<: *defaults
     steps:
       - checkout
       - run:
@@ -39,11 +38,7 @@ jobs:
           name: 'PFML Contribution Calculator Build App'
           command: cd PFML/ContributionCalculator && npm run build
   ui-cal-benefits:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:10.10.0
-    parallelism: 2
-    working_directory: ~/repo
+    <<: *defaults
     steps:
       - checkout
       - run:
@@ -56,11 +51,7 @@ jobs:
           name: 'UI Benefits Calculator Build App'
           command: cd UI/BenefitsCalculator && npm run build
   ui-cal-part-time-benefits:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:10.10.0
-    parallelism: 2
-    working_directory: ~/repo
+    <<: *defaults
     steps:
       - checkout
       - run:
