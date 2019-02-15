@@ -4,7 +4,7 @@ import { decode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery, encode } fr
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
-import FooterLinksLiveData from './data/FooterLinksLive.json';
+import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import Part1 from './components/Part1';
 import Part2 from './components/Part2';
@@ -14,7 +14,6 @@ import BenefitsVariables from './data/BenefitsVariables.json';
 import PartOneProps from './data/PartOne.json';
 
 import './index.css';
-
 
 /**
  * Map from url query params to props. The values in `url` will still be encoded
@@ -63,7 +62,7 @@ class App extends Component {
     };
     /* eslint-enable react/no-unused-state */
     this.footerProps = {
-      footerLinks: FooterLinksLiveData.footerLinks,
+      footerLinks: FooterData.footerLinks,
       socialLinks: SocialLinksLiveData.socialLinks
     };
     this.headerProps = {
