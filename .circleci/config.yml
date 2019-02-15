@@ -99,6 +99,9 @@ jobs:
           command: |
               cd PFML/BenefitsCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/yourbenefits/ --delete
+      - persist_to_workspace:
+          root: ~/repo
+          paths: ["*"]
   
   pfml-cal-contribution-deploy-dev:
     <<: *defaults
@@ -120,6 +123,9 @@ jobs:
           command: |
               cd PFML/ContributionCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/contribution/ --delete
+      - persist_to_workspace:
+          root: ~/repo
+          paths: ["*"]
   
   ui-cal-benefits-deploy-dev:
     <<: *defaults
@@ -141,6 +147,9 @@ jobs:
           command: |
               cd UI/BenefitsCalculator/ && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/yourbenefits/ --delete
+      - persist_to_workspace:
+          root: ~/repo
+          paths: ["*"]
   
   ui-cal-parttime-deploy-dev:
     <<: *defaults
@@ -162,6 +171,9 @@ jobs:
           command: |
               cd UI/PartTimeBenefitsCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/parttimebenefits/ --delete
+      - persist_to_workspace:
+          root: ~/repo
+          paths: ["*"]
 
   # Deploy master branches to production ev.
   pfml-cal-benefits-deploy-prod:
