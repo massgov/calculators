@@ -4,6 +4,10 @@
 
 version: 2
 
+references:
+  install_globel_packages: &install_globel_packages
+    run: {name: 'Install globale packages', command: 'npm install'}
+
 defaults: &defaults
     docker:
       - image: circleci/node:10.10.0
@@ -15,6 +19,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - *install_globel_packages
       - run:
           name: 'PFML Benefits Calculator Install Packages'
           command: cd PFML/BenefitsCalculator && npm install
@@ -28,6 +33,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - *install_globel_packages
       - run:
           name: 'PFML Contribution Calculator Install Packages'
           command: cd PFML/ContributionCalculator && npm install
@@ -41,6 +47,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - *install_globel_packages
       - run:
           name: 'UI Benefits Calculator Install Packages'
           command: cd UI/BenefitsCalculator && npm install
@@ -54,6 +61,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - *install_globel_packages
       - run:
           name: 'UI Part Time Benefits Calculator Install Packages'
           command: cd UI/PartTimeBenefitsCalculator && npm install
