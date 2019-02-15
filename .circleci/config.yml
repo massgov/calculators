@@ -87,6 +87,7 @@ jobs:
           keys:
             - dependency-cache-{{ checksum "PFML/BenefitsCalculator/package.json" }}
       - *install_aws
+      - *install_global_packages
       - run:
           name: 'PFML Benefits Calculator Install Packages'
           command: cd PFML/BenefitsCalculator && npm install
@@ -99,9 +100,6 @@ jobs:
           command: |
               cd PFML/BenefitsCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/yourbenefits/ --delete
-      - persist_to_workspace:
-          root: ~/repo
-          paths: ["*"]
   
   pfml-cal-contribution-deploy-dev:
     <<: *defaults
@@ -111,6 +109,7 @@ jobs:
           keys:
             - dependency-cache-{{ checksum "PFML/ContributionCalculator/package.json" }}
       - *install_aws
+      - *install_global_packages
       - run:
           name: 'PFML Contribution Calculator Install Packages'
           command: cd PFML/ContributionCalculator && npm install
@@ -123,9 +122,6 @@ jobs:
           command: |
               cd PFML/ContributionCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/contribution/ --delete
-      - persist_to_workspace:
-          root: ~/repo
-          paths: ["*"]
   
   ui-cal-benefits-deploy-dev:
     <<: *defaults
@@ -135,6 +131,7 @@ jobs:
           keys:
             - dependency-cache-{{ checksum "UI/BenefitsCalculator/package.json" }}
       - *install_aws
+      - *install_global_packages
       - run:
           name: 'UI Benefits Calculator Install Packages'
           command: cd UI/BenefitsCalculator/ && npm install
@@ -147,9 +144,6 @@ jobs:
           command: |
               cd UI/BenefitsCalculator/ && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/yourbenefits/ --delete
-      - persist_to_workspace:
-          root: ~/repo
-          paths: ["*"]
   
   ui-cal-parttime-deploy-dev:
     <<: *defaults
@@ -159,6 +153,7 @@ jobs:
           keys:
             - dependency-cache-{{ checksum "UI/PartTimeBenefitsCalculator/package.json" }}
       - *install_aws
+      - *install_global_packages
       - run:
           name: 'UI Part Time Benefits Calculator Install Packages'
           command: cd UI/PartTimeBenefitsCalculator && npm install
@@ -171,9 +166,6 @@ jobs:
           command: |
               cd UI/PartTimeBenefitsCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/parttimebenefits/ --delete
-      - persist_to_workspace:
-          root: ~/repo
-          paths: ["*"]
 
   # Deploy master branches to production ev.
   pfml-cal-benefits-deploy-prod:
@@ -184,6 +176,7 @@ jobs:
           keys:
             - dependency-cache-{{ checksum "PFML/BenefitsCalculator/package.json" }}
       - *install_aws
+      - *install_global_packages
       - run:
           name: 'PFML Benefits Calculator Install Packages'
           command: cd PFML/BenefitsCalculator && npm install
@@ -205,6 +198,7 @@ jobs:
           keys:
             - dependency-cache-{{ checksum "PFML/ContributionCalculator/package.json" }}
       - *install_aws
+      - *install_global_packages
       - run:
           name: 'PFML Contribution Calculator Install Packages'
           command: cd PFML/ContributionCalculator && npm install
