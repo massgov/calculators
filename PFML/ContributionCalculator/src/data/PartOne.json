@@ -3,7 +3,7 @@
         "question": {
             "helpText": "",
             "triggerText": "",
-            "content": "Do you have any W2 employees or 1099-MISC contractors performing services in Massachusetts? "
+            "content": "Do you have any Massachusetts W2 employees or 1099-MISC contractors?"
         },
         "errorMsg": "Please select yes or no.",
         "options": [{
@@ -22,13 +22,13 @@
     },
     "questionTwo": {
         "question": {
-            "content": "How many W2 employees have you hired in the last 12 months?"
+            "content": "How many Massachusetts W2 employees have you employed in the last 12 months?"
         },
         "errorMsg": "Please enter a value."
     },
     "questionThree": {
         "question": {
-            "content": "How many 1099-MISC contractors have you paid to perform work for your business in the last 12 months?"
+            "content": "How many Massachusetts 1099-MISC contractors have worked for you in the last 12 months?"
         },
         "errorMsg": "Please enter a value."
     },

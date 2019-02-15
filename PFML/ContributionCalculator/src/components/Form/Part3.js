@@ -283,13 +283,13 @@ const Part3 = (props) => {
                         <th>Total</th>
                       </tr>
                       <tr>
-                        <th rowSpan="1">You will pay:</th>
+                        <th rowSpan="1">The employer will pay:</th>
                         <td>{toCurrency(medLeaveComp / timeValue)}</td>
                         <td>{toCurrency(famLeaveComp / timeValue)}</td>
                         <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
                       </tr>
                       <tr>
-                        <th rowSpan="1">Your Employees will pay:</th>
+                        <th rowSpan="1">The employee will pay:</th>
                         <td>{toCurrency(medLeaveEmp / timeValue)}</td>
                         <td>{toCurrency(famLeaveEmp / timeValue)}</td>
                         <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
@@ -307,13 +307,13 @@ const Part3 = (props) => {
                         <th>Total</th>
                       </tr>
                       <tr>
-                        <td>You will pay:</td>
+                        <td>The employer will pay:</td>
                         <td>{toCurrency(medLeaveComp / timeValue)}</td>
                         <td>{toCurrency(famLeaveComp / timeValue)}</td>
                         <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
                       </tr>
                       <tr>
-                        <td>Your Employee will pay:</td>
+                        <td>The employees will pay:</td>
                         <td>{toCurrency(medLeaveEmp / timeValue)}</td>
                         <td>{toCurrency(famLeaveEmp / timeValue)}</td>
                         <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
