@@ -7,6 +7,8 @@ version: 2
 references:
   install_global_packages: &install_global_packages
     run: {name: 'Install global packages', command: 'npm install'}
+  install_aws: &install_aws
+    run: {name: 'Install awscli', command: 'sudo apt-get -y -qq install awscli'}
 
 defaults: &defaults
     docker:
@@ -84,13 +86,7 @@ jobs:
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "PFML/BenefitsCalculator/package.json" }}
-      - run: 
-          name: 'Install awscli'
-          command: |
-            if [ "$CIRCLE_BRANCH" == "develop" ]; then
-              sudo apt-get install python-dev python-pip
-              sudo pip install awscli
-            fi
+      - *install_aws
       - run:
           name: 'PFML Benefits Calculator Install Packages'
           command: cd PFML/BenefitsCalculator && npm install
@@ -112,13 +108,7 @@ jobs:
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "PFML/ContributionCalculator/package.json" }}
-      - run: 
-          name: 'Install awscli'
-          command: |
-            if [ "$CIRCLE_BRANCH" == "develop" ]; then
-              sudo apt-get install python-dev python-pip
-              sudo pip install awscli
-            fi
+      - *install_aws
       - run:
           name: 'PFML Contribution Calculator Install Packages'
           command: cd PFML/ContributionCalculator && npm install
@@ -140,13 +130,7 @@ jobs:
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "UI/BenefitsCalculator/package.json" }}
-      - run: 
-          name: 'Install awscli'
-          command: |
-            if [ "$CIRCLE_BRANCH" == "develop" ]; then
-              sudo apt-get install python-dev python-pip
-              sudo pip install awscli
-            fi
+      - *install_aws
       - run:
           name: 'UI Benefits Calculator Install Packages'
           command: cd UI/BenefitsCalculator/ && npm install
@@ -168,13 +152,7 @@ jobs:
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "UI/PartTimeBenefitsCalculator/package.json" }}
-      - run: 
-          name: 'Install awscli'
-          command: |
-            if [ "$CIRCLE_BRANCH" == "develop" ]; then
-              sudo apt-get install python-dev python-pip
-              sudo pip install awscli
-            fi
+      - *install_aws
       - run:
           name: 'UI Part Time Benefits Calculator Install Packages'
           command: cd UI/PartTimeBenefitsCalculator && npm install
@@ -198,13 +176,7 @@ jobs:
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "PFML/BenefitsCalculator/package.json" }}
-      - run: 
-          name: 'Install awscli'
-          command: |
-            if [ "$CIRCLE_BRANCH" == "master" ]; then
-              sudo apt-get install python-dev python-pip
-              sudo pip install awscli
-            fi
+      - *install_aws
       - run:
           name: 'PFML Benefits Calculator Install Packages'
           command: cd PFML/BenefitsCalculator && npm install
@@ -226,13 +198,7 @@ jobs:
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "PFML/ContributionCalculator/package.json" }}
-      - run: 
-          name: 'Install awscli'
-          command: |
-            if [ "$CIRCLE_BRANCH" == "master" ]; then
-              sudo apt-get install python-dev python-pip
-              sudo pip install awscli
-            fi
+      - *install_aws
       - run:
           name: 'PFML Contribution Calculator Install Packages'
           command: cd PFML/ContributionCalculator && npm install
