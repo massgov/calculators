@@ -97,10 +97,9 @@ jobs:
       - run:
           name: 'PFML Benefits Calculator Deploy Dev App'
           command: |
-            if [ "$CIRCLE_BRANCH" == "develop" ]; then
               cd PFML/BenefitsCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/yourbenefits/ --delete
-            fi
+  
   pfml-cal-contribution-deploy-dev:
     <<: *defaults
     steps:
@@ -119,10 +118,9 @@ jobs:
       - run:
           name: 'PFML Contribution Calculator Deploy Dev App'
           command: |
-            if [ "$CIRCLE_BRANCH" == "develop" ]; then
               cd PFML/ContributionCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/contribution/ --delete
-            fi
+  
   ui-cal-benefits-deploy-dev:
     <<: *defaults
     steps:
@@ -141,10 +139,9 @@ jobs:
       - run:
           name: 'UI Benefits Calculator Deploy Dev App'
           command: |
-            if [ "$CIRCLE_BRANCH" == "develop" ]; then
               cd UI/BenefitsCalculator/ && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/yourbenefits/ --delete
-            fi
+  
   ui-cal-parttime-deploy-dev:
     <<: *defaults
     steps:
@@ -163,10 +160,8 @@ jobs:
       - run:
           name: 'UI Part Time Benefits Calculator Deploy Dev App'
           command: |
-            if [ "$CIRCLE_BRANCH" == "develop" ]; then
               cd UI/PartTimeBenefitsCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/parttimebenefits/ --delete
-            fi
 
   # Deploy master branches to production ev.
   pfml-cal-benefits-deploy-prod:
@@ -187,10 +182,9 @@ jobs:
       - run:
           name: 'PFML Benefits Calculator Deploy Prod App'
           command: |
-            if [ "$CIRCLE_BRANCH" == "master" ]; then
               cd PFML/BenefitsCalculator && npm run build
               aws s3 sync build s3://calculator.digital.mass.gov/pfml/yourbenefits/ --delete
-            fi
+
   pfml-cal-contribution-deploy-prod:
     <<: *defaults
     steps:
@@ -209,10 +203,8 @@ jobs:
       - run:
           name: 'PFML Contribution Calculator Deploy Prod App'
           command: |
-            if [ "$CIRCLE_BRANCH" == "master" ]; then
               cd PFML/ContributionCalculator && npm run build
               aws s3 sync build s3://calculator.digital.mass.gov/pfml/contribution/ --delete
-            fi
 
 
 workflows:
