@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import numbro from 'numbro';
-import { SelectBox, Input, InputSlider, InputNumber, FormContext } from '@massds/mayflower-react';
+import { SelectBox, Input, InputSlider, InputNumber, FormContext, Table } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { toCurrency, getHelpTip } from '../../utils';
 import ContributionVariables from '../../data/ContributionVariables.json';
 import PartThreeProps from '../../data/PartThree.json';
+import tableProps from '../../data/table.data';
 
 import '../../css/index.css';
 
@@ -247,7 +248,7 @@ const Part3 = (props) => {
                               key={Math.random()}
                             />
                           </div>
-                          <InputSlider {...medLeaveSliderProps} key={Math.random()}/>
+                          <InputSlider {...medLeaveSliderProps} key={Math.random()} />
                         </Input>
                       </div>
                     </fieldset>
@@ -303,6 +304,7 @@ const Part3 = (props) => {
                     </tbody>
                   </table>
                 )}
+                <Table {...tableProps} />
               </React.Fragment>
             );
           }
@@ -310,6 +312,7 @@ const Part3 = (props) => {
     </FormContext.Consumer>
   );
 };
+
 
 Part3.propTypes = {
   /** Functions that push changed context props to the url. */
