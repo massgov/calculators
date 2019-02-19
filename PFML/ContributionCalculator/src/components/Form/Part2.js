@@ -84,8 +84,14 @@ const Part2 = (props) => {
                           trimMantissa: false,
                           thousandSeparated: true
                         }}
-                        onChange={(e, value) => {
-                          onChangePayW2(value);
+                        onChange={(val) => {
+                          context.updateState({
+                            value: {
+                              ...context.value,
+                              payrollW2: val
+                            }
+                          });
+                          onChangePayW2(val);
                         }}
                         required
                         disabled={disableInput}
@@ -109,8 +115,14 @@ const Part2 = (props) => {
                           trimMantissa: false,
                           thousandSeparated: true
                         }}
-                        onChange={(e, value) => {
-                          onChangePay1099(value);
+                        onChange={(val) => {
+                          context.updateState({
+                            value: {
+                              ...context.value,
+                              payroll1099: val
+                            }
+                          });
+                          onChangePay1099(val);
                         }}
                         disabled={disableInput || !over50per}
                         required
@@ -165,8 +177,14 @@ const Part2 = (props) => {
                           trimMantissa: false,
                           thousandSeparated: true
                         }}
-                        onChange={(e, value) => {
-                          onChangePayWages(value);
+                        onChange={(val) => {
+                          context.updateState({
+                            value: {
+                              ...context.value,
+                              payrollWages: val
+                            }
+                          });
+                          onChangePayWages(val);
                         }}
                         required
                         inline

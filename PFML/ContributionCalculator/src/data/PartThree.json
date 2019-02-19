@@ -1,14 +1,14 @@
 {
     "questionOne": {
         "over25": {
-            "content": "How will you <strong>split the contribution with your qualifying workers</strong>?",
-            "triggerText": "<strong>split the contribution with your qualifying workers</strong>",
-            "helpText": "Since you have 25 or more qualifying workers, you are required to pay at least 60% of the medical leave portion. You are free to pay a larger portion of the contribution if you wish to do so."
+            "text": "How will you <strong>split the contribution with your qualifying workers</strong>?",
+            "triggerText": ["<strong>split the contribution with your qualifying workers</strong>"],
+            "helpText": ["Since you have 25 or more qualifying workers, you are required to pay at least 60% of the medical leave portion. You are free to pay a larger portion of the contribution if you wish to do so."]
         },
         "under25": {
-            "content": "How will you <strong>split the contribution with your qualifying workers</strong>?",
-            "triggerText": "<strong>split the contribution with your qualifying workers</strong>",
-            "helpText": "Since you have fewer than 25 qualifying workers, you are not required to pay the employer share unless you choose to do so."
+            "text": "How will you <strong>split the contribution with your qualifying workers</strong>?",
+            "triggerText": ["<strong>split the contribution with your qualifying workers</strong>"],
+            "helpText": ["Since you have fewer than 25 qualifying workers, you are not required to pay the employer share unless you choose to do so."]
         },
         "left": {
             "main": "Family Leave",
