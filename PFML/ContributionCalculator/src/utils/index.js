@@ -13,7 +13,7 @@ export const toPercentage = (number, decimal) => {
   return percent;
 };
 
-export const getHelpTip = ({ text, triggerText, helpText, id, theme }, key) => {
+export const getHelpTip = ({ text, triggerText, helpText, id }, theme, key) => {
   return(
     <HelpTip
       key={key}
