@@ -273,7 +273,7 @@ const Part3 = (props) => {
                     </h2>
                   </React.Fragment>
                 )}
-                {disable && payrollBase === 'all' && (
+                {disable && (
                   <table className="ma__table">
                     <tbody>
                       <tr className="ma__table-headers">
@@ -290,36 +290,6 @@ const Part3 = (props) => {
                       </tr>
                       <tr>
                         <th rowSpan="1">The employee will pay:</th>
-                        <td>{toCurrency(medLeaveEmp / timeValue)}</td>
-                        <td>{toCurrency(famLeaveEmp / timeValue)}</td>
-                        <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
-                      </tr>
-                      <tr>
-                        <td className="ma__td--group">Total payment:</td>
-                        <td>{toCurrency(medLeave / timeValue)}</td>
-                        <td>{toCurrency(famLeave / timeValue)}</td>
-                        <td>{toCurrency((medLeave + famLeave) / timeValue)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                )}
-                {disable && payrollBase === 'one' && (
-                  <table className="ma__table">
-                    <tbody>
-                      <tr className="ma__table-headers">
-                        <th>Contribution</th>
-                        <th>Medical Leave</th>
-                        <th>Family Leave</th>
-                        <th>Total</th>
-                      </tr>
-                      <tr>
-                        <td>The employer will pay:</td>
-                        <td>{toCurrency(medLeaveComp / timeValue)}</td>
-                        <td>{toCurrency(famLeaveComp / timeValue)}</td>
-                        <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
-                      </tr>
-                      <tr>
-                        <td>The employees will pay:</td>
                         <td>{toCurrency(medLeaveEmp / timeValue)}</td>
                         <td>{toCurrency(famLeaveEmp / timeValue)}</td>
                         <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
