@@ -95,11 +95,21 @@ fieldset {
 			}
 		}
 }
+
+.ma__input-group {
+  &--inline {
+    .ma__input-group-right {
+       align-items: unset;
+    }
+  }
+}
+
 .ma__input-group-right {
 	.ma__input-group {
 	   width: 100%;
 	}
 }
+
 .ma__input-group--ends{
 	display: flex;
 		flex-direction: row;
