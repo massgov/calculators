@@ -11,7 +11,7 @@ html, body {
 		@media ($bp-large-min) {
 			float: none !important;
 		}
-    
+
     & > * {
       margin-top: 0 !important;
     }
@@ -59,18 +59,6 @@ fieldset {
         visibility: visible;
         display: block;
       }
-}
-
-.ma__table {
-    border-bottom: 3px solid $c-primary-lighter !important;
-    .ma__table-headers {
-        border-top: 3px solid $c-primary-lighter !important;
-        border-bottom: 3px solid $c-primary-lighter !important;
-		background-color: $c-primary-lightest;
-	}
-    .ma__td--group {
-	    padding-left: 0px !important;
-	}
 }
 
 .ma__table-heading {
@@ -146,7 +134,7 @@ fieldset {
 	    font-size: 1rem;
 	    color: $c-primary;
     }
-}	
+}
 
 .ma__help-text {
 	padding: 10px;
@@ -160,14 +148,14 @@ fieldset {
 	}
 }
 
-.ma__help-tip__text { 
+.ma__help-tip__text {
     .ma__help-tip__text-direct {
 	    @media ($bp-large-min) {
 	      margin-right: 20px !important;
 	      margin-left: 5px !important;
 	    }
 	}
-	
+
 	&--c-white {
 	    .ma__help-text {
 	        @media ($bp-large-min) {

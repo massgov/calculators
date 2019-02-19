@@ -6,7 +6,7 @@ import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'reac
 import { toCurrency, getHelpTip } from '../../utils';
 import ContributionVariables from '../../data/ContributionVariables.json';
 import PartThreeProps from '../../data/PartThree.json';
-import tableProps from '../../data/table.data';
+import tableData from '../../data/table.data';
 
 import '../../css/index.css';
 
@@ -147,6 +147,20 @@ const Part3 = (props) => {
               onChange: (value) => onMedSliderChange(value)
             };
 
+            const tBody = tableData.bodies[0];
+            const tRow1 = tBody.rows[0];
+            const tRow2 = tBody.rows[1];
+            const tRow3 = tBody.rows[2];
+            tRow1.cells[1].text = toCurrency(medLeaveComp / timeValue);
+            tRow1.cells[2].text = toCurrency(famLeaveComp / timeValue);
+            tRow1.cells[3].text = toCurrency((medLeaveComp + famLeaveComp) / timeValue);
+            tRow2.cells[1].text = toCurrency(medLeaveEmp / timeValue);
+            tRow2.cells[2].text = toCurrency(famLeaveEmp / timeValue);
+            tRow2.cells[3].text = toCurrency((medLeaveEmp + famLeaveEmp) / timeValue);
+            tRow3.cells[1].text = toCurrency(medLeave / timeValue);
+            tRow3.cells[2].text = toCurrency(famLeave / timeValue);
+            tRow3.cells[3].text = toCurrency((medLeave + famLeave) / timeValue);
+
             return(
               <React.Fragment>
                 {disable && (
@@ -275,36 +289,8 @@ const Part3 = (props) => {
                   </React.Fragment>
                 )}
                 {disable && (
-                  <table className="ma__table">
-                    <tbody>
-                      <tr className="ma__table-headers">
-                        <th>Contribution</th>
-                        <th>Medical Leave</th>
-                        <th>Family Leave</th>
-                        <th>Total</th>
-                      </tr>
-                      <tr>
-                        <th rowSpan="1">The employer will pay:</th>
-                        <td>{toCurrency(medLeaveComp / timeValue)}</td>
-                        <td>{toCurrency(famLeaveComp / timeValue)}</td>
-                        <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
-                      </tr>
-                      <tr>
-                        <th rowSpan="1">The employee will pay:</th>
-                        <td>{toCurrency(medLeaveEmp / timeValue)}</td>
-                        <td>{toCurrency(famLeaveEmp / timeValue)}</td>
-                        <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
-                      </tr>
-                      <tr>
-                        <td className="ma__td--group">Total payment:</td>
-                        <td>{toCurrency(medLeave / timeValue)}</td>
-                        <td>{toCurrency(famLeave / timeValue)}</td>
-                        <td>{toCurrency((medLeave + famLeave) / timeValue)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <Table {...tableData} />
                 )}
-                <Table {...tableProps} />
               </React.Fragment>
             );
           }
