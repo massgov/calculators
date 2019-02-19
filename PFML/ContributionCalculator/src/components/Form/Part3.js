@@ -200,7 +200,7 @@ const Part3 = (props) => {
                               key={Math.random()}
                             />
                           </div>
-                          <InputSlider {...familyLeaveSliderProps} />
+                          <InputSlider {...familyLeaveSliderProps} key={Math.random()} />
                         </Input>
                         <Input labelText={questionOne.right.main} required>
                           <div className="ma__input-group--ends">
@@ -247,7 +247,7 @@ const Part3 = (props) => {
                               key={Math.random()}
                             />
                           </div>
-                          <InputSlider {...medLeaveSliderProps} />
+                          <InputSlider {...medLeaveSliderProps} key={Math.random()}/>
                         </Input>
                       </div>
                     </fieldset>
