@@ -13,18 +13,17 @@ export const toPercentage = (number, decimal) => {
   return percent;
 };
 
-export const getHelpTip = (question, theme, key) => {
-  const text = (question.content).split(question.triggerText);
+export const getHelpTip = ({ text, triggerText, helpText, id }, theme, key) => {
   return(
     <HelpTip
-      textBefore={text[0]}
-      triggerText={question.triggerText}
-      textAfter={text[1]}
-      id={`help-tip-${question.triggerText}`}
-      labelID={`help-tip-${question.triggerText}-label`}
-      theme={theme || 'c-primary'}
-      helpText={question.helpText}
       key={key}
+      text={text}
+      triggerText={triggerText}
+      helpText={helpText}
+      id={key}
+      hasMarkup
+      bypassMobileStyle={false}
+      theme={theme || 'c-primary'}
     />
   );
 };

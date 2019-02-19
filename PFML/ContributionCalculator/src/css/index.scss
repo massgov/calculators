@@ -11,7 +11,7 @@ html, body {
 		@media ($bp-large-min) {
 			float: none !important;
 		}
-    
+
     & > * {
       margin-top: 0 !important;
     }
@@ -61,27 +61,49 @@ fieldset {
       }
 }
 
+// Table
+
 .ma__table {
-    border-bottom: 3px solid $c-primary-lighter !important;
-    .ma__table-headers {
-        border-top: 3px solid $c-primary-lighter !important;
-        border-bottom: 3px solid $c-primary-lighter !important;
-		background-color: $c-primary-lightest;
-	}
-    .ma__td--group {
-	    padding-left: 0px !important;
-	}
+  border: 1px solid $c-gray-light;
+
+  @media ($bp-medium-min) {
+    // total separator desktop
+    tbody {
+      tr:last-child {
+        border-top: 1px solid $c-gray;
+      }
+    }
+
+    thead {
+      background-color: $c-primary;
+      th {
+        color: $c-white;
+      }
+    }
+  }
+
+  @media ($bp-medium-max) {
+    tbody {
+      tr {
+        th:first-child {
+          background-color: $c-primary-lightest;
+        }
+      }
+    }
+  }
+
+  &-heading {
+  	margin: 30px 0px 30px;
+  	text-align: center;
+  	font-size: 1.5rem;
+  	@media ($bp-large-max) {
+  	  margin-top: 70px;
+  	}
+  }
 }
 
-.ma__table-heading {
-	margin: 30px 0px 30px;
-	text-align: center;
-	font-size: 1.5rem;
-	@media ($bp-large-max) {
-	  margin-top: 70px;
-	}
-}
 
+// Input Group
 
 .ma_input-group--mobile-1 {
     @media ($bp-large-max) {
@@ -98,6 +120,10 @@ fieldset {
 		flex-direction: column;
 	.ma__input-group {
 		width: 100%;
+
+    & + & {
+      margin-top: 20px;
+    }
 	}
 		@media ($bp-medium-min) {
 			flex-direction: row;
@@ -107,11 +133,21 @@ fieldset {
 			}
 		}
 }
+
+.ma__input-group {
+  &--inline {
+    .ma__input-group-right {
+       align-items: unset;
+    }
+  }
+}
+
 .ma__input-group-right {
 	.ma__input-group {
 	   width: 100%;
 	}
 }
+
 .ma__input-group--ends{
 	display: flex;
 		flex-direction: row;
@@ -146,7 +182,7 @@ fieldset {
 	    font-size: 1rem;
 	    color: $c-primary;
     }
-}	
+}
 
 .ma__help-text {
 	padding: 10px;
@@ -160,14 +196,14 @@ fieldset {
 	}
 }
 
-.ma__help-tip__text { 
+.ma__help-tip__text {
     .ma__help-tip__text-direct {
 	    @media ($bp-large-min) {
 	      margin-right: 20px !important;
 	      margin-left: 5px !important;
 	    }
 	}
-	
+
 	&--c-white {
 	    .ma__help-text {
 	        @media ($bp-large-min) {
