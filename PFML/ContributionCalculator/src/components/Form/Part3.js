@@ -294,6 +294,12 @@ const Part3 = (props) => {
                         <td>{toCurrency(famLeaveEmp / timeValue)}</td>
                         <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
                       </tr>
+                      <tr>
+                        <td className="ma__td--group">Total payment:</td>
+                        <td>{toCurrency(medLeave / timeValue)}</td>
+                        <td>{toCurrency(famLeave / timeValue)}</td>
+                        <td>{toCurrency((medLeave + famLeave) / timeValue)}</td>
+                      </tr>
                     </tbody>
                   </table>
                 )}
