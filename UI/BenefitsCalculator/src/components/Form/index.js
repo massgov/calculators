@@ -66,6 +66,8 @@ class Calculator extends Component {
                 }}
               />
               <div className="input_apply-all">
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                <label htmlFor="apply-all">Apply this quarter&apos;s earnings to the all quarters.</label>
                 <input
                   type="checkbox"
                   id="apply-all"
@@ -79,7 +81,6 @@ class Calculator extends Component {
                     formContext.setValue({ id: 'quarter4', value: quarter1 });
                   }}
                 />
-                <label htmlFor="apply-all">Apply this quarter's earnings to the all quarters.</label>
               </div>
               <InputCurrency
                 {... inputCurrencyProps}

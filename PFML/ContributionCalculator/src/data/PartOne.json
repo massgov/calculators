@@ -1,9 +1,9 @@
 {
     "questionOne": {
         "question": {
-            "helpText": "",
-            "triggerText": "",
-            "content": "Do you have any W2 employees or 1099-MISC contractors performing services in Massachusetts? "
+            "helpText": ["Employees or contractors who you would issue Massachusetts W2 or 1099-MISC to."],
+            "triggerText": ["Massachusetts W2 employees or 1099-MISC contractors"],
+            "text": "Do you have any Massachusetts W2 employees or 1099-MISC contractors?"
         },
         "errorMsg": "Please select yes or no.",
         "options": [{
@@ -22,22 +22,22 @@
     },
     "questionTwo": {
         "question": {
-            "content": "How many W2 employees have you hired in the last 12 months?"
+            "content": "How many Massachusetts W2 employees have you employed in the last 12 months?"
         },
         "errorMsg": "Please enter a value."
     },
     "questionThree": {
         "question": {
-            "content": "How many 1099-MISC contractors have you paid to perform work for your business in the last 12 months?"
+            "content": "How many Massachusetts 1099-MISC contractors have worked for you in the last 12 months?"
         },
         "errorMsg": "Please enter a value."
     },
     "output": {
         "overMinEmpOver1099": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, all your <strong>W2 employees and 1099-MISC contractors</strong> are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”",
-                "triggerText": "<strong>W2 employees and 1099-MISC contractors</strong>",
-                "helpText": "If 1099-MISC contractors make up more than half of your workforce, they are considered qualifying workers and you are responsible for sending contributions on their behalf."
+                "text": "Based on the makeup of your workforce, all your <strong>W2 employees and 1099-MISC contractors</strong> are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”",
+                "triggerText": ["<strong>W2 employees and 1099-MISC contractors</strong>"],
+                "helpText": ["If 1099-MISC contractors make up more than half of your workforce, they are considered qualifying workers and you are responsible for sending contributions on their behalf."]
             }
         }, {
             "paragraph": {
@@ -45,16 +45,16 @@
             }
         }, {
             "paragraph": {
-                "content": "You are also <strong>required to pay the employer share</strong> of the contribution for medical leave.",
-                "triggerText": "<strong>required to pay the employer share</strong>",
-                "helpText": "If you have 25 or more qualifying workers, you are required to pay the employer share."
+                "text": "You are also <strong>required to pay the employer share</strong> of the contribution for medical leave.",
+                "triggerText": ["<strong>required to pay the employer share</strong>"],
+                "helpText": ["If you have 25 or more qualifying workers, you are required to pay the employer share."]
             }
         }],
         "overMinEmpUnder1099": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, <strong>only your W2 employees</strong> are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”",
-                "triggerText": "<strong>only your W2 employees</strong>",
-                "helpText": "If 1099-MISC contractors make up less than half of your workforce, they are not considered qualifying workers and you are not responsible for sending contributions on their behalf."
+                "text": "Based on the makeup of your workforce, <strong>only your W2 employees</strong> are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”",
+                "triggerText": ["<strong>only your W2 employees</strong>"],
+                "helpText": ["If 1099-MISC contractors make up less than half of your workforce, they are not considered qualifying workers and you are not responsible for sending contributions on their behalf."]
             }
         }, {
             "paragraph": {
@@ -62,16 +62,16 @@
             }
         }, {
             "paragraph": {
-                "content": "You are also <strong>required to pay the employer share</strong> of the contribution for medical leave.",
-                "triggerText": "<strong>required to pay the employer share</strong>",
-                "helpText": "If you have 25 or more qualifying workers, you need to pay the employer share."
+                "text": "You are also <strong>required to pay the employer share</strong> of the contribution for medical leave.",
+                "triggerText": ["<strong>required to pay the employer share</strong>"],
+                "helpText": ["If you have 25 or more qualifying workers, you need to pay the employer share."]
             }
         }],
         "underMinEmpOver1099": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, <strong>all your W2 employees and 1099-MISC contractors</strong> are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”",
-                "triggerText": "<strong>all your W2 employees and 1099-MISC contractors</strong>",
-                "helpText": "If 1099-MISC contractors make up more than half of your workforce, they are considered qualifying workers and you are responsible for sending contributions on their behalf."
+                "text": "Based on the makeup of your workforce, <strong>all your W2 employees and 1099-MISC contractors</strong> are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”",
+                "triggerText": ["<strong>all your W2 employees and 1099-MISC contractors</strong>"],
+                "helpText": ["If 1099-MISC contractors make up more than half of your workforce, they are considered qualifying workers and you are responsible for sending contributions on their behalf."]
             }
         }, {
             "paragraph": {
@@ -79,16 +79,16 @@
             }
         }, {
             "paragraph": {
-                "content": "You are <strong>not required to pay the employer share</strong> of the contribution for family or medical leave.",
-                "triggerText": "<strong>not required to pay the employer share</strong>",
-                "helpText": "If you have fewer than 25 qualifying workers, you do not need to pay the employer share."
+                "text": "You are <strong>not required to pay the employer share</strong> of the contribution for family or medical leave.",
+                "triggerText": ["<strong>not required to pay the employer share</strong>"],
+                "helpText": ["If you have fewer than 25 qualifying workers, you do not need to pay the employer share."]
             }
         }],
         "underMinEmpUnder1099": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, <strong>only your W2 employees</strong> are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”",
-                "triggerText": "<strong>only your W2 employees</strong>",
-                "helpText": "If 1099-MISC contractors make up less than half of your workforce, they are not considered qualifying workers and you are not responsible for sending contributions on their behalf."
+                "text": "Based on the makeup of your workforce, <strong>only your W2 employees</strong> are eligible for PFML benefits and will be referred to as “<strong>qualifying workers</strong>.”",
+                "triggerText": ["<strong>only your W2 employees</strong>"],
+                "helpText": ["If 1099-MISC contractors make up less than half of your workforce, they are not considered qualifying workers and you are not responsible for sending contributions on their behalf."]
             }
         }, {
             "paragraph": {
@@ -96,9 +96,9 @@
             }
         }, {
             "paragraph": {
-                "content": "You are <strong>not required to pay the employer share</strong> of the contribution for family or medical leave.",
-                "triggerText": "<strong>not required to pay the employer share</strong>",
-                "helpText": " If you have fewer than 25 qualifying workers, you do not need to pay the employer share."
+                "text": "You are <strong>not required to pay the employer share</strong> of the contribution for family or medical leave.",
+                "triggerText": ["<strong>not required to pay the employer share</strong>"],
+                "helpText": ["If you have fewer than 25 qualifying workers, you do not need to pay the employer share."]
             }
         }],
         "underMinEmpNo1099": [{
@@ -112,9 +112,9 @@
         },
         {
             "paragraph": {
-                "content": "You are <strong>not required to pay the employer share</strong> of the contribution for family or medical leave.",
-                "triggerText": "<strong>not required to pay the employer share</strong>",
-                "helpText": "If you have fewer than 25 qualifying workers, you do not need to pay the employer share."
+                "text": "You are <strong>not required to pay the employer share</strong> of the contribution for family or medical leave.",
+                "triggerText": ["<strong>not required to pay the employer share</strong>"],
+                "helpText": ["If you have fewer than 25 qualifying workers, you do not need to pay the employer share."]
             }
         }],
         "overMinEmpNo1099": [{
@@ -127,9 +127,9 @@
             }
         },{
             "paragraph": {
-                "content": "You are also <strong>required to pay the employer share</strong> of the contribution for medical leave.",
-                "triggerText": "<strong>required to pay the employer share</strong>",
-                "helpText": "If you have 25 or more qualifying workers, you need to pay the employer share."
+                "text": "You are also <strong>required to pay the employer share</strong> of the contribution for medical leave.",
+                "triggerText": ["<strong>required to pay the employer share</strong>"],
+                "helpText": ["If you have 25 or more qualifying workers, you need to pay the employer share."]
             }
         }]
     }

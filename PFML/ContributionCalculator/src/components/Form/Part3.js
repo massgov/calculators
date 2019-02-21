@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import numbro from 'numbro';
-import { SelectBox, Input, InputSlider, InputNumber, FormContext } from '@massds/mayflower-react';
+import { SelectBox, Input, InputSlider, InputNumber, FormContext, Table } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { toCurrency, getHelpTip } from '../../utils';
 import ContributionVariables from '../../data/ContributionVariables.json';
 import PartThreeProps from '../../data/PartThree.json';
+import tableData from '../../data/table.data';
 
 import '../../css/index.css';
 
@@ -146,6 +147,20 @@ const Part3 = (props) => {
               onChange: (value) => onMedSliderChange(value)
             };
 
+            const tBody = tableData.bodies[0];
+            const tRow1 = tBody.rows[0];
+            const tRow2 = tBody.rows[1];
+            const tRow3 = tBody.rows[2];
+            tRow1.cells[1].text = toCurrency(medLeaveComp / timeValue);
+            tRow1.cells[2].text = toCurrency(famLeaveComp / timeValue);
+            tRow1.cells[3].text = toCurrency((medLeaveComp + famLeaveComp) / timeValue);
+            tRow2.cells[1].text = toCurrency(medLeaveEmp / timeValue);
+            tRow2.cells[2].text = toCurrency(famLeaveEmp / timeValue);
+            tRow2.cells[3].text = toCurrency((medLeaveEmp + famLeaveEmp) / timeValue);
+            tRow3.cells[1].text = toCurrency(medLeave / timeValue);
+            tRow3.cells[2].text = toCurrency(famLeave / timeValue);
+            tRow3.cells[3].text = toCurrency((medLeave + famLeave) / timeValue);
+
             return(
               <React.Fragment>
                 {disable && (
@@ -200,7 +215,7 @@ const Part3 = (props) => {
                               key={Math.random()}
                             />
                           </div>
-                          <InputSlider {...familyLeaveSliderProps} />
+                          <InputSlider {...familyLeaveSliderProps} key={Math.random()} />
                         </Input>
                         <Input labelText={questionOne.right.main} required>
                           <div className="ma__input-group--ends">
@@ -247,7 +262,7 @@ const Part3 = (props) => {
                               key={Math.random()}
                             />
                           </div>
-                          <InputSlider {...medLeaveSliderProps} />
+                          <InputSlider {...medLeaveSliderProps} key={Math.random()} />
                         </Input>
                       </div>
                     </fieldset>
@@ -273,59 +288,8 @@ const Part3 = (props) => {
                     </h2>
                   </React.Fragment>
                 )}
-                {disable && payrollBase === 'all' && (
-                  <table className="ma__table">
-                    <tbody>
-                      <tr className="ma__table-headers">
-                        <th>Contribution</th>
-                        <th>Medical Leave</th>
-                        <th>Family Leave</th>
-                        <th>Total</th>
-                      </tr>
-                      <tr>
-                        <th rowSpan="1">You will pay:</th>
-                        <td>{toCurrency(medLeaveComp / timeValue)}</td>
-                        <td>{toCurrency(famLeaveComp / timeValue)}</td>
-                        <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
-                      </tr>
-                      <tr>
-                        <th rowSpan="1">Your Employees will pay:</th>
-                        <td>{toCurrency(medLeaveEmp / timeValue)}</td>
-                        <td>{toCurrency(famLeaveEmp / timeValue)}</td>
-                        <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                )}
-                {disable && payrollBase === 'one' && (
-                  <table className="ma__table">
-                    <tbody>
-                      <tr className="ma__table-headers">
-                        <th>Contribution</th>
-                        <th>Medical Leave</th>
-                        <th>Family Leave</th>
-                        <th>Total</th>
-                      </tr>
-                      <tr>
-                        <td>You will pay:</td>
-                        <td>{toCurrency(medLeaveComp / timeValue)}</td>
-                        <td>{toCurrency(famLeaveComp / timeValue)}</td>
-                        <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
-                      </tr>
-                      <tr>
-                        <td>Your Employee will pay:</td>
-                        <td>{toCurrency(medLeaveEmp / timeValue)}</td>
-                        <td>{toCurrency(famLeaveEmp / timeValue)}</td>
-                        <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
-                      </tr>
-                      <tr>
-                        <td className="ma__td--group">Total payment:</td>
-                        <td>{toCurrency(medLeave / timeValue)}</td>
-                        <td>{toCurrency(famLeave / timeValue)}</td>
-                        <td>{toCurrency((medLeave + famLeave) / timeValue)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                {disable && (
+                  <Table {...tableData} />
                 )}
               </React.Fragment>
             );
@@ -334,6 +298,7 @@ const Part3 = (props) => {
     </FormContext.Consumer>
   );
 };
+
 
 Part3.propTypes = {
   /** Functions that push changed context props to the url. */

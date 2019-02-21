@@ -3,7 +3,7 @@ import { Header, Footer, PageHeader } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
-import FooterLinksLiveData from './data/FooterLinksLive.json';
+import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import ExampleForm from './components/ExampleForm';
 import history from './components/History';
@@ -16,7 +16,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.footerProps = {
-      footerLinks: FooterLinksLiveData.footerLinks,
+      footerLinks: FooterData.footerLinks,
       socialLinks: SocialLinksLiveData.socialLinks
     };
     this.headerProps = {

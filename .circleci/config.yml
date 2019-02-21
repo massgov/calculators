@@ -3,15 +3,26 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 
 version: 2
-jobs:
-  pfml-cal-benefits:
+
+references:
+  install_global_packages: &install_global_packages
+    run: {name: 'Install global packages', command: 'npm install'}
+  install_aws: &install_aws
+    run: {name: 'Install awscli', command: 'sudo apt-get -y -qq install awscli'}
+
+defaults: &defaults
     docker:
-      # specify the version you desire here
       - image: circleci/node:10.10.0
     parallelism: 2
     working_directory: ~/repo
+    
+jobs:
+  # Test jobs for validating calculor code on all branches.
+  pfml-cal-benefits-test:
+    <<: *defaults
     steps:
       - checkout
+      - *install_global_packages
       - run:
           name: 'PFML Benefits Calculator Install Packages'
           command: cd PFML/BenefitsCalculator && npm install
@@ -21,14 +32,12 @@ jobs:
       - run:
           name: 'PFML Benefits Calculator Build App'
           command: cd PFML/BenefitsCalculator && npm run build
-  pfml-cal-contribution:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:10.10.0
-    parallelism: 2
-    working_directory: ~/repo
+
+  pfml-cal-contribution-test:
+    <<: *defaults
     steps:
       - checkout
+      - *install_global_packages
       - run:
           name: 'PFML Contribution Calculator Install Packages'
           command: cd PFML/ContributionCalculator && npm install
@@ -38,9 +47,207 @@ jobs:
       - run:
           name: 'PFML Contribution Calculator Build App'
           command: cd PFML/ContributionCalculator && npm run build
+          
+  ui-cal-benefits-test:
+    <<: *defaults
+    steps:
+      - checkout
+      - *install_global_packages
+      - run:
+          name: 'UI Benefits Calculator Install Packages'
+          command: cd UI/BenefitsCalculator && npm install
+      - run:
+          name: 'UI Benefits Calculator Lint'
+          command: cd UI/BenefitsCalculator && npm run build-css && npm run lint
+      - run:
+          name: 'UI Benefits Calculator Build App'
+          command: cd UI/BenefitsCalculator && npm run build
+  
+  ui-cal-part-time-benefits-test:
+    <<: *defaults
+    steps:
+      - checkout
+      - *install_global_packages
+      - run:
+          name: 'UI Part Time Benefits Calculator Install Packages'
+          command: cd UI/PartTimeBenefitsCalculator && npm install
+      - run:
+          name: 'UI Part Time Benefits Calculator Lint'
+          command: cd UI/PartTimeBenefitsCalculator && npm run build-css && npm run lint
+      - run:
+          name: 'UI Part Time Benefits Calculator Build App'
+          command: cd UI/PartTimeBenefitsCalculator && npm run build
+          
+  # Deploy develop branches to dev env.
+  pfml-cal-benefits-deploy-dev:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "PFML/BenefitsCalculator/package.json" }}
+      - *install_aws
+      - *install_global_packages
+      - run:
+          name: 'PFML Benefits Calculator Install Packages'
+          command: cd PFML/BenefitsCalculator && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "PFML/BenefitsCalculator/package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: 'PFML Benefits Calculator Deploy Dev App'
+          command: |
+              cd PFML/BenefitsCalculator && npm run build:development
+              aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/yourbenefits/ --delete
+  
+  pfml-cal-contribution-deploy-dev:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "PFML/ContributionCalculator/package.json" }}
+      - *install_aws
+      - *install_global_packages
+      - run:
+          name: 'PFML Contribution Calculator Install Packages'
+          command: cd PFML/ContributionCalculator && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "PFML/ContributionCalculator/package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: 'PFML Contribution Calculator Deploy Dev App'
+          command: |
+              cd PFML/ContributionCalculator && npm run build:development
+              aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/contribution/ --delete
+  
+  ui-cal-benefits-deploy-dev:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "UI/BenefitsCalculator/package.json" }}
+      - *install_aws
+      - *install_global_packages
+      - run:
+          name: 'UI Benefits Calculator Install Packages'
+          command: cd UI/BenefitsCalculator/ && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "UI/BenefitsCalculator/package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: 'UI Benefits Calculator Deploy Dev App'
+          command: |
+              cd UI/BenefitsCalculator/ && npm run build:development
+              aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/yourbenefits/ --delete
+  
+  ui-cal-parttime-deploy-dev:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "UI/PartTimeBenefitsCalculator/package.json" }}
+      - *install_aws
+      - *install_global_packages
+      - run:
+          name: 'UI Part Time Benefits Calculator Install Packages'
+          command: cd UI/PartTimeBenefitsCalculator && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "UI/PartTimeBenefitsCalculator/package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: 'UI Part Time Benefits Calculator Deploy Dev App'
+          command: |
+              cd UI/PartTimeBenefitsCalculator && npm run build:development
+              aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/parttimebenefits/ --delete
+
+  # Deploy master branches to production ev.
+  pfml-cal-benefits-deploy-prod:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "PFML/BenefitsCalculator/package.json" }}
+      - *install_aws
+      - *install_global_packages
+      - run:
+          name: 'PFML Benefits Calculator Install Packages'
+          command: cd PFML/BenefitsCalculator && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "PFML/BenefitsCalculator/package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: 'PFML Benefits Calculator Deploy Prod App'
+          command: |
+              cd PFML/BenefitsCalculator && npm run build
+              aws s3 sync build s3://calculator.digital.mass.gov/pfml/yourbenefits/ --delete
+
+  pfml-cal-contribution-deploy-prod:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "PFML/ContributionCalculator/package.json" }}
+      - *install_aws
+      - *install_global_packages
+      - run:
+          name: 'PFML Contribution Calculator Install Packages'
+          command: cd PFML/ContributionCalculator && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "PFML/ContributionCalculator/package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: 'PFML Contribution Calculator Deploy Prod App'
+          command: |
+              cd PFML/ContributionCalculator && npm run build
+              aws s3 sync build s3://calculator.digital.mass.gov/pfml/contribution/ --delete
+
+
 workflows:
   version: 2
   test:
     jobs:
-      - pfml-cal-benefits
-      - pfml-cal-contribution
+      - pfml-cal-benefits-test:
+          filters:
+            branches: { only: /(pfml-benefits\/|all\/).*/ }
+      - pfml-cal-contribution-test:
+          filters:
+            branches: { only: /(pfml-contribution\/|all\/).*/ }
+      - ui-cal-benefits-test:
+          filters:
+            branches: { only: /(ui-benefits\/|all\/).*/ }
+      - ui-cal-part-time-benefits-test:
+          filters:
+            branches: { only: /(ui-part-time\/|all\/).*/ }
+  deploy-dev:
+    jobs:
+      - pfml-cal-benefits-deploy-dev:
+          filters:
+            branches: { only: develop }
+      - pfml-cal-contribution-deploy-dev:
+          filters:
+            branches: { only: develop }
+      - ui-cal-benefits-deploy-dev:
+          filters:
+            branches: { only: develop }
+      - ui-cal-parttime-deploy-dev:
+          filters:
+            branches: { only: develop }
+  deploy-prod:
+    jobs:
+      - pfml-cal-benefits-deploy-prod:
+          filters:
+            branches: { only: master }
+      - pfml-cal-contribution-deploy-prod:
+          filters:
+            branches: { only: master }

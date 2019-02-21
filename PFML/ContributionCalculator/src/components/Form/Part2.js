@@ -84,8 +84,14 @@ const Part2 = (props) => {
                           trimMantissa: false,
                           thousandSeparated: true
                         }}
-                        onChange={(e, value) => {
-                          onChangePayW2(value);
+                        onChange={(val) => {
+                          context.updateState({
+                            value: {
+                              ...context.value,
+                              payrollW2: val
+                            }
+                          });
+                          onChangePayW2(val);
                         }}
                         required
                         disabled={disableInput}
@@ -109,8 +115,14 @@ const Part2 = (props) => {
                           trimMantissa: false,
                           thousandSeparated: true
                         }}
-                        onChange={(e, value) => {
-                          onChangePay1099(value);
+                        onChange={(val) => {
+                          context.updateState({
+                            value: {
+                              ...context.value,
+                              payroll1099: val
+                            }
+                          });
+                          onChangePay1099(val);
                         }}
                         disabled={disableInput || !over50per}
                         required
@@ -122,22 +134,18 @@ const Part2 = (props) => {
                       <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
-                            textBefore="The total estimated annual contribution for your company is "
-                            triggerText={`<strong>${toCurrency(totalPayment)}</strong>`}
-                            textAfter="."
+                            text={`The total estimated annual contribution for your company is <strong>${toCurrency(totalPayment)}</strong>.`}
+                            triggerText={[`<strong>${toCurrency(totalPayment)}</strong>`]}
                             id="help-tip-total-ann-cont"
-                            labelID="help-tip-total-ann-cont-label"
                             theme="c-white"
                           >
                             <p className="ma__help-text">{toCurrency(totalPayment)} = {toCurrency(totalPayroll)} X {toPercentage(totalPercent, 2)}</p>
 
                           </HelpTip>
                           <HelpTip
-                            textBefore="Of this amount, "
-                            triggerText={`<strong>${toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave.`}
-                            textAfter="."
+                            text={`Of this amount, <strong>${toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave.`}
+                            triggerText={[`<strong>${toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave`]}
                             id="help-tip-medfam-ann-cont"
-                            labelID="help-tip-medfam-ann-cont-label"
                             theme="c-white"
                           >
                             <div className="ma__help-text">
@@ -169,8 +177,14 @@ const Part2 = (props) => {
                           trimMantissa: false,
                           thousandSeparated: true
                         }}
-                        onChange={(e, value) => {
-                          onChangePayWages(value);
+                        onChange={(val) => {
+                          context.updateState({
+                            value: {
+                              ...context.value,
+                              payrollWages: val
+                            }
+                          });
+                          onChangePayWages(val);
                         }}
                         required
                         inline
@@ -183,21 +197,17 @@ const Part2 = (props) => {
                         {payrollWages && (
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
-                            textBefore="The total estimated annual contribution for this qualifying worker is "
-                            triggerText={`<strong>${toCurrency(payrollWagesCap * totalPercent)}</strong>`}
-                            textAfter="."
+                            text={`The total estimated annual contribution for this qualifying worker is <strong>${toCurrency(payrollWagesCap * totalPercent)}</strong>.`}
+                            triggerText={[`<strong>${toCurrency(payrollWagesCap * totalPercent)}</strong>`]}
                             id="help-tip-tot-emp-ann-cont"
-                            labelID="help-tip-tot-emp-cont-label"
-                            helpText={`${toCurrency(payrollWagesCap * totalPercent)} = ${toCurrency(payrollWagesCap)} X ${toPercentage(totalPercent, 2)}`}
+                            helpText={[`${toCurrency(payrollWagesCap * totalPercent)} = ${toCurrency(payrollWagesCap)} X ${toPercentage(totalPercent, 2)}`]}
                             theme="c-white"
                           />
                           <HelpTip
-                            textBefore="Of this amount, "
-                            triggerText={`<strong>${toCurrency(medPercent * payrollWagesCap)}</strong> is for medical leave and <strong>${toCurrency(famPercent * payrollWagesCap)}</strong> is for family leave`}
-                            textAfter="."
+                            text={`Of this amount, <strong>${toCurrency(medPercent * payrollWagesCap)}</strong> is for medical leave and <strong>${toCurrency(famPercent * payrollWagesCap)}</strong> is for family leave.`}
+                            triggerText={[`<strong>${toCurrency(medPercent * payrollWagesCap)}</strong> is for medical leave and <strong>${toCurrency(famPercent * payrollWagesCap)}</strong> is for family leave`]}
                             id="help-tip-medfam-emp-ann-cont"
-                            labelID="help-tip-medfam-emp-cont-label"
-                            helpText={<div><p>Medical Leave: {toCurrency(medPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(medPercent, 2)}</p><p>Family Leave: {toCurrency(famPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}</p></div>}
+                            helpText={[<div><p>Medical Leave: {toCurrency(medPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(medPercent, 2)}</p><p>Family Leave: {toCurrency(famPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}</p></div>]}
                             theme="c-white"
                           />
                           { numbro.unformat(payrollWages) > socialSecCap && (
