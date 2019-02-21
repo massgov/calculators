@@ -46,8 +46,8 @@ const Output = (props) => {
   const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
   
   
-  const helpTextBasePeriod2Q = 'Your weekly benefit is half of the sum of the 2 highest quarters wages divided by the number of weeks in the combined quarters:'
-  const helpTextBasePeriod1Q = 'Your weekly benefit is half of the highest quarter wages divided by the number of weeks in the combined quarters:'
+  const helpTextBasePeriod2Q = 'Your weekly benefit is half of the sum of the 2 highest quarters total wages divided by the number of weeks in the combined quarters:'
+  const helpTextBasePeriod1Q = 'Your weekly benefit is half of the highest quarter total wages divided by the number of weeks in the combined quarters:'
 
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">

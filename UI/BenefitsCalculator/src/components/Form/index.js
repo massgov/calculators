@@ -52,7 +52,7 @@ class Calculator extends Component {
             <Fragment>
               <InputCurrency
                 {... inputCurrencyProps}
-                labelText={`${this.q1.qStart} – ${this.q1.qEnd} earnings:`}
+                labelText={`${this.q1.qStart} – ${this.q1.qEnd} total wages:`}
                 id="quarter1"
                 name="quarter1"
                 onChange={(value, id) => {
@@ -66,7 +66,7 @@ class Calculator extends Component {
               />
               <InputCheckBox
                 id="apply-all"
-                label="Apply this quartes's earnings to the all quarters."
+                label="Apply this quarter's wages to the all quarters."
                 icon={{name: '',ariaHidden: true}}
                 defaultValue={false}
                 onChange={(e, value) => {
@@ -82,7 +82,7 @@ class Calculator extends Component {
               />
               <InputCurrency
                 {... inputCurrencyProps}
-                labelText={`${this.q2.qStart} – ${this.q2.qEnd} earnings:`}
+                labelText={`${this.q2.qStart} – ${this.q2.qEnd} total wages:`}
                 id="quarter2"
                 name="quarter2"
                 disabled={applyAll}
@@ -92,7 +92,7 @@ class Calculator extends Component {
               />
               <InputCurrency
                 {... inputCurrencyProps}
-                labelText={`${this.q3.qStart} – ${this.q3.qEnd} earnings:`}
+                labelText={`${this.q3.qStart} – ${this.q3.qEnd} total wages:`}
                 id="quarter3"
                 name="quarter3"
                 disabled={applyAll}
@@ -102,7 +102,7 @@ class Calculator extends Component {
               />
               <InputCurrency
                 {... inputCurrencyProps}
-                labelText={`${this.q4.qStart} – ${this.q4.qEnd} earnings:`}
+                labelText={`${this.q4.qStart} – ${this.q4.qEnd} total wages:`}
                 id="quarter4"
                 name="quarter4"
                 disabled={applyAll}
