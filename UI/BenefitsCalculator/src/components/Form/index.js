@@ -42,7 +42,7 @@ class Calculator extends Component {
       required: true,
       inline: true,
       min: 0,
-      step: 0.01
+      step: 1
     };
     return(
       <FormProvider>
@@ -55,7 +55,6 @@ class Calculator extends Component {
                 labelText={`${this.q1.qStart} – ${this.q1.qEnd} earnings:`}
                 id="quarter1"
                 name="quarter1"
-                defaultValue={0}
                 onChange={(value, id) => {
                   formContext.setValue({ id, value });
                   if (applyAll) {
@@ -87,7 +86,6 @@ class Calculator extends Component {
                 labelText={`${this.q2.qStart} – ${this.q2.qEnd} earnings:`}
                 id="quarter2"
                 name="quarter2"
-                defaultValue={0}
                 disabled={applyAll}
                 onChange={(value, id) => {
                   formContext.setValue({ id, value });
@@ -98,7 +96,6 @@ class Calculator extends Component {
                 labelText={`${this.q3.qStart} – ${this.q3.qEnd} earnings:`}
                 id="quarter3"
                 name="quarter3"
-                defaultValue={0}
                 disabled={applyAll}
                 onChange={(value, id) => {
                   formContext.setValue({ id, value });
@@ -109,7 +106,6 @@ class Calculator extends Component {
                 labelText={`${this.q4.qStart} – ${this.q4.qEnd} earnings:`}
                 id="quarter4"
                 name="quarter4"
-                defaultValue={0}
                 disabled={applyAll}
                 onChange={(value, id) => {
                   formContext.setValue({ id, value });
