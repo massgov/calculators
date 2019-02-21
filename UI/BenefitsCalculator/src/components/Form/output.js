@@ -72,8 +72,8 @@ const Output = (props) => {
       <Fragment>
         <Paragraph text="Your maximum benefit credit is calculated as the lesser of either:" />
           <ul>
-            <li>30 times your weekly benefit amount: <br /><strong>{toCurrency(maxBenefitOption1)}</strong> {`= ${parseInt(benefitDuration, 10)} x ${toCurrency(weeklyBenefitFinal)}`}</li>
-            <li>36% of the total wages in your base period: <br /><strong>{toCurrency(maxBenefitOption2)}</strong> {`= ${toCurrency(topQuartersSum)} x 4 x 36%`}</li>
+            <li>30 times your weekly benefit amount: <Paragraph text={`<strong>${toCurrency(maxBenefitOption1)}</strong> = ${parseInt(benefitDuration, 10)} x ${toCurrency(weeklyBenefitFinal)}`} /></li>
+            <li>36% of the total wages in your base period: <Paragraph text={`<strong>${toCurrency(maxBenefitOption2)}</strong> = ${toCurrency(topQuartersSum)} x 4 x 36%`} /></li>
           </ul>
         <Paragraph text={`Since ${toCurrency(maxBenefitFinal)} is less than ${toCurrency(maxBenefitOther)}, your maximum benefit credit would be <strong>${toCurrency(maxBenefitFinal)}</strong>.`} />
       </Fragment>
