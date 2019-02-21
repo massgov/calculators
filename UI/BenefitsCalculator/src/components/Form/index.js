@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import moment from 'moment';
 import {
-  InputCurrency, Button, FormProvider, Form, FormContext
+  InputCurrency, Button, FormProvider, Form, FormContext, InputCheckBox
 } from '@massds/mayflower-react';
 import Output from './output';
 
@@ -64,23 +64,22 @@ class Calculator extends Component {
                   }
                 }}
               />
-              <div className="input_apply-all">
-                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                <label htmlFor="apply-all">Apply this quarter&apos;s earnings to the all quarters.</label>
-                <input
-                  type="checkbox"
-                  id="apply-all"
-                  onChange={(e) => {
-                    this.setState({
-                      applyAll: e.target.checked
-                    });
-                    const { quarter1 } = formContext.getValues();
-                    formContext.setValue({ id: 'quarter2', value: quarter1 });
-                    formContext.setValue({ id: 'quarter3', value: quarter1 });
-                    formContext.setValue({ id: 'quarter4', value: quarter1 });
-                  }}
-                />
-              </div>
+              <InputCheckBox
+                id="apply-all"
+                label="Apply this quartes's earnings to the all quarters."
+                icon={{name: '',ariaHidden: true}}
+                defaultValue={false}
+                onChange={(e, value) => {
+                  this.setState({
+                    applyAll: value
+                  });
+                  const { quarter1 } = formContext.getValues();
+                  formContext.setValue({ id: 'quarter2', value: quarter1 });
+                  formContext.setValue({ id: 'quarter3', value: quarter1 });
+                  formContext.setValue({ id: 'quarter4', value: quarter1 });
+                }}
+                errorMsg="You are required to check this box."
+              />
               <InputCurrency
                 {... inputCurrencyProps}
                 labelText={`${this.q2.qStart} – ${this.q2.qEnd} earnings:`}
