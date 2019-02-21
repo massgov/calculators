@@ -30,6 +30,12 @@
             "text": "Quarter",
             "value": "4"
         }, {
+            "text": "Monthly",
+            "value": "12"
+        }, {
+            "text": "Bi-Weekly",
+            "value": "24"
+        }, {
             "text": "Week",
             "value": "52"
         }]
