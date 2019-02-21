@@ -44,6 +44,10 @@ const Output = (props) => {
 
   // benefit duration
   const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
+  
+  
+  const helpTextBasePeriod2Q = 'Your weekly benefit is half of the sum of the 2 highest quarters wages divided by the number of weeks in the combined quarters:'
+  const helpTextBasePeriod1Q = 'Your weekly benefit is half of the highest quarter wages divided by the number of weeks in the combined quarters:'
 
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">
@@ -51,7 +55,7 @@ const Output = (props) => {
         <Paragraph text={`Your weekly benefit is capped at ${toCurrency(weeklyBenefitMax)}.`} />
       ) : (
         <Fragment>
-          <Paragraph text="Your weekly benefit is half of the sum of the highest quarters divided by the number of weeks in the combined quarters:" />
+          <Paragraph text={ quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q } />
           <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)}/ ${weeksInTopQuarters} weeks in the combined quarters`} /></div>
         </Fragment>
       )}
