@@ -34,3 +34,8 @@ form {
   padding: 5px 10px;
 	}
 }
+
+// remove if fixed in mayflower-react
+.ma__input-group--inline .ma__input-group-right {
+  align-items: unset;
+}

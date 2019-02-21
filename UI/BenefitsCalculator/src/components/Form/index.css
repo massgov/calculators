@@ -30,3 +30,6 @@ form {
     background-color: #F2F2F2;
     border: 2px solid #DCDCDC;
     padding: 5px 10px; }
+
+.ma__input-group--inline .ma__input-group-right {
+  align-items: unset; }
