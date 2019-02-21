@@ -12,4 +12,13 @@ const FormContext = React.createContext({
   mass_employees: 'yes'
 });
 
-export default FormContext;
+const DisableInputContext = React.createContext({
+  disabled: false,
+  toggleDisabled: () => {}
+});
+
+export default DisableInputContext;
+export const PartOneContext = React.createContext(null);
+
+
+//export default FormContext;
