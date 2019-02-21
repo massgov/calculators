@@ -40,11 +40,12 @@ const Output = (props) => {
   const maxBenefitOption1 = 30 * weeklyBenefitFinal;
   const maxBenefitOption2 = quartersSum * 0.36;
   const maxBenefitFinal = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption2 : maxBenefitOption1;
+  const maxBenefitOther = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption1 : maxBenefitOption2;
 
   // benefit duration
   const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
 
-  const getHelpText = () => (
+  const getBenefitsHelpText = () => (
     <div className="ma__help-text">
       { weeklyBenefit > weeklyBenefitMax ? (
         <Paragraph text={`Your weekly benefit is capped at ${toCurrency(weeklyBenefitMax)}.`} />
@@ -56,6 +57,28 @@ const Output = (props) => {
       )}
     </div>
   );
+  
+  const getDurationHelpText = () => (
+    <div className="ma__help-text">
+      <Fragment>
+        <Paragraph text="Your duration of benefits is calculated by dividing your maximum benefit credit by your weekly benefit amount.:" />
+        <div className="ma__output-calculation"><Paragraph text={`${parseInt(benefitDuration, 10)} = ${toCurrency(maxBenefitFinal)} / ${toCurrency(weeklyBenefitFinal)}`} /></div>
+      </Fragment>
+    </div>
+  );
+  
+  const getTotalHelpText = () => (
+    <div className="ma__help-text">
+      <Fragment>
+        <Paragraph text="Your maximum benefit credit is calculated as the lesser of either:" />
+          <ul>
+            <li>30 times your weekly benefit amount: <br /><strong>{toCurrency(maxBenefitOption1)}</strong> {`= ${parseInt(benefitDuration, 10)} x ${toCurrency(weeklyBenefitFinal)}`}</li>
+            <li>36% of the total wages in your base period: <br /><strong>{toCurrency(maxBenefitOption2)}</strong> {`= ${toCurrency(topQuartersSum)} x 4 x 36%`}</li>
+          </ul>
+        <Paragraph text={`Since ${toCurrency(maxBenefitFinal)} is less than ${toCurrency(maxBenefitOther)}, your maximum benefit credit would be <strong>${toCurrency(maxBenefitFinal)}</strong>.`} />
+      </Fragment>
+    </div>
+  );
 
   return(
     <Fragment>
@@ -64,21 +87,24 @@ const Output = (props) => {
         <CalloutAlert theme="c-primary" icon={null}>
           <HelpTip
             theme="c-white"
-            text={`You would be eligible to receive <strong>${toCurrency(weeklyBenefitFinal)} for ${parseInt(benefitDuration, 10)} weeks</strong>, based on your maximum benefit credit of <strong>${toCurrency(maxBenefitFinal)}</strong>.`}
-            triggerText={[`<strong>${toCurrency(weeklyBenefitFinal)} for ${parseInt(benefitDuration, 10)} weeks</strong>`]}
+            text={`You would be eligible to receive
+              <strong>${toCurrency(weeklyBenefitFinal)}</strong> for <strong>${parseInt(benefitDuration, 10)} weeks</strong>,
+              based on your maximum benefit credit of <strong>${toCurrency(maxBenefitFinal)}</strong>.`}
+            triggerText={[`<strong>${toCurrency(weeklyBenefitFinal)}</strong>`,`<strong>${parseInt(benefitDuration, 10)} weeks</strong>`, `<strong>${toCurrency(maxBenefitFinal)}</strong>`]}
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
           >
-            { getHelpText() }
+            { getBenefitsHelpText() }
+            { getDurationHelpText() }
+            { getTotalHelpText() }
           </HelpTip>
         </CalloutAlert>
       ) : (
         <CalloutAlert theme="c-error-red" icon={null}>
           <HelpTip
             theme="c-white"
-            textBefore="You are "
-            triggerText={'<span>not eligible</span>'}
-            textAfter="for unemployment benefits."
+            text="You are <span>not eligible</span> for unemployment benefits."
+            triggerText={['<span>not eligible</span>']}
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
           >
