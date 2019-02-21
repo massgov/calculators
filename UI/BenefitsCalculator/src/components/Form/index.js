@@ -67,7 +67,7 @@ class Calculator extends Component {
               <InputCheckBox
                 id="apply-all"
                 label="Apply this quarter's wages to the all quarters."
-                icon={{name: '',ariaHidden: true}}
+                icon={{ name: '', ariaHidden: true }}
                 defaultValue={false}
                 onChange={(e, value) => {
                   this.setState({

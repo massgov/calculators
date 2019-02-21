@@ -44,10 +44,10 @@ const Output = (props) => {
 
   // benefit duration
   const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
-  
-  
-  const helpTextBasePeriod2Q = 'Your weekly benefit is half of the sum of the 2 highest quarters total wages divided by the number of weeks in the combined quarters:'
-  const helpTextBasePeriod1Q = 'Your weekly benefit is half of the highest quarter total wages divided by the number of weeks in the combined quarters:'
+
+
+  const helpTextBasePeriod2Q = 'Your weekly benefit is half of the sum of the 2 highest quarters total wages divided by the number of weeks in the combined quarters:';
+  const helpTextBasePeriod1Q = 'Your weekly benefit is half of the highest quarter total wages divided by the number of weeks in the combined quarters:';
 
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">
@@ -55,13 +55,13 @@ const Output = (props) => {
         <Paragraph text={`Your weekly benefit is capped at ${toCurrency(weeklyBenefitMax)}.`} />
       ) : (
         <Fragment>
-          <Paragraph text={ quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q } />
+          <Paragraph text={quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q} />
           <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)}/ ${weeksInTopQuarters} weeks in the combined quarters`} /></div>
         </Fragment>
       )}
     </div>
   );
-  
+
   const getDurationHelpText = () => (
     <div className="ma__help-text">
       <Fragment>
@@ -70,15 +70,21 @@ const Output = (props) => {
       </Fragment>
     </div>
   );
-  
+
   const getTotalHelpText = () => (
     <div className="ma__help-text">
       <Fragment>
         <Paragraph text="Your maximum benefit credit is calculated as the lesser of either:" />
-          <ul>
-            <li>30 times your weekly benefit amount: <Paragraph text={`<strong>${toCurrency(maxBenefitOption1)}</strong> = ${parseInt(benefitDuration, 10)} x ${toCurrency(weeklyBenefitFinal)}`} /></li>
-            <li>36% of the total wages in your base period: <Paragraph text={`<strong>${toCurrency(maxBenefitOption2)}</strong> = ${toCurrency(topQuartersSum)} x 4 x 36%`} /></li>
-          </ul>
+        <ul>
+          <li>
+30 times your weekly benefit amount:
+            <Paragraph text={`<strong>${toCurrency(maxBenefitOption1)}</strong> = ${parseInt(benefitDuration, 10)} x ${toCurrency(weeklyBenefitFinal)}`} />
+          </li>
+          <li>
+36% of the total wages in your base period:
+            <Paragraph text={`<strong>${toCurrency(maxBenefitOption2)}</strong> = ${toCurrency(topQuartersSum)} x 4 x 36%`} />
+          </li>
+        </ul>
         <Paragraph text={`Since ${toCurrency(maxBenefitFinal)} is less than ${toCurrency(maxBenefitOther)}, your maximum benefit credit would be <strong>${toCurrency(maxBenefitFinal)}</strong>.`} />
       </Fragment>
     </div>
@@ -94,7 +100,7 @@ const Output = (props) => {
             text={`You would be eligible to receive
               <strong>${toCurrency(weeklyBenefitFinal)}</strong> for <strong>${parseInt(benefitDuration, 10)} weeks</strong>,
               based on your maximum benefit credit of <strong>${toCurrency(maxBenefitFinal)}</strong>.`}
-            triggerText={[`<strong>${toCurrency(weeklyBenefitFinal)}</strong>`,`<strong>${parseInt(benefitDuration, 10)} weeks</strong>`, `<strong>${toCurrency(maxBenefitFinal)}</strong>`]}
+            triggerText={[`<strong>${toCurrency(weeklyBenefitFinal)}</strong>`, `<strong>${parseInt(benefitDuration, 10)} weeks</strong>`, `<strong>${toCurrency(maxBenefitFinal)}</strong>`]}
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
           >
