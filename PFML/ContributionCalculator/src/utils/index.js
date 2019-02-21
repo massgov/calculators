@@ -1,5 +1,6 @@
 import React from 'react';
 import numbro from 'numbro';
+import PropTypes from 'prop-types';
 import { HelpTip } from '@massds/mayflower-react';
 
 export const toCurrency = (number) => {
@@ -13,17 +14,23 @@ export const toPercentage = (number, decimal) => {
   return percent;
 };
 
-export const getHelpTip = ({ text, triggerText, helpText, id }, theme, key) => {
-  return(
-    <HelpTip
-      key={key}
-      text={text}
-      triggerText={triggerText}
-      helpText={helpText}
-      id={key}
-      hasMarkup
-      bypassMobileStyle={false}
-      theme={theme || 'c-primary'}
-    />
-  );
+export const getHelpTip = ({
+  text, triggerText, helpText
+}, theme, key) => (
+  <HelpTip
+    key={key}
+    text={text}
+    triggerText={triggerText}
+    helpText={helpText}
+    id={key}
+    hasMarkup
+    bypassMobileStyle={false}
+    theme={theme || 'c-primary'}
+  />
+);
+
+getHelpTip.propTypes = {
+  text: PropTypes.string,
+  triggerText: PropTypes.arrayOf(PropTypes.string),
+  helpText: PropTypes.arrayOf(PropTypes.string)
 };
