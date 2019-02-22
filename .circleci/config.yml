@@ -242,7 +242,7 @@ workflows:
             branches: { only: develop }
       - ui-cal-parttime-deploy-dev:
           filters:
-            branches: { only: develop }
+            branches: { only: /(ui-part-time\/|all\/).*/ }
   deploy-prod:
     jobs:
       - pfml-cal-benefits-deploy-prod:
