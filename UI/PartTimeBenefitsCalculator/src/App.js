@@ -34,9 +34,12 @@ class App extends Component {
         <main className="main-content">
           <PageHeader
             title="UI Benefits Calculator for Part-time Workers"
-            optionalContents={[{paragraph: {text:
+            optionalContents={[{
+              paragraph: {
+                text:
                 'If you work part time, you may still qualify for unemployment benefits. The weekly benefit amount you receive may be adjusted based on how much you earn from your part-time job.'
-              }}]}
+              }
+            }]}
           />
           <section className="main-content--two">
             <div className="ma__page-header__content">

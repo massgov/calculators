@@ -1,0 +1,107 @@
+import React, { Fragment } from 'react';
+import { toCurrency, displayCurrency, toNumber } from './util';
+import {
+  Form, FormProvider, InputCurrency, CalloutAlert, HelpTip, Input, InputContext, Paragraph
+} from '@massds/mayflower-react';
+
+export const ScenarioOne = (props) => {
+  // Do not make a copy of formContext with object destructuring.
+  const formContext = props.formContext;
+  // These are default values only.
+  const scenarioDefaults = {
+    showScenario: false,
+    weeklyBenefits: formContext.hasId('weekly-benefits') ? formContext.getValue('weekly-benefits') : null,
+    weeklyEarnings: formContext.hasId('weekly-earnings') ? formContext.getValue('weekly-earnings') : null
+  };
+  return(
+    <Input id="scenario-one" defaultValue={scenarioDefaults}>
+      <InputContext.Consumer>
+        { (inputContext) => {
+          // Updated by handleChange.
+          const { showScenario } = inputContext.getValue();
+          const values = formContext.getValues();
+          const weeklyBenefits = toNumber(values['weekly-benefits']);
+          const weeklyEarnings = toNumber(values['weekly-earnings']);
+          if (
+            showScenario
+            && !Number.isNaN(weeklyBenefits)
+            && !Number.isNaN(weeklyEarnings)) {
+            return(
+              <Fragment>
+                <hr />
+                <CalloutAlert theme="c-primary" icon={null}>
+                  <HelpTip
+                    theme="c-white"
+                    triggerText={['<strong>not affected</strong>']}
+                    text="Your weekly benefits are <strong>not affected</strong>."
+                    id="help-tip-scenario-one"
+                    labelID="help-tip-scenario-one-label"
+                  >
+As you make less than a third of your weekly benefits through your part time employment, your weekly benefit stays the same.
+                  </HelpTip>
+                  <Paragraph text={`You take home ${displayCurrency(weeklyBenefits)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(toNumber(weeklyBenefits) + toNumber(weeklyEarnings))} weekly.`} />
+                </CalloutAlert>
+              </Fragment>
+            );
+          }
+          return null;
+        }}
+      </InputContext.Consumer>
+    </Input>
+  );
+};
+
+
+export const ScenarioTwo = (props) => {
+  // Do not make a copy of formContext with object destructuring.
+  const formContext = props.formContext;
+  // These are default values only.
+  const scenarioDefaults = {
+    showScenario: false,
+    weeklyBenefits: formContext.hasId('weekly-benefits') ? formContext.getValue('weekly-benefits') : null,
+    weeklyEarnings: formContext.hasId('weekly-earnings') ? formContext.getValue('weekly-earnings') : null,
+    earningsDisregard: formContext.hasId('earnings-disregard') ? formContext.getValue('earnings-disregard') : null,
+    reducedBenefit: null,
+    earningsOverDis: null
+  };
+  return(
+    <Input id="scenario-two" defaultValue={scenarioDefaults}>
+      <InputContext.Consumer>
+        { (inputContext) => {
+          // Updated by handleChange.
+          const { reducedBenefit, earningsOverDis, showScenario } = inputContext.getValue();
+          const values = formContext.getValues();
+          const weeklyBenefits = toNumber(values['weekly-benefits']);
+          const weeklyEarnings = toNumber(values['weekly-earnings']);
+          const earningsDisregard = toNumber(values['earnings-disregard']);
+          if (
+            showScenario
+            && !Number.isNaN(weeklyBenefits)
+            && !Number.isNaN(weeklyEarnings)
+            && !Number.isNaN(reducedBenefit)
+            && !Number.isNaN(earningsOverDis)
+            && !Number.isNaN(earningsDisregard)) {
+            return(
+              <Fragment>
+                <hr />
+                <CalloutAlert theme="c-primary" icon={null}>
+                  <HelpTip
+                    theme="c-white"
+                    triggerText={[toCurrency(reducedBenefit)]}
+                    text={`Your reduced weekly benefit amount is ${toCurrency(reducedBenefit)}.`}
+                    id="help-tip-scenario-two"
+                    labelID="help-tip-scenario-two-label"
+                  >
+                    {`Earnings over earnings disregard: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyBenefits)} - ${toCurrency(earningsDisregard)}`}
+                  </HelpTip>
+                  <Paragraph text={`You will take home ${displayCurrency(reducedBenefit)} from UI benefits and ${displayCurrency(weeklyBenefits)} from your income, a total amount of ${displayCurrency(toNumber(reducedBenefit) + toNumber(weeklyBenefits))} weekly. `} />
+                </CalloutAlert>
+              </Fragment>
+            );
+          }
+          return null;
+        }}
+      </InputContext.Consumer>
+    </Input>
+  );
+};
