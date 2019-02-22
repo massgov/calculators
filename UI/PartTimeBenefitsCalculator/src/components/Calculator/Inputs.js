@@ -15,7 +15,7 @@ export const QuestionOne = (props) => {
         id="weekly-benefits"
         name="weekly-benefits"
         placeholder="e.g. $500.00"
-        defaultValue="0"
+        defaultValue={null}
         step={1}
         min={0}
         onChange={handleChange}
@@ -34,7 +34,7 @@ export const QuestionTwo = (props) => {
       id="weekly-earnings"
       name="weekly-earnings"
       placeholder="e.g. $500.00"
-      defaultValue="0"
+      defaultValue={null}
       step={1}
       min={0}
       onChange={handleChange}
