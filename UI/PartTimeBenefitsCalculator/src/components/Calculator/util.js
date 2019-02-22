@@ -14,7 +14,7 @@ export const displayCurrency = (val) => {
 };
 
 export const toNumber = (val) => {
-  if (typeof val === 'string' && val.length === 0) {
+  if (typeof val === 'string' && val.length === 0 || !val) {
     return NaN;
   }
   return Number(numbro(val).format({

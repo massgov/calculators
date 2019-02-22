@@ -19,9 +19,11 @@ const Calculator = () => (
       {
           (formContext) => {
             const handleChange = (newVal, id) => {
+              const weeklyBenefits = toNumber(formContext.getValue('weekly-benefits'));
+              const weeklyEarnings = toNumber(formContext.getValue('weekly-earnings'));
+              const earningsDisregard = toNumber(formContext.getValue('earnings-disregard'));
               if (id === 'weekly-benefits') {
                 if (formContext.hasId('weekly-benefits')) {
-                  const weeklyBenefits = toNumber(formContext.getValue('weekly-benefits'));
                   if (!Number.isNaN(weeklyBenefits)) {
                     const earningsDisregard = (weeklyBenefits * (1 / 3));
                     formContext.setValue({ id: 'earnings-disregard', value: earningsDisregard });
@@ -31,9 +33,6 @@ const Calculator = () => (
                 }
               }
               if (formContext.hasId('scenario-one') && formContext.hasId('weekly-benefits') && formContext.hasId('weekly-earnings')) {
-                const weeklyBenefits = toNumber(formContext.getValue('weekly-benefits'));
-                const weeklyEarnings = toNumber(formContext.getValue('weekly-earnings'));
-                const earningsDisregard = toNumber(formContext.getValue('earnings-disregard'));
                 if (!Number.isNaN(weeklyBenefits) && !Number.isNaN(weeklyEarnings)) {
                   if (weeklyEarnings <= earningsDisregard) {
                     formContext.setValue({ id: 'scenario-one', value: { showScenario: true } });
@@ -45,9 +44,6 @@ const Calculator = () => (
                 }
               }
               if (formContext.hasId('scenario-two') && formContext.hasId('earnings-disregard') && formContext.hasId('weekly-earnings')) {
-                const weeklyBenefits = toNumber(formContext.getValue('weekly-benefits'));
-                const weeklyEarnings = toNumber(formContext.getValue('weekly-earnings'));
-                const earningsDisregard = toNumber(formContext.getValue('earnings-disregard'));
                 const reducedBenefit = weeklyBenefits - (weeklyEarnings - earningsDisregard);
                 const earningsOverDis = weeklyBenefits - earningsDisregard;
                 if (!Number.isNaN(weeklyBenefits) && !Number.isNaN(weeklyEarnings) && !Number.isNaN(earningsDisregard)) {
@@ -61,22 +57,14 @@ const Calculator = () => (
                 }
               }
             };
+            const weeklyBenefits = toNumber(formContext.getValue('weekly-benefits'));
             return(
               <Fragment>
-                <div className="form-item">
-                  <QuestionOne handleChange={handleChange} />
+                  <QuestionOne handleChange={handleChange}/>
                   <OutputOne />
-                </div>
-                
-                <div className="form-item">
-                  <QuestionTwo handleChange={handleChange} />
-                </div>
-                <div className="form-item">
+                  <QuestionTwo handleChange={handleChange}/>
                   <ScenarioOne formContext={formContext} />
-                </div>
-                <div className="form-item">
                   <ScenarioTwo formContext={formContext} />
-                </div>
               </Fragment>
             );
           }
