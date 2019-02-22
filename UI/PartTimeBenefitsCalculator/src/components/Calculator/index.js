@@ -125,8 +125,8 @@ const QuestionOne = (props) => {
                 <CalloutAlert theme="c-primary" icon={null}>
                   <HelpTip
                     theme="c-white"
-                    triggerText={toCurrency(inputContext.getValue())}
-                    textAfter={`Any earnings greater than ${toCurrency(inputContext.getValue())} will be deducted dollar-for-dollar from your weekly benefit payment.`}
+                    triggerText={[toCurrency(inputContext.getValue())]}
+                    text={`Any earnings greater than ${toCurrency(inputContext.getValue())} will be deducted dollar-for-dollar from your weekly benefit payment.`}
                     id="help-tip-weekly-benefits"
                     labelID="help-tip-weekly-benefits-label"
                   >
@@ -186,9 +186,8 @@ const ScenarioOne = (props) => {
                 <CalloutAlert theme="c-primary" icon={null}>
                   <HelpTip
                     theme="c-white"
-                    triggerText={'<strong>not affected</strong>'}
-                    textBefore="Your weekly benefits are "
-                    textAfter="."
+                    triggerText={['<strong>not affected</strong>']}
+                    text="Your weekly benefits are <strong>not affected</strong>."
                     id="help-tip-scenario-one"
                     labelID="help-tip-scenario-one-label"
                   >As you make less than a third of your weekly benefits through your part time employment, your weekly benefit stays the same.</HelpTip>
@@ -238,9 +237,8 @@ const ScenarioTwo = (props) => {
                 <CalloutAlert theme="c-primary" icon={null}>
                   <HelpTip
                     theme="c-white"
-                    triggerText={toCurrency(reducedBenefit)}
-                    textBefore="Your reduced weekly benefit amount is "
-                    textAfter="."
+                    triggerText={[toCurrency(reducedBenefit)]}
+                    text={`Your reduced weekly benefit amount is ${toCurrency(reducedBenefit)}.`}
                     id="help-tip-scenario-two"
                     labelID="help-tip-scenario-two-label"
                   >{`Earnings over earnings disregard: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyBenefits)} - ${toCurrency(earningsDisregard)}`}</HelpTip>
