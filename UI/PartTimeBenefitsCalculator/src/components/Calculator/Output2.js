@@ -37,7 +37,7 @@ export const ScenarioOne = (props) => {
                     id="help-tip-scenario-one"
                     labelID="help-tip-scenario-one-label"
                   >
-As you make less than a third of your weekly benefits through your part time employment, your weekly benefit stays the same.
+                  <div className="ma__help-text">As you make less than a third of your weekly benefits through your part time employment, your weekly benefit stays the same.</div>
                   </HelpTip>
                   <Paragraph text={`You take home ${displayCurrency(weeklyBenefits)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(toNumber(weeklyBenefits) + toNumber(weeklyEarnings))} weekly.`} />
                 </CalloutAlert>
@@ -92,7 +92,7 @@ export const ScenarioTwo = (props) => {
                     id="help-tip-scenario-two"
                     labelID="help-tip-scenario-two-label"
                   >
-                    {`Earnings over earnings disregard: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyBenefits)} - ${toCurrency(earningsDisregard)}`}
+                    <div className="ma__help-text">{`Earnings over earnings disregard: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyBenefits)} - ${toCurrency(earningsDisregard)}`}</div>
                   </HelpTip>
                   <Paragraph text={`You will take home ${displayCurrency(reducedBenefit)} from UI benefits and ${displayCurrency(weeklyBenefits)} from your income, a total amount of ${displayCurrency(toNumber(reducedBenefit) + toNumber(weeklyBenefits))} weekly. `} />
                 </CalloutAlert>

@@ -4,7 +4,8 @@ import {
 } from '@massds/mayflower-react';
 import { toCurrency, displayCurrency, toNumber } from './util';
 import { QuestionOne, QuestionTwo } from './Inputs';
-import { ScenarioOne, ScenarioTwo } from './Outputs';
+import OutputOne from './Output1';
+import { ScenarioOne, ScenarioTwo } from './Output2';
 import './style.css';
 
 // Anything within the form component is only rendered a single time.
@@ -64,7 +65,9 @@ const Calculator = () => (
               <Fragment>
                 <div className="form-item">
                   <QuestionOne handleChange={handleChange} />
+                  <OutputOne />
                 </div>
+                
                 <div className="form-item">
                   <QuestionTwo handleChange={handleChange} />
                 </div>

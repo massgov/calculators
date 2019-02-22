@@ -712,3 +712,6 @@ label {
 .ma__form-page .ma__show-currency {
   color: #14558f;
   font-weight: bold; }
+
+.ma__help-text {
+  padding: 10px; }
