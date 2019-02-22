@@ -43,6 +43,7 @@ class App extends Component {
           />
           <section className="main-content--two">
             <div className="ma__page-header__content">
+              <hr />
               <Calculator />
             </div>
           </section>

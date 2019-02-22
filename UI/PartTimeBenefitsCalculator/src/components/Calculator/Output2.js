@@ -92,9 +92,12 @@ export const ScenarioTwo = (props) => {
                     id="help-tip-scenario-two"
                     labelID="help-tip-scenario-two-label"
                   >
-                    <div className="ma__help-text">{`Earnings over earnings disregard: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyBenefits)} - ${toCurrency(earningsDisregard)}`}</div>
+                    <div className="ma__help-text">
+                      <Paragraph text={`Earnings over earnings disregard: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyEarnings)} - ${toCurrency(earningsDisregard)}`} />
+                      <Paragraph text={`Reduced weekly benefit: <strong>${toCurrency(reducedBenefit)}</strong> = ${toCurrency(weeklyBenefits)} - ${toCurrency(earningsOverDis)}`} />
+                    </div>
                   </HelpTip>
-                  <Paragraph text={`You will take home ${displayCurrency(reducedBenefit)} from UI benefits and ${displayCurrency(weeklyBenefits)} from your income, a total amount of ${displayCurrency(toNumber(reducedBenefit) + toNumber(weeklyBenefits))} weekly. `} />
+                  <Paragraph text={`You will take home ${displayCurrency(reducedBenefit)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(toNumber(reducedBenefit) + toNumber(weeklyEarnings))} weekly. `} />
                 </CalloutAlert>
               </Fragment>
             );
