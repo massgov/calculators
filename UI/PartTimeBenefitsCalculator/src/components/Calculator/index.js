@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Form, FormProvider } from '@massds/mayflower-react';
-import { displayCurrency, toNumber } from './util';
+import { toNumber } from './util';
 import { QuestionOne, QuestionTwo } from './Inputs';
 import OutputOne from './Output1';
 import { ScenarioOne, ScenarioTwo, ScenarioThree } from './Output2';
@@ -26,8 +26,8 @@ const Calculator = () => (
               if (id === 'weekly-benefits') {
                 if (formContext.hasId('weekly-benefits')) {
                   if (!Number.isNaN(weeklyBenefits)) {
-                    const earningsDisregard = (weeklyBenefits * (1 / 3));
-                    formContext.setValue({ id: 'earnings-disregard', value: earningsDisregard });
+                    const earningsDisregardCalc = (weeklyBenefits * (1 / 3));
+                    formContext.setValue({ id: 'earnings-disregard', value: earningsDisregardCalc });
                   } else {
                     formContext.setValue({ id: 'earnings-disregard', value: 0 });
                   }
@@ -69,21 +69,21 @@ const Calculator = () => (
             };
             return(
               <Fragment>
-                  <QuestionOne handleChange={handleChange}/>
-                  <OutputOne />
-                  <QuestionTwo handleChange={handleChange} />
-                  {
+                <QuestionOne handleChange={handleChange} />
+                <OutputOne />
+                <QuestionTwo handleChange={handleChange} />
+                {
                     // Output2: benefits not impacted
                   }
-                  <ScenarioOne formContext={formContext} />
-                  {
+                <ScenarioOne formContext={formContext} />
+                {
                     // Output2: benefits reduced
                   }
-                  <ScenarioTwo formContext={formContext} />
-                  {
+                <ScenarioTwo formContext={formContext} />
+                {
                     // Output2: benefits void
                   }
-                  <ScenarioThree formContext={formContext} />
+                <ScenarioThree formContext={formContext} />
               </Fragment>
             );
           }

@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import {
-  Form, FormProvider, InputCurrency, CalloutAlert, HelpTip, Input, InputContext, Paragraph
+  CalloutAlert, HelpTip, Input, InputContext
 } from '@massds/mayflower-react';
-import { toCurrency, displayCurrency, toNumber } from './util';
+import { toCurrency } from './util';
 
-const OutputOne = (props) => (
+const OutputOne = () => (
   <Input id="earnings-disregard" defaultValue={0}>
     <InputContext.Consumer>
       { (inputContext) => {

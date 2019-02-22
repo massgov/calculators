@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
-import {
-  Form, FormProvider, InputCurrency, CalloutAlert, HelpTip, Input, InputContext, Paragraph
-} from '@massds/mayflower-react';
-import { toCurrency, displayCurrency, toNumber } from './util';
+import PropTypes from 'prop-types';
+import { InputCurrency } from '@massds/mayflower-react';
 
 export const QuestionOne = (props) => {
   const { handleChange } = props;
@@ -40,4 +38,12 @@ export const QuestionTwo = (props) => {
       onChange={handleChange}
     />
   );
+};
+
+QuestionOne.propTypes = {
+  handleChange: PropTypes.func
+};
+
+QuestionTwo.propTypes = {
+  handleChange: PropTypes.func
 };
