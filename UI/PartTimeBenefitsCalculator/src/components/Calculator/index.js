@@ -22,6 +22,9 @@ const Calculator = () => (
               const weeklyBenefits = toNumber(formContext.getValue('weekly-benefits'));
               const weeklyEarnings = toNumber(formContext.getValue('weekly-earnings'));
               const earningsDisregard = toNumber(formContext.getValue('earnings-disregard'));
+              const earningsOverDis = weeklyEarnings - earningsDisregard;
+              const reducedBenefit = weeklyBenefits - earningsOverDis;
+
               if (id === 'weekly-benefits') {
                 if (formContext.hasId('weekly-benefits')) {
                   if (!Number.isNaN(weeklyBenefits)) {
@@ -34,7 +37,7 @@ const Calculator = () => (
               }
               if (formContext.hasId('scenario-one') && formContext.hasId('weekly-benefits') && formContext.hasId('weekly-earnings')) {
                 if (!Number.isNaN(weeklyBenefits) && !Number.isNaN(weeklyEarnings)) {
-                  if (weeklyEarnings <= earningsDisregard) {
+                  if (earningsOverDis <= 0) {
                     formContext.setValue({ id: 'scenario-one', value: { showScenario: true } });
                   } else {
                     formContext.setValue({ id: 'scenario-one', value: { showScenario: false } });
@@ -44,10 +47,8 @@ const Calculator = () => (
                 }
               }
               if (formContext.hasId('scenario-two') && formContext.hasId('earnings-disregard') && formContext.hasId('weekly-earnings')) {
-                const reducedBenefit = weeklyBenefits - (weeklyEarnings - earningsDisregard);
-                const earningsOverDis = weeklyBenefits - earningsDisregard;
                 if (!Number.isNaN(weeklyBenefits) && !Number.isNaN(weeklyEarnings) && !Number.isNaN(earningsDisregard)) {
-                  if (weeklyEarnings > earningsDisregard) {
+                  if (earningsOverDis > 0 && reducedBenefit > 0) {
                     formContext.setValue({ id: 'scenario-two', value: { showScenario: true, reducedBenefit, earningsOverDis } });
                   } else {
                     formContext.setValue({ id: 'scenario-two', value: { showScenario: false, reducedBenefit, earningsOverDis } });
@@ -57,10 +58,8 @@ const Calculator = () => (
                 }
               }
               if (formContext.hasId('scenario-three') && formContext.hasId('earnings-disregard') && formContext.hasId('weekly-earnings')) {
-                const reducedBenefit = weeklyBenefits - (weeklyEarnings - earningsDisregard);
-                const earningsOverDis = weeklyBenefits - earningsDisregard;
                 if (!Number.isNaN(weeklyBenefits) && !Number.isNaN(weeklyEarnings) && !Number.isNaN(earningsDisregard)) {
-                  if (weeklyEarnings > earningsDisregard) {
+                  if (reducedBenefit <= 0) {
                     formContext.setValue({ id: 'scenario-three', value: { showScenario: true, reducedBenefit, earningsOverDis } });
                   } else {
                     formContext.setValue({ id: 'scenario-three', value: { showScenario: false, reducedBenefit, earningsOverDis } });
@@ -70,7 +69,6 @@ const Calculator = () => (
                 }
               }
             };
-            const weeklyBenefits = toNumber(formContext.getValue('weekly-benefits'));
             return(
               <Fragment>
                   <QuestionOne handleChange={handleChange}/>
