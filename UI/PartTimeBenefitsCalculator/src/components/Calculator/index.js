@@ -62,7 +62,7 @@ const Calculator = () => (
               <Fragment>
                   <QuestionOne handleChange={handleChange}/>
                   <OutputOne />
-                  <QuestionTwo handleChange={handleChange}/>
+                  <QuestionTwo handleChange={handleChange} />
                   <ScenarioOne formContext={formContext} />
                   <ScenarioTwo formContext={formContext} />
               </Fragment>

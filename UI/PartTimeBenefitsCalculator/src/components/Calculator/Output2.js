@@ -24,7 +24,7 @@ export const ScenarioOne = (props) => {
           const weeklyEarnings = toNumber(values['weekly-earnings']);
           if (
             showScenario
-            && !Number.isNaN(weeklyBenefits)
+            && !Number.isNaN(weeklyBenefits) && weeklyEarnings !== 0
             && !Number.isNaN(weeklyEarnings)) {
             return(
               <Fragment>
