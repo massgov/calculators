@@ -78,7 +78,7 @@ const Output = (props) => {
         <ul>
           <li>
 30 times your weekly benefit amount:
-            <Paragraph text={`<strong>${toCurrency(maxBenefitOption1)}</strong> = ${parseInt(benefitDuration, 10)} x ${toCurrency(weeklyBenefitFinal)}`} />
+            <Paragraph text={`<strong>${toCurrency(maxBenefitOption1)}</strong> = 30 x ${toCurrency(weeklyBenefitFinal)}`} />
           </li>
           <li>
 36% of the total wages in your base period:
