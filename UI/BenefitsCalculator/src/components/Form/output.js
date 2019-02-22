@@ -65,7 +65,7 @@ const Output = (props) => {
   const getDurationHelpText = () => (
     <div className="ma__help-text">
       <Fragment>
-        <Paragraph text="Your duration of benefits is calculated by dividing your maximum benefit credit by your weekly benefit amount.:" />
+        <Paragraph text="Your duration of benefits is equal to your maximum benefit credit divided by your weekly benefit amount:" />
         <div className="ma__output-calculation"><Paragraph text={`${parseInt(benefitDuration, 10)} = ${toCurrency(maxBenefitFinal)} / ${toCurrency(weeklyBenefitFinal)}`} /></div>
       </Fragment>
     </div>
@@ -85,7 +85,7 @@ const Output = (props) => {
             <Paragraph text={`<strong>${toCurrency(maxBenefitOption2)}</strong> = 36% x ${toCurrency(quartersSum)}`} />
           </li>
         </ul>
-        <Paragraph text={`Since ${toCurrency(maxBenefitFinal)} is less than ${toCurrency(maxBenefitOther)}, your maximum benefit credit would be <strong>${toCurrency(maxBenefitFinal)}</strong>.`} />
+        <Paragraph text={`Since ${toCurrency(maxBenefitFinal)} is less than ${toCurrency(maxBenefitOther)}, your maximum benefit credit is <strong>${toCurrency(maxBenefitFinal)}</strong>.`} />
       </Fragment>
     </div>
   );
