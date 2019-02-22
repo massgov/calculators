@@ -1,9 +1,13 @@
 import React, { Fragment } from 'react';
-import { CalloutAlert, HelpTip, Paragraph, Input, InputContext } from '@massds/mayflower-react';
+import {
+  CalloutAlert, HelpTip, Paragraph, Input, InputContext
+} from '@massds/mayflower-react';
+import PropTypes from 'prop-types';
 import { toCurrency, displayCurrency, toNumber } from './util';
 
 export const ScenarioOne = (props) => {
   // Do not make a copy of formContext with object destructuring.
+  // eslint-disable-next-line react/destructuring-assignment
   const formContext = props.formContext;
   // These are default values only.
   const scenarioDefaults = {
@@ -52,6 +56,7 @@ export const ScenarioOne = (props) => {
 
 export const ScenarioTwo = (props) => {
   // Do not make a copy of formContext with object destructuring.
+  // eslint-disable-next-line react/destructuring-assignment
   const formContext = props.formContext;
   // These are default values only.
   const scenarioDefaults = {
@@ -109,6 +114,7 @@ export const ScenarioTwo = (props) => {
 
 export const ScenarioThree = (props) => {
   // Do not make a copy of formContext with object destructuring.
+  // eslint-disable-next-line react/destructuring-assignment
   const formContext = props.formContext;
   // These are default values only.
   const scenarioDefaults = {
@@ -151,4 +157,16 @@ export const ScenarioThree = (props) => {
       </InputContext.Consumer>
     </Input>
   );
+};
+
+ScenarioOne.propTypes = {
+  formContext: PropTypes.object
+};
+
+ScenarioTwo.propTypes = {
+  formContext: PropTypes.object
+};
+
+ScenarioThree.propTypes = {
+  formContext: PropTypes.object
 };
