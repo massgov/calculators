@@ -38,7 +38,7 @@ const Output = (props) => {
 
   // max benefit credit
   const maxBenefitOption1 = 30 * weeklyBenefitFinal;
-  const maxBenefitOption2 = quartersSum * 0.36;
+  const maxBenefitOption2 = 0.36 * quartersSum;
   const maxBenefitFinal = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption2 : maxBenefitOption1;
   const maxBenefitOther = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption1 : maxBenefitOption2;
 
@@ -82,7 +82,7 @@ const Output = (props) => {
           </li>
           <li>
 36% of the total wages in your base period:
-            <Paragraph text={`<strong>${toCurrency(maxBenefitOption2)}</strong> = ${toCurrency(topQuartersSum)} x 4 x 36%`} />
+            <Paragraph text={`<strong>${toCurrency(maxBenefitOption2)}</strong> = 36% x ${toCurrency(quartersSum)}`} />
           </li>
         </ul>
         <Paragraph text={`Since ${toCurrency(maxBenefitFinal)} is less than ${toCurrency(maxBenefitOther)}, your maximum benefit credit would be <strong>${toCurrency(maxBenefitFinal)}</strong>.`} />
