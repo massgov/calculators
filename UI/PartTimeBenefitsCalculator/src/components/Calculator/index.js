@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
-import {
-  Form, FormProvider, InputCurrency, CalloutAlert, HelpTip, Input, InputContext, Paragraph
-} from '@massds/mayflower-react';
-import { toCurrency, displayCurrency, toNumber } from './util';
+import { Form, FormProvider } from '@massds/mayflower-react';
+import { displayCurrency, toNumber } from './util';
 import { QuestionOne, QuestionTwo } from './Inputs';
 import OutputOne from './Output1';
 import { ScenarioOne, ScenarioTwo, ScenarioThree } from './Output2';

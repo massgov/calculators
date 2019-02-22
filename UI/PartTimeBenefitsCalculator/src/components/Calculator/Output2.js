@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import { toCurrency, displayCurrency, toNumber } from './util';
 import {
   Form, FormProvider, InputCurrency, CalloutAlert, HelpTip, Input, InputContext, Paragraph
 } from '@massds/mayflower-react';
+import { toCurrency, displayCurrency, toNumber } from './util';
 
 export const ScenarioOne = (props) => {
   // Do not make a copy of formContext with object destructuring.
@@ -37,7 +37,7 @@ export const ScenarioOne = (props) => {
                     id="help-tip-scenario-one"
                     labelID="help-tip-scenario-one-label"
                   >
-                  <div className="ma__help-text">As you make less than 1/3 of your weekly benefits through your part time employment, your weekly benefit stays the same.</div>
+                    <div className="ma__help-text">As you make less than 1/3 of your weekly benefits through your part time employment, your weekly benefit stays the same.</div>
                   </HelpTip>
                   <Paragraph text={`You take home ${displayCurrency(weeklyBenefits)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(toNumber(weeklyBenefits) + toNumber(weeklyEarnings))} weekly.`} />
                 </CalloutAlert>
@@ -142,7 +142,7 @@ export const ScenarioThree = (props) => {
               <Fragment>
                 <hr />
                 <CalloutAlert theme="c-error-red" icon={null}>
-                  <Paragraph text={`Because your weekly part-time earnings is over the UI benefits plus the earnings disregard (1/3 of the UI benefits). You are no longer eligible for the benefits. `} />
+                  <Paragraph text="Because your weekly part-time earnings is over the UI benefits plus the earnings disregard (1/3 of the UI benefits). You are no longer eligible for the benefits. " />
                   <Paragraph text={`You will take home ${displayCurrency(0)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(weeklyEarnings)} weekly. `} />
                 </CalloutAlert>
               </Fragment>

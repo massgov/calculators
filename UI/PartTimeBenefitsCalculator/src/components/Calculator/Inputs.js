@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import { toCurrency, displayCurrency, toNumber } from './util';
 import {
   Form, FormProvider, InputCurrency, CalloutAlert, HelpTip, Input, InputContext, Paragraph
 } from '@massds/mayflower-react';
+import { toCurrency, displayCurrency, toNumber } from './util';
 
 export const QuestionOne = (props) => {
   const { handleChange } = props;
