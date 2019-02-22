@@ -5,7 +5,7 @@ import {
 import { toCurrency, displayCurrency, toNumber } from './util';
 import { QuestionOne, QuestionTwo } from './Inputs';
 import OutputOne from './Output1';
-import { ScenarioOne, ScenarioTwo } from './Output2';
+import { ScenarioOne, ScenarioTwo, ScenarioThree } from './Output2';
 import './style.css';
 
 // Anything within the form component is only rendered a single time.
@@ -56,6 +56,19 @@ const Calculator = () => (
                   formContext.setValue({ id: 'scenario-two', value: { showScenario: false, reducedBenefit, earningsOverDis } });
                 }
               }
+              if (formContext.hasId('scenario-three') && formContext.hasId('earnings-disregard') && formContext.hasId('weekly-earnings')) {
+                const reducedBenefit = weeklyBenefits - (weeklyEarnings - earningsDisregard);
+                const earningsOverDis = weeklyBenefits - earningsDisregard;
+                if (!Number.isNaN(weeklyBenefits) && !Number.isNaN(weeklyEarnings) && !Number.isNaN(earningsDisregard)) {
+                  if (weeklyEarnings > earningsDisregard) {
+                    formContext.setValue({ id: 'scenario-three', value: { showScenario: true, reducedBenefit, earningsOverDis } });
+                  } else {
+                    formContext.setValue({ id: 'scenario-three', value: { showScenario: false, reducedBenefit, earningsOverDis } });
+                  }
+                } else {
+                  formContext.setValue({ id: 'scenario-three', value: { showScenario: false, reducedBenefit, earningsOverDis } });
+                }
+              }
             };
             const weeklyBenefits = toNumber(formContext.getValue('weekly-benefits'));
             return(
@@ -63,8 +76,18 @@ const Calculator = () => (
                   <QuestionOne handleChange={handleChange}/>
                   <OutputOne />
                   <QuestionTwo handleChange={handleChange} />
+                  {
+                    // Output2: benefits not impacted
+                  }
                   <ScenarioOne formContext={formContext} />
+                  {
+                    // Output2: benefits reduced
+                  }
                   <ScenarioTwo formContext={formContext} />
+                  {
+                    // Output2: benefits void
+                  }
+                  <ScenarioThree formContext={formContext} />
               </Fragment>
             );
           }

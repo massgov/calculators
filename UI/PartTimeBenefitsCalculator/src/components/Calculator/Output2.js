@@ -37,7 +37,7 @@ export const ScenarioOne = (props) => {
                     id="help-tip-scenario-one"
                     labelID="help-tip-scenario-one-label"
                   >
-                  <div className="ma__help-text">As you make less than a third of your weekly benefits through your part time employment, your weekly benefit stays the same.</div>
+                  <div className="ma__help-text">As you make less than 1/3 of your weekly benefits through your part time employment, your weekly benefit stays the same.</div>
                   </HelpTip>
                   <Paragraph text={`You take home ${displayCurrency(weeklyBenefits)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(toNumber(weeklyBenefits) + toNumber(weeklyEarnings))} weekly.`} />
                 </CalloutAlert>
@@ -98,6 +98,52 @@ export const ScenarioTwo = (props) => {
                     </div>
                   </HelpTip>
                   <Paragraph text={`You will take home ${displayCurrency(reducedBenefit)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(toNumber(reducedBenefit) + toNumber(weeklyEarnings))} weekly. `} />
+                </CalloutAlert>
+              </Fragment>
+            );
+          }
+          return null;
+        }}
+      </InputContext.Consumer>
+    </Input>
+  );
+};
+
+export const ScenarioThree = (props) => {
+  // Do not make a copy of formContext with object destructuring.
+  const formContext = props.formContext;
+  // These are default values only.
+  const scenarioDefaults = {
+    showScenario: false,
+    weeklyBenefits: formContext.hasId('weekly-benefits') ? formContext.getValue('weekly-benefits') : null,
+    weeklyEarnings: formContext.hasId('weekly-earnings') ? formContext.getValue('weekly-earnings') : null,
+    earningsDisregard: formContext.hasId('earnings-disregard') ? formContext.getValue('earnings-disregard') : null,
+    reducedBenefit: null,
+    earningsOverDis: null
+  };
+  return(
+    <Input id="scenario-three" defaultValue={scenarioDefaults}>
+      <InputContext.Consumer>
+        { (inputContext) => {
+          // Updated by handleChange.
+          const { reducedBenefit, earningsOverDis, showScenario } = inputContext.getValue();
+          const values = formContext.getValues();
+          const weeklyBenefits = toNumber(values['weekly-benefits']);
+          const weeklyEarnings = toNumber(values['weekly-earnings']);
+          const earningsDisregard = toNumber(values['earnings-disregard']);
+          if (
+            showScenario
+            && !Number.isNaN(weeklyBenefits)
+            && !Number.isNaN(weeklyEarnings)
+            && !Number.isNaN(reducedBenefit)
+            && !Number.isNaN(earningsOverDis)
+            && !Number.isNaN(earningsDisregard)) {
+            return(
+              <Fragment>
+                <hr />
+                <CalloutAlert theme="c-error-red" icon={null}>
+                  <Paragraph text={`Because your weekly part-time earnings is over the UI benefits plus the earnings disregard (1/3 of the UI benefits). You are no longer eligible for the benefits. `} />
+                  <Paragraph text={`You will take home $0 from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(weeklyEarnings)} weekly. `} />
                 </CalloutAlert>
               </Fragment>
             );
