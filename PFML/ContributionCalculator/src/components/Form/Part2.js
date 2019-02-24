@@ -25,7 +25,7 @@ const Part2 = (props) => {
   const partOneContext = useContext(InputContext);
 
   const {
-    minEmployees, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, socialSecCap
+    smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, socialSecCap
   } = ContributionVariables.baseVariables;
   const {
     questionOne, questionTwo, questionThree, questionFour
@@ -52,10 +52,9 @@ const Part2 = (props) => {
               payrollW2, payroll1099, payrollWages,
             } = formContext.getValues();
             const {
-              mass_employees, over50: over50per, empCount: employeeCount
+              mass_employees, over50: over50per, over25, empCount: employeeCount
             } = partOneContext.getValue();
             const hasMassEmployees = (mass_employees) === 'yes';
-            const over25 = employeeCount >= minEmployees;
             const medPercent = over25 ? largeMedPercent : smallMedPercent;
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
             const totalPercent = medPercent + famPercent;

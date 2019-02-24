@@ -24,7 +24,7 @@ const Part3 = (props) => {
   const partOneContext = props.partOneContext;
   const formContext = useContext(FormContext);
   const {
-    minEmployees, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, largeCompFamCont, smallCompFamCont, largeCompMedCont, smallCompMedCont, socialSecCap
+    smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, largeCompFamCont, smallCompFamCont, largeCompMedCont, smallCompMedCont, socialSecCap
   } = ContributionVariables.baseVariables;
   const { questionOne, questionTwo } = PartThreeProps;
   const {
@@ -34,12 +34,6 @@ const Part3 = (props) => {
   const {
    empCount: employeeCount, famLeaveCont
   } = partOneContext.getValue();
-  const over25 = employeeCount >= minEmployees;
-
-  const minMed = over25 ? largeCompMedCont : smallCompMedCont;
-  const minFam = over25 ? largeCompFamCont : smallCompFamCont;
-  const minMedPer = Math.round(minMed * 100);
-  const minFamPer = Math.round(minFam * 100);
 
   const getTimeValue = (text) => {
     let value;
@@ -50,9 +44,6 @@ const Part3 = (props) => {
     });
     return value;
   };
-
-  const famTicks = minFamPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minFamPer, 'Min Employer Contribution'], [100, '100%']];
-  const medTicks = minMedPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minMedPer, 'Min Employer Contribution'], [100, '100%']];
 
   const leaveTableDefaults = {
     famCont: Number.isNaN(props.famCont) ? 0 : Number(props.famCont),
@@ -68,7 +59,7 @@ const Part3 = (props) => {
           {
             (leaveTableContext) => {
               const {
-                mass_employees, over50, empCount, famLeaveCont, medLeaveCont
+                mass_employees, over50, over25, empCount, famLeaveCont, medLeaveCont
               } = formContext.getValue('part_one');
               const { payrollBase, pay1099, payW2, payWages } = formContext.getValue('payrollBase');
               let totalPayroll;
@@ -77,11 +68,16 @@ const Part3 = (props) => {
               } else {
                 totalPayroll = numbro.unformat(payWages) > socialSecCap ? socialSecCap : numbro.unformat(payWages);
               }
+              const minMed = over25 ? largeCompMedCont : smallCompMedCont;
+              const minFam = over25 ? largeCompFamCont : smallCompFamCont;
+              const minMedPer = Math.round(minMed * 100);
+              const minFamPer = Math.round(minFam * 100);
+              const famTicks = minFamPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minFamPer, 'Min Employer Contribution'], [100, '100%']];
+              const medTicks = minMedPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minMedPer, 'Min Employer Contribution'], [100, '100%']];
               const hasMassEmployees = (mass_employees) === 'yes';
               const disableAll = payrollBase === 'all' && numbro.unformat(payW2) > 0 && (over50 ? numbro.unformat(pay1099) > 0 : true);
               const disableOne = payrollBase === 'one' && numbro.unformat(payWages) > 0;
               const show = hasMassEmployees && (empCount > 0) && (disableOne || disableAll);
-              const over25 = empCount >= minEmployees;
               const medPercent = over25 ? largeMedPercent : smallMedPercent;
               const famPercent = over25 ? largeFamPercent : smallFamPercent;
               const medLeave = totalPayroll * medPercent;

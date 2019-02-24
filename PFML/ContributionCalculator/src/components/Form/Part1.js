@@ -73,6 +73,7 @@ const Part1 = (props) => {
     mass_employees: 'yes',
     empCount: Number.isNaN(employeeCount) ? 0 : employeeCount,
     over50: over50per,
+    over25: Number.isNaN(employeeCount) ? 0 >= minEmployees : employeeCount >= minEmployees,
     disableInputs: false,
     famLeaveCont: !Number.isNaN(props.famCont) ? Number(props.famCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
     medLeaveCont: !Number.isNaN(props.medCont) ? Number(props.medCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
@@ -151,7 +152,8 @@ const Part1 = (props) => {
                             const current1099 = Number(formContext.getValue('employees1099'));
                             const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
                             const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
-                            const newVal = Object.assign({}, formContext.getValue('part_one'), { emp1099: current1099, empCount, over50, w2: empW2 });
+                            const over25 = empCount >= minEmployees;
+                            const newVal = Object.assign({}, formContext.getValue('part_one'), { emp1099: current1099, empCount, over50, over25, w2: empW2 });
                             inputContext.setValue(newVal, () => {
                               onChangeW2(empW2);
                             });
@@ -176,7 +178,8 @@ const Part1 = (props) => {
                             const current1099 = Number(formContext.getValue('employees1099'));
                             const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
                             const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
-                            const newVal = Object.assign({}, formContext.getValue('part_one'), { w2: empW2, empCount, over50, emp1099: current1099 });
+                            const over25 = empCount >= minEmployees;
+                            const newVal = Object.assign({}, formContext.getValue('part_one'), { w2: empW2, empCount, over50, over25, emp1099: current1099 });
                             inputContext.setValue(newVal, () => {
                               onChangeEmp1099(newVal.emp1099);
                             });
