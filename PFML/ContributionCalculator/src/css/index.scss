@@ -10,8 +10,9 @@ html, body {
 		float: left;
 		@media ($bp-large-min) {
 			float: none !important;
+			width: unset !important;
 		}
-    
+
     & > * {
       margin-top: 0 !important;
     }
@@ -146,7 +147,7 @@ fieldset {
 	    font-size: 1rem;
 	    color: $c-primary;
     }
-}	
+}
 
 .ma__help-text {
 	padding: 10px;
@@ -160,14 +161,14 @@ fieldset {
 	}
 }
 
-.ma__help-tip__text { 
+.ma__help-tip__text {
     .ma__help-tip__text-direct {
 	    @media ($bp-large-min) {
 	      margin-right: 20px !important;
 	      margin-left: 5px !important;
 	    }
 	}
-	
+
 	&--c-white {
 	    .ma__help-text {
 	        @media ($bp-large-min) {

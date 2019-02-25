@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 import numbro from 'numbro';
-import { SelectBox, Input, InputSlider, InputNumber, FormContext, InputContext } from "@massds/mayflower-react";
+import { SelectBox, Input, InputSlider, InputNumber, FormContext, InputContext } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import { toCurrency, getHelpTip } from '../../utils';
 import ContributionVariables from '../../data/ContributionVariables.json';
@@ -31,9 +31,7 @@ const Part3 = (props) => {
     onChangeMedCont, onChangeFamCont, onChangeTimeValue, onChangeTimePeriod
   } = props;
 
-  const {
-   empCount: employeeCount, famLeaveCont
-  } = partOneContext.getValue();
+  const famLeaveDefault = partOneContext.getValue().famLeaveCont;
 
   const getTimeValue = (text) => {
     let value;
@@ -50,7 +48,7 @@ const Part3 = (props) => {
     medCont: Number.isNaN(props.medCont) ? 0 : Number(props.medCont),
     timeValue: Number.isNaN(props.timeValue) ? 1 : Number(props.timeValue),
     timePeriod: props.timePeriod || 'Year',
-    'family-leave': String(Math.round(famLeaveCont * 100)),
+    'family-leave': String(Math.round(famLeaveDefault * 100))
   };
   return(
     <React.Fragment>
@@ -86,13 +84,13 @@ const Part3 = (props) => {
               const famLeaveComp = famLeave * famLeaveCont;
               const medLeaveEmp = medLeave * (1 - medLeaveCont);
               const famLeaveEmp = famLeave * (1 - famLeaveCont);
-              const timePeriod = formContext.getValue('leave_table')['timePeriod'];
+              const timePeriod = formContext.getValue('leave_table').timePeriod;
               const timeValue = getTimeValue(timePeriod);
-              const onFamSliderChange = (value, id) => {
+              const onFamSliderChange = (value) => {
                 const fracNum = value > minFamPer ? value / 100 : minFam;
                 const newVal = Object.assign({}, formContext.getValue('leave_table'), {
                   famCont: fracNum,
-                  'family-leave': String(value),
+                  'family-leave': String(value)
                 });
                 const newPartOne = Object.assign({}, partOneContext.getValue(), {
                   famLeaveCont: fracNum
@@ -109,7 +107,7 @@ const Part3 = (props) => {
                 const fracNum = value > minMedPer ? value / 100 : minMed;
                 const newVal = Object.assign({}, formContext.getValue('leave_table'), {
                   medCont: fracNum,
-                  'medical-leave': String(value),
+                  'medical-leave': String(value)
                 });
                 const newPartOne = Object.assign({}, partOneContext.getValue(), {
                   medLeaveCont: fracNum
@@ -128,7 +126,7 @@ const Part3 = (props) => {
                 const fracNum = fam > minFamPer ? fam / 100 : minFam;
                 const newVal = Object.assign({}, formContext.getValue('leave_table'), {
                   famCont: fracNum,
-                  'family-leave': String(value),
+                  'family-leave': String(value)
                 });
 
                 const newPartOne = Object.assign({}, partOneContext.getValue(), {
@@ -154,7 +152,7 @@ const Part3 = (props) => {
                 const fracNum = med > minMedPer ? med / 100 : minMed;
                 const newVal = Object.assign({}, formContext.getValue('leave_table'), {
                   famCont: fracNum,
-                  'medical-leave': String(value),
+                  'medical-leave': String(value)
                 });
 
                 const newPartOne = Object.assign({}, partOneContext.getValue(), {
@@ -205,7 +203,7 @@ const Part3 = (props) => {
                 onChange: onMedSliderChange
               };
               if (show) {
-                return (
+                return(
                   <Fragment>
                     <fieldset>
                       <legend className="ma__label">
@@ -213,7 +211,7 @@ const Part3 = (props) => {
                       </legend>
                       <div className="ma__input-group--two">
                         <div className="ma__input-group">
-                          <label className="ma__label ma__label--required">Family Leave</label>
+                          <label htmlFor="famEmployerCont" className="ma__label ma__label--required">Family Leave</label>
                           <div className="ma__input-group-right">
                             <div className="ma__input-group--ends">
                               <InputNumber
@@ -256,7 +254,7 @@ const Part3 = (props) => {
                           </div>
                         </div>
                         <div className="ma__input-group">
-                          <label className="ma__label ma__label--required">Medical Leave</label>
+                          <label htmlFor="medEmployerCont" className="ma__label ma__label--required">Medical Leave</label>
                           <div className="ma__input-group-right">
                             <div className="ma__input-group--ends">
                               <InputNumber
@@ -348,30 +346,30 @@ const Part3 = (props) => {
                       {show && payrollBase === 'one' && (
                         <table className="ma__table">
                           <tbody>
-                          <tr className="ma__table-headers">
-                            <th>Contribution</th>
-                            <th>Medical Leave</th>
-                            <th>Family Leave</th>
-                            <th>Total</th>
-                          </tr>
-                          <tr>
-                            <td>You will pay:</td>
-                            <td>{toCurrency(medLeaveComp / timeValue)}</td>
-                            <td>{toCurrency(famLeaveComp / timeValue)}</td>
-                            <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
-                          </tr>
-                          <tr>
-                            <td>Your Employee will pay:</td>
-                            <td>{toCurrency(medLeaveEmp / timeValue)}</td>
-                            <td>{toCurrency(famLeaveEmp / timeValue)}</td>
-                            <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
-                          </tr>
-                          <tr>
-                            <td className="ma__td--group">Total payment:</td>
-                            <td>{toCurrency(medLeave / timeValue)}</td>
-                            <td>{toCurrency(famLeave / timeValue)}</td>
-                            <td>{toCurrency((medLeave + famLeave) / timeValue)}</td>
-                          </tr>
+                            <tr className="ma__table-headers">
+                              <th>Contribution</th>
+                              <th>Medical Leave</th>
+                              <th>Family Leave</th>
+                              <th>Total</th>
+                            </tr>
+                            <tr>
+                              <td>You will pay:</td>
+                              <td>{toCurrency(medLeaveComp / timeValue)}</td>
+                              <td>{toCurrency(famLeaveComp / timeValue)}</td>
+                              <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
+                            </tr>
+                            <tr>
+                              <td>Your Employee will pay:</td>
+                              <td>{toCurrency(medLeaveEmp / timeValue)}</td>
+                              <td>{toCurrency(famLeaveEmp / timeValue)}</td>
+                              <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
+                            </tr>
+                            <tr>
+                              <td className="ma__td--group">Total payment:</td>
+                              <td>{toCurrency(medLeave / timeValue)}</td>
+                              <td>{toCurrency(famLeave / timeValue)}</td>
+                              <td>{toCurrency((medLeave + famLeave) / timeValue)}</td>
+                            </tr>
                           </tbody>
                         </table>
                       )}
