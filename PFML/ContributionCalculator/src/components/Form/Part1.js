@@ -69,15 +69,15 @@ const Part1 = (props) => {
     });
   }
   const partOneDefaults = {
-    w2: Number.isNaN(props.w2) ? null : Number(props.w2),
-    emp1099: Number.isNaN(props.emp1099) ? null : Number(props.emp1099),
+    w2: props.w2 ? Number(props.w2) : null,
+    emp1099: props.emp1099 ? Number(props.emp1099) : null,
     mass_employees: 'yes',
     empCount: Number.isNaN(employeeCount) ? 0 : employeeCount,
     over50: over50per,
     over25: Number.isNaN(employeeCount) ? minEmployees <= 0 : employeeCount >= minEmployees,
     disableInputs: false,
-    famLeaveCont: !Number.isNaN(props.famCont) ? Number(props.famCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
-    medLeaveCont: !Number.isNaN(props.medCont) ? Number(props.medCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont
+    famLeaveCont: props.famCont ? Number(props.famCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
+    medLeaveCont: props.medCont ? Number(props.medCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont
   };
   if (typeof props.massEmp === 'string') {
     partOneDefaults.mass_employees = (props.massEmp && props.massEmp === 'true') ? 'yes' : 'no';
@@ -151,13 +151,21 @@ const Part1 = (props) => {
                     onChange={() => {
                       const empW2 = Number(formContext.getValue('employeesW2'));
                       const current1099 = Number(formContext.getValue('employees1099'));
-                      const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
-                      const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
-                      const over25 = empCount >= minEmployees;
-                      const newVal = Object.assign({}, formContext.getValue('part_one'), { emp1099: current1099, empCount, over50, over25, w2: empW2 });
-                      inputContext.setValue(newVal, () => {
-                        onChangeW2(empW2);
-                      });
+                      if (!Number.isNaN(empW2)) {
+                        const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
+                        const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
+                        const over25 = empCount >= minEmployees;
+                        const newVal = Object.assign({}, formContext.getValue('part_one'), {
+                          emp1099: current1099,
+                          empCount,
+                          over50,
+                          over25,
+                          w2: empW2
+                        });
+                        inputContext.setValue(newVal, () => {
+                          onChangeW2(empW2);
+                        });
+                      }
                     }}
                     showButtons
                   />
@@ -178,13 +186,21 @@ const Part1 = (props) => {
                     onChange={() => {
                       const empW2 = Number(formContext.getValue('employeesW2'));
                       const current1099 = Number(formContext.getValue('employees1099'));
-                      const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
-                      const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
-                      const over25 = empCount >= minEmployees;
-                      const newVal = Object.assign({}, formContext.getValue('part_one'), { w2: empW2, empCount, over50, over25, emp1099: current1099 });
-                      inputContext.setValue(newVal, () => {
-                        onChangeEmp1099(newVal.emp1099);
-                      });
+                      if (!Number.isNaN(current1099)) {
+                        const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
+                        const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
+                        const over25 = empCount >= minEmployees;
+                        const newVal = Object.assign({}, formContext.getValue('part_one'), {
+                          w2: empW2,
+                          empCount,
+                          over50,
+                          over25,
+                          emp1099: current1099
+                        });
+                        inputContext.setValue(newVal, () => {
+                          onChangeEmp1099(newVal.emp1099);
+                        });
+                      }
                     }}
                     showButtons
                   />

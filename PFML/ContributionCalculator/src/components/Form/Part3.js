@@ -32,6 +32,7 @@ const Part3 = (props) => {
   } = props;
 
   const famLeaveDefault = partOneContext.getValue().famLeaveCont;
+  const medLeaveDefault = partOneContext.getValue().medLeaveCont;
 
   const getTimeValue = (text) => {
     let value;
@@ -44,12 +45,13 @@ const Part3 = (props) => {
   };
 
   const leaveTableDefaults = {
-    famCont: Number.isNaN(props.famCont) ? 0 : Number(props.famCont),
-    medCont: Number.isNaN(props.medCont) ? 0 : Number(props.medCont),
-    timeValue: Number.isNaN(props.timeValue) ? 1 : Number(props.timeValue),
+    famCont: props.famCont ? Number(props.famCont) : medLeaveDefault,
+    medCont: props.medCont ? Number(props.medCont) : famLeaveDefault,
+    timeValue: props.timeValue ? Number(props.timeValue) : 1,
     timePeriod: props.timePeriod || 'Year',
-    'family-leave': String(Math.round(famLeaveDefault * 100))
   };
+  leaveTableDefaults['family-leave'] = String(Math.round(leaveTableDefaults.famCont * 100));
+  leaveTableDefaults['medical-leave'] = String(Math.round(leaveTableDefaults.medCont * 100));
   return(
     <React.Fragment>
       <Input id="leave_table" defaultValue={leaveTableDefaults}>
