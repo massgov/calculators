@@ -239,7 +239,7 @@ workflows:
             branches: { only: develop }
       - ui-cal-benefits-deploy-dev:
           filters:
-            branches: { only: /(ui-benefits\/|all\/).*/ }
+            branches: { only: develop }
       - ui-cal-parttime-deploy-dev:
           filters:
             branches: { only: develop }
