@@ -113,7 +113,7 @@ const Part3 = (props) => {
             const medLeaveComp = medLeave * medLeaveCont;
             const famLeaveComp = famLeave * famLeaveCont;
             const medLeaveEmp = medLeave * (maxMed - medLeaveCont);
-            const famLeaveEmp = famLeave * (maxMed - famLeaveCont);
+            const famLeaveEmp = famLeave * (1 - famLeaveCont);
 
             const enableAll = payrollBase === 'all' && numbro.unformat(payrollW2) > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true);
             const enableOne = payrollBase === 'one' && numbro.unformat(payrollWages) > 0;
@@ -136,6 +136,7 @@ const Part3 = (props) => {
               ticks: famTicks,
               domain: [0, 100],
               skipped: true,
+              disabled: !enable,
               onChange: (value) => onFamSliderChange(value)
             };
             const medLeaveSliderProps = {
@@ -149,6 +150,7 @@ const Part3 = (props) => {
               domain: [0, maxMedPer],
               ticks: medTicks,
               skipped: true,
+              disabled: !enable,
               onChange: (value) => onMedSliderChange(value)
             };
 
@@ -173,7 +175,7 @@ const Part3 = (props) => {
                     {over25 ? getHelpTip(questionOne.over25) : getHelpTip(questionOne.under25)}
                   </legend>
                   <div className="ma__input-group--two">
-                    <Input labelText={questionOne.left.main} required>
+                    <Input labelText={questionOne.left.main} required >
                       <div className="ma__input-group--ends">
                         <InputNumber
                           labelText={questionOne.left.left}
@@ -191,6 +193,7 @@ const Part3 = (props) => {
                           min={minFamPer}
                           step={1}
                           showButtons
+                          disabled={!enable}
                           onChange={(event, value) => onFamChange(event, value)}
                               // Remove onBlur event after integration of form context
                           onBlur={(event, value) => onFamBlur(event, value)}
@@ -220,7 +223,7 @@ const Part3 = (props) => {
                       </div>
                       <InputSlider {...familyLeaveSliderProps} key={Math.random()} />
                     </Input>
-                    <Input labelText={questionOne.right.main} required>
+                    <Input labelText={questionOne.right.main} required disabled={!enable}>
                       <div className="ma__input-group--ends">
                         <InputNumber
                           labelText={questionOne.right.left}
@@ -238,6 +241,7 @@ const Part3 = (props) => {
                           required
                           step={1}
                           showButtons
+                          disabled={!enable}
                           onChange={(event, value) => onMedChange(event, value)}
                               // Remove onBlur event after integration of form context
                           onBlur={(event, value) => onMedBlur(event, value)}
