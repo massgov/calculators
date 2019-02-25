@@ -40,8 +40,6 @@ const Part3 = (props) => {
               hasMassEmployees, payrollBase, famLeaveCont, medLeaveCont, timeValue, timePeriod
             } = context;
 
-            console.log(timePeriod)
-
             const over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
             const employeeCount = over50per ? (Number(employeesW2) + Number(employees1099)) : Number(employeesW2);
             const over25 = employeeCount >= minEmployees;
