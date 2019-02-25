@@ -43,7 +43,7 @@ class ExampleForm extends Component {
     const famLeaveCont = (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont;
     const validNumber = (num) => (num || (num !== null && num !== undefined));
     const getDefaultCurrency = (num) => ((validNumber(num)) ? Number(num) : '0');
-    const getDefaultNumber = (num) => ((validNumber(num)) ? Number(num) : 0);
+    const getDefaultNumber = (num) => ((validNumber(num)) ? Number(num) : null);
     /* eslint-disable react/no-unused-state */
     this.state = {
       isActive: true,

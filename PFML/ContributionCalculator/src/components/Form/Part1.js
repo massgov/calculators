@@ -124,16 +124,17 @@ const Part1 = (props) => {
                 </Collapse>
                 <InputNumber
                   labelText={questionTwo.question.helpText ? getHelpTip(questionTwo.question) : questionTwo.question.content}
+                  inline
+                  disabled={!context.hasMassEmployees}
                   id="employeesW2"
                   name="employeesW2"
                   type="number"
                   width={0}
-                  inline
-                  maxlength={0}
+                  maxlength={100}
                   placeholder="e.g. 50"
                   errorMsg={questionTwo.errorMsg}
-                  defaultValue={Number(employeesW2)}
-                  disabled={!context.hasMassEmployees}
+                  min={0}
+                  defaultValue={employeesW2 ? Number(employeesW2) : null}
                   required
                   unit=""
                   onChange={(e, inputValue) => {
@@ -154,17 +155,19 @@ const Part1 = (props) => {
                 />
                 <InputNumber
                   labelText={questionThree.question.helpText ? getHelpTip(questionThree.question) : questionThree.question.content}
+                  inline
+                  disabled={!context.hasMassEmployees}
                   name="employees1099"
                   id="employees1099"
                   type="number"
                   width={0}
-                  maxlength={0}
+                  maxlength={100}
                   placeholder="e.g. 50"
-                  inline
                   errorMsg={questionThree.errorMsg}
-                  defaultValue={Number(context.value.employees1099)}
-                  disabled={!context.hasMassEmployees}
+                  min={0}
+                  defaultValue={employees1099 ? Number(employees1099) : null}
                   required
+                  unit=""
                   onChange={(e, inputValue) => {
                     const emp1099 = Number(inputValue);
                     // Pull value from form for updating.

@@ -2,8 +2,8 @@ import React from 'react';
 
 const FormContext = React.createContext({
   hasMassEmployees: true,
-  employeesW2: 0,
-  employees1099: 0,
+  employeesW2: null,
+  employees1099: null,
   medLeaveCont: 0,
   famLeaveCont: 0,
   timePeriod: 'Quarter',
