@@ -10,7 +10,7 @@ import history from '../History';
 import { defaultState } from '../Form/context';
 
 
-const Reset = () =>  (
+const Reset = () => (
   <FormContext.Consumer>
     {
       (context) => {
@@ -21,14 +21,14 @@ const Reset = () =>  (
               employeesW2: 0
             }
           });
-          history.push('/')
-        }
+          history.push('/');
+        };
         return(
           <Button text="reset" onClick={clearValues} />
-        )
+        );
       }
     }
   </FormContext.Consumer>
-)
+);
 
 export default Reset;
