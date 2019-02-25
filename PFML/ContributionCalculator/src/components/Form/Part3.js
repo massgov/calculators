@@ -121,7 +121,7 @@ const Part3 = (props) => {
 
             const famTicks = minFamPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minFamPer, 'Min Employer Contribution'], [100, '100%']];
             let medTicks = [[0, '0%'], [40, '40%']];
-            if(over25) {
+            if (over25) {
               medTicks = minMedPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minMedPer, 'Min Employer Contribution'], [100, '100%']];
             }
 
@@ -171,7 +171,7 @@ const Part3 = (props) => {
             return(
               <Fragment>
                 <fieldset>
-                  <legend className={`ma__label${enable ? '': ` ma__label--disabled`}`}>
+                  <legend className={`ma__label${enable ? '' : ' ma__label--disabled'}`}>
                     {over25 ? getHelpTip(questionOne.over25) : getHelpTip(questionOne.under25)}
                   </legend>
                   <div className="ma__input-group--two">
