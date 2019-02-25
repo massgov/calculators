@@ -40,6 +40,8 @@ const Part3 = (props) => {
               hasMassEmployees, payrollBase, famLeaveCont, medLeaveCont, timeValue, timePeriod
             } = context;
 
+            console.log(timePeriod)
+
             const over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
             const employeeCount = over50per ? (Number(employeesW2) + Number(employees1099)) : Number(employeesW2);
             const over25 = employeeCount >= minEmployees;
@@ -273,7 +275,7 @@ const Part3 = (props) => {
                         required
                         id="color-select"
                         options={questionTwo.options}
-                        selected={timePeriod || 'Year'}
+                        selected={timePeriod || 'Quarter'}
                         onChangeCallback={({ selected }) => {
                           const value = getTimeValue(selected);
                           context.updateState({
