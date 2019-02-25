@@ -62,31 +62,57 @@ const Part3 = (props) => {
             const maxMedPer = Math.round(maxMed * 100);
             const minFamPer = Math.round(minFam * 100);
 
-            const onMedChange = (event, value) => {
+            const onMedChange = (event, value, reverse) => {
               // If statement should be removed after porting form context in.
               if (event.target.type === 'button') {
-                const fracNum = value > minMedPer ? value / 100 : minMed;
+                let fracNum = value > minMedPer ? value / 100 : minMed;
+                if (reverse) {
+                  const reverseMax = maxMedPer - minMedPer;
+                  const reverseMin = 0;
+                  // set upper boundary
+                  fracNum = value < reverseMax ? (maxMedPer - value) / 100 : reverseMax / 100
+                  // set lower boundary
+                  if (value < reverseMin) {
+                    fracNum = maxMed
+                  }
+                }
                 context.updateState({ medLeaveCont: fracNum });
                 onChangeMedCont(fracNum);
               }
             };
             // Remove this function after integrating form context.
-            const onMedBlur = (event, value) => {
-              const fracNum = value > minMedPer ? value / 100 : minMed;
+            const onMedBlur = (event, value, reverse) => {
+              let fracNum = value > minMedPer ? value / 100 : minMed;
+              if (reverse) {
+                const reverseMax = maxMedPer - minMedPer;
+                const reverseMin = 0;
+                // set upper boundary
+                fracNum = value < reverseMax ? (maxMedPer - value) / 100 : reverseMax / 100
+                // set lower boundary
+                if (value < reverseMin) {
+                  fracNum = maxMed
+                }
+              }
               context.updateState({ medLeaveCont: fracNum });
               onChangeMedCont(fracNum);
             };
-            const onFamChange = (event, value) => {
+            const onFamChange = (event, value, reverse) => {
               // If statement should be removed after porting form context in.
               if (event.target.type === 'button') {
-                const fracNum = value > minFamPer ? value / 100 : minFam;
+                let fracNum = value > minFamPer ? value / 100 : minFam;
+                if (reverse) {
+                  fracNum = (100 - value) / 100
+                }
                 context.updateState({ famLeaveCont: fracNum });
                 onChangeFamCont(fracNum);
               }
             };
             // Remove this function after integrating form context.
-            const onFamBlur = (event, value) => {
-              const fracNum = value > minFamPer ? value / 100 : minFam;
+            const onFamBlur = (event, value, reverse) => {
+              let fracNum = value > minFamPer ? value / 100 : minFam;
+              if (reverse) {
+                fracNum = (100 - value) / 100
+              }
               context.updateState({ famLeaveCont: fracNum });
               onChangeFamCont(fracNum);
             };
@@ -192,7 +218,7 @@ const Part3 = (props) => {
                           max={100}
                           min={minFamPer}
                           step={1}
-                          showButtons
+                          showButtons={false}
                           disabled={!enable}
                           onChange={(event, value) => onFamChange(event, value)}
                               // Remove onBlur event after integration of form context
@@ -215,9 +241,11 @@ const Part3 = (props) => {
                           defaultValue={Math.round((1 - famLeaveCont) * 100)}
                           unit="%"
                           required
-                          disabled
+                          disabled={!enable}
                           showButtons={false}
-                          onChange={(event, value) => onFamChange(event, value)}
+                          onChange={(event, value) => onFamChange(event, value, true)}
+                              // Remove onBlur event after integration of form context
+                          onBlur={(event, value) => onFamBlur(event, value, true)}
                           key={Math.random()}
                         />
                       </div>
@@ -240,12 +268,12 @@ const Part3 = (props) => {
                           unit="%"
                           required
                           step={1}
-                          showButtons
+                          showButtons={false}
                           disabled={!enable}
                           onChange={(event, value) => onMedChange(event, value)}
-                              // Remove onBlur event after integration of form context
+                          // Remove onBlur event after integration of form context
                           onBlur={(event, value) => onMedBlur(event, value)}
-                              // Remove key after integration of form context.
+                          // Remove key after integration of form context.
                           key={medLeaveCont < minMed ? `medical-leave-input-number-${medLeaveCont}-${Math.random()}` : `medical-leave-input-number-${medLeaveCont}`}
                         />
                         <InputNumber
@@ -257,15 +285,17 @@ const Part3 = (props) => {
                           maxlength={0}
                           placeholder="e.g. 50"
                           inline={false}
-                          max={maxMedPer}
+                          max={maxMedPer - minMedPer}
                           min={0}
                           defaultValue={Math.round((maxMed - medLeaveCont) * 100)}
                           unit="%"
                           required
-                          disabled
-                          showButtons
+                          disabled={!enable}
+                          showButtons={false}
                           step={1}
-                          onChange={(event, value) => onMedChange(event, value)}
+                          onChange={(event, value) => onMedChange(event, value, true)}
+                          // Remove onBlur event after integration of form context
+                          onBlur={(event, value) => onMedBlur(event, value, true)}
                           key={Math.random()}
                         />
                       </div>
