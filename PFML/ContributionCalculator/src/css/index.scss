@@ -25,9 +25,17 @@ fieldset {
   }
 }
 
-.ma__label--small {
-	font-size: 1em;
+.ma__label {
+  &--small {
+  	font-size: 1em;
+  }
+  
+  &--disabled {
+    opacity: 0.5;
+  }
 }
+
+
 
 
 .ma__collapse {
