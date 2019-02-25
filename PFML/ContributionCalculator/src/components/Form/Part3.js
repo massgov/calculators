@@ -62,51 +62,35 @@ const Part3 = (props) => {
             const maxMedPer = Math.round(maxMed * 100);
             const minFamPer = Math.round(minFam * 100);
 
-            const onMedChange = (event, value, reverse) => {
-              // If statement should be removed after porting form context in.
-              if (event.target.type === 'button') {
-                let fracNum = value > minMedPer ? value / 100 : minMed;
-                if (reverse) {
-                  const reverseMax = maxMedPer - minMedPer;
-                  const reverseMin = 0;
-                  // set upper boundary
-                  fracNum = value < reverseMax ? (maxMedPer - value) / 100 : reverseMax / 100
-                  // set lower boundary
-                  if (value < reverseMin) {
-                    fracNum = maxMed
-                  }
-                }
-                context.updateState({ medLeaveCont: fracNum });
-                onChangeMedCont(fracNum);
-              }
-            };
             // Remove this function after integrating form context.
             const onMedBlur = (event, value, reverse) => {
-              let fracNum = value > minMedPer ? value / 100 : minMed;
-              if (reverse) {
+              let fracNum;
+              if (!reverse) {
+                if(value < 0) {
+                  fracNum = 0;
+                } else if (value > maxMedPer) {
+                  fracNum = maxMedPer;
+                }
+                fracNum = value > minMedPer ? value / 100 : minMed;
+              } else {
                 const reverseMax = maxMedPer - minMedPer;
-                const reverseMin = 0;
                 // set upper boundary
                 fracNum = value < reverseMax ? (maxMedPer - value) / 100 : reverseMax / 100
                 // set lower boundary
-                if (value < reverseMin) {
+                if (value < 0) {
                   fracNum = maxMed
                 }
               }
               context.updateState({ medLeaveCont: fracNum });
               onChangeMedCont(fracNum);
             };
-            const onFamChange = (event, value, reverse) => {
+            const onMedChange = (event, value, reverse) => {
               // If statement should be removed after porting form context in.
               if (event.target.type === 'button') {
-                let fracNum = value > minFamPer ? value / 100 : minFam;
-                if (reverse) {
-                  fracNum = (100 - value) / 100
-                }
-                context.updateState({ famLeaveCont: fracNum });
-                onChangeFamCont(fracNum);
+                onMedBlur(event, value, reverse);
               }
             };
+            
             // Remove this function after integrating form context.
             const onFamBlur = (event, value, reverse) => {
               let fracNum = value > minFamPer ? value / 100 : minFam;
@@ -116,6 +100,13 @@ const Part3 = (props) => {
               context.updateState({ famLeaveCont: fracNum });
               onChangeFamCont(fracNum);
             };
+            const onFamChange = (event, value, reverse) => {
+              // If statement should be removed after porting form context in.
+              if (event.target.type === 'button') {
+                onFamChange(event, value, reverse);
+              }
+            };
+
             const onMedSliderChange = (value) => {
               const fracNum = value > minMedPer ? value / 100 : minMed;
               context.updateState({ medLeaveCont: fracNum });
