@@ -115,9 +115,9 @@ const Part3 = (props) => {
             const medLeaveEmp = medLeave * (maxMed - medLeaveCont);
             const famLeaveEmp = famLeave * (maxMed - famLeaveCont);
 
-            const disableAll = payrollBase === 'all' && numbro.unformat(payrollW2) > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true);
-            const disableOne = payrollBase === 'one' && numbro.unformat(payrollWages) > 0;
-            const disable = hasMassEmployees && (employeeCount > 0) && (disableOne || disableAll);
+            const enableAll = payrollBase === 'all' && numbro.unformat(payrollW2) > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true);
+            const enableOne = payrollBase === 'one' && numbro.unformat(payrollWages) > 0;
+            const enable = hasMassEmployees && (employeeCount > 0) && (enableOne || enableAll);
 
             const famTicks = minFamPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minFamPer, 'Min Employer Contribution'], [100, '100%']];
             let medTicks = [[0, '0%'], [40, '40%']];
@@ -269,7 +269,7 @@ const Part3 = (props) => {
                     </Input>
                   </div>
                 </fieldset>
-                {!disable && (
+                {enable && (
                   <Fragment>
                     <h2 className="ma__table-heading">
                       <SelectBox
