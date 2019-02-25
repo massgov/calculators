@@ -300,7 +300,7 @@ const Part3 = (props) => {
                         </div>
                       </div>
                     </fieldset>
-                    <h2 className="ma__table-heading">
+                    <div className="ma__table-heading">
                       <SelectBox
                         label={questionTwo.question}
                         stackLabel={false}
@@ -321,9 +321,10 @@ const Part3 = (props) => {
                         }}
                         className="ma__select-box js-dropdown"
                       />
-                      {show && payrollBase === 'all' && (
-                        <table className="ma__table">
-                          <tbody>
+                    </div>
+                    {show && payrollBase === 'all' && (
+                      <table className="ma__table">
+                        <tbody>
                           <tr className="ma__table-headers">
                             <th>Contribution</th>
                             <th>Medical Leave</th>
@@ -342,40 +343,39 @@ const Part3 = (props) => {
                             <td>{toCurrency(famLeaveEmp / timeValue)}</td>
                             <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
                           </tr>
-                          </tbody>
-                        </table>
-                      )}
-                      {show && payrollBase === 'one' && (
-                        <table className="ma__table">
-                          <tbody>
-                            <tr className="ma__table-headers">
-                              <th>Contribution</th>
-                              <th>Medical Leave</th>
-                              <th>Family Leave</th>
-                              <th>Total</th>
-                            </tr>
-                            <tr>
-                              <td>You will pay:</td>
-                              <td>{toCurrency(medLeaveComp / timeValue)}</td>
-                              <td>{toCurrency(famLeaveComp / timeValue)}</td>
-                              <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
-                            </tr>
-                            <tr>
-                              <td>Your Employee will pay:</td>
-                              <td>{toCurrency(medLeaveEmp / timeValue)}</td>
-                              <td>{toCurrency(famLeaveEmp / timeValue)}</td>
-                              <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
-                            </tr>
-                            <tr>
-                              <td className="ma__td--group">Total payment:</td>
-                              <td>{toCurrency(medLeave / timeValue)}</td>
-                              <td>{toCurrency(famLeave / timeValue)}</td>
-                              <td>{toCurrency((medLeave + famLeave) / timeValue)}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      )}
-                    </h2>
+                        </tbody>
+                      </table>
+                    )}
+                    {show && payrollBase === 'one' && (
+                      <table className="ma__table">
+                        <tbody>
+                          <tr className="ma__table-headers">
+                            <th>Contribution</th>
+                            <th>Medical Leave</th>
+                            <th>Family Leave</th>
+                            <th>Total</th>
+                          </tr>
+                          <tr>
+                            <td>You will pay:</td>
+                            <td>{toCurrency(medLeaveComp / timeValue)}</td>
+                            <td>{toCurrency(famLeaveComp / timeValue)}</td>
+                            <td>{toCurrency((medLeaveComp + famLeaveComp) / timeValue)}</td>
+                          </tr>
+                          <tr>
+                            <td>Your Employee will pay:</td>
+                            <td>{toCurrency(medLeaveEmp / timeValue)}</td>
+                            <td>{toCurrency(famLeaveEmp / timeValue)}</td>
+                            <td>{toCurrency((medLeaveEmp + famLeaveEmp) / timeValue)}</td>
+                          </tr>
+                          <tr>
+                            <td className="ma__td--group">Total payment:</td>
+                            <td>{toCurrency(medLeave / timeValue)}</td>
+                            <td>{toCurrency(famLeave / timeValue)}</td>
+                            <td>{toCurrency((medLeave + famLeave) / timeValue)}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    )}
                   </Fragment>
                 );
               }
