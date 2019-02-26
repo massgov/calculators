@@ -50,8 +50,13 @@ const Part2 = (props) => {
             const disableInput = !hasMassEmployees || !employeeCount;
             const under25MedContDisclaimer = `*Employers with fewer than 25 qualifying workers are not required to pay the employer share (60%) of the medical leave contribution. Their qualifying workers will pay up to <strong>40%</strong> of the medical leave unless the employer chooses to contribute on their behalf. </p>`;
             
+            // all workers annual
+            const medCompPayment = medPercent * totalPayroll * (over25 ? 1 : 0.4);
+            const famCompPayment = famPercent * totalPayroll;
+            // one worker annual
             const medPayment = medPercent * payrollWagesCap * (over25 ? 1 : 0.4);
             const famPayment = famPercent * payrollWagesCap;
+            
             return(
               <fieldset>
                 <div className="ma_input-group--mobile-1">
@@ -138,14 +143,19 @@ const Part2 = (props) => {
                       <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
-                            text={`The total estimated annual contribution for your company is <strong>${toCurrency(totalPayment)}</strong>. `}
-                            triggerText={[`<strong>${toCurrency(totalPayment)}</strong>`]}
+                            text={`The total estimated annual contribution for your company is <strong>${toCurrency(famCompPayment + medCompPayment)}</strong>. `}
+                            triggerText={[`<strong>${toCurrency(famCompPayment + medCompPayment)}</strong>`]}
                             id="help-tip-total-ann-cont"
                             theme="c-white"
-                          >
-                            <p className="ma__help-text">{toCurrency(totalPayment)} = {toCurrency(totalPayroll)} X {toPercentage(totalPercent, 2)}</p>
-
-                          </HelpTip>
+                            helpText={over25 ? (
+                              // over 25 total medLeave calculation
+                              [`${toCurrency(famCompPayment + medCompPayment)} = ${toCurrency(totalPayroll)} X ${toPercentage(totalPercent, 2)}`] 
+                            ) : (
+                              // under 25 total medLeave calculation
+                              [`${toCurrency(famCompPayment + medCompPayment)} = (${toCurrency(totalPayroll)} X ${toPercentage(famPercent, 2)}) + (${toCurrency(totalPayroll)} X ${toPercentage(medPercent, 2)} X 40%)`]   
+                            ) 
+                            }
+                          />
                           <HelpTip
                             text={`Of this amount, <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave and <strong>${toCurrency(medPercent * totalPayroll * (over25 ? 1 : 0.4))}</strong> is for medical leave.`}
                             triggerText={[`<strong>${toCurrency(famPercent * totalPayroll)}</strong>`,`<strong>${toCurrency(medPercent * totalPayroll * (over25 ? 1 : 0.4))}</strong>`]}
