@@ -13,6 +13,7 @@ import '../../css/index.css';
  * We do this since we are not using a urlPropsQueryConfig.
  */
 const mapUrlChangeHandlersToProps = () => ({
+  onChangeMedCont: (value) => replaceInUrlQuery('medCont', encode(UrlQueryParamTypes.number, value)),
   onChangeMassEmp: (value) => replaceInUrlQuery('massEmp', encode(UrlQueryParamTypes.string, value)),
   onChangeW2: (value) => replaceInUrlQuery('w2', encode(UrlQueryParamTypes.number, value)),
   onChangeEmp1099: (value) => replaceInUrlQuery('emp1099', encode(UrlQueryParamTypes.number, value))
@@ -25,7 +26,7 @@ const Part1 = (props) => {
   const {
     questionOne, questionTwo, questionThree, output
   } = PartOneProps;
-  const { onChangeMassEmp, onChangeW2, onChangeEmp1099 } = props;
+  const { onChangeMassEmp, onChangeW2, onChangeEmp1099, onChangeMedCont } = props;
   const calloutParagraphClass = 'ma__help-tip-many';
   const getDangerousParagraph = (text, key) => (<p className={calloutParagraphClass} dangerouslySetInnerHTML={{ __html: text }} key={key} />);
   return(
@@ -150,6 +151,7 @@ const Part1 = (props) => {
                       medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
                       famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
                     });
+                    onChangeMedCont(value.medLeaveCont)
                   }}
                   showButtons
                 />
@@ -180,6 +182,7 @@ const Part1 = (props) => {
                       famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
                     });
                     onChangeEmp1099(emp1099);
+                    onChangeMedCont(value.medLeaveCont)
                   }}
                   showButtons
                 />
