@@ -35,12 +35,11 @@ const Part2 = (props) => {
       {
           (context) => {
             const {
- employeesW2, employees1099, payrollW2, payroll1099, payrollWages
+ employeesW2, employees1099, payrollW2, payroll1099, payrollWages, over25
 } = context.value;
             const { payrollBase, hasMassEmployees } = context;
             const over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
             const employeeCount = over50per ? (Number(employeesW2) + Number(employees1099)) : Number(employeesW2);
-            const over25 = employeeCount >= minEmployees;
             const medPercent = over25 ? largeMedPercent : smallMedPercent;
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
             const totalPercent = medPercent + famPercent;
@@ -149,17 +148,18 @@ const Part2 = (props) => {
                             theme="c-white"
                           >
                               <div className="ma__help-text">
-                                Medical Leave: {toCurrency(medPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(medPercent, 2)}
+                                Medical Leave: {toCurrency(medPercent * totalPayroll)} = {toCurrency(totalPayroll)} X 
+                                { over25 ? toPercentage(medPercent, 2) : <span>{toPercentage(medPercent, 2)} X 40%</span>}
+                                {
+                                  !over25 && (
+                                    <p className="ma__disclaimer">*Employers with fewer than 25 qualifying workers are not required to pay the employer share (60%) of the medical leave contribution. Their qualifying workers will pay up to <strong>40%</strong> of the medical leave unless the employer chooses to contribute on their behalf. 
+                                    </p>
+                                  )
+                                }
                               </div>
 
                               <div className="ma__help-text">
                                 Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent, 2)}
-                                {
-                                  !over25 && (
-                                    <p>Employers with fewer than 25 qualifying workers are not required to pay the employer share of the medical leave contribution [tooltip: the employer share = 60% of the medical leave contribution]. Their qualifying workers will pay up to 40% of the medical leave unless the employer chooses to contribute on their behalf. 
-                                    </p>
-                                  )
-                                }
                               </div>  
                           </HelpTip>
                           { numbro.unformat(payrollWages) > socialSecCap && (
