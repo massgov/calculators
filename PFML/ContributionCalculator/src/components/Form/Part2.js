@@ -134,7 +134,7 @@ const Part2 = (props) => {
                       <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
-                            text={`The total estimated annual contribution for your company is <strong>${toCurrency(totalPayment)}</strong>.`}
+                            text={`The total estimated annual contribution for your company is <strong>${toCurrency(totalPayment)}</strong>. `}
                             triggerText={[`<strong>${toCurrency(totalPayment)}</strong>`]}
                             id="help-tip-total-ann-cont"
                             theme="c-white"
@@ -144,16 +144,29 @@ const Part2 = (props) => {
                           </HelpTip>
                           <HelpTip
                             text={`Of this amount, <strong>${toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave.`}
-                            triggerText={[`<strong>${toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave`]}
+                            triggerText={[`<strong>${toCurrency(medPercent * totalPayroll)}</strong>`, `<strong>${toCurrency(famPercent * totalPayroll)}</strong>`]}
                             id="help-tip-medfam-ann-cont"
                             theme="c-white"
                           >
-                            <div className="ma__help-text">
-                              <p>Medical Leave: {toCurrency(medPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(medPercent, 2)}</p>
-                              <p>Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent, 2)}</p>
-                            </div>
+                              <div className="ma__help-text">
+                                Medical Leave: {toCurrency(medPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(medPercent, 2)}
+                              </div>
 
+                              <div className="ma__help-text">
+                                Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent, 2)}
+                                {
+                                  !over25 && (
+                                    <p>Employers with fewer than 25 qualifying workers are not required to pay the employer share of the medical leave contribution [tooltip: the employer share = 60% of the medical leave contribution]. Their qualifying workers will pay up to 40% of the medical leave unless the employer chooses to contribute on their behalf. 
+                                    </p>
+                                  )
+                                }
+                              </div>  
                           </HelpTip>
+                          { numbro.unformat(payrollWages) > socialSecCap && (
+                            <div className='ma__disclaimer'>
+                              <Paragraph text={`*If any of your qualifying workers’ wages are above the SSI cap <strong>${toCurrency(socialSecCap)}</strong> your total contribution is an overestimation.To yield a more accurate estimate, use the SSI cap amount in place of any wages that are above the cap when calculating your total payroll above.`} />
+                            </div>
+                          )}
                         </CalloutAlert>
                       </div>
                     </Collapse>
@@ -197,21 +210,27 @@ const Part2 = (props) => {
                         {payrollWages && (
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
-                            text={`The total estimated annual contribution for this qualifying worker is <strong>${toCurrency(payrollWagesCap * totalPercent)}</strong>.`}
+                            text={`The total estimated annual contribution for this qualifying worker is <strong>${toCurrency(payrollWagesCap * totalPercent)}</strong>. `}
                             triggerText={[`<strong>${toCurrency(payrollWagesCap * totalPercent)}</strong>`]}
                             id="help-tip-tot-emp-ann-cont"
                             helpText={[`${toCurrency(payrollWagesCap * totalPercent)} = ${toCurrency(payrollWagesCap)} X ${toPercentage(totalPercent, 2)}`]}
                             theme="c-white"
-                          />
+                          >
+                          </HelpTip>
                           <HelpTip
                             text={`Of this amount, <strong>${toCurrency(medPercent * payrollWagesCap)}</strong> is for medical leave and <strong>${toCurrency(famPercent * payrollWagesCap)}</strong> is for family leave.`}
-                            triggerText={[`<strong>${toCurrency(medPercent * payrollWagesCap)}</strong> is for medical leave and <strong>${toCurrency(famPercent * payrollWagesCap)}</strong> is for family leave`]}
+                            triggerText={[`<strong>${toCurrency(medPercent * payrollWagesCap)}</strong>`,` <strong>${toCurrency(famPercent * payrollWagesCap)}</strong>`]}
                             id="help-tip-medfam-emp-ann-cont"
-                            helpText={[<div><p>Medical Leave: {toCurrency(medPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(medPercent, 2)}</p><p>Family Leave: {toCurrency(famPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}</p></div>]}
                             theme="c-white"
-                          />
+                          >
+                            <p className="ma__help-text">Medical Leave: {toCurrency(medPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(medPercent, 2)}</p>
+                            <p className="ma__help-text">Family Leave: {toCurrency(famPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}
+                            </p>
+                          </HelpTip>
                           { numbro.unformat(payrollWages) > socialSecCap && (
-                            <Paragraph text={`Required contributions are capped at the Social Security cap, which is updated annually. It is <strong>${toCurrency(socialSecCap)}</strong> for 2019.`} />
+                            <div className="ma__disclaimer">
+                              <Paragraph text={`*Required contributions are capped at the Social Security cap, which is updated annually. It is <strong>${toCurrency(socialSecCap)}</strong> for 2019.`} />
+                            </div>
                           )}
                         </CalloutAlert>
                       )}
