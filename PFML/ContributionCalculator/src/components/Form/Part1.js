@@ -35,8 +35,14 @@ const Part1 = (props) => {
     <FormContext.Consumer>
       {
           (context) => {
-            const { employeesW2, employees1099 } = context.value;
-            const { hasMassEmployees, over25, over50per, employeeCount } = context;
+            const {
+              over25,
+              over50per,
+              hasMassEmployees,
+              value: {
+                employeesW2, employees1099
+              }
+            } = context;
             let outputMessage;
             if (over25 && over50per) {
               outputMessage = (
