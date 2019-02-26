@@ -33,27 +33,44 @@ const Part1 = (props) => {
   const { employeesW2 = !Number.isNaN(props.w2) ? props.w2 : 0, employees1099 = !Number.isNaN(props.emp1099) ? props.emp1099 : 0 } = formContext.getValues();
   let over50per;
   let employeeCount;
-  let outputMessage;
   over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
   employeeCount = over50per ? (Number(employeesW2) + Number(employees1099)) : Number(employeesW2);
 
-  if (formContext.hasId('part_one')) {
-    const { over50 = null, empCount = null } = formContext.getValue('part_one');
-
-    over50per = (typeof over50 === 'boolean') ? over50 : over50per;
-    employeeCount = (empCount !== null) ? empCount : employeeCount;
-    const over25 = employeeCount >= minEmployees;
+  const getConditionsMessage = () => {
+    let calloutMessage = null;
+    let conditionEmpCount;
+    let conditionEmp1099;
+    let conditionOver50;
+    if (formContext.hasId('part_one')) {
+      const {
+        w2 = !Number.isNaN(props.w2) ? props.w2 : 0,
+        emp1099 = !Number.isNaN(props.emp1099) ? props.emp1099 : 0,
+        over50 = ((emp1099 / w2) + emp1099) >= emp1099Fraction,
+        empCount = over50 ? (w2 + emp1099) : w2,
+        outputMessage
+      } = formContext.getValue('part_one');
+      conditionEmpCount = empCount;
+      calloutMessage = outputMessage;
+      conditionEmp1099 = emp1099;
+      conditionOver50 = over50;
+    } else {
+      const w2 = !Number.isNaN(props.w2) ? props.w2 : 0;
+      conditionEmp1099 = !Number.isNaN(props.emp1099) ? props.emp1099 : 0;
+      conditionOver50 = ((conditionEmp1099 / w2) + conditionEmp1099) >= emp1099Fraction;
+      conditionEmpCount = conditionOver50 ? (w2 + conditionEmp1099) : w2;
+    }
+    const over25 = conditionEmpCount >= minEmployees;
     const conditions = new Map([
-      ['overMinEmpOver1099', (over25 && over50per)],
-      ['overMinEmpUnder1099', (over25 && !over50per && employees1099 && employees1099 > 0)],
-      ['overMinEmpNo1099', (over25 && !over50per && (!employees1099 || Number(employees1099) <= 0 || employees1099 === 'NaN'))],
-      ['underMinEmpOver1099', (!over25 && over50per)],
-      ['underMinEmpUnder1099', (!over25 && !over50per && employees1099 && employees1099 > 0)],
-      ['underMinEmpNo1099', (!over25 && !over50per && (Number(employees1099) <= 0 || !employees1099 || employees1099 === 'NaN'))]
+      ['overMinEmpOver1099', (over25 && conditionOver50)],
+      ['overMinEmpUnder1099', (over25 && !conditionOver50 && conditionEmp1099 && conditionEmp1099 > 0)],
+      ['overMinEmpNo1099', (over25 && !conditionOver50 && (!conditionEmp1099 || conditionEmp1099 <= 0 || conditionEmp1099 === 'NaN'))],
+      ['underMinEmpOver1099', (!over25 && conditionOver50)],
+      ['underMinEmpUnder1099', (!over25 && !conditionOver50 && conditionEmp1099 && conditionEmp1099 > 0)],
+      ['underMinEmpNo1099', (!over25 && !conditionOver50 && (conditionEmp1099 <= 0 || !conditionEmp1099 || conditionEmp1099 === 'NaN'))]
     ]);
     conditions.forEach((condition, key) => {
       if (condition) {
-        outputMessage = (
+        calloutMessage = (
           <Fragment>
             {output[key].map((message, messageIndex) => {
               // eslint-disable-next-line react/no-array-index-key
@@ -67,7 +84,9 @@ const Part1 = (props) => {
         );
       }
     });
-  }
+    return calloutMessage;
+  };
+
   const partOneDefaults = {
     w2: props.w2 ? Number(props.w2) : null,
     emp1099: props.emp1099 ? Number(props.emp1099) : null,
@@ -77,7 +96,7 @@ const Part1 = (props) => {
     over25: Number.isNaN(employeeCount) ? minEmployees <= 0 : employeeCount >= minEmployees,
     disableInputs: false,
     famLeaveCont: props.famCont ? Number(props.famCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
-    medLeaveCont: props.medCont ? Number(props.medCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont
+    medLeaveCont: props.medCont ? Number(props.medCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
   };
   if (typeof props.massEmp === 'string') {
     partOneDefaults.mass_employees = (props.massEmp && props.massEmp === 'true') ? 'yes' : 'no';
@@ -88,7 +107,12 @@ const Part1 = (props) => {
         <InputContext.Consumer>
           {
             (inputContext) => {
-              const { mass_employees: massEmployees, disableInputs, emp1099, w2 } = formContext.getValue('part_one');
+              const {
+                mass_employees: massEmployees,
+                disableInputs,
+                emp1099,
+                w2
+              } = formContext.getValue('part_one');
               return(
                 <React.Fragment>
                   <Input id="mass_employees" defaultValue={massEmployees}>
@@ -118,7 +142,7 @@ const Part1 = (props) => {
                       }
                     </InputContext.Consumer>
                   </Input>
-                  <Input id="question_one_callout" defaultValue={false}>
+                  <Input id="question_one_callout" defaultValue={massEmployees === 'no'}>
                     <InputContext.Consumer>
                       {
                         (questionContext) => (
@@ -204,10 +228,10 @@ const Part1 = (props) => {
                     }}
                     showButtons
                   />
-                  <Collapse in={massEmployees === 'no' && formContext.getValue('employeesW2') && formContext.getValue('employeesW2') > 0} dimension="height" className="ma__callout-alert">
+                  <Collapse in={massEmployees === 'yes' && w2 && w2 > 0} dimension="height" className="ma__callout-alert">
                     <div className="ma__collapse">
                       <CalloutAlert theme="c-primary">
-                        { outputMessage }
+                        { getConditionsMessage() }
                       </CalloutAlert>
                     </div>
                   </Collapse>
