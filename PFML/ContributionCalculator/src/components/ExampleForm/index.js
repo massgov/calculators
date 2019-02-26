@@ -65,7 +65,9 @@ class ExampleForm extends Component {
       payrollBase: (option && option.length > 0) ? option : 'all',
       hasMassEmployees: massEmp ? (massEmp === 'yes') : true,
       updateState: this.updateState,
-      over25
+      over25,
+      over50per,
+      employeeCount
     };
     /* eslint-enable react/no-unused-state */
   }
