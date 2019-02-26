@@ -34,15 +34,15 @@ const Part3 = (props) => {
       {
           (context) => {
             const {
-              employeesW2, employees1099, payrollW2, payroll1099, payrollWages
-            } = context.value;
+              over25,
+              value: {employeesW2, employees1099, payrollW2, payroll1099, payrollWages}
+            } = context;
             const {
               hasMassEmployees, payrollBase, famLeaveCont, medLeaveCont, timeValue, timePeriod
             } = context;
 
             const over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
             const employeeCount = over50per ? (Number(employeesW2) + Number(employees1099)) : Number(employeesW2);
-            const over25 = employeeCount >= minEmployees;
             const medPercent = over25 ? largeMedPercent : smallMedPercent;
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
 
