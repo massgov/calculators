@@ -164,7 +164,7 @@ const Part2 = (props) => {
                           </HelpTip>
                           { numbro.unformat(payrollWages) > socialSecCap && (
                             <div className='ma__disclaimer'>
-                              <Paragraph text={`*If any of your qualifying workers’ wages are above the SSI cap <strong>${toCurrency(socialSecCap)}</strong> your total contribution is an overestimation. To yield a more accurate estimate, use the SSI cap amount in place of any wages that are above the cap when calculating your total payroll above.`} />
+                              <Paragraph text={`<strong>SSI Cap Disclaimer:</strong> If any of your qualifying workers’ wages are above the SSI cap <strong>${toCurrency(socialSecCap)}</strong> your total contribution is an overestimation. To yield a more accurate estimate, use the SSI cap amount in place of any wages that are above the cap when calculating your total payroll above.`} />
                             </div>
                           )}
                         </CalloutAlert>
@@ -237,7 +237,7 @@ const Part2 = (props) => {
                           </HelpTip>
                           { numbro.unformat(payrollWages) > socialSecCap && (
                             <div className="ma__disclaimer">
-                              <Paragraph text={`*Required contributions are capped at the Social Security cap, which is updated annually. It is <strong>${toCurrency(socialSecCap)}</strong> for 2019.`} />
+                              <Paragraph text={`<strong>SSI Cap Disclaimer: </strong>Required contributions are capped at the Social Security cap, which is updated annually. It is <strong>${toCurrency(socialSecCap)}</strong> for 2019.`} />
                             </div>
                           )}
                         </CalloutAlert>
