@@ -49,6 +49,9 @@ const Part2 = (props) => {
             const payrollWagesCap = numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages);
             const disableInput = !hasMassEmployees || !employeeCount;
             const under25MedContDisclaimer = `*Employers with fewer than 25 qualifying workers are not required to pay the employer share (60%) of the medical leave contribution. Their qualifying workers will pay up to <strong>40%</strong> of the medical leave unless the employer chooses to contribute on their behalf. </p>`;
+            
+            const medPayment = medPercent * payrollWagesCap * (over25 ? 1 : 0.4);
+            const famPayment = famPercent * payrollWagesCap;
             return(
               <fieldset>
                 <div className="ma_input-group--mobile-1">
@@ -210,22 +213,29 @@ const Part2 = (props) => {
                         {payrollWages && (
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
-                            text={`The total estimated annual contribution for this qualifying worker is <strong>${toCurrency(payrollWagesCap * totalPercent)}</strong>. `}
-                            triggerText={[`<strong>${toCurrency(payrollWagesCap * totalPercent)}</strong>`]}
+                            text={`The total estimated annual contribution for this qualifying worker is <strong>${toCurrency(famPayment + medPayment)}</strong>. `}
+                            triggerText={[`<strong>${toCurrency(famPayment + medPayment)}</strong>`]}
                             id="help-tip-tot-emp-ann-cont"
-                            helpText={[`${toCurrency(payrollWagesCap * totalPercent)} = ${toCurrency(payrollWagesCap)} X ${toPercentage(totalPercent, 2)}`]}
+                            helpText={over25 ? (
+                              // over 25 total medLeave calculation
+                              [`${toCurrency(famPayment + medPayment)} = ${toCurrency(payrollWagesCap)} X ${toPercentage(totalPercent, 2)}`] 
+                            ) : (
+                              // under 25 total medLeave calculation
+                              [`${toCurrency(famPayment + medPayment)} = (${toCurrency(payrollWagesCap)} X ${toPercentage(famPercent, 2)}) + (${toCurrency(payrollWagesCap)} X ${toPercentage(medPercent, 2)} X 40%)`]   
+                            ) 
+                            }
                             theme="c-white"
                           >
                           </HelpTip>
                           <HelpTip
-                            text={`Of this amount, <strong>${toCurrency(famPercent * payrollWagesCap)}</strong> is for family leave. and <strong>${toCurrency(medPercent * payrollWagesCap * (over25 ? 1 : 0.4))}</strong> is for medical leave.`}
-                            triggerText={[` <strong>${toCurrency(famPercent * payrollWagesCap)}</strong>`, `<strong>${toCurrency(medPercent * payrollWagesCap * (over25 ? 1 : 0.4))}</strong>`]}
+                            text={`Of this amount, <strong>${toCurrency(famPayment)}</strong> is for family leave. and <strong>${toCurrency(medPayment)}</strong> is for medical leave.`}
+                            triggerText={[` <strong>${toCurrency(famPayment)}</strong>`, `<strong>${toCurrency(medPayment)}</strong>`]}
                             id="help-tip-medfam-emp-ann-cont"
                             theme="c-white"
                           >
-                            <div className="ma__help-text">Family Leave: {toCurrency(famPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}
+                            <div className="ma__help-text">Family Leave: {toCurrency(famPayment)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}
                             </div>
-                            <div className="ma__help-text">Medical Leave: {toCurrency(medPercent * payrollWagesCap * (over25 ? 1 : 0.4))} = {toCurrency(payrollWagesCap)} X 
+                            <div className="ma__help-text">Medical Leave: {toCurrency(medPayment)} = {toCurrency(payrollWagesCap)} X 
                             { over25 ? toPercentage(medPercent, 2) : <span>{toPercentage(medPercent, 2)} X 40%</span>}
                             { !over25 && (
                               <div className="ma__disclaimer">
