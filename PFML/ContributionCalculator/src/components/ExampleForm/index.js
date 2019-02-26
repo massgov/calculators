@@ -6,6 +6,7 @@ import ContributionVariables from '../../data/ContributionVariables.json';
 import Part1 from '../Form/Part1';
 import Part2 from '../Form/Part2';
 import Part3 from '../Form/Part3';
+import Reset from '../Form/Reset';
 
 import '../../css/index.css';
 
@@ -75,10 +76,12 @@ class ExampleForm extends Component {
   };
   updateState = (newState) => { this.setState(newState); };
   render() {
+    console.log(this.state)
     return(
-      <form className="ma__form-page" action="#">
+      <form className="ma__form-page">
         <FormContext.Provider value={this.state}>
           <div className="page-content">
+            <Reset />
             <Part1 />
             <hr />
             <Part2 />
