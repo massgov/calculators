@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { decode, addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import { FormContext } from '@massds/mayflower-react';
@@ -81,13 +81,13 @@ class ExampleForm extends Component {
       <form className="ma__form-page">
         <FormContext.Provider value={this.state}>
           <div className="page-content">
-            <Reset />
             <Part1 />
             <hr />
             <Part2 />
           </div>
           <hr />
           <Part3 />
+          <Reset />
         </FormContext.Provider>
       </form>
     );
