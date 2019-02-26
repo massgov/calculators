@@ -23,7 +23,7 @@ const mapUrlChangeHandlersToProps = () => ({
 
 const Part3 = (props) => {
   const {
-    minEmployees, emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, largeCompFamCont, smallCompFamCont, empMedCont, largeCompMedCont, smallCompMedCont, socialSecCap
+    emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, largeCompFamCont, smallCompFamCont, empMedCont, largeCompMedCont, smallCompMedCont, socialSecCap
   } = ContributionVariables.baseVariables;
   const { questionOne, questionTwo } = PartThreeProps;
   const {
@@ -35,7 +35,9 @@ const Part3 = (props) => {
           (context) => {
             const {
               over25,
-              value: {employeesW2, employees1099, payrollW2, payroll1099, payrollWages}
+              value: {
+ employeesW2, employees1099, payrollW2, payroll1099, payrollWages
+}
             } = context;
             const {
               hasMassEmployees, payrollBase, famLeaveCont, medLeaveCont, timeValue, timePeriod
@@ -66,7 +68,7 @@ const Part3 = (props) => {
             const onMedBlur = (event, value, reverse) => {
               let fracNum;
               if (!reverse) {
-                if(value < 0) {
+                if (value < 0) {
                   // employee lower boundary
                   fracNum = 0;
                 } else if (value > maxMedPer) {
@@ -96,12 +98,12 @@ const Part3 = (props) => {
                 onMedBlur(event, value, reverse);
               }
             };
-            
+
             // Remove this function after integrating form context.
             const onFamBlur = (event, value, reverse) => {
               let fracNum = value > minFamPer ? value / 100 : minFam;
               if (reverse) {
-                fracNum = (100 - value) / 100
+                fracNum = (100 - value) / 100;
               }
               context.updateState({ famLeaveCont: fracNum });
               onChangeFamCont(fracNum);
@@ -176,10 +178,10 @@ const Part3 = (props) => {
               disabled: !enable,
               onChange: (value) => onMedSliderChange(value)
             };
-            
+
             const medLeaveTotal = (medLeaveComp + medLeaveEmp) / timeValue;
             const famLeaveTotal = (famLeaveComp + famLeaveEmp) / timeValue;
-            
+
             const tBody = tableData.bodies[0];
             const tRow1 = tBody.rows[0];
             const tRow2 = tBody.rows[1];

@@ -26,7 +26,9 @@ const Part1 = (props) => {
   const {
     questionOne, questionTwo, questionThree, output
   } = PartOneProps;
-  const { onChangeMassEmp, onChangeW2, onChangeEmp1099, onChangeMedCont } = props;
+  const {
+    onChangeMassEmp, onChangeW2, onChangeEmp1099, onChangeMedCont
+  } = props;
   const calloutParagraphClass = 'ma__help-tip-many';
   const getDangerousParagraph = (text, key) => (<p className={calloutParagraphClass} dangerouslySetInnerHTML={{ __html: text }} key={key} />);
   return(
@@ -144,16 +146,15 @@ const Part1 = (props) => {
                     value.payrollBase = 'all';
                     value.employeesW2 = empW2;
                     const empCount = empW2 + (context.value.employees1099 / (context.value.employees1099 + empW2) >= emp1099Fraction ? context.value.employees1099 : 0);
-                    const over25 = empCount >= minEmployees;
                     // Use updateState for updating many form values, otherwise use setValue for a single form id.
                     onChangeW2(empW2);
                     context.updateState({
                       value,
                       medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
                       famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
-                      over25
+                      over25: empCount >= minEmployees
                     });
-                    onChangeMedCont(value.medLeaveCont)
+                    onChangeMedCont(value.medLeaveCont);
                   }}
                   showButtons
                 />
@@ -178,15 +179,14 @@ const Part1 = (props) => {
                     const value = { ...context.value };
                     value.employees1099 = emp1099;
                     const empCount = context.value.employeesW2 + (emp1099 / (emp1099 + context.value.employeesW2) >= emp1099Fraction ? emp1099 : 0);
-                    const over25 = empCount >= minEmployees;
                     context.updateState({
                       value,
                       medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
                       famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
-                      over25
+                      over25: empCount >= minEmployees
                     });
                     onChangeEmp1099(emp1099);
-                    onChangeMedCont(value.medLeaveCont)
+                    onChangeMedCont(value.medLeaveCont);
                   }}
                   showButtons
                 />
@@ -208,6 +208,7 @@ const Part1 = (props) => {
 
 Part1.propTypes = {
   /** Functions that push changed context props to the url. */
+  onChangeMedCont: PropTypes.func,
   onChangeMassEmp: PropTypes.func,
   onChangeW2: PropTypes.func,
   onChangeEmp1099: PropTypes.func

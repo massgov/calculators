@@ -5,9 +5,9 @@ export const defaultState = {
   value: {
     employeesW2: 0,
     employees1099: 0,
-    payrollW2: getDefaultCurrency(payW2),
-    payroll1099: getDefaultCurrency(pay1099),
-    payrollWages: getDefaultCurrency(payWages)
+    payrollW2: 0,
+    payroll1099: 0,
+    payrollWages: 0
   },
   medLeaveCont: 0,
   famLeaveCont: 0,
@@ -16,7 +16,7 @@ export const defaultState = {
   fam_leave: 0,
   mass_employees: 'yes',
   over25: false
-}
+};
 
 const FormContext = React.createContext(defaultState);
 
