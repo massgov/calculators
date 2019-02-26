@@ -67,18 +67,24 @@ const Part3 = (props) => {
               let fracNum;
               if (!reverse) {
                 if(value < 0) {
+                  // employee lower boundary
                   fracNum = 0;
                 } else if (value > maxMedPer) {
-                  fracNum = maxMedPer;
+                  // employer upper boundary
+                  fracNum = maxMed;
+                } else {
+                  fracNum = value > minMedPer ? value / 100 : minMed;
                 }
-                fracNum = value > minMedPer ? value / 100 : minMed;
               } else {
                 const reverseMax = maxMedPer - minMedPer;
-                // set upper boundary
-                fracNum = value < reverseMax ? (maxMedPer - value) / 100 : reverseMax / 100
-                // set lower boundary
                 if (value < 0) {
-                  fracNum = maxMed
+                  // employee lower boundary
+                  fracNum = maxMed;
+                } else if (value > reverseMax) {
+                  // employee upper boundary
+                  fracNum = 0;
+                } else {
+                  fracNum = (maxMedPer - value) / 100;
                 }
               }
               context.updateState({ medLeaveCont: fracNum });
@@ -170,7 +176,10 @@ const Part3 = (props) => {
               disabled: !enable,
               onChange: (value) => onMedSliderChange(value)
             };
-
+            
+            const medLeaveTotal = (medLeaveComp + medLeaveEmp) / timeValue;
+            const famLeaveTotal = (famLeaveComp + famLeaveEmp) / timeValue;
+            
             const tBody = tableData.bodies[0];
             const tRow1 = tBody.rows[0];
             const tRow2 = tBody.rows[1];
@@ -181,9 +190,9 @@ const Part3 = (props) => {
             tRow2.cells[1].text = toCurrency(medLeaveEmp / timeValue);
             tRow2.cells[2].text = toCurrency(famLeaveEmp / timeValue);
             tRow2.cells[3].text = toCurrency((medLeaveEmp + famLeaveEmp) / timeValue);
-            tRow3.cells[1].text = toCurrency(medLeave / timeValue);
-            tRow3.cells[2].text = toCurrency(famLeave / timeValue);
-            tRow3.cells[3].text = toCurrency((medLeave + famLeave) / timeValue);
+            tRow3.cells[1].text = toCurrency(medLeaveTotal);
+            tRow3.cells[2].text = toCurrency(famLeaveTotal);
+            tRow3.cells[3].text = toCurrency(medLeaveTotal + famLeaveTotal);
 
             return(
               <Fragment>
