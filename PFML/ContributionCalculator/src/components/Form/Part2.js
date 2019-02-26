@@ -169,13 +169,13 @@ const Part2 = (props) => {
                             <div className="ma__help-text">
                               Medical Leave: {toCurrency(medPercent * totalPayroll * (over25 ? 1 : 0.4))} = {toCurrency(totalPayroll)} X
                               { over25 ? toPercentage(medPercent, 2) : <span>{toPercentage(medPercent, 2)} X 40%</span>}
-                              { !over25 && (
-                                <div className="ma__disclaimer">
-                                  <Paragraph text={under25MedContDisclaimer} />
-                                </div>
-                              )}
                             </div>
                           </HelpTip>
+                          { !over25 && (
+                            <div className="ma__disclaimer">
+                              <Paragraph text={under25MedContDisclaimer} />
+                            </div>
+                          )}
                           { numbro.unformat(payrollWages) > socialSecCap && (
                             <div className="ma__disclaimer">
                               <Paragraph text={`<strong>SSI Cap Disclaimer:</strong> If any of your qualifying workers’ wages are above the SSI cap <strong>${toCurrency(socialSecCap)}</strong> your total contribution is an overestimation. To yield a more accurate estimate, use the SSI cap amount in place of any wages that are above the cap when calculating your total payroll above.`} />
@@ -247,14 +247,14 @@ const Part2 = (props) => {
                             </div>
                             <div className="ma__help-text">Medical Leave: {toCurrency(medPayment)} = {toCurrency(payrollWagesCap)} X
                               { over25 ? toPercentage(medPercent, 2) : <span>{toPercentage(medPercent, 2)} X 40%</span>}
-                              { !over25 && (
-                              <div className="ma__disclaimer">
-                                <Paragraph text={under25MedContDisclaimer} />
-                              </div>
-                            )}
                             </div>
 
                           </HelpTip>
+                          { !over25 && (
+                            <div className="ma__disclaimer">
+                              <Paragraph text={under25MedContDisclaimer} />
+                            </div>
+                          )}
                           { numbro.unformat(payrollWages) > socialSecCap && (
                             <div className="ma__disclaimer">
                               <Paragraph text={`<strong>SSI Cap Disclaimer: </strong>Required contributions are capped at the Social Security cap, which is updated annually. It is <strong>${toCurrency(socialSecCap)}</strong> for 2019.`} />
