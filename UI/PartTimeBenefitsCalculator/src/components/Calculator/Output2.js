@@ -115,7 +115,7 @@ export const ScenarioTwo = (props) => {
 export const ScenarioThree = (props) => {
   // Do not make a copy of formContext with object destructuring.
   // eslint-disable-next-line react/destructuring-assignment
-  const formContext = props.formContext;
+  const formContext = useContext(FormContext);
   // These are default values only.
   const scenarioDefaults = {
     showScenario: false,
