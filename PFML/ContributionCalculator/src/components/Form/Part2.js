@@ -48,6 +48,7 @@ const Part2 = (props) => {
             const totalPayment = totalPayroll * totalPercent;
             const payrollWagesCap = numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages);
             const disableInput = !hasMassEmployees || !employeeCount;
+            const under25MedContDisclaimer = `*Employers with fewer than 25 qualifying workers are not required to pay the employer share (60%) of the medical leave contribution. Their qualifying workers will pay up to <strong>40%</strong> of the medical leave unless the employer chooses to contribute on their behalf. </p>`;
             return(
               <fieldset>
                 <div className="ma_input-group--mobile-1">
@@ -143,25 +144,23 @@ const Part2 = (props) => {
 
                           </HelpTip>
                           <HelpTip
-                            text={`Of this amount, <strong>${toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave.`}
-                            triggerText={[`<strong>${toCurrency(medPercent * totalPayroll)}</strong>`, `<strong>${toCurrency(famPercent * totalPayroll)}</strong>`]}
+                            text={`Of this amount, <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave and <strong>${toCurrency(medPercent * totalPayroll)}</strong> is for medical leave.`}
+                            triggerText={[`<strong>${toCurrency(famPercent * totalPayroll)}</strong>`,`<strong>${toCurrency(medPercent * totalPayroll)}</strong>`]}
                             id="help-tip-medfam-ann-cont"
                             theme="c-white"
                           >
-                              <div className="ma__help-text">
-                                Medical Leave: {toCurrency(medPercent * totalPayroll)} = {toCurrency(totalPayroll)} X 
-                                { over25 ? toPercentage(medPercent, 2) : <span>{toPercentage(medPercent, 2)} X 40%</span>}
-                                {
-                                  !over25 && (
-                                    <p className="ma__disclaimer">*Employers with fewer than 25 qualifying workers are not required to pay the employer share (60%) of the medical leave contribution. Their qualifying workers will pay up to <strong>40%</strong> of the medical leave unless the employer chooses to contribute on their behalf. 
-                                    </p>
-                                  )
-                                }
-                              </div>
-
-                              <div className="ma__help-text">
-                                Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent, 2)}
-                              </div>  
+                            <div className="ma__help-text">
+                              Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent, 2)}
+                            </div>  
+                            <div className="ma__help-text">
+                              Medical Leave: {toCurrency(medPercent * totalPayroll)} = {toCurrency(totalPayroll)} X 
+                              { over25 ? toPercentage(medPercent, 2) : <span>{toPercentage(medPercent, 2)} X 40%</span>}
+                              { !over25 && (
+                                <div className="ma__disclaimer">
+                                  <Paragraph text={under25MedContDisclaimer} />
+                                </div>
+                              )}
+                            </div>
                           </HelpTip>
                           { numbro.unformat(payrollWages) > socialSecCap && (
                             <div className='ma__disclaimer'>
@@ -219,14 +218,22 @@ const Part2 = (props) => {
                           >
                           </HelpTip>
                           <HelpTip
-                            text={`Of this amount, <strong>${toCurrency(medPercent * payrollWagesCap)}</strong> is for medical leave and <strong>${toCurrency(famPercent * payrollWagesCap)}</strong> is for family leave.`}
-                            triggerText={[`<strong>${toCurrency(medPercent * payrollWagesCap)}</strong>`,` <strong>${toCurrency(famPercent * payrollWagesCap)}</strong>`]}
+                            text={`Of this amount, <strong>${toCurrency(famPercent * payrollWagesCap)}</strong> is for family leave. and <strong>${toCurrency(medPercent * payrollWagesCap)}</strong> is for medical leave.`}
+                            triggerText={[` <strong>${toCurrency(famPercent * payrollWagesCap)}</strong>`, `<strong>${toCurrency(medPercent * payrollWagesCap)}</strong>`]}
                             id="help-tip-medfam-emp-ann-cont"
                             theme="c-white"
                           >
-                            <p className="ma__help-text">Medical Leave: {toCurrency(medPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(medPercent, 2)}</p>
-                            <p className="ma__help-text">Family Leave: {toCurrency(famPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}
-                            </p>
+                            <div className="ma__help-text">Family Leave: {toCurrency(famPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}
+                            </div>
+                            <div className="ma__help-text">Medical Leave: {toCurrency(medPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X 
+                            { over25 ? toPercentage(medPercent, 2) : <span>{toPercentage(medPercent, 2)} X 40%</span>}
+                            { !over25 && (
+                              <div className="ma__disclaimer">
+                                <Paragraph text={under25MedContDisclaimer} />
+                              </div>
+                            )}
+                            </div>
+                            
                           </HelpTip>
                           { numbro.unformat(payrollWages) > socialSecCap && (
                             <div className="ma__disclaimer">
