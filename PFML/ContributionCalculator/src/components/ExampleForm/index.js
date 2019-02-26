@@ -76,7 +76,6 @@ class ExampleForm extends Component {
   };
   updateState = (newState) => { this.setState(newState); };
   render() {
-    console.log(this.state)
     return(
       <form className="ma__form-page">
         <FormContext.Provider value={this.state}>
