@@ -7,6 +7,7 @@
   	"smallCompFamCont": 0,
   	"largeCompMedCont": 0.6,
   	"largeCompFamCont": 0,
+    "empMedCont": 0.4,
   	"smallMedPercent": 0.0052,
   	"largeMedPercent": 0.0052,
   	"smallFamPercent": 0.0011,

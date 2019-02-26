@@ -23,7 +23,7 @@ const mapUrlChangeHandlersToProps = () => ({
 
 const Part3 = (props) => {
   const {
-    minEmployees, emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, largeCompFamCont, smallCompFamCont, largeCompMedCont, smallCompMedCont, socialSecCap
+    minEmployees, emp1099Fraction, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, largeCompFamCont, smallCompFamCont, empMedCont, largeCompMedCont, smallCompMedCont, socialSecCap
   } = ContributionVariables.baseVariables;
   const { questionOne, questionTwo } = PartThreeProps;
   const {
@@ -56,7 +56,7 @@ const Part3 = (props) => {
             const famLeave = totalPayroll * famPercent;
 
             const minMed = over25 ? largeCompMedCont : smallCompMedCont;
-            const maxMed = over25 ? 1 : 0.4;
+            const maxMed = over25 ? (largeCompMedCont + empMedCont) : (smallCompMedCont + empMedCont);
             const minFam = over25 ? largeCompFamCont : smallCompFamCont;
             const minMedPer = Math.round(minMed * 100);
             const maxMedPer = Math.round(maxMed * 100);
