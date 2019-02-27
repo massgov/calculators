@@ -41,7 +41,7 @@ const Part2 = (props) => {
               payrollBase,
               hasMassEmployees,
               value: {
-                payrollW2, payroll1099, payrollWages
+                payrollW2, payroll1099, payrollWages, employeesW2
               }
             } = context;
             const medPercent = over25 ? largeMedPercent : smallMedPercent;
@@ -107,7 +107,7 @@ const Part2 = (props) => {
                           onChangePayW2(val);
                         }}
                         required
-                        disabled={disableInput}
+                        disabled={disableInput || employeesW2 === 0}
                         inline
                         step={1}
                       />
@@ -143,7 +143,7 @@ const Part2 = (props) => {
                         step={1}
                       />
                     </div>
-                    <Collapse in={hasMassEmployees && numbro.unformat(payrollW2) > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true)} dimension="height" className="ma__callout-alert">
+                    <Collapse in={hasMassEmployees && employeeCount > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true)} dimension="height" className="ma__callout-alert">
                       <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
