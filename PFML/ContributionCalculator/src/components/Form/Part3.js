@@ -145,7 +145,7 @@ const Part3 = (props) => {
             const enable = hasMassEmployees && (employeeCount > 0) && (enableOne || enableAll);
 
             const famTicks = minFamPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minFamPer, 'Min Employer Contribution'], [100, '100%']];
-            let medTicks = [[0, '0%'], [40, '40%']];
+            let medTicks = [[0, '0%'], [empMedCont * 100, `${empMedCont * 100}%`]];
             if (over25) {
               medTicks = minMedPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minMedPer, 'Min Employer Contribution'], [100, '100%']];
             }
