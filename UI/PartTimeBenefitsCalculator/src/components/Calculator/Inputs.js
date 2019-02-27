@@ -1,24 +1,22 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { InputCurrency } from '@massds/mayflower-react';
 
 export const QuestionOne = (props) => {
   const { handleChange } = props;
   return(
-    <Fragment>
-      <InputCurrency
-        labelText="How much do you receive weekly in UI benefits?"
-        inline
-        required
-        id="weekly-benefits"
-        name="weekly-benefits"
-        placeholder="e.g. $500.00"
-        defaultValue={null}
-        step={1}
-        min={0}
-        onChange={handleChange}
-      />
-    </Fragment>
+    <InputCurrency
+      labelText="How much do you receive weekly in UI benefits?"
+      inline
+      required
+      id="weekly-benefits"
+      name="weekly-benefits"
+      placeholder="e.g. $500.00"
+      defaultValue={null}
+      step={1}
+      min={0}
+      onChange={handleChange}
+    />
   );
 };
 
