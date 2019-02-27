@@ -20,7 +20,7 @@ export default {
     rows: [{
       cells: [{
         heading: true,
-        text: 'The employer will pay:'
+        text: 'The business will pay:'
       }, {
       }, {
       }, {
@@ -28,7 +28,7 @@ export default {
     }, {
       cells: [{
         heading: true,
-        text: 'The employee will pay:'
+        text: 'The covered individuals will pay:'
       }, {
       }, {
       }, {
