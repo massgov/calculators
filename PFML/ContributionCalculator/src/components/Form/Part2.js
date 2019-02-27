@@ -180,7 +180,7 @@ const Part2 = (props) => {
                             </div>
                           )}
                           <div className="ma__disclaimer">
-                            <Paragraph text={`<strong>SSI Cap Disclaimer:</strong> If any of the covered individuals’ wages are above the SSI cap (<strong>${toCurrency(socialSecCap)}</strong>), the estimated total contribution above is an overestimation. To yield a more accurate estimate, substitute the SSI cap amount in place of any wages above the cap when summing your total payroll.`} />
+                            <Paragraph text={`<strong>Please note:</strong> If any of the covered individuals’ wages are above the SSI cap (<strong>${toCurrency(socialSecCap)}</strong>), the estimated total contribution above is an overestimation. To yield a more accurate estimate, substitute the SSI cap amount in place of any wages above the cap when summing your total payroll.`} />
                           </div>
                         </CalloutAlert>
                       </div>
@@ -258,7 +258,7 @@ const Part2 = (props) => {
                           )}
                           { numbro.unformat(payrollWages) > socialSecCap && (
                             <div className="ma__disclaimer">
-                              <Paragraph text={`<strong>SSI Cap Disclaimer: </strong>Required contributions are capped at the Social Security cap, which is updated annually. It is <strong>${toCurrency(socialSecCap)}</strong> for 2019.`} />
+                              <Paragraph text={`<strong>Please note: </strong>Required contributions are capped at the Social Security cap, which is updated annually. It is <strong>${toCurrency(socialSecCap)}</strong> for 2019.`} />
                             </div>
                           )}
                         </CalloutAlert>

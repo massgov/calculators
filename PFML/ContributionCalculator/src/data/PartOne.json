@@ -140,9 +140,47 @@
                 "helpText": ["If you have fewer than 25 covered individuals, you do not need to pay the employer share."]
             }
         }],
+        "underMinEmpNoW2": [{
+            "paragraph": {
+                "content": "Based on the makeup of your workforce, all your Massachusetts 1099-MSC contractors are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”"
+            }
+        }, {
+            "paragraph": {
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send your business’ full contribution every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and an <strong>employee share</strong>."
+            }
+        }, {
+            "paragraph": {
+                "content": "The <strong>employee share</strong> of the total contribution includes 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct from your covered individuals’ wages to cover the <strong>employee share</strong>."
+            }
+        }, {
+            "paragraph": {
+                "text": "Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution. You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution.",
+                "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
+                "helpText": ["If you have fewer than 25 covered individuals, you do not need to pay the employer share."]
+            }
+        }],
         "overMinEmpNo1099": [{
             "paragraph": {
                 "content": "Based on the makeup of your workforce, all your Massachusetts W2 employees are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”"
+            }
+        }, {
+            "paragraph": {
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send your business’ full contribution every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and an <strong>employee share</strong>."
+            }
+        }, {
+            "paragraph": {
+                "content": "The <strong>employee share</strong> of the total contribution includes 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct from your covered individuals’ wages to cover the <strong>employee share</strong>."
+            }
+        }, {
+            "paragraph": {
+                "text": "You are required to pay the remaining <strong>employer share</strong> of the total contribution. The <strong>employer share</strong> is at least 60% of the medical leave contribution.",
+                "triggerText": ["required to pay the remaining <strong>employer share</strong>"],
+                "helpText": ["If you have 25 or more covered individuals, you are required to pay the employer share."]
+            }
+        }],
+        "overMinEmpNoW2": [{
+            "paragraph": {
+                "content": "Based on the makeup of your workforce, all your Massachusetts 1099-MISC contractors are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”"
             }
         }, {
             "paragraph": {

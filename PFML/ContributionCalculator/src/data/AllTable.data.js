@@ -28,7 +28,7 @@ export default {
     }, {
       cells: [{
         heading: true,
-        text: 'The covered individuals will pay:'
+        text: 'Covered individuals will pay:'
       }, {
       }, {
       }, {

@@ -104,6 +104,26 @@ const Part1 = (props) => {
                 </Fragment>
               );
             }
+            if (!over25 && over50per && Number(employees1099) > 0 && Number(employeesW2 === 0)) {
+              outputMessage = (
+                <Fragment>
+                  {output.underMinEmpNoW2.map((message, messageIndex) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpNo1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpNo1099-${messageIndex}`)
+                  ))}
+                </Fragment>
+              );
+            }
+            if (over25 && over50per && Number(employees1099) > 0 && Number(employeesW2 === 0)) {
+              outputMessage = (
+                <Fragment>
+                  {output.overMinEmpNoW2.map((message, messageIndex) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpNo1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpNo1099-${messageIndex}`)
+                  ))}
+                </Fragment>
+              );
+            }
             return(
               <fieldset>
                 <InputRadioGroup
@@ -197,7 +217,7 @@ const Part1 = (props) => {
                   }}
                   showButtons
                 />
-                <Collapse in={hasMassEmployees && employeesW2 > 0} dimension="height" className="ma__callout-alert">
+                <Collapse in={hasMassEmployees && (employeesW2 > 0 || employees1099 > 0)} dimension="height" className="ma__callout-alert">
                   <div className="ma__collapse">
                     <CalloutAlert theme="c-primary">
                       { outputMessage }
