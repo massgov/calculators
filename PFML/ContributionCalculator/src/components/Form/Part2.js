@@ -175,9 +175,7 @@ const Part2 = (props) => {
                             </div>
                           </HelpTip>
                           { !over25 && (
-                            <div className="ma__disclaimer">
-                              {getHelpTip(under25MedContDisclaimer, 'c-white')}
-                            </div>
+                            {getHelpTip(under25MedContDisclaimer, 'c-white')}
                           )}
                           <div className="ma__disclaimer">
                             <Paragraph text={`<strong>Please note:</strong> If any of the covered individuals’ wages are above the SSI cap (<strong>${toCurrency(socialSecCap)}</strong>), the estimated total contribution above is an overestimation. To yield a more accurate estimate, substitute the SSI cap amount in place of any wages above the cap when summing your total payroll.`} />
@@ -252,9 +250,7 @@ const Part2 = (props) => {
 
                           </HelpTip>
                           { !over25 && (
-                            <div className="ma__disclaimer">
-                              {getHelpTip(under25MedContDisclaimer, 'c-white')}
-                            </div>
+                            {getHelpTip(under25MedContDisclaimer, 'c-white')}
                           )}
                           { numbro.unformat(payrollWages) > socialSecCap && (
                             <div className="ma__disclaimer">

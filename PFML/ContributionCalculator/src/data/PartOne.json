@@ -3,7 +3,7 @@
         "question": {
             "helpText": ["The statute distinguishes the two because…"],
             "triggerText": ["Massachusetts W2 employees or Massachusetts 1099-MISC contractors"],
-            "text": "Do you have any Massachusetts W2 employees or Massachusetts 1099-MISC contractors performing services in Massachusetts?"
+            "text": "Do you have any Massachusetts W2 employees or Massachusetts 1099-MISC contractors performing services for you business?"
         },
         "errorMsg": "Please select yes or no.",
         "options": [{
@@ -41,7 +41,7 @@
             "paragraph": {
                 "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees and Massachusetts 1099-MISC contractors are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”",
                 "triggerText": ["Massachusetts W2 employees and Massachusetts 1099-MISC contractors"],
-                "helpText": ["If your Massachusetts 1099-MISC contractors are equal or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf."]
+                "helpText": ["If your Massachusetts 1099-MISC contractors are equal to or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf."]
             }
         }, {
             "paragraph": {
@@ -83,7 +83,7 @@
             "paragraph": {
                 "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees and Massachusetts 1099-MISC contractors are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”",
                 "triggerText": ["Massachusetts W2 employees and Massachusetts 1099-MISC contractors"],
-                "helpText": ["If your Massachusetts 1099-MISC contractors are equal or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf."]
+                "helpText": ["If your Massachusetts 1099-MISC contractors are equal to or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf."]
             }
         }, {
             "paragraph": {
