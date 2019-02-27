@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import moment from 'moment';
 import {
-  InputCurrency, Button, FormProvider, Form, FormContext
+  InputCurrency, Button, FormProvider, Form, FormContext, InputCheckBox
 } from '@massds/mayflower-react';
 import Output from './output';
 
@@ -42,7 +42,7 @@ class Calculator extends Component {
       required: true,
       inline: true,
       min: 0,
-      step: 0.01
+      step: 1
     };
     return(
       <FormProvider>
@@ -52,10 +52,9 @@ class Calculator extends Component {
             <Fragment>
               <InputCurrency
                 {... inputCurrencyProps}
-                labelText={`${this.q1.qStart} – ${this.q1.qEnd} earnings:`}
+                labelText={`${this.q1.qStart} – ${this.q1.qEnd} total wages:`}
                 id="quarter1"
                 name="quarter1"
-                defaultValue={0}
                 onChange={(value, id) => {
                   formContext.setValue({ id, value });
                   if (applyAll) {
@@ -65,29 +64,27 @@ class Calculator extends Component {
                   }
                 }}
               />
-              <div className="input_apply-all">
-                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                <label htmlFor="apply-all">Apply this quarter&apos;s earnings to the all quarters.</label>
-                <input
-                  type="checkbox"
-                  id="apply-all"
-                  onChange={(e) => {
-                    this.setState({
-                      applyAll: e.target.checked
-                    });
-                    const { quarter1 } = formContext.getValues();
-                    formContext.setValue({ id: 'quarter2', value: quarter1 });
-                    formContext.setValue({ id: 'quarter3', value: quarter1 });
-                    formContext.setValue({ id: 'quarter4', value: quarter1 });
-                  }}
-                />
-              </div>
+              <InputCheckBox
+                id="apply-all"
+                label="Apply this quarter's wages to the all quarters."
+                icon={{ name: '', ariaHidden: true }}
+                defaultValue={false}
+                onChange={(e, value) => {
+                  this.setState({
+                    applyAll: value
+                  });
+                  const { quarter1 } = formContext.getValues();
+                  formContext.setValue({ id: 'quarter2', value: quarter1 });
+                  formContext.setValue({ id: 'quarter3', value: quarter1 });
+                  formContext.setValue({ id: 'quarter4', value: quarter1 });
+                }}
+                errorMsg="You are required to check this box."
+              />
               <InputCurrency
                 {... inputCurrencyProps}
-                labelText={`${this.q2.qStart} – ${this.q2.qEnd} earnings:`}
+                labelText={`${this.q2.qStart} – ${this.q2.qEnd} total wages:`}
                 id="quarter2"
                 name="quarter2"
-                defaultValue={0}
                 disabled={applyAll}
                 onChange={(value, id) => {
                   formContext.setValue({ id, value });
@@ -95,10 +92,9 @@ class Calculator extends Component {
               />
               <InputCurrency
                 {... inputCurrencyProps}
-                labelText={`${this.q3.qStart} – ${this.q3.qEnd} earnings:`}
+                labelText={`${this.q3.qStart} – ${this.q3.qEnd} total wages:`}
                 id="quarter3"
                 name="quarter3"
-                defaultValue={0}
                 disabled={applyAll}
                 onChange={(value, id) => {
                   formContext.setValue({ id, value });
@@ -106,10 +102,9 @@ class Calculator extends Component {
               />
               <InputCurrency
                 {... inputCurrencyProps}
-                labelText={`${this.q4.qStart} – ${this.q4.qEnd} earnings:`}
+                labelText={`${this.q4.qStart} – ${this.q4.qEnd} total wages:`}
                 id="quarter4"
                 name="quarter4"
-                defaultValue={0}
                 disabled={applyAll}
                 onChange={(value, id) => {
                   formContext.setValue({ id, value });

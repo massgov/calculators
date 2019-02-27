@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Header, Footer, PageHeader } from '@massds/mayflower-react';
+import {
+  Header, Footer, PageHeader, Heading
+} from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
@@ -36,11 +38,12 @@ class App extends Component {
             optionalContents={[{
               paragraph: {
                 text:
-              'If you are eligible to receive unemployment benefits, you will receive a weekly benefit amount of approximately 50% of your average weekly wage, up to the maximum set by law. As of October 2018, the maximum weekly benefit amount is $795 per week. Enter your earnings below to estimate your benefits.'
+              'If you are eligible to receive unemployment benefits, you will receive a weekly benefit amount of approximately 50% of your average weekly wage, up to the maximum set by law. As of October 2018, the maximum weekly benefit amount is $795 per week.'
               }
             }]}
           />
           <section className="main-content main-content--two">
+            <Heading level={2} text="Enter your total wages for the last 4 quarters to estimate your benefits." />
             <div className="page-content">
               <hr />
               <Form />

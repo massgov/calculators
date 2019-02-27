@@ -38,7 +38,12 @@ const Part3 = (props) => {
               over25,
               over50per,
               employeeCount,
-              hasMassEmployees, payrollBase, famLeaveCont, medLeaveCont, timeValue, timePeriod,
+              hasMassEmployees,
+              payrollBase,
+              famLeaveCont,
+              medLeaveCont,
+              timeValue,
+              timePeriod,
               value: {
                 payrollW2, payroll1099, payrollWages
               }
@@ -313,7 +318,7 @@ const Part3 = (props) => {
                         required
                         id="color-select"
                         options={questionTwo.options}
-                        selected={timePeriod || 'Quarter'}
+                        selected={timePeriod || 'Year'}
                         onChangeCallback={({ selected }) => {
                         const value = getTimeValue(selected);
                         context.updateState({

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@massds/mayflower-react": "^8.26.0",
+    "@massds/mayflower-react": "^9.1.1",
     "env-cmd": "^8.0.2",
     "moment": "^2.24.0",
     "node-sass-chokidar": "^1.3.4",
