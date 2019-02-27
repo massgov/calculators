@@ -5,7 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import { toCurrency, displayCurrency, toNumber } from './util';
 
-export const ScenarioOne = (props) => {
+export const ScenarioOne = () => {
   // Do not make a copy of formContext with object destructuring.
   // eslint-disable-next-line react/destructuring-assignment
   const formContext = useContext(FormContext);
@@ -54,7 +54,7 @@ export const ScenarioOne = (props) => {
 };
 
 
-export const ScenarioTwo = (props) => {
+export const ScenarioTwo = () => {
   // Do not make a copy of formContext with object destructuring.
   // eslint-disable-next-line react/destructuring-assignment
   const formContext = useContext(FormContext);
@@ -112,7 +112,7 @@ export const ScenarioTwo = (props) => {
   );
 };
 
-export const ScenarioThree = (props) => {
+export const ScenarioThree = () => {
   // Do not make a copy of formContext with object destructuring.
   // eslint-disable-next-line react/destructuring-assignment
   const formContext = useContext(FormContext);
