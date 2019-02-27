@@ -155,7 +155,8 @@ const Part1 = (props) => {
                       value,
                       medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
                       famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
-                      over25: empCount >= minEmployees
+                      over25: empCount >= minEmployees,
+                      over50per: (Number(context.value.employees1099) / (Number(empW2) + Number(context.value.employees1099))) >= emp1099Fraction
                     });
                     onChangeMedCont(value.medLeaveCont);
                   }}
