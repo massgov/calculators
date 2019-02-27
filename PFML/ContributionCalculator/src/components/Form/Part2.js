@@ -52,7 +52,7 @@ const Part2 = (props) => {
             const disableInput = !hasMassEmployees || !employeeCount;
             const under25MedContDisclaimer = '*Employers with fewer than 25 qualifying workers are not required to pay the employer share (60%) of the medical leave contribution. Their qualifying workers will pay up to <strong>40%</strong> of the medical leave unless the employer chooses to contribute on their behalf. </p>';
 
-            
+
             // all workers annual
             const medCompPayment = medPercent * totalPayroll * medPayrollPercent;
             const famCompPayment = famPercent * totalPayroll;
