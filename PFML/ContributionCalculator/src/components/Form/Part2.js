@@ -149,7 +149,7 @@ const Part2 = (props) => {
                         step={1}
                       />
                     </div>
-                    <Collapse in={hasMassEmployees && employeeCount > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true)} dimension="height" className="ma__callout-alert">
+                    <Collapse in={hasMassEmployees && employeeCount > 0 && totalPayroll && (over50per ? numbro.unformat(payroll1099) > 0 : true)} dimension="height" className="ma__callout-alert">
                       <div className="ma__collapse">
                         <CalloutAlert theme="c-primary" icon={null}>
                           <HelpTip
