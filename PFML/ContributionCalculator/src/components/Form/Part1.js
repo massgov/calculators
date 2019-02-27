@@ -104,7 +104,7 @@ const Part1 = (props) => {
                 </Fragment>
               );
             }
-            if (!over25 && over50per && Number(employees1099) > 0 && Number(employeesW2 === 0)) {
+            if (!over25 && over50per && Number(employees1099) > 0 && !(Number(employeesW2) > 0)) {
               outputMessage = (
                 <Fragment>
                   {output.underMinEmpNoW2.map((message, messageIndex) => (
@@ -114,7 +114,7 @@ const Part1 = (props) => {
                 </Fragment>
               );
             }
-            if (over25 && over50per && Number(employees1099) > 0 && Number(employeesW2 === 0)) {
+            if (over25 && over50per && Number(employees1099) > 0 && !(Number(employeesW2) > 0)) {
               outputMessage = (
                 <Fragment>
                   {output.overMinEmpNoW2.map((message, messageIndex) => (
@@ -164,7 +164,7 @@ const Part1 = (props) => {
                   required
                   unit=""
                   onChange={(e, inputValue) => {
-                    const empW2 = Number(inputValue);
+                    const empW2 = Number(inputValue) > 0 ? Number(inputValue) : 0;
                     const value = { ...context.value };
                     value.payrollBase = 'all';
                     value.employeesW2 = empW2;
@@ -199,7 +199,7 @@ const Part1 = (props) => {
                   required
                   unit=""
                   onChange={(e, inputValue) => {
-                    const emp1099 = Number(inputValue);
+                    const emp1099 = Number(inputValue) > 0 ? Number(inputValue) : 0;
                     // Pull value from form for updating.
                     const value = { ...context.value };
                     value.employees1099 = emp1099;

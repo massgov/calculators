@@ -45,7 +45,7 @@ const Part3 = (props) => {
               timeValue,
               timePeriod,
               value: {
-                payrollW2, payroll1099, payrollWages
+                payrollW2, payroll1099, payrollWages, employeesW2, employees1099
               }
             } = context;
 
@@ -53,8 +53,10 @@ const Part3 = (props) => {
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
 
             let totalPayroll;
-            if (payrollBase === 'all') {
+            if (payrollBase === 'all' && employeesW2 > 0) {
               totalPayroll = over50per ? (numbro.unformat(payroll1099) + numbro.unformat(payrollW2)) : numbro.unformat(payrollW2);
+            } else if (payrollBase === 'all' && !(employeesW2 > 0)) {
+              totalPayroll = numbro.unformat(payroll1099);
             } else {
               totalPayroll = numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages);
             }
@@ -144,7 +146,7 @@ const Part3 = (props) => {
             const medLeaveEmp = medLeave * (maxMed - medLeaveCont);
             const famLeaveEmp = famLeave * (1 - famLeaveCont);
 
-            const enableAll = payrollBase === 'all' && numbro.unformat(payrollW2) > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true);
+            const enableAll = payrollBase === 'all' && ((employeesW2 > 0 && numbro.unformat(payrollW2) > 0) || (!(employeesW2 > 0) && employees1099 > 0 && numbro.unformat(payroll1099) > 0)) && (over50per ? numbro.unformat(payroll1099) > 0 : true);
             const enableOne = payrollBase === 'one' && numbro.unformat(payrollWages) > 0;
             const enable = hasMassEmployees && (employeeCount > 0) && (enableOne || enableAll);
 

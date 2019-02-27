@@ -48,10 +48,16 @@ const Part2 = (props) => {
             const medPayrollPercent = over25 ? (largeCompMedCont + empMedCont) : empMedCont;
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
             const totalPercent = medPercent + famPercent;
-            const totalPayroll = over50per ? (numbro.unformat(payrollW2 || 0) + numbro.unformat(payroll1099)) : (numbro.unformat(payrollW2 || 0));
+            let totalPayroll;
+            if (payrollBase === 'all' && employeesW2 > 0) {
+              totalPayroll = over50per ? (numbro.unformat(payroll1099) + numbro.unformat(payrollW2)) : numbro.unformat(payrollW2);
+            } else if (payrollBase === 'all' && !(employeesW2 > 0)) {
+              totalPayroll = numbro.unformat(payroll1099);
+            } else {
+              totalPayroll = numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages);
+            }
             const payrollWagesCap = numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages);
             const disableInput = !hasMassEmployees || !employeeCount;
-
             // all workers annual
             const medCompPayment = medPercent * totalPayroll * medPayrollPercent;
             const famCompPayment = famPercent * totalPayroll;
@@ -218,7 +224,7 @@ const Part2 = (props) => {
                         disabled={disableInput}
                       />
                     </div>
-                    <Collapse in={(payrollWages && (employeeCount > 0) && (numbro.unformat(payrollWages) > 0))} dimension="height">
+                    <Collapse in={hasMassEmployees && (payrollWages && (employeeCount > 0) && (numbro.unformat(payrollWages) > 0))} dimension="height">
                       <div className="ma__collapse">
                         {payrollWages && (
                         <CalloutAlert theme="c-primary" icon={null}>
