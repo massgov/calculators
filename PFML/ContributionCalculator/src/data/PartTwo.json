@@ -25,6 +25,6 @@
         "errorMsg": "Please enter a value."
     },
     "under25MedContDisclaimer": {
-        "text": "Businesses with fewer than 25 covered individuals are exempt from paying the employer share of the medical leave contribution (<strong>60%</strong>) but are still required to send the employee share of the medical leave contribution (<strong>40%</strong>) on behalf of their covered individuals. "  
+        "content": "Businesses with fewer than 25 covered individuals are exempt from paying the employer share of the medical leave contribution (<strong>60%</strong>) but are still required to send the employee share of the medical leave contribution (<strong>40%</strong>) on behalf of their covered individuals. "  
     }
 }
