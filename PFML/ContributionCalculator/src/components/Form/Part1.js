@@ -153,6 +153,7 @@ const Part1 = (props) => {
                     onChangeW2(empW2);
                     context.updateState({
                       value,
+                      employeeCount: empCount,
                       medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
                       famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
                       over25: empCount >= minEmployees,
@@ -185,6 +186,7 @@ const Part1 = (props) => {
                     const empCount = context.value.employeesW2 + (emp1099 / (emp1099 + context.value.employeesW2) >= emp1099Fraction ? emp1099 : 0);
                     context.updateState({
                       value,
+                      employeeCount: empCount,
                       medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
                       famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
                       over25: empCount >= minEmployees,
