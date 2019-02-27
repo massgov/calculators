@@ -57,10 +57,10 @@ const Part2 = (props) => {
             // one worker annual
             const medPayment = medPercent * payrollWagesCap * medPayrollPercent;
             const famPayment = famPercent * payrollWagesCap;
-            
+
             const empMedContPercent = `${empMedCont * 100}%`;
             const compMedContPercent = `${largeCompMedCont * 100}%`;
-            
+
             const under25MedContDisclaimer = `*Employers with fewer than 25 qualifying workers are not required to pay the ${compMedContPercent} employer share of the medical leave contribution. Their qualifying workers will pay up to <strong>${empMedContPercent}</strong> of the medical leave unless the employer chooses to contribute on their behalf. </p>`;
 
             return(
