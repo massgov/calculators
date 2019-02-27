@@ -75,15 +75,15 @@ const Calculator = () => (
                 {
                     // Output2: benefits not impacted
                   }
-                <ScenarioOne formContext={formContext} />
+                <ScenarioOne />
                 {
                     // Output2: benefits reduced
                   }
-                <ScenarioTwo formContext={formContext} />
+                <ScenarioTwo />
                 {
                     // Output2: benefits void
                   }
-                <ScenarioThree formContext={formContext} />
+                <ScenarioThree />
               </Fragment>
             );
           }

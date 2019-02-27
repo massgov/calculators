@@ -158,15 +158,3 @@ export const ScenarioThree = () => {
     </Input>
   );
 };
-
-ScenarioOne.propTypes = {
-  formContext: PropTypes.object
-};
-
-ScenarioTwo.propTypes = {
-  formContext: PropTypes.object
-};
-
-ScenarioThree.propTypes = {
-  formContext: PropTypes.object
-};
