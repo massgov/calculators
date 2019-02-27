@@ -48,7 +48,7 @@ const Part2 = (props) => {
             const medPayrollPercent = over25 ? (largeCompMedCont + empMedCont) : empMedCont;
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
             const totalPercent = medPercent + famPercent;
-            const totalPayroll = over50per ? (numbro.unformat(payrollW2) + numbro.unformat(payroll1099)) : (numbro.unformat(payrollW2));
+            const totalPayroll = over50per ? (numbro.unformat(payrollW2 || 0) + numbro.unformat(payroll1099)) : (numbro.unformat(payrollW2 || 0));
             const payrollWagesCap = numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages);
             const disableInput = !hasMassEmployees || !employeeCount;
 
@@ -107,7 +107,7 @@ const Part2 = (props) => {
                           onChangePayW2(val);
                         }}
                         required
-                        disabled={disableInput || employeesW2 === 0}
+                        disabled={disableInput || !employeesW2}
                         inline
                         step={1}
                       />
