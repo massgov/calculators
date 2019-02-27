@@ -22,7 +22,7 @@ const mapUrlChangeHandlersToProps = () => ({
 
 const Part2 = (props) => {
   const {
-    smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, socialSecCap
+    smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, socialSecCap, empMedCont
   } = ContributionVariables.baseVariables;
   const {
     questionOne, questionTwo, questionThree, questionFour
@@ -44,6 +44,7 @@ const Part2 = (props) => {
             } = context;
             const { payrollBase, hasMassEmployees } = context;
             const medPercent = over25 ? largeMedPercent : smallMedPercent;
+            const medPayrollPercent = over25 ? (largeMedPercent + empMedCont) : empMedCont;
             const famPercent = over25 ? largeFamPercent : smallFamPercent;
             const totalPercent = medPercent + famPercent;
             const totalPayroll = over50per ? (numbro.unformat(payrollW2) + numbro.unformat(payroll1099)) : (numbro.unformat(payrollW2));
@@ -51,11 +52,12 @@ const Part2 = (props) => {
             const disableInput = !hasMassEmployees || !employeeCount;
             const under25MedContDisclaimer = '*Employers with fewer than 25 qualifying workers are not required to pay the employer share (60%) of the medical leave contribution. Their qualifying workers will pay up to <strong>40%</strong> of the medical leave unless the employer chooses to contribute on their behalf. </p>';
 
+            
             // all workers annual
-            const medCompPayment = medPercent * totalPayroll * (over25 ? 1 : 0.4);
+            const medCompPayment = medPercent * totalPayroll * medPayrollPercent;
             const famCompPayment = famPercent * totalPayroll;
             // one worker annual
-            const medPayment = medPercent * payrollWagesCap * (over25 ? 1 : 0.4);
+            const medPayment = medPercent * payrollWagesCap * medPayrollPercent;
             const famPayment = famPercent * payrollWagesCap;
 
             return(
@@ -158,8 +160,8 @@ const Part2 = (props) => {
                             }
                           />
                           <HelpTip
-                            text={`Of this amount, <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave and <strong>${toCurrency(medPercent * totalPayroll * (over25 ? 1 : 0.4))}</strong> is for medical leave.`}
-                            triggerText={[`<strong>${toCurrency(famPercent * totalPayroll)}</strong>`, `<strong>${toCurrency(medPercent * totalPayroll * (over25 ? 1 : 0.4))}</strong>`]}
+                            text={`Of this amount, <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave and <strong>${toCurrency(medPercent * totalPayroll * medPayrollPercent)}</strong> is for medical leave.`}
+                            triggerText={[`<strong>${toCurrency(famPercent * totalPayroll)}</strong>`, `<strong>${toCurrency(medPercent * totalPayroll * medPayrollPercent)}</strong>`]}
                             id="help-tip-medfam-ann-cont"
                             theme="c-white"
                           >
@@ -167,7 +169,7 @@ const Part2 = (props) => {
                               Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent, 2)}
                             </div>
                             <div className="ma__help-text">
-                              Medical Leave: {toCurrency(medPercent * totalPayroll * (over25 ? 1 : 0.4))} = {toCurrency(totalPayroll)} X
+                              Medical Leave: {toCurrency(medPercent * totalPayroll * medPayrollPercent)} = {toCurrency(totalPayroll)} X
                               { over25 ? toPercentage(medPercent, 2) : <span>{toPercentage(medPercent, 2)} X 40%</span>}
                             </div>
                           </HelpTip>
