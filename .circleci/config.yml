@@ -8,7 +8,7 @@ references:
   install_global_packages: &install_global_packages
     run: {name: 'Install global packages', command: 'npm install'}
   install_aws: &install_aws
-    run: {name: 'Install awscli', command: 'sudo apt-get -y -qq install awscli'}
+    run: {name: 'Install awscli', command: 'sudo apt-get install python-dev python-pip && sudo pip install awscli'}
 
 defaults: &defaults
     docker:
@@ -101,7 +101,7 @@ jobs:
               cd PFML/BenefitsCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/yourbenefits/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/pfml/yourbenefits/*' --invalidation-batch
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/pfml/yourbenefits/*'
   
   pfml-cal-contribution-deploy-dev:
     <<: *defaults
