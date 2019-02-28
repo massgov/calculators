@@ -223,6 +223,54 @@ jobs:
               aws s3 sync build s3://calculator.digital.mass.gov/pfml/contribution/ --delete
               aws configure set preview.cloudfront true
               aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/pfml/contribution/*'
+  
+  ui-cal-benefits-deploy-prod:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "UI/BenefitsCalculator/package.json" }}
+      - *install_aws
+      - *install_global_packages
+      - run:
+          name: 'UI Benefits Calculator Install Packages'
+          command: cd UI/BenefitsCalculator/ && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "UI/BenefitsCalculator/package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: 'UI Benefits Calculator Deploy Prod App'
+          command: |
+              cd UI/BenefitsCalculator/ && npm run build
+              aws s3 sync build s3://calculator.digital.mass.gov/ui/yourbenefits/ --delete
+              aws configure set preview.cloudfront true
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/ui/yourbenefits/*'
+  
+  ui-cal-parttime-deploy-prod:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "UI/PartTimeBenefitsCalculator/package.json" }}
+      - *install_aws
+      - *install_global_packages
+      - run:
+          name: 'UI Part Time Benefits Calculator Install Packages'
+          command: cd UI/PartTimeBenefitsCalculator && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "UI/PartTimeBenefitsCalculator/package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: 'UI Part Time Benefits Calculator Deploy Prod App'
+          command: |
+              cd UI/PartTimeBenefitsCalculator && npm run build
+              aws s3 sync build s3://calculator.digital.mass.gov/ui/parttimebenefits/ --delete
+              aws configure set preview.cloudfront true
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/ui/parttimebenefits/*'
 
 
 workflows:
@@ -261,5 +309,11 @@ workflows:
           filters:
             branches: { only: master }
       - pfml-cal-contribution-deploy-prod:
+          filters:
+            branches: { only: master }
+      - ui-cal-benefits-deploy-prod:
+          filters:
+            branches: { only: master }
+      - ui-cal-parttime-deploy-prod:
           filters:
             branches: { only: master }
