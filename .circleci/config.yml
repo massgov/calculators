@@ -9,6 +9,7 @@ references:
     run: {name: 'Install global packages', command: 'npm install'}
   install_aws: &install_aws
     run: {name: 'Install awscli', command: 'sudo apt-get -y -qq install awscli'}
+    run: {name: 'Enable cloudfront', command: 'aws configure set preview.cloudfront true'}
 
 defaults: &defaults
     docker:
@@ -100,6 +101,7 @@ jobs:
           command: |
               cd PFML/BenefitsCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/yourbenefits/ --delete
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/pfml/yourbenefits/*'
   
   pfml-cal-contribution-deploy-dev:
     <<: *defaults
@@ -122,6 +124,7 @@ jobs:
           command: |
               cd PFML/ContributionCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/contribution/ --delete
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/pfml/contribution/*'
   
   ui-cal-benefits-deploy-dev:
     <<: *defaults
@@ -144,6 +147,7 @@ jobs:
           command: |
               cd UI/BenefitsCalculator/ && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/yourbenefits/ --delete
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/ui/yourbenefits/*'
   
   ui-cal-parttime-deploy-dev:
     <<: *defaults
@@ -166,6 +170,7 @@ jobs:
           command: |
               cd UI/PartTimeBenefitsCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/parttimebenefits/ --delete
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/ui/parttimebenefits/*'
 
   # Deploy master branches to production ev.
   pfml-cal-benefits-deploy-prod:
@@ -189,6 +194,7 @@ jobs:
           command: |
               cd PFML/BenefitsCalculator && npm run build
               aws s3 sync build s3://calculator.digital.mass.gov/pfml/yourbenefits/ --delete
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/pfml/yourbenefits/*'
 
   pfml-cal-contribution-deploy-prod:
     <<: *defaults
@@ -211,6 +217,7 @@ jobs:
           command: |
               cd PFML/ContributionCalculator && npm run build
               aws s3 sync build s3://calculator.digital.mass.gov/pfml/contribution/ --delete
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/pfml/contribution/*'
 
 
 workflows:
