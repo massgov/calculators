@@ -8,8 +8,7 @@ references:
   install_global_packages: &install_global_packages
     run: {name: 'Install global packages', command: 'npm install'}
   install_aws: &install_aws
-    run: {name: 'Install awscli', command: 'sudo apt-get -y -qq install awscli'}
-    run: {name: 'Enable cloudfront', command: 'aws configure set preview.cloudfront true'}
+    run: {name: 'Install awscli and enable cloudfront', command: 'sudo apt-get -y -qq install awscli && aws configure set preview.cloudfront true'}
 
 defaults: &defaults
     docker:
