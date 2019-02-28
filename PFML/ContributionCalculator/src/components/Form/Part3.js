@@ -257,7 +257,7 @@ const Part3 = (props) => {
                           key={famLeaveCont < minFam ? `family-leave-input-number-emp-${famLeaveCont}-${Math.random()}` : `family-leave-input-number-emp-${famLeaveCont}`}
                         />
                       </div>
-                      <InputSlider 
+                      <InputSlider
                         {...familyLeaveSliderProps}
                         key={famLeaveCont < minFam ? `medical-leave-input-slider-${famLeaveCont}-${Math.random()}` : `medical-leave-input-slider-${famLeaveCont}`}
                       />
@@ -310,8 +310,8 @@ const Part3 = (props) => {
                           key={medLeaveCont < minMed ? `medical-leave-input-number-emp-${medLeaveCont}-${Math.random()}` : `medical-leave-input-number-emp-${medLeaveCont}`}
                         />
                       </div>
-                      <InputSlider 
-                        {...medLeaveSliderProps} 
+                      <InputSlider
+                        {...medLeaveSliderProps}
                         key={medLeaveCont < minMed ? `medical-leave-input-slider-${medLeaveCont}-${Math.random()}` : `medical-leave-input-slider-${medLeaveCont}`}
                       />
                     </Input>
