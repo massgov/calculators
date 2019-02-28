@@ -101,8 +101,7 @@ jobs:
               cd PFML/BenefitsCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/yourbenefits/ --delete
               aws configure set preview.cloudfront true
-              echo $AWS_CLOUDFRONT_ID
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/pfml/yourbenefits/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/pfml/yourbenefits/*' --invalidation-batch
   
   pfml-cal-contribution-deploy-dev:
     <<: *defaults
