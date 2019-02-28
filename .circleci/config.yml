@@ -240,7 +240,7 @@ workflows:
     jobs:
       - pfml-cal-benefits-deploy-dev:
           filters:
-            branches: { only: develop }
+            branches: { only: DP-12873--Add-CF-Invalidation-to-CircleDeploy }
       - pfml-cal-contribution-deploy-dev:
           filters:
             branches: { only: develop }
