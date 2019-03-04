@@ -58,7 +58,7 @@ class App extends Component {
       yearIncome: getDefaultNumber(yearIncome),
       maxWeeks: getWeeks(PartOneProps, leaveReason),
       leaveReason,
-      belowMinSalary: getDefaultNumber(yearIncome) < BenefitsVariables.baseVariables.minSalary || false
+      belowMinSalary: !!((getDefaultNumber(yearIncome) && getDefaultNumber(yearIncome) < BenefitsVariables.baseVariables.minSalary))
     };
     /* eslint-enable react/no-unused-state */
     this.footerProps = {
