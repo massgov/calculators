@@ -168,7 +168,7 @@ const Part3 = (props) => {
               domain: [0, 100],
               skipped: true,
               disabled: !enable,
-              onChange: (value) => onFamSliderChange(value)
+              onUpdate: (value) => onFamSliderChange(value)
             };
             const medLeaveSliderProps = {
               id: 'medical-leave',
@@ -182,7 +182,7 @@ const Part3 = (props) => {
               ticks: medTicks,
               skipped: true,
               disabled: !enable,
-              onChange: (value) => onMedSliderChange(value)
+              onUpdate: (value) => onMedSliderChange(value)
             };
 
             const medLeaveTotal = (medLeaveComp + medLeaveEmp) / timeValue;
