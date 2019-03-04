@@ -39,7 +39,7 @@
   margin-bottom: 0rem;
 }
 
-.ma__collapse {
+.ma__callout-collapse {
   margin: 20px 0px;
 
   p {
@@ -49,6 +49,10 @@
    &.collapsed {
         visibility: hidden;
         height: 0px;
+        .ma__help-tip__container.expanded {
+          visibility: hidden !important;
+          height: 0px !important;
+        }
       }
 
       &.collapsing, &.expanding {
