@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Footer, PageHeader } from '@massds/mayflower-react';
+import { Header, Footer, PageHeader, Collapse } from '@massds/mayflower-react';
 import { decode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery, encode } from 'react-url-query';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
@@ -133,9 +133,11 @@ class App extends Component {
             <Part1 error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
             <hr />
             <Part2 onChange={this.handleInput} onBlur={this.handleBlur} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalaryConv} />
-            {yearIncome > 0 && maxWeeks > 0 && !belowMinSalaryConv && (
-              <Part3 yearIncome={yearIncome} maxWeeks={maxWeeks} leaveReason={leaveReason} />
-            )}
+            <Collapse in={yearIncome > 0 && maxWeeks > 0 && yearIncome > BenefitsVariables.baseVariables.minSalary} dimension="height" className="ma__callout-alert">
+              <div className="ma__collapse">
+                <Part3 yearIncome={yearIncome} maxWeeks={maxWeeks} leaveReason={leaveReason} />
+              </div>
+            </Collapse>
           </section>
         </main>
         <Footer {...this.footerProps} />
