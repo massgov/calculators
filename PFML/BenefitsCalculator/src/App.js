@@ -97,7 +97,7 @@ class App extends Component {
       });
     }
     // Allow rendering belowMinSalary callout on inputCurrency up/down button click.
-    if(e.type === "click") {
+    if (e.type === 'click') {
       if (numberValue < BenefitsVariables.baseVariables.minSalary) {
         this.setState({
           belowMinSalary: true
