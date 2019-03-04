@@ -293,7 +293,7 @@ workflows:
     jobs:
       - pfml-cal-benefits-deploy-dev:
           filters:
-            branches: { only: develop }
+            branches: { only: pfml-benefits/DP-12881--content-update-benefits }
       - pfml-cal-contribution-deploy-dev:
           filters:
             branches: { only: develop }
