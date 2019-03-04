@@ -1,6 +1,7 @@
 {
-	"question": "How much did you earn in the last year?",
+	"question": "How much did you earn in the last 12 months?",
 	"errorMsg": "Please enter a value.",
 	"message": "Based on your entry, you may not have enough earnings to be financially eligible.",
-	"messageTheme": "c-error-red"
+	"messageTheme": "c-error-red",
+	"placeholder": "e.g. $35,000.00"
 }

@@ -6,7 +6,6 @@ import {
 import numbro from 'numbro';
 import BenefitsVariables from '../../data/BenefitsVariables.json';
 import PartThreeProps from '../../data/PartThree.json';
-import EmpSpan from '../EmpSpan';
 
 import './index.css';
 
@@ -45,8 +44,6 @@ const Part3 = (props) => {
 
   // The percent of weekly income the benefit will cover
   const percentWeeklyIncome = estWeeklyBenefit / (yearIncome / weeksPerYear);
-  // The percent of your annual income that, based on the max number of week, you can receive.
-  const percentIncome = totBenefit / yearIncome;
 
   const toCurrency = (number) => {
     const currency = numbro(number).formatCurrency({ thousandSeparated: true, mantissa: 2, spaceSeparated: false });
@@ -57,7 +54,7 @@ const Part3 = (props) => {
     const percent = numbro(number).format({ output: 'percent', mantissa, spaceSeparated: false });
     return percent;
   };
-  const empClass = 'ma__output-emphasized';
+
   const getHelpText = () => (
     <div className="ma__help-text">
       { yearIncome < benefitBreak ? (
@@ -88,24 +85,14 @@ const Part3 = (props) => {
       <CalloutAlert theme="c-primary" icon={{ name: '', ariaHidden: true }}>
         <HelpTip
           theme="c-white"
-          textBefore={`${paragraphOne.partOne} `}
-          triggerText={`<span class=${empClass} >${toCurrency(estWeeklyBenefit)}</span>`}
-          textAfter={`${paragraphOne.partTwo} <span class=${empClass} >${toPercentage(percentWeeklyIncome)}</span> ${paragraphOne.partThree}`}
+          text={`${paragraphOne.partOne} <strong>${toCurrency(estWeeklyBenefit)}</strong>${paragraphOne.partTwo} <strong>${toPercentage(percentWeeklyIncome)}</strong> ${paragraphOne.partThree}`}
+          triggerText={[`<strong>${toCurrency(estWeeklyBenefit)}</strong>`]}
           id="help-tip-benefits"
           labelID="help-tip-benefits-label"
         >
           {getHelpText()}
         </HelpTip>
-        <p>
-          {paragraphTwo.partOne}
-          {' '}
-          {<EmpSpan text={toCurrency(totBenefit)} />}
-          {paragraphTwo.partTwo}
-          {' '}
-          {<EmpSpan text={toPercentage(percentIncome)} />}
-          {' '}
-          {paragraphTwo.partThree}
-        </p>
+        <Paragraph text={`${paragraphTwo.partOne} ${maxWeeks} ${paragraphTwo.partTwo} <strong>${toCurrency(totBenefit)}</strong>.`} className="ma__help-text--p" />
       </CalloutAlert>
       <Button type="submit" size="small" info={buttonLink.text} text={buttonLink.text} href={buttonLink.link} />
     </Fragment>

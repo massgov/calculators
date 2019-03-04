@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@massds/mayflower-react": "^8.25.0",
+    "@massds/mayflower-react": "^9.1.1",
     "core-js": "^2.6.4",
     "env-cmd": "^8.0.2",
     "history": "^4.7.2",

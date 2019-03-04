@@ -1,11 +1,11 @@
 {
 	"question": {
 		"content": "For which of the following reasons are you planning to take leave?",
-		"triggerText": "following reasons",
-		"helpText": "For more information on the qualifications listed below, please visit hyperlink to a benefits page"
+		"triggerText": ["following reasons"],
+		"helpText": ["For more information on the qualifications listed below, please visit hyperlink to a benefits page"]
 	},
 	"options": [{
-	    "label": "Birth, adoption, or fostering of a child",
+	    "label": "Birth, adoption, or placement of a foster child",
 	    "value": "birth-adoption",
 			"class": "col-large-1",
 	    "weeks": "12",

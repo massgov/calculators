@@ -34,7 +34,7 @@ const mapUrlChangeHandlersToProps = () => ({
 });
 
 const validNumber = (num) => (num || (num !== null && num !== undefined));
-const getDefaultNumber = (num) => ((validNumber(num)) ? Number(num) : 0);
+const getDefaultNumber = (num) => ((validNumber(num)) ? Number(num) : null);
 
 const getWeeks = (qOneProps, selected) => {
   let maxWeeks;
@@ -85,7 +85,7 @@ class App extends Component {
     history.listen();
   }
 
-  handleInput = (e, value) => {
+  handleInput = (value) => {
     const numberValue = value;
     this.setState({
       yearIncome: numberValue
@@ -134,7 +134,7 @@ class App extends Component {
             <hr />
             <Part2 onChange={this.handleInput} onBlur={this.handleBlur} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalaryConv} />
             {yearIncome > 0 && maxWeeks > 0 && !belowMinSalaryConv && (
-              <Part3 yearIncome={yearIncome} maxWeeks={maxWeeks} />
+              <Part3 yearIncome={yearIncome} maxWeeks={maxWeeks} leaveReason={leaveReason} />
             )}
           </section>
         </main>
