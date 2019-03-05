@@ -85,7 +85,7 @@ class App extends Component {
     history.listen();
   }
 
-  handleInput = (e, value) => {
+  handleInput = (value, id, type) => {
     const numberValue = value;
     this.setState({
       yearIncome: numberValue
@@ -97,7 +97,7 @@ class App extends Component {
       });
     }
     // Allow rendering belowMinSalary callout on inputCurrency up/down button click.
-    if (e.type === 'click') {
+    if (type === 'click') {
       if (numberValue < BenefitsVariables.baseVariables.minSalary) {
         this.setState({
           belowMinSalary: true
