@@ -23,25 +23,24 @@ const mapUrlChangeHandlersToProps = () => ({
 const Part2 = (props) => {
   const formContext = useContext(FormContext);
   const partOneContext = useContext(InputContext);
-
   const {
-    smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, socialSecCap
+    totContribution, totMedPercent, totFamPercent, socialSecCap, empMedCont, largeCompMedCont
   } = ContributionVariables.baseVariables;
   const {
-    questionOne, questionTwo, questionThree, questionFour
+    questionOne, questionTwo, questionThree, questionFour, under25MedContDisclaimer
   } = PartTwoProps;
   const {
     onChangeOption, onChangePayW2, onChangePay1099, onChangePayWages
   } = props;
   const partTwoDefaults = {
     payrollBase: props.option || 'all',
-    payW2: props.payW2 || '0',
-    pay1099: props.pay1099 || '0',
-    payWages: props.payWages || '0'
+    payW2: props.payW2 || '',
+    pay1099: props.pay1099 || '',
+    payWages: props.payWages || ''
   };
 
   return(
-    <Input id="payrollBase" defaultValue={partTwoDefaults}>
+    <Input id="part_two" defaultValue={partTwoDefaults}>
       <InputContext.Consumer>
         {
           (inputContext) => {
@@ -49,20 +48,34 @@ const Part2 = (props) => {
               return null;
             }
             const {
-              payrollW2, payroll1099, payrollWages,
-            } = formContext.getValues();
-            const {
-              mass_employees, over50: over50per, over25, empCount: employeeCount
+              mass_employees, over50: over50per, over25, empCount: employeeCount, w2: employeesW2
             } = partOneContext.getValue();
+            const {
+              payrollBase, payW2, pay1099, payWages
+            } = formContext.getValue('part_two');
             const hasMassEmployees = (mass_employees) === 'yes';
-            const medPercent = over25 ? largeMedPercent : smallMedPercent;
-            const famPercent = over25 ? largeFamPercent : smallFamPercent;
+            const medPercent = totContribution * totMedPercent;
+            const medPayrollPercent = over25 ? (largeCompMedCont + empMedCont) : empMedCont;
+            const famPercent = totContribution * totFamPercent;
             const totalPercent = medPercent + famPercent;
-            const totalPayroll = over50per ? (numbro.unformat(payrollW2) + numbro.unformat(payroll1099)) : (numbro.unformat(payrollW2));
-            const totalPayment = totalPayroll * totalPercent;
-            const payrollWagesCap = numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages);
+            let totalPayroll;
+            if (payrollBase === 'all' && employeesW2 > 0) {
+              totalPayroll = over50per ? (numbro.unformat(pay1099) + numbro.unformat(payW2)) : numbro.unformat(payW2);
+            } else if (payrollBase === 'all' && !(employeesW2 > 0)) {
+              totalPayroll = numbro.unformat(pay1099);
+            } else {
+              totalPayroll = numbro.unformat(payWages) > socialSecCap ? socialSecCap : numbro.unformat(payWages);
+            }
+            const payrollWagesCap = numbro.unformat(payWages) > socialSecCap ? socialSecCap : numbro.unformat(payWages);
             const disableInput = !hasMassEmployees || !employeeCount;
-            const { payrollBase, payW2, pay1099, payWages } = inputContext.getValue();
+            // all workers annual
+            const medCompPayment = medPercent * totalPayroll * medPayrollPercent;
+            const famCompPayment = famPercent * totalPayroll;
+            // one worker annual
+            const medPayment = medPercent * payrollWagesCap * medPayrollPercent;
+            const famPayment = famPercent * payrollWagesCap;
+
+            const empMedContPercent = `${empMedCont * 100}%`;
             return(
               <Fragment>
                 <fieldset>
@@ -75,7 +88,7 @@ const Part2 = (props) => {
                       errorMsg={questionOne.errorMsg}
                       radioButtons={questionOne.options}
                       onChange={(e) => {
-                        const newVal = Object.assign({}, formContext.getValue('payrollBase'), { payrollBase: e.selected });
+                        const newVal = Object.assign({}, inputContext.getValue(), { payrollBase: e.selected });
                         inputContext.setValue(newVal, () => {
                           onChangeOption(newVal.payrollBase);
                         });
@@ -103,12 +116,13 @@ const Part2 = (props) => {
                             thousandSeparated: true
                           }}
                           onChange={(value, id) => {
-                            const newVal = Object.assign({}, formContext.getValue('payrollBase'), { payW2: value });
+                            const newVal = Object.assign({}, inputContext.getValue(), { payW2: value });
                             inputContext.setValue(newVal, () => {
                               onChangePayW2(value);
                             });
                           }}
-                          disabled={disableInput}
+                          required
+                          disabled={disableInput || !employeesW2}
                           inline
                           step={1}
                         />
@@ -130,7 +144,7 @@ const Part2 = (props) => {
                             thousandSeparated: true
                           }}
                           onChange={(value, id) => {
-                            const newVal = Object.assign({}, formContext.getValue('payrollBase'), { pay1099: value });
+                            const newVal = Object.assign({}, inputContext.getValue(), { pay1099: value });
                             inputContext.setValue(newVal, () => {
                               onChangePay1099(value);
                             });
@@ -141,34 +155,42 @@ const Part2 = (props) => {
                           step={1}
                         />
                       </div>
-                      <Collapse in={hasMassEmployees && numbro.unformat(payrollW2) > 0 && (over50per ? numbro.unformat(payroll1099) > 0 : true)} dimension="height" className="ma__callout-alert">
+                      <Collapse in={(hasMassEmployees && (employeeCount > 0) && Number(totalPayroll) && (over50per ? (numbro.unformat(pay1099) > 0) : true)) === true} dimension="height" className="ma__callout-alert">
                         <div className="ma__collapse">
                           <CalloutAlert theme="c-primary" icon={null}>
                             <HelpTip
-                              textBefore="The total estimated annual contribution for your company is "
-                              triggerText={`<strong>${toCurrency(totalPayment)}</strong>`}
-                              textAfter="."
+                              text={`The estimated total annual contribution for the business is <strong>${toCurrency(famCompPayment + medCompPayment)}</strong>. `}
+                              triggerText={[`<strong>${toCurrency(famCompPayment + medCompPayment)}</strong>`]}
                               id="help-tip-total-ann-cont"
-                              labelID="help-tip-total-ann-cont-label"
                               theme="c-white"
-                            >
-                              <p className="ma__help-text">{toCurrency(totalPayment)} = {toCurrency(totalPayroll)} X {toPercentage(totalPercent, 2)}</p>
-
-                            </HelpTip>
-                            <HelpTip
-                              textBefore="Of this amount, "
-                              triggerText={`<strong>${toCurrency(medPercent * totalPayroll)}</strong> is for medical leave and <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave.`}
-                              textAfter="."
-                              id="help-tip-medfam-ann-cont"
-                              labelID="help-tip-medfam-ann-cont-label"
-                              theme="c-white"
-                            >
-                              <div className="ma__help-text">
-                                <p>Medical Leave: {toCurrency(medPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(medPercent, 2)}</p>
-                                <p>Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent, 2)}</p>
-                              </div>
-
-                            </HelpTip>
+                              helpText={over25 ? (
+                                // over 25 total medLeave calculation
+                                [`${toCurrency(famCompPayment + medCompPayment)} = ${toCurrency(totalPayroll)} X ${toPercentage(totalPercent, 2)}`]
+                              ) : (
+                                // under 25 total medLeave calculation
+                                [`${toCurrency(famCompPayment + medCompPayment)} = (${toCurrency(totalPayroll)} X ${toPercentage(famPercent, 2)}) + (${toCurrency(totalPayroll)} X ${toPercentage(medPercent, 2)} X ${empMedContPercent})`]
+                              )
+                              }
+                            />
+                            <div className="ma__help-tip-many">
+                              <HelpTip
+                                text={`Of this amount, <strong>${toCurrency(famPercent * totalPayroll)}</strong> is for family leave and <strong>${toCurrency(medPercent * totalPayroll * medPayrollPercent)}</strong> is for medical leave.`}
+                                triggerText={[`<strong>${toCurrency(famPercent * totalPayroll)}</strong>`, `<strong>${toCurrency(medPercent * totalPayroll * medPayrollPercent)}</strong>`]}
+                                id="help-tip-medfam-ann-cont"
+                                theme="c-white"
+                              >
+                                <div className="ma__help-text">
+                                  Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent, 2)}
+                                </div>
+                                <div className="ma__help-text">
+                                  Medical Leave: {toCurrency(medPercent * totalPayroll * medPayrollPercent)} = {toCurrency(totalPayroll)} X { over25 ? toPercentage(medPercent, 2) : <span>{toPercentage(medPercent, 2)} X {empMedContPercent}</span>}
+                                </div>
+                              </HelpTip>
+                            </div>
+                            { !over25 && <Paragraph className="ma__help-tip-many" text={under25MedContDisclaimer.content} />}
+                            <div className="ma__disclaimer">
+                              <Paragraph text={`<strong>Please note:</strong> If any of the covered individuals’ wages are above the SSI cap (<strong>${toCurrency(socialSecCap)}</strong>), the estimated total contribution above is an overestimation. To yield a more accurate estimate, substitute the SSI cap amount in place of any wages above the cap when summing your total payroll.`} />
+                            </div>
                           </CalloutAlert>
                         </div>
                       </Collapse>
@@ -193,7 +215,7 @@ const Part2 = (props) => {
                             thousandSeparated: true
                           }}
                           onChange={(value, id) => {
-                            const newVal = Object.assign({}, formContext.getValue('payrollBase'), { payWages: value });
+                            const newVal = Object.assign({}, inputContext.getValue(), { payWages: value });
                             inputContext.setValue(newVal, () => {
                               onChangePayWages(value);
                             });
@@ -204,30 +226,42 @@ const Part2 = (props) => {
                           disabled={disableInput}
                         />
                       </div>
-                      <Collapse in={((payrollWages) && (employeeCount > 0) && (numbro.unformat(payrollWages) > 0))} dimension="height">
+                      <Collapse in={hasMassEmployees && (payWages && (employeeCount > 0) && (numbro.unformat(payWages) > 0))} dimension="height">
                         <div className="ma__collapse">
-                          {payrollWages && (
+                          {payWages && (
                             <CalloutAlert theme="c-primary" icon={null}>
-                              <HelpTip
-                                textBefore="The total estimated annual contribution for this qualifying worker is "
-                                triggerText={`<strong>${toCurrency(payrollWagesCap * totalPercent)}</strong>`}
-                                textAfter="."
-                                id="help-tip-tot-emp-ann-cont"
-                                labelID="help-tip-tot-emp-cont-label"
-                                helpText={`${toCurrency(payrollWagesCap * totalPercent)} = ${toCurrency(payrollWagesCap)} X ${toPercentage(totalPercent, 2)}`}
-                                theme="c-white"
-                              />
-                              <HelpTip
-                                textBefore="Of this amount, "
-                                triggerText={`<strong>${toCurrency(medPercent * payrollWagesCap)}</strong> is for medical leave and <strong>${toCurrency(famPercent * payrollWagesCap)}</strong> is for family leave`}
-                                textAfter="."
-                                id="help-tip-medfam-emp-ann-cont"
-                                labelID="help-tip-medfam-emp-cont-label"
-                                helpText={<div><p>Medical Leave: {toCurrency(medPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(medPercent, 2)}</p><p>Family Leave: {toCurrency(famPercent * payrollWagesCap)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}</p></div>}
-                                theme="c-white"
-                              />
-                              { numbro.unformat(payrollWages) > socialSecCap && (
-                                <Paragraph text={`Required contributions are capped at the Social Security cap, which is updated annually. It is <strong>${toCurrency(socialSecCap)}</strong> for 2019.`} />
+                              <div className="ma__help-tip-many">
+                                <HelpTip
+                                  text={`The total estimated minimum annual contribution for this covered individual is <strong>${toCurrency(famPayment + medPayment)}</strong>. `}
+                                  triggerText={[`<strong>${toCurrency(famPayment + medPayment)}</strong>`]}
+                                  id="help-tip-tot-emp-ann-cont"
+                                  helpText={over25 ? (
+                                    // over 25 total medLeave calculation
+                                    [`Total Contribution: ${toCurrency(famPayment + medPayment)} = ${toCurrency(payrollWagesCap)} X ${toPercentage(totalPercent, 2)}`]
+                                  ) : (
+                                    // under 25 total medLeave calculation
+                                    [`Total Contribution: ${toCurrency(famPayment + medPayment)} = (${toCurrency(payrollWagesCap)} X ${toPercentage(famPercent, 2)}) + (${toCurrency(payrollWagesCap)} X ${toPercentage(medPercent, 2)} X ${empMedContPercent})`]
+                                  )
+                                  }
+                                  theme="c-white"
+                                />
+                                <HelpTip
+                                  text={`Of this amount, <strong>${toCurrency(famPayment)}</strong> is for family leave. and <strong>${toCurrency(medPayment)}</strong> is for medical leave.`}
+                                  triggerText={[`<strong>${toCurrency(famPayment)}</strong>`, `<strong>${toCurrency(medPayment)}</strong>`]}
+                                  id="help-tip-medfam-emp-ann-cont"
+                                  theme="c-white"
+                                >
+                                  <div className="ma__help-text">Family Leave: {toCurrency(famPayment)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}
+                                  </div>
+                                  <div className="ma__help-text">Medical Leave: {toCurrency(medPayment)} = {toCurrency(payrollWagesCap)} X { over25 ? toPercentage(medPercent, 2) : <span>{toPercentage(medPercent, 2)} X {empMedContPercent}</span>}
+                                  </div>
+                                </HelpTip>
+                              </div>
+                              { !over25 && <Paragraph className="ma__help-tip-many" text={under25MedContDisclaimer.content} />}
+                              { numbro.unformat(payWages) > socialSecCap && (
+                                <div className="ma__disclaimer">
+                                  <Paragraph text={`<strong>Please note: </strong>Required contributions are capped at the Social Security cap, which is updated annually. It is <strong>${toCurrency(socialSecCap)}</strong> for 2019.`} />
+                                </div>
                               )}
                             </CalloutAlert>
                           )}

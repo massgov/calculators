@@ -179,12 +179,14 @@ const Part1 = (props) => {
                         const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
                         const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
                         const over25 = empCount >= minEmployees;
-                        const newVal = Object.assign({}, formContext.getValue('part_one'), {
+                        const newVal = Object.assign({}, inputContext.getValue(), {
                           emp1099: current1099,
                           empCount,
                           over50,
                           over25,
-                          w2: empW2
+                          w2: empW2,
+                          medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                          famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
                         });
                         inputContext.setValue(newVal, () => {
                           onChangeW2(empW2);
@@ -214,12 +216,14 @@ const Part1 = (props) => {
                         const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
                         const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
                         const over25 = empCount >= minEmployees;
-                        const newVal = Object.assign({}, formContext.getValue('part_one'), {
+                        const newVal = Object.assign({}, inputContext.getValue(), {
                           w2: empW2,
                           empCount,
                           over50,
                           over25,
-                          emp1099: current1099
+                          emp1099: current1099,
+                          medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                          famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
                         });
                         inputContext.setValue(newVal, () => {
                           onChangeEmp1099(newVal.emp1099);
