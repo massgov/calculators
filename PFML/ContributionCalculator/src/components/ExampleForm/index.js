@@ -5,6 +5,7 @@ import { FormProvider } from '@massds/mayflower-react';
 import Part1 from '../Form/Part1';
 import Part2 from '../Form/Part2';
 import Part3 from '../Form/Part3';
+import Reset from '../Form/Reset';
 
 
 import '../../css/index.css';
@@ -39,6 +40,7 @@ const ExampleForm = () => {
                 <Fragment>
                   <hr />
                   <Part3 partOneContext={partOneContext} />
+                  <Reset />
                 </Fragment>
               )
             }

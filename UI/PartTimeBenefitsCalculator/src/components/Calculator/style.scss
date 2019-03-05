@@ -1,0 +1,16 @@
+@import "../../css/global";
+@import "../../css/layout";
+
+.ma__form-page {
+  .ma__input-group {
+    padding-top: 1em;
+  }
+  .ma__show-currency {
+    color: $c-bay-blue;
+    font-weight: bold;
+  }
+}
+
+.ma__help-text {
+	padding: 10px;
+}

@@ -11,7 +11,7 @@ const Part2 = (props) => {
     defaultValue, onChange, disabled, belowMinSalary, onBlur
   } = props;
   const {
-    question, errorMsg, message, messageTheme
+    question, errorMsg, message, messageTheme, placeholder
   } = PartTwoProps;
   return(
     <Fragment>
@@ -19,14 +19,15 @@ const Part2 = (props) => {
         labelText={question}
         id="question-2"
         name="question-2"
+        width={0}
+        maxlength={200}
         defaultValue={defaultValue}
         min={0}
+        placeholder={placeholder}
         format={{
           mantissa: 2,
           trimMantissa: false,
-          thousandSeparated: true,
-          negative: 'parenthesis',
-          output: 'currency'
+          thousandSeparated: true
         }}
         errorMsg={errorMsg}
         onChange={onChange}

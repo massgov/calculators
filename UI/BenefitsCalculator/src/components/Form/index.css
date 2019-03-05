@@ -1,3 +1,9 @@
+html {
+  box-sizing: border-box; }
+
+*, *::after, *::before {
+  box-sizing: inherit; }
+
 form {
   margin: 40px 0 !important; }
 
@@ -14,3 +20,16 @@ form {
 
 .ma__help-text {
   padding: 15px; }
+
+.ma__output-calculation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0px 10px; }
+  .ma__output-calculation p {
+    background-color: #F2F2F2;
+    border: 2px solid #DCDCDC;
+    padding: 5px 10px; }
+
+.ma__input-group--inline .ma__input-group-right {
+  align-items: unset; }

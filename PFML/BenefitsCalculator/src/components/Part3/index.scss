@@ -1,15 +1,10 @@
 @import "./node_modules/@massds/mayflower-react/es/components/styles/global";
 
-.ma__output-emphasized {
-	color: $c-primary;
-	font-weight: 700;
-}
-
 .ma__help-tip__trigger {
+	&:hover,
+	&:focus,
+	&:active {
   .ma__output-emphasized {
-    &:hover,
-    &:focus,
-    &:active {
       color: $c-white;
     }
   }
@@ -38,4 +33,43 @@
 
 .ma__callout-alert {
 	margin-bottom: 40px;
+}
+
+.ma__help-text--p {
+  margin-bottom: 0rem;
+}
+
+.ma__collapse {
+  margin: 20px 0px;
+
+  p {
+    margin-bottom: 0rem;
+  }
+
+   &.collapsed {
+        visibility: hidden;
+        height: 0px;
+        .ma__help-tip__container.expanded {
+          visibility: hidden !important;
+          height: 0px !important;
+        }
+      }
+
+      &.collapsing, &.expanding {
+        position: relative;
+        overflow: hidden;
+        visibility: visible;
+        -webkit-transition-property: height, visibility;
+        transition-property: height, visibility;
+        transition-duration: 0.5s;
+        -webkit-transition-duration: 0.5s;
+        transition-timing-function: ease;
+        -webkit-transition-timing-function: ease;
+      }
+
+      &.expanded {
+        height: auto;
+        visibility: visible;
+        display: block;
+      }
 }
