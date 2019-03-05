@@ -9,10 +9,8 @@
   	"largeCompFamCont": 0,
     "empMedCont": 0.4,
     "totContribution": 0.0063,
-  	"smallMedPercent": 0.825,
-  	"largeMedPercent": 0.825,
-  	"smallFamPercent": 0.175,
-  	"largeFamPercent": 0.175,
+  	"totMedPercent": 0.825,
+  	"totFamPercent": 0.175,
   	"emp1099Fraction": 0.5,
   	"socialSecCap": 132900
   }
