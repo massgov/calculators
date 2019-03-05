@@ -22,7 +22,7 @@ const mapUrlChangeHandlersToProps = () => ({
 
 const Part2 = (props) => {
   const {
-    smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, socialSecCap, empMedCont, largeCompMedCont
+    totContribution, smallMedPercent, smallFamPercent, largeMedPercent, largeFamPercent, socialSecCap, empMedCont, largeCompMedCont
   } = ContributionVariables.baseVariables;
   const {
     questionOne, questionTwo, questionThree, questionFour, under25MedContDisclaimer
@@ -44,9 +44,9 @@ const Part2 = (props) => {
                 payrollW2, payroll1099, payrollWages, employeesW2
               }
             } = context;
-            const medPercent = over25 ? largeMedPercent : smallMedPercent;
+            const medPercent = over25 ? totContribution * largeMedPercent : totContribution * smallMedPercent;
             const medPayrollPercent = over25 ? (largeCompMedCont + empMedCont) : empMedCont;
-            const famPercent = over25 ? largeFamPercent : smallFamPercent;
+            const famPercent = over25 ? totContribution * largeFamPercent : totContribution * smallFamPercent;
             const totalPercent = medPercent + famPercent;
             let totalPayroll;
             if (payrollBase === 'all' && employeesW2 > 0) {
