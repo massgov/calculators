@@ -74,7 +74,6 @@ const Part3 = (props) => {
 
             // Remove this function after integrating form context.
             const onMedBlur = (event, value, reverse) => {
-              const medSliderKey = Math.random();
               let fracNum;
               if (!reverse) {
                 if (value < 0) {
@@ -98,7 +97,7 @@ const Part3 = (props) => {
                   fracNum = (maxMedPer - value) / 100;
                 }
               }
-              context.updateState({ medLeaveCont: fracNum, medSliderKey });
+              context.updateState({ medLeaveCont: fracNum, medSliderKey: Math.random() });
               onChangeMedCont(fracNum);
             };
             const onMedChange = (event, value, reverse) => {
@@ -110,12 +109,11 @@ const Part3 = (props) => {
 
             // Remove this function after integrating form context.
             const onFamBlur = (event, value, reverse) => {
-              const famSliderKey = Math.random();
               let fracNum = value > minFamPer ? value / 100 : minFam;
               if (reverse) {
                 fracNum = (100 - value) / 100;
               }
-              context.updateState({ famLeaveCont: fracNum, famSliderKey });
+              context.updateState({ famLeaveCont: fracNum, famSliderKey: Math.random() });
               onChangeFamCont(fracNum);
             };
             const onFamChange = (event, value, reverse) => {
@@ -263,7 +261,7 @@ const Part3 = (props) => {
                       </div>
                       <InputSlider
                         {...familyLeaveSliderProps}
-                        key={famSliderKey ? `family-leave-input-slider-${famSliderKey}` : `family-leave-input-slider`}
+                        key={famSliderKey ? `family-leave-input-slider-${famSliderKey}` : 'family-leave-input-slider'}
                       />
                     </Input>
                     <Input labelText={questionOne.right.main} required disabled={!enable}>
@@ -316,7 +314,7 @@ const Part3 = (props) => {
                       </div>
                       <InputSlider
                         {...medLeaveSliderProps}
-                        key={medSliderKey ? `medical-leave-input-slider-${medSliderKey}` : `medical-leave-input-slider`}
+                        key={medSliderKey ? `medical-leave-input-slider-${medSliderKey}` : 'medical-leave-input-slider'}
                       />
                     </Input>
                   </div>
