@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Header, Footer, PageHeader, Heading, HelpTip
+  Header, Footer, PageHeader, HelpTip
 } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
@@ -44,7 +44,7 @@ class App extends Component {
           />
           <section className="main-content main-content--two">
             <div className="page-content">
-            <hr />
+              <hr />
               <h2>
               <HelpTip
                 text="Enter your total wages for the last 4 quarters to estimate your benefits."
