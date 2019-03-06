@@ -134,7 +134,7 @@ class App extends Component {
     const questTwoDisabled = !(maxWeeks > 0);
     return(
       <div className="App">
-        <Header {...this.headerProps} />
+        {process.env.REACT_APP_IFRAME === "false" && <Header {...this.headerProps} />}
         <main className="main-content">
           <PageHeader title={BenefitsVariables.title} optionalContents={[{ paragraph: { text: BenefitsVariables.description } }]} />
           <section className="main-content--two">
@@ -150,7 +150,7 @@ class App extends Component {
             }
           </section>
         </main>
-        <Footer {...this.footerProps} />
+        {process.env.REACT_APP_IFRAME === "false" && <Footer {...this.footerProps} />}
       </div>
     );
   }
