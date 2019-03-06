@@ -35,7 +35,7 @@ class App extends Component {
   render() {
     return(
       <div className="App">
-        {process.env.REACT_APP_IFRAME === "false" && <Header {...this.headerProps} />}
+        {process.env.REACT_APP_IFRAME === 'false' && <Header {...this.headerProps} />}
         <main className="main-content">
           <PageHeader
             title={ContributionVariables.title}
@@ -45,7 +45,7 @@ class App extends Component {
             <ExampleForm />
           </section>
         </main>
-        {process.env.REACT_APP_IFRAME === "false" && <Footer {...this.footerProps} />}
+        {process.env.REACT_APP_IFRAME === 'false' && <Footer {...this.footerProps} />}
       </div>
     );
   }
