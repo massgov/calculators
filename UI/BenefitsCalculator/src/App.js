@@ -46,14 +46,14 @@ class App extends Component {
             <div className="page-content">
               <hr />
               <h2>
-              <HelpTip
-                text="Enter your total wages for the last 4 quarters to estimate your benefits."
-                triggerText={['total wages']}
-                helpText={['Total wages means the gross amount that appears on your paycheck or W-2. Do not use wages net of tax or other deductions.']}
-                id="helptext-total-wages"
-              />
+                <HelpTip
+                  text="Enter your total wages for the last 4 quarters to estimate your benefits."
+                  triggerText={['total wages']}
+                  helpText={['Total wages means the gross amount that appears on your paycheck or W-2. Do not use wages net of tax or other deductions.']}
+                  id="helptext-total-wages"
+                />
               </h2>
-              
+
               <Form />
             </div>
           </section>
