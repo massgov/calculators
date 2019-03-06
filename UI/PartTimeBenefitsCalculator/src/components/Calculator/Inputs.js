@@ -15,6 +15,7 @@ export const QuestionOne = (props) => {
       defaultValue={null}
       step={1}
       min={0}
+      max={795}
       onChange={handleChange}
     />
   );
@@ -24,7 +25,7 @@ export const QuestionTwo = (props) => {
   const { handleChange } = props;
   return(
     <InputCurrency
-      labelText="How much you earn weekly working part-time (before taxes)?"
+      labelText="How much do you earn weekly working part-time (before taxes)?"
       inline
       required
       id="weekly-earnings"
