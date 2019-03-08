@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Header, Footer, PageHeader, Heading
+  Header, Footer, PageHeader, HelpTip
 } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
@@ -31,7 +31,7 @@ class App extends Component {
   render() {
     return(
       <div className="App">
-        <Header {...this.headerProps} />
+        {process.env.REACT_APP_IFRAME === 'false' && <Header {...this.headerProps} />}
         <main className="main-content">
           <PageHeader
             title="UI Claimants Benefits Calculator"
@@ -43,14 +43,22 @@ class App extends Component {
             }]}
           />
           <section className="main-content main-content--two">
-            <Heading level={2} text="Enter your total wages for the last 4 quarters to estimate your benefits." />
             <div className="page-content">
               <hr />
+              <h2>
+                <HelpTip
+                  text="Enter your total wages for the last 4 quarters to estimate your benefits."
+                  triggerText={['total wages']}
+                  helpText={['Total wages means the gross amount that appears on your paycheck or W-2. Do not use wages net of tax or other deductions.']}
+                  id="helptext-total-wages"
+                />
+              </h2>
+
               <Form />
             </div>
           </section>
         </main>
-        <Footer {...this.footerProps} />
+        {process.env.REACT_APP_IFRAME === 'false' && <Footer {...this.footerProps} />}
       </div>
     );
   }

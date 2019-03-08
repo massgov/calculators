@@ -30,7 +30,7 @@ class App extends Component {
   render() {
     return(
       <div className="App">
-        <Header {...this.headerProps} />
+        {process.env.REACT_APP_IFRAME === 'false' && <Header {...this.headerProps} />}
         <main className="main-content">
           <PageHeader
             title="UI Benefits Calculator for Part-time Workers"
@@ -48,7 +48,7 @@ class App extends Component {
             </div>
           </section>
         </main>
-        <Footer {...this.footerProps} />
+        {process.env.REACT_APP_IFRAME === 'false' && <Footer {...this.footerProps} />}
       </div>
     );
   }

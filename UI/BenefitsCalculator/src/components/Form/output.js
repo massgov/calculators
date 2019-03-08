@@ -74,7 +74,7 @@ const Output = (props) => {
   const getTotalHelpText = () => (
     <div className="ma__help-text">
       <Fragment>
-        <Paragraph text="Your maximum benefit credit is calculated as the lesser of either:" />
+        <Paragraph text="Your maximum benefit credit is equal to the lesser of either:" />
         <ul>
           <li>
 30 times your weekly benefit amount:

@@ -32,6 +32,7 @@
     "start": "npm-run-all build-menus -p watch-css start-js",
     "build": "npm-run-all build-menus build-css build-js",
     "build:development": "env-cmd .env.development npm-run-all build-css build-js",
+    "build:iframe": "env-cmd .env.iframe npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/eslint .",
