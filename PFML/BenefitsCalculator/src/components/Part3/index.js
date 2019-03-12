@@ -92,7 +92,7 @@ const Part3 = (props) => {
         >
           {getHelpText()}
         </HelpTip>
-        <Paragraph text={`${paragraphTwo.partOne} ${maxWeeks} ${paragraphTwo.partTwo} <strong>${toCurrency(totBenefit)}</strong>.`} className="ma__help-text--p" />
+        <Paragraph text={`${paragraphTwo.partOne} <strong>${toCurrency(totBenefit)}</strong>.`} className="ma__help-text--p" />
       </CalloutAlert>
       <Button type="submit" size="small" info={buttonLink.text} text={buttonLink.text} href={buttonLink.link} />
     </Fragment>

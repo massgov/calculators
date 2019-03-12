@@ -21,10 +21,10 @@
         "errorMsg": "Please enter a value."
     },
     "questionFour": {
-        "question": "What was the covered individual’s net wages in the last 12 months?",
+        "question": "What was the covered individual’s gross wages in the last 12 months?",
         "errorMsg": "Please enter a value."
     },
     "under25MedContDisclaimer": {
-        "content": "Businesses with fewer than 25 covered individuals are exempt from paying the employer share of the medical leave contribution (<strong>60%</strong>) but are still required to send the employee share of the medical leave contribution (<strong>40%</strong>) on behalf of their covered individuals. "  
+        "content": "Employers with fewer than 25 covered individuals are exempt from paying the employer share of the medical leave contribution (<strong>60%</strong>) but are still required to send the employee share of the medical leave contribution (<strong>40%</strong>) on behalf of their covered individuals. "  
     }
 }

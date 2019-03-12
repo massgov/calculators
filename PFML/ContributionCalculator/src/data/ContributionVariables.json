@@ -1,6 +1,6 @@
 {
-  "title": "Paid Family Medical Leave Contribution Calculator",
-  "description": "Under the <a href=\"https://www.mass.gov/guides/a-guide-to-paid-family-and-medical-leave-for-massachusetts-businesses\">PFML law</a>, businesses are responsible for sending family and medical leave contributions to the Department of Family and Medical Leave on behalf of their W2 employees and 1099-MISC contractors. If you’re a Massachusetts business or your workforce includes Massachusetts 1099-MISC contractors, use the calculator below to estimate the required contributions you will need to send.",
+  "title": "Paid Family and Medical Leave Contribution Calculator",
+  "description": "Under the <a href=\"https://www.mass.gov/guides/a-guide-to-paid-family-and-medical-leave-for-massachusetts-businesses\">PFML law</a>, businesses are responsible for sending family and medical leave contributions to the Department of Family and Medical Leave on behalf of their W2 employees and 1099-MISC contractors. If you’re a Massachusetts employer or your workforce includes Massachusetts 1099-MISC contractors, use the calculator below to estimate the required contributions you will need to send.",
   "baseVariables": {
   	"minEmployees": 25,
   	"smallCompMedCont": 0,

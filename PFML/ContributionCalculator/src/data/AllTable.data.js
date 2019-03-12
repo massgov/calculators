@@ -20,7 +20,7 @@ export default {
     rows: [{
       cells: [{
         heading: true,
-        text: 'The business will pay:'
+        text: 'The employer will pay:'
       }, {
       }, {
       }, {

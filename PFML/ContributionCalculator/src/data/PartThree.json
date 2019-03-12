@@ -1,14 +1,14 @@
 {
     "questionOne": {
         "over25": {
-            "text": "How will the business split the total contribution with covered individuals?",
+            "text": "How will the employer split the total contribution with covered individuals?",
             "triggerText": ["split the total contribution"],
-            "helpText": ["Since the business has 25 or more covered individuals, it is required to pay at least 60% of the medical leave contribution. The business is free to pay a larger portion of the contribution if it chooses to do so."]
+            "helpText": ["Since the employer has 25 or more covered individuals, it is required to pay at least 60% of the medical leave contribution. The employer is free to pay a larger portion of the contribution if it chooses to do so."]
         },
         "under25": {
-            "text": "How will the business split the total contribution with covered individuals?",
+            "text": "How will the employer split the total contribution with covered individuals?",
             "triggerText": ["split the total contribution"],
-            "helpText": ["Businesses with fewer than 25 covered individuals are not required to pay the employer share of the medical leave contribution, but can choose to contribute on behalf of their covered individuals into the remaining 40%."]
+            "helpText": ["Employers with fewer than 25 covered individuals are not required to pay the employer share of the medical leave contribution, but can choose to contribute on behalf of their covered individuals into the remaining 40%."]
         },
         "left": {
             "main": "Family Leave",
