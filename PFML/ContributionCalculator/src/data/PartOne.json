@@ -28,7 +28,7 @@
     },
     "questionThree": {
         "question": {
-            "helpText": [" A MA 1099-MISC contractor is an individual that resides in Massachusetts for whom your business is required to report payment for services on IRS Form 1099-MISC."],
+            "helpText": ["A MA 1099-MISC contractor is an individual that resides in Massachusetts for whom your business is required to report payment for services on IRS Form 1099-MISC."],
             "triggerText": ["Massachusetts 1099-MISC contractors"],
             "text": "What is the average number of Massachusetts 1099-MISC contractors regularly performing services for your business over the last 12 months?"
         },
