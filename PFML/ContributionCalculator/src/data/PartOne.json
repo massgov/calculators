@@ -7,13 +7,13 @@
         "options": [{
             "label": "Yes",
             "value": "yes",
-            "id": "yes",
+            "id": "mass_employees_yes",
             "message": "",
             "theme": "c-primary"
         }, {
             "label": "No",
             "value": "no",
-            "id": "no",
+            "id": "mass_employees_no",
             "message": "You are <strong>not required</strong> to participate in the PFML <strong>program</strong>.",
             "theme": "c-error-red"
         }]
