@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Header, Footer, PageHeader, HelpTip
+  Header, Footer, PageHeader, HelpTip, ButtonFixedFeedback
 } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
@@ -57,6 +57,7 @@ class App extends Component {
               <Form />
             </div>
           </section>
+          {process.env.REACT_APP_IFRAME === 'false' && <ButtonFixedFeedback href="https://www.mass.gov/feedback" />}
         </main>
         {process.env.REACT_APP_IFRAME === 'false' && <Footer {...this.footerProps} />}
       </div>
