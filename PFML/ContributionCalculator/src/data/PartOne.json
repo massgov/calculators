@@ -1,7 +1,7 @@
 {
     "questionOne": {
         "question": {
-            "content": "Do you have any Massachusetts W2 employees or Massachusetts 1099-MISC contractors performing services for you business?"
+            "content": "Do you have any Massachusetts W2 employees or Massachusetts 1099-MISC contractors in your workforce?"
         },
         "errorMsg": "Please select yes or no.",
         "options": [{
@@ -22,7 +22,7 @@
         "question": {
             "helpText": ["A MA W2 employee is anyone to whom your business issues a W2 form for performing services in Massachusetts."],
             "triggerText": ["Massachusetts W2 employees"],
-            "text": "What is the average number of Massachusetts W2 employees in your workforce over the last 12 months?"
+            "text": "What is the average number of Massachusetts W2 employees in your workforce over the last calendar year?"
         },
         "errorMsg": "Please enter a value."
     },
@@ -30,7 +30,7 @@
         "question": {
             "helpText": ["A MA 1099-MISC contractor is an individual that resides in Massachusetts for whom your business is required to report payment for services on IRS Form 1099-MISC."],
             "triggerText": ["Massachusetts 1099-MISC contractors"],
-            "text": "What is the average number of Massachusetts 1099-MISC contractors regularly performing services for your business over the last 12 months?"
+            "text": "What is the average number of Massachusetts 1099-MISC contractors in your workforce over the last calendar year?"
         },
         "errorMsg": "Please enter a value."
     },

@@ -13,11 +13,11 @@
         }]
     },
     "questionTwo": {
-        "question": "What was your total payroll for Massachusetts W2 employees in the last 12 months?",
+        "question": "What was your total payroll for Massachusetts W2 employees in the last calendar year?",
         "errorMsg": "Please enter a value."
     },
     "questionThree": {
-        "question": "What was your total payroll for Massachusetts 1099-MISC contractors in the last 12 months?",
+        "question": "What was your total payroll for Massachusetts 1099-MISC contractors in the last calendar year?",
         "errorMsg": "Please enter a value."
     },
     "questionFour": {
