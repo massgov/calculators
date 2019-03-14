@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import TagManager from 'react-gtm-module'
+import TagManager from 'react-gtm-module';
 import numbro from 'numbro';
 import { SelectBox, Input, InputSlider, InputNumber, FormContext, Table } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
@@ -129,21 +129,25 @@ const Part3 = (props) => {
               const fracNum = value > minMedPer ? value / 100 : minMed;
               context.updateState({ medLeaveCont: fracNum });
               onChangeMedCont(fracNum);
-              TagManager.dataLayer({dataLayer:{
+              TagManager.dataLayer({
+dataLayer: {
                 event: 'gtm.slider',
                 sliderValue: fracNum,
                 sliderID: 'medical-leave'
-              }})
+              }
+});
             };
             const onFamSliderChange = (value) => {
               const fracNum = value > minFamPer ? value / 100 : minFam;
               context.updateState({ famLeaveCont: fracNum });
               onChangeFamCont(fracNum);
-              TagManager.dataLayer({dataLayer:{
+              TagManager.dataLayer({
+ dataLayer: {
                 event: 'gtm.slider',
                 sliderValue: fracNum,
                 sliderID: 'family-leave'
-              }})
+              }
+});
             };
             const getTimeValue = (text) => {
               let value;
