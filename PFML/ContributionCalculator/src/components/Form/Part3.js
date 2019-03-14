@@ -131,8 +131,8 @@ const Part3 = (props) => {
               onChangeMedCont(fracNum);
               TagManager.dataLayer({dataLayer:{
                 event: 'gtm.slider',
-                value: fracNum,
-                elementID: 'medical-leave'
+                sliderValue: fracNum,
+                sliderID: 'medical-leave'
               }})
             };
             const onFamSliderChange = (value) => {
@@ -141,8 +141,8 @@ const Part3 = (props) => {
               onChangeFamCont(fracNum);
               TagManager.dataLayer({dataLayer:{
                 event: 'gtm.slider',
-                value: fracNum,
-                elementID: 'family-leave'
+                sliderValue: fracNum,
+                sliderID: 'family-leave'
               }})
             };
             const getTimeValue = (text) => {
