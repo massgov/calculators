@@ -208,7 +208,7 @@ const Part3 = (props) => {
               <Fragment>
                 <fieldset>
                   <legend className={`ma__label${enable ? '' : ' ma__label--disabled'}`}>
-                    {over25 ? getHelpTip(questionOne.over25) : getHelpTip(questionOne.under25)}
+                    {over25 ? getHelpTip(questionOne.over25, '', 'over25Split') : getHelpTip(questionOne.under25, '', 'under25Split')}
                   </legend>
                   <div className="ma__input-group--two">
                     <Input labelText={questionOne.left.main} required disabled={!enable}>
