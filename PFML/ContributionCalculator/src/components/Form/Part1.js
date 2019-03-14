@@ -149,7 +149,7 @@ const Part1 = (props) => {
                   </div>
                 </Collapse>
                 <InputNumber
-                  labelText={questionTwo.question.helpText ? getHelpTip(questionTwo.question) : questionTwo.question.content}
+                  labelText={questionTwo.question.helpText ? getHelpTip(questionTwo.question, '', 'w2Employees') : questionTwo.question.content}
                   inline
                   disabled={!context.hasMassEmployees}
                   id="employeesW2"
@@ -184,7 +184,7 @@ const Part1 = (props) => {
                   showButtons
                 />
                 <InputNumber
-                  labelText={questionThree.question.helpText ? getHelpTip(questionThree.question) : questionThree.question.content}
+                  labelText={questionThree.question.helpText ? getHelpTip(questionThree.question, '', '1099Contractors') : questionThree.question.content}
                   inline
                   disabled={!context.hasMassEmployees}
                   name="employees1099"
