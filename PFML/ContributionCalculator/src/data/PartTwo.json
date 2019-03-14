@@ -7,7 +7,7 @@
             "value": "all",
             "label": "All Covered Individuals"
         }, {
-            "id:": "payroll_base_one",
+            "id": "payroll_base_one",
             "value": "one",
             "label": "Single Covered Individual"
         }]
