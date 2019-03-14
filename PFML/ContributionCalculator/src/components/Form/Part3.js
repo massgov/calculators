@@ -326,7 +326,7 @@ const Part3 = (props) => {
                         label={questionTwo.question}
                         stackLabel={false}
                         required
-                        id="color-select"
+                        id="payroll_frequency"
                         options={questionTwo.options}
                         selected={timePeriod || 'Year'}
                         onChangeCallback={({ selected }) => {
