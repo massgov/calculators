@@ -4,7 +4,7 @@ $margin: 5px;
 $total-margin: $margin * 2;
 
 .ma__input-group__items--inline.ma__input-group__items--outline {
-	.ma__input-group__item.item-5 {
+	.ma__input-group__item.item-6 {
 		width: calc(100% - #{$total-margin});
 	   @media ($bp-small-min) {
 	     width: calc(50% - #{$total-margin});
