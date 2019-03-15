@@ -194,14 +194,15 @@ const Part3 = (props) => {
             const tRow1 = tBody.rows[0];
             const tRow2 = tBody.rows[1];
             const tRow3 = tBody.rows[2];
-            tRow1.cells[1].text = toCurrency(medLeaveComp / timeValue);
-            tRow1.cells[2].text = toCurrency(famLeaveComp / timeValue);
+            tRow1.cells[1].text = toCurrency(famLeaveComp / timeValue);
+            tRow1.cells[2].text = toCurrency(medLeaveComp / timeValue);
+            tRow1.cells[1].text = toCurrency(famLeaveComp / timeValue);
             tRow1.cells[3].text = toCurrency((medLeaveComp + famLeaveComp) / timeValue);
-            tRow2.cells[1].text = toCurrency(medLeaveEmp / timeValue);
-            tRow2.cells[2].text = toCurrency(famLeaveEmp / timeValue);
+            tRow2.cells[1].text = toCurrency(famLeaveEmp / timeValue);
+            tRow2.cells[2].text = toCurrency(medLeaveEmp / timeValue);
             tRow2.cells[3].text = toCurrency((medLeaveEmp + famLeaveEmp) / timeValue);
-            tRow3.cells[1].text = toCurrency(medLeaveTotal);
-            tRow3.cells[2].text = toCurrency(famLeaveTotal);
+            tRow3.cells[1].text = toCurrency(famLeaveTotal);
+            tRow3.cells[2].text = toCurrency(medLeaveTotal);
             tRow3.cells[3].text = toCurrency(medLeaveTotal + famLeaveTotal);
 
             return(

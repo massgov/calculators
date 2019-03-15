@@ -6,10 +6,10 @@ export default {
         text: 'Contribution'
       }, {
         heading: true,
-        text: 'Medical Leave'
+        text: 'Family Leave'
       }, {
         heading: true,
-        text: 'Family Leave'
+        text: 'Medical Leave'
       }, {
         heading: true,
         text: 'Total'
