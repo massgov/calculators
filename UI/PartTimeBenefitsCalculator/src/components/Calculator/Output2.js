@@ -1,4 +1,5 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
+import is from 'is';
 import {
   CalloutAlert, HelpTip, Paragraph, Input, InputContext, FormContext
 } from '@massds/mayflower-react';
@@ -10,23 +11,28 @@ export const ScenarioOne = () => {
   const formContext = useContext(FormContext);
   // These are default values only.
   const scenarioDefaults = {
-    showScenario: false,
     weeklyBenefits: formContext.hasId('weekly-benefits') ? formContext.getValue('weekly-benefits') : null,
     weeklyEarnings: formContext.hasId('weekly-earnings') ? formContext.getValue('weekly-earnings') : null
   };
-  return(
-    <Input id="scenario-one" defaultValue={scenarioDefaults}>
-      <InputContext.Consumer>
-        { (inputContext) => {
-          // Updated by handleChange.
-          const { showScenario } = inputContext.getValue();
-          const values = formContext.getValues();
-          const weeklyBenefits = toNumber(values['weekly-benefits']);
-          const weeklyEarnings = toNumber(values['weekly-earnings']);
-          if (
-            showScenario
-            && !Number.isNaN(weeklyBenefits) && weeklyEarnings !== 0
-            && !Number.isNaN(weeklyEarnings)) {
+  const showDefault = is.number(scenarioDefaults.weeklyBenefits) && is.number(scenarioDefaults.weeklyEarnings);
+  const [showScenario, updateShowScenario] = useState(showDefault);
+  scenarioDefaults['showScenario'] = showScenario;
+  scenarioDefaults.toggleScenario = () => { updateShowScenario(!showScenario) };
+
+  if (showDefault) {
+    return(
+      <Input id="scenario-one" defaultValue={scenarioDefaults}>
+        <InputContext.Consumer>
+          { () => {
+            // Updated by handleChange.
+            const values = formContext.getValues();
+            const weeklyBenefits = toNumber(values['weekly-benefits']);
+            const weeklyEarnings = toNumber(values['weekly-earnings']);
+            const showDefault = is.number(weeklyBenefits) && is.number(weeklyEarnings);
+            if (!showDefault) {
+              values['scenario-one'].toggleScenario();
+            }
+
             return(
               <Fragment>
                 <hr />
@@ -44,12 +50,12 @@ export const ScenarioOne = () => {
                 </CalloutAlert>
               </Fragment>
             );
-          }
-          return null;
-        }}
-      </InputContext.Consumer>
-    </Input>
-  );
+          }}
+        </InputContext.Consumer>
+      </Input>
+    );
+  }
+  return null;
 };
 
 

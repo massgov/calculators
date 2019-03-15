@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import is from 'is';
 import { Form, FormProvider } from '@massds/mayflower-react';
 import { toNumber } from './util';
 import { QuestionOne, QuestionTwo } from './Inputs';
@@ -25,7 +26,7 @@ const Calculator = () => (
 
               if (id === 'weekly-benefits') {
                 if (formContext.hasId('weekly-benefits')) {
-                  if (!Number.isNaN(weeklyBenefits)) {
+                  if (is.number(weeklyBenefits)) {
                     const earningsDisregardCalc = (weeklyBenefits * (1 / 3));
                     formContext.setValue({ id: 'earnings-disregard', value: earningsDisregardCalc });
                   } else {
