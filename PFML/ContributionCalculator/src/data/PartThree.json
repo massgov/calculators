@@ -13,12 +13,12 @@
         "left": {
             "main": "Family Leave",
             "left": "Employer Share",
-            "right": "Employee Share"
+            "right": "Covered Individual Share"
         },
         "right": {
             "main": "Medical Leave",
             "left": "Employer Share",
-            "right": "Employee Share"
+            "right": "Covered Individual Share"
         }
     },
     "questionTwo": {
