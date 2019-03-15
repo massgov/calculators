@@ -1,6 +1,6 @@
 {
     "questionOne": {
-        "question": "Toggle between the options below to estimate the total contribution for your entire workforce and for a single covered individual.",
+        "question": "Toggle between the options below to estimate the total contribution for your entire workforce or for a single covered individual.",
         "errorMsg": "Please select an option.",
         "options": [{
             "id": "payroll_base_all",
@@ -13,11 +13,11 @@
         }]
     },
     "questionTwo": {
-        "question": "What was your total payroll for Massachusetts W2 employees in the last 12 months?",
+        "question": "What were the total wages for Massachusetts W2 employees in the last 12 months?",
         "errorMsg": "Please enter a value."
     },
     "questionThree": {
-        "question": "What was your total payroll for Massachusetts 1099-MISC contractors in the last 12 months?",
+        "question": "What were the total payments made to Massachusetts 1099-MISC contractors in the last 12 months?",
         "errorMsg": "Please enter a value."
     },
     "questionFour": {
@@ -25,6 +25,6 @@
         "errorMsg": "Please enter a value."
     },
     "under25MedContDisclaimer": {
-        "content": "Employers with fewer than 25 covered individuals are exempt from paying the employer share of the medical leave contribution (<strong>60%</strong>) but are still required to send the employee share of the medical leave contribution (<strong>40%</strong>) on behalf of their covered individuals. "  
+        "content": "Employers with fewer than 25 covered individuals are not required to pay the employer share of the medical leave contribution, but can choose to contribute in order to reduce the amounts paid by covered individuals in their workforce."  
     }
 }
