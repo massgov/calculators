@@ -1,7 +1,7 @@
 {
     "questionOne": {
         "question": {
-            "content": "Do you have any Massachusetts W2 employees or Massachusetts 1099-MISC contractors?"
+            "content": "Do you have any Massachusetts W2 employees or Massachusetts 1099-MISC contractors in your workforce?"
         },
         "errorMsg": "Please select yes or no.",
         "options": [{
@@ -47,7 +47,7 @@
             }
         }, {
             "paragraph": {
-                "content": "Covered individuals will be responsible for 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct these amounts from the wages of your covered individuals."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct these amounts from the wages of your covered individuals."
             }
         }, {
             "paragraph": {
@@ -68,7 +68,7 @@
             }
         }, {
             "paragraph": {
-                "content": "Covered individuals will be responsible for 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct these amounts from the wages of your covered individuals."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct these amounts from the wages of your covered individuals."
             }
         }, {
             "paragraph": {
@@ -89,7 +89,7 @@
             }
         }, {
             "paragraph": {
-                "content": "Covered individuals will be responsible for 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct these amounts from the wages of your covered individuals."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct these amounts from the wages of your covered individuals."
             }
         }, {
             "paragraph": {
@@ -110,7 +110,7 @@
             }
         }, {
             "paragraph": {
-                "content": "Covered individuals will be responsible for 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct these amounts from the wages of your covered individuals."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct these amounts from the wages of your covered individuals."
             }
         }, {
             "paragraph": {
@@ -131,7 +131,7 @@
             }
         }, {
             "paragraph": {
-                "content": "Covered individuals will be responsible for 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct these amounts from the wages of your covered individuals."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct these amounts from the wages of your covered individuals."
             }
         }, {
             "paragraph": {
@@ -152,7 +152,7 @@
             }
         }, {
             "paragraph": {
-                "content": "Covered individuals will be responsible for 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct these amounts from the wages of your covered individuals."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct these amounts from the wages of your covered individuals."
             }
         }, {
             "paragraph": {
@@ -173,7 +173,7 @@
             }
         }, {
             "paragraph": {
-                "content": "Covered individuals will be responsible for 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct these amounts from the wages of your covered individuals."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct these amounts from the wages of your covered individuals."
             }
         }, {
             "paragraph": {
@@ -194,7 +194,7 @@
             }
         }, {
             "paragraph": {
-                "content": "Covered individuals will be responsible for 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct these amounts from the wages of your covered individuals."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct these amounts from the wages of your covered individuals."
             }
         }, {
             "paragraph": {
