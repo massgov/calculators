@@ -25,7 +25,6 @@ const Part3 = (props) => {
   const benefitBreak = maAvgYear * 0.5;
   const benefitBreakWeek = (benefitBreak / weeksPerYear) * lowBenefitFraction;
   const maxBenefit = ((maxBenefitWeek - benefitBreakWeek) * weeksPerYear * 2) + benefitBreak;
-  const maxBenefitDelta = maxBenefit - benefitBreak;
 
   let estBenefit;
   if (yearIncome <= benefitBreak) {
@@ -33,8 +32,8 @@ const Part3 = (props) => {
     estBenefit = yearIncome * lowBenefitFraction;
   } else {
     // If yearly income is greater than half the state wide avg income.
-    const addBenefit = (yearIncome - benefitBreak) > maxBenefitDelta ? (maxBenefitDelta * highBenefitFraction) : ((yearIncome - benefitBreak) * highBenefitFraction);
-    estBenefit = (benefitBreak * lowBenefitFraction) + addBenefit;
+    const addBenefit = yearIncome < maxBenefit ? ((yearIncome - benefitBreak) * highBenefitFraction) : ((maxBenefit - benefitBreak) * highBenefitFraction);
+    estBenefit = addBenefit + (benefitBreak * lowBenefitFraction);
   }
 
   // The estimated weekly benefit you would receive.
