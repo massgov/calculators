@@ -53,8 +53,8 @@ const Part3 = (props) => {
               }
             } = context;
 
-            const medPercent = totContribution * totMedPercent;
-            const famPercent = totContribution * totFamPercent;
+            const medPercent = Math.round(totContribution * totMedPercent * 1e4) / 1e4;
+            const famPercent = Math.round(totContribution * totFamPercent * 1e4) / 1e4;
 
             let totalPayroll;
             if (payrollBase === 'all' && employeesW2 > 0) {
