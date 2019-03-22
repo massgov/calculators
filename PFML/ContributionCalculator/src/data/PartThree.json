@@ -3,7 +3,7 @@
         "over25": {
             "text": "How will the employer split the total contribution with covered individuals?",
             "triggerText": ["split the total contribution"],
-            "helpText": ["Since the employer has 25 or more covered individuals, it is required to pay at least 60% of the medical leave contribution. The employer is free to pay a larger portion of the contribution if it chooses to do so."]
+            "helpText": ["Since the employer has 25 or more covered individuals, it is required to pay at least 60% of the medical leave contribution. The employer may pay a larger portion of the total contribution if it chooses to do so."]
         },
         "under25": {
             "text": "How will the employer split the total contribution with covered individuals?",
