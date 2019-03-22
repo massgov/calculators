@@ -1,7 +1,7 @@
 {
     "questionOne": {
         "question": {
-            "content": "Do you have any Massachusetts W2 employees or Massachusetts 1099-MISC?"
+            "content": "Do you have any Massachusetts W2 employees or Massachusetts 1099-MISC contractors?"
         },
         "errorMsg": "Please select yes or no.",
         "options": [{
@@ -39,7 +39,7 @@
             "paragraph": {
                 "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees and Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
                 "triggerText": ["Massachusetts W2 employees and Massachusetts 1099-MISC contractors","<strong>covered individuals</strong>"],
-                "helpText": ["If your Massachusetts 1099-MISC contractors are equal to or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC combined)</li></ul>"]
+                "helpText": ["If your Massachusetts 1099-MISC contractors are equal to or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
@@ -60,7 +60,7 @@
             "paragraph": {
                 "text": "Based on the makeup of your workforce, only your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
                 "triggerText": ["only your Massachusetts W2 employees","<strong>covered individuals</strong>"],
-                "helpText": ["If you have fewer Massachusetts 1099-MISC contractors than Massachusetts W2 employees, the Massachusetts 1099-MISC contractors are not considered covered individuals and you are not responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC combined)</li></ul>"]
+                "helpText": ["If you have fewer Massachusetts 1099-MISC contractors than Massachusetts W2 employees, the Massachusetts 1099-MISC contractors are not considered covered individuals and you are not responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
@@ -81,7 +81,7 @@
             "paragraph": {
                 "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees and Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
                 "triggerText": ["Massachusetts W2 employees and Massachusetts 1099-MISC contractors","<strong>covered individuals</strong>"],
-                "helpText": ["If your Massachusetts 1099-MISC contractors are equal to or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC combined)</li></ul>"]
+                "helpText": ["If your Massachusetts 1099-MISC contractors are equal to or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
@@ -102,7 +102,7 @@
             "paragraph": {
                 "text": "Based on the makeup of your workforce, only your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
                 "triggerText": ["only your Massachusetts W2 employees","<strong>covered individuals</strong>"],
-                "helpText": ["If you have fewer Massachusetts 1099-MISC contractors than Massachusetts W2 employees, the Massachusetts 1099-MISC contractors are not considered covered individuals and you are not responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC combined)</li></ul>"]
+                "helpText": ["If you have fewer Massachusetts 1099-MISC contractors than Massachusetts W2 employees, the Massachusetts 1099-MISC contractors are not considered covered individuals and you are not responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
@@ -123,7 +123,7 @@
             "paragraph": {
                 "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
                 "triggerText": ["<strong>covered individuals</strong>"],
-                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC combined)</li></ul>"]
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
@@ -144,7 +144,7 @@
             "paragraph": {
                 "text": "Based on the makeup of your workforce, all your Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
                 "triggerText": ["<strong>covered individuals</strong>"],
-                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC combined)</li></ul>"]
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
@@ -165,7 +165,7 @@
             "paragraph": {
                 "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
                 "triggerText": ["<strong>covered individuals</strong>"],
-                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC combined)</li></ul>"]
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
@@ -186,7 +186,7 @@
             "paragraph": {
                 "text": "Based on the makeup of your workforce, all your Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
                 "triggerText": ["<strong>covered individuals</strong>"],
-                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC combined)</li></ul>"]
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
