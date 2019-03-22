@@ -8,7 +8,7 @@
         "under25": {
             "text": "How will the employer split the total contribution with covered individuals?",
             "triggerText": ["split the total contribution"],
-            "helpText": ["Employers with fewer than 25 covered individuals are not required to pay the employer share of the medical leave contribution, but can choose to contribute in order to reduce the amounts paid by covered individuals in their workforce."]
+            "helpText": ["Employers with fewer than 25 covered individuals are not required to pay the employer share of the medical leave contribution, but may choose to contribute in order to reduce the amounts paid by covered individuals in their workforce."]
         },
         "left": {
             "main": "Family Leave",
