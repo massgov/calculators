@@ -57,7 +57,7 @@ const Part3 = (props) => {
 
   const getHelpText = () => (
     <div className="ma__help-text">
-      { yearIncome < benefitBreak ? (
+      { yearIncome <= benefitBreak ? (
         <Fragment>
           <Paragraph text={`${less.partOne} ${toCurrency(benefitBreak)} ${less.partTwo} ${toPercentage(lowBenefitFraction)} ${less.partThree} ${toCurrency(benefitBreakWeek)} ${less.partFour}`} />
           <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = (${toCurrency(yearIncome)} x ${toPercentage(lowBenefitFraction)}) / ${weeksPerYear} weeks per year`} /></div>
