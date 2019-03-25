@@ -307,16 +307,16 @@ workflows:
     jobs:
       - pfml-cal-benefits-test:
           filters:
-            branches: { only: /(pfml-benefits\/|all\/).*/ }
+            branches: { only: /(pfml-benefits\/).*/ }
       - pfml-cal-contribution-test:
           filters:
-            branches: { only: /(pfml-contribution\/|all\/).*/ }
+            branches: { only: /(pfml-contribution\/).*/ }
       - ui-cal-benefits-test:
           filters:
-            branches: { only: /(ui-benefits\/|all\/).*/ }
+            branches: { only: /(ui-benefits\/).*/ }
       - ui-cal-part-time-benefits-test:
           filters:
-            branches: { only: /(ui-part-time\/|all\/).*/ }
+            branches: { only: /(ui-part-time\/).*/ }
   deploy-dev:
     jobs:
       - pfml-cal-benefits-deploy-dev:
