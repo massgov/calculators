@@ -53,7 +53,7 @@
             "paragraph": {
                 "text": "You are required to pay the remaining employer share of the total contribution. The <strong>employer share</strong> is at least 60% of the medical leave contribution.",
                 "triggerText": ["required to pay the remaining employer share"],
-                "helpText": ["If you have 25 or more covered individuals, you are required to pay the employer share."]
+                "helpText": ["If you had 25 or more covered individuals in your average workforce last year, you are required to pay the employer share this year."]
             }
         }],
         "overMinEmpUnder1099": [{
@@ -74,7 +74,7 @@
             "paragraph": {
                 "text": "You are required to pay the remaining <strong>employer share</strong> of the total contribution. The employer share is at least 60% of the medical leave contribution.",
                 "triggerText": ["required to pay the remaining <strong>employer share</strong>"],
-                "helpText": ["If you have 25 or more covered individuals, you are required to pay the employer share."]
+                "helpText": ["If you had 25 or more covered individuals in your average workforce last year, you are required to pay the employer share this year."]
             }
         }],
         "underMinEmpOver1099": [{
@@ -95,7 +95,7 @@
             "paragraph": {
                 "text": "You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution but you may elect to cover a portion of the covered individual share.",
                 "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
-                "helpText": ["If you have fewer than 25 covered individuals, you do not need to pay the employer share, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
+                "helpText": ["If you had fewer than 25 covered individuals in your average workforce last year, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
             }
         }],
         "underMinEmpUnder1099": [{
@@ -116,7 +116,7 @@
             "paragraph": {
                 "text": "You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution but you may elect to cover a portion of the covered individual share.",
                 "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
-                "helpText": ["If you have fewer than 25 covered individuals, you do not need to pay the employer share, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
+                "helpText": ["If you had fewer than 25 covered individuals in your average workforce last year, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
             }
         }],
         "underMinEmpNo1099": [{
@@ -137,7 +137,7 @@
             "paragraph": {
                 "text": "You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution but you may elect to cover a portion of the covered individual share.",
                 "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
-                "helpText": ["If you have fewer than 25 covered individuals, you do not need to pay the employer share, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
+                "helpText": ["If you had fewer than 25 covered individuals in your average workforce last year, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
             }
         }],
         "underMinEmpNoW2": [{
@@ -158,7 +158,7 @@
             "paragraph": {
                 "text": "You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution but you may elect to cover a portion of the covered individual share.",
                 "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
-                "helpText": ["If you have fewer than 25 covered individuals, you do not need to pay the employer share, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
+                "helpText": ["If you had fewer than 25 covered individuals in your average workforce last year, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
             }
         }],
         "overMinEmpNo1099": [{
@@ -179,7 +179,7 @@
             "paragraph": {
                 "text": "You are required to pay the remaining <strong>employer share</strong> of the total contribution. The <strong>employer share</strong> is at least 60% of the medical leave contribution.",
                 "triggerText": ["required to pay the remaining <strong>employer share</strong>"],
-                "helpText": ["If you have 25 or more covered individuals, you are required to pay the employer share."]
+                "helpText": ["If you had 25 or more covered individuals in your average workforce last year, you are required to pay the employer share this year."]
             }
         }],
         "overMinEmpNoW2": [{
@@ -200,7 +200,7 @@
             "paragraph": {
                 "text": "You are required to pay the remaining <strong>employer share</strong> of the total contribution. The <strong>employer share</strong> is at least 60% of the medical leave contribution.",
                 "triggerText": ["required to pay the remaining <strong>employer share</strong>"],
-                "helpText": ["If you have 25 or more covered individuals, you are required to pay the employer share."]
+                "helpText": ["If you had 25 or more covered individuals in your average workforce last year, you are required to pay the employer share this year."]
             }
         }]
     }
