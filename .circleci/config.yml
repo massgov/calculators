@@ -327,10 +327,10 @@ workflows:
             branches: { only: /(all\/).*/ }
       - ui-cal-benefits-deploy-dev:
           filters:
-            branches: { only: develop }
+            branches: { only: /(all\/).*/ }
       - ui-cal-parttime-deploy-dev:
           filters:
-            branches: { only: develop }
+            branches: { only: /(all\/).*/ }
   deploy-prod:
     jobs:
       - pfml-cal-benefits-deploy-prod:
