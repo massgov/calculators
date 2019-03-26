@@ -313,7 +313,7 @@ workflows:
             branches: { only: /(pfml-contribution\/).*/ }
       - ui-cal-benefits-test:
           filters:
-            branches: { only: /(ui-benefits\/).*/ }
+            branches: { only: /(ui-benefits\/|all\/).*/ }
       - ui-cal-part-time-benefits-test:
           filters:
             branches: { only: /(ui-part-time\/).*/ }
