@@ -22,6 +22,7 @@ const Part2 = (props) => {
         width={0}
         maxlength={200}
         defaultValue={defaultValue}
+        max={1000000000000}
         min={0}
         placeholder={placeholder}
         format={{
