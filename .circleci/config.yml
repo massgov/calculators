@@ -321,7 +321,7 @@ workflows:
     jobs:
       - pfml-cal-benefits-deploy-dev:
           filters:
-            branches: { only: /(all\/).*/ }
+            branches: { only: develop }
       - pfml-cal-contribution-deploy-dev:
           filters:
             branches: { only: /(all\/).*/ }
