@@ -6,7 +6,7 @@ export default {
     closeText: 'Close',
     panel: {
       description: {
-        text: 'The <a href="#">A-Z Organizations page</a> provides an alphabetical listing of government organizations, including commissions, departments, and bureaus.'
+        text: 'The <a href="https://www.mass.gov/state-organization-index">A-Z Organizations page</a> provides an alphabetical listing of government organizations, including commissions, departments, and bureaus.'
       }
     }
   }, {
