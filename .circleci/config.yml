@@ -316,7 +316,7 @@ workflows:
             branches: { only: /(ui-benefits\/|all\/).*/ }
       - ui-cal-part-time-benefits-test:
           filters:
-            branches: { only: /(ui-part-time\/).*/ }
+            branches: { only: /(ui-part-time\/|all\/).*/ }
   deploy-dev:
     jobs:
       - pfml-cal-benefits-deploy-dev:
