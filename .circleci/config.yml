@@ -307,7 +307,7 @@ workflows:
     jobs:
       - pfml-cal-benefits-test:
           filters:
-            branches: { only: /(pfml-benefits\/).*/ }
+            branches: { only: /(pfml-benefits\/|all\/).*/ }
       - pfml-cal-contribution-test:
           filters:
             branches: { only: /(pfml-contribution\/).*/ }
