@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { decode, addUrlProps, UrlQueryParamTypes } from 'react-url-query';
-import { FormProvider } from '@massds/mayflower-react';
+import { Form, FormProvider, InputSync } from '@massds/mayflower-react';
 import Part1 from '../Form/Part1';
 import Part2 from '../Form/Part2';
 import Part3 from '../Form/Part3';
@@ -32,20 +32,10 @@ const ExampleForm = () => {
   return(
     <FormProvider>
       <div className="page-content">
-        <Part1>
-          <hr />
-          <Part2>
-            {
-              (partOneContext) => (
-                <Fragment>
-                  <hr />
-                  <Part3 partOneContext={partOneContext} />
-                  <Reset />
-                </Fragment>
-              )
-            }
-          </Part2>
-        </Part1>
+        <Part1 />
+        <hr />
+        <Part2 />
+        <Part3 />
       </div>
     </FormProvider>
   );

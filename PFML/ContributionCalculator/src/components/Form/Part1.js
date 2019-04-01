@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { InputRadioGroup, CalloutAlert, InputNumber, Collapse, Paragraph, Input, InputContext, FormContext } from '@massds/mayflower-react';
+import { InputRadioGroup, CalloutAlert, InputNumber, Collapse, Paragraph, Input, InputContext, FormContext, InputSync } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
 import ContributionVariables from '../../data/ContributionVariables.json';
 import PartOneProps from '../../data/PartOne.json';
@@ -30,7 +30,7 @@ const Part1 = (props) => {
   const calloutParagraphClass = 'ma__help-tip-many';
   const getDangerousParagraph = (text, key) => (<div className={calloutParagraphClass} dangerouslySetInnerHTML={{ __html: text }} key={key} />);
 
-  const { employeesW2 = !Number.isNaN(props.w2) ? props.w2 : 0, employees1099 = !Number.isNaN(props.emp1099) ? props.emp1099 : 0 } = formContext.getValues();
+  const { employeesW2 = !Number.isNaN(props.w2) ? props.w2 : 0, employees1099 = !Number.isNaN(props.emp1099) ? props.emp1099 : 0 } = formContext.getInputProviderValues();
   let over50per;
   let employeeCount;
   over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
@@ -41,14 +41,14 @@ const Part1 = (props) => {
     let conditionEmpCount;
     let conditionEmp1099;
     let conditionOver50;
-    if (formContext.hasId('part_one')) {
+    if (formContext.hasInputProviderId('part_one')) {
       const {
         w2 = !Number.isNaN(props.w2) ? props.w2 : 0,
         emp1099 = !Number.isNaN(props.emp1099) ? props.emp1099 : 0,
         over50 = ((emp1099 / w2) + emp1099) >= emp1099Fraction,
         empCount = over50 ? (w2 + emp1099) : w2,
         outputMessage
-      } = formContext.getValue('part_one');
+      } = formContext.getInputProviderValue('part_one');
       conditionEmpCount = empCount;
       calloutMessage = outputMessage;
       conditionEmp1099 = emp1099;
@@ -103,149 +103,148 @@ const Part1 = (props) => {
   }
   return(
     <fieldset>
-      <Input id="part_one" defaultValue={partOneDefaults}>
-        <InputContext.Consumer>
-          {
-            (inputContext) => {
-              const {
-                mass_employees: massEmployees,
-                disableInputs,
-                emp1099,
-                w2
-              } = formContext.getValue('part_one');
-              return(
-                <React.Fragment>
-                  <Input id="mass_employees" defaultValue={massEmployees}>
-                    <InputContext.Consumer>
-                      {
-                        (radioContext) => (
-                          <InputRadioGroup
-                            title={questionOne.question.helpText ? getHelpTip(questionOne.question) : questionOne.question.content}
-                            name="mass_employees"
-                            outline
-                            defaultSelected={radioContext.getValue()}
-                            errorMsg={questionOne.errorMsg}
-                            radioButtons={questionOne.options}
-                            onChange={(e) => {
-                              radioContext.setValue(e.selected, () => {
-                                const newVal = Object.assign({}, inputContext.getValue(), { disableInputs: !disableInputs, mass_employees: radioContext.getValue() });
-                                inputContext.setValue(newVal, () => {
-                                  const hasEmployees = (radioContext.getValue() === 'yes');
-                                  formContext.setValue({ id: 'employeesW2', value: Number(formContext.getValue('employeesW2')) });
-                                  formContext.setValue({ id: 'question_one_callout', value: !hasEmployees });
-                                  onChangeMassEmp(hasEmployees);
-                                });
-                              });
-                            }}
-                          />
-                        )
-                      }
-                    </InputContext.Consumer>
-                  </Input>
-                  <Input id="question_one_callout" defaultValue={massEmployees === 'no'}>
-                    <InputContext.Consumer>
-                      {
-                        (questionContext) => (
-                          <Collapse in={questionContext.getValue()} dimension="height" className="ma__callout-alert">
-                            <div className="ma__collapse">
-                              <CalloutAlert theme={questionOne.options[1].theme}>
-                                <Paragraph text={questionOne.options[1].message} />
-                              </CalloutAlert>
-                            </div>
-                          </Collapse>
-                        )
-                      }
-                    </InputContext.Consumer>
-                  </Input>
-                  <InputNumber
-                    labelText={questionTwo.question.helpText ? getHelpTip(questionTwo.question) : questionTwo.question.content}
-                    id="employeesW2"
-                    name="employeesW2"
-                    type="number"
-                    width={0}
-                    inline
-                    maxlength={0}
-                    min={0}
-                    placeholder="e.g. 50"
-                    errorMsg={questionTwo.errorMsg}
-                    defaultValue={w2}
-                    disabled={massEmployees === 'no'}
-                    required
-                    unit=""
-                    onChange={() => {
-                      const empW2 = Number(formContext.getValue('employeesW2'));
-                      const current1099 = Number(formContext.getValue('employees1099'));
-                      if (!Number.isNaN(empW2)) {
-                        const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
-                        const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
-                        const over25 = empCount >= minEmployees;
-                        const newVal = Object.assign({}, inputContext.getValue(), {
-                          emp1099: current1099,
-                          empCount,
-                          over50,
-                          over25,
-                          w2: empW2,
-                          medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                          famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
-                        });
-                        inputContext.setValue(newVal, () => {
-                          onChangeW2(empW2);
-                        });
-                      }
-                    }}
-                    showButtons
-                  />
-                  <InputNumber
-                    labelText={questionThree.question.helpText ? getHelpTip(questionThree.question) : questionThree.question.content}
-                    name="employees1099"
-                    id="employees1099"
-                    type="number"
-                    width={0}
-                    maxlength={0}
-                    min={0}
-                    placeholder="e.g. 50"
-                    inline
-                    errorMsg={questionThree.errorMsg}
-                    defaultValue={emp1099}
-                    disabled={(formContext.hasId('part_one') && formContext.getValue('part_one').mass_employees === 'no')}
-                    required
-                    onChange={() => {
-                      const empW2 = Number(formContext.getValue('employeesW2'));
-                      const current1099 = Number(formContext.getValue('employees1099'));
-                      if (!Number.isNaN(current1099)) {
-                        const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
-                        const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
-                        const over25 = empCount >= minEmployees;
-                        const newVal = Object.assign({}, inputContext.getValue(), {
-                          w2: empW2,
-                          empCount,
-                          over50,
-                          over25,
-                          emp1099: current1099,
-                          medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                          famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
-                        });
-                        inputContext.setValue(newVal, () => {
-                          onChangeEmp1099(newVal.emp1099);
-                        });
-                      }
-                    }}
-                    showButtons
-                  />
-                  <Collapse in={massEmployees === 'yes' && w2 && w2 > 0} dimension="height" className="ma__callout-alert">
-                    <div className="ma__collapse">
-                      <CalloutAlert theme="c-primary">
-                        { getConditionsMessage() }
-                      </CalloutAlert>
-                    </div>
-                  </Collapse>
-                  {props.children}
-                </React.Fragment>
-              );
+      <React.Fragment>
+        <Input id="mass_employees" defaultValue={partOneDefaults.mass_employees} useOwnStateValue>
+          <InputContext.Consumer>
+            {
+              (radioContext) => (
+                <InputRadioGroup
+                  title={questionOne.question.helpText ? getHelpTip(questionOne.question) : questionOne.question.content}
+                  name="mass_employees"
+                  outline
+                  defaultSelected={radioContext.getOwnValue()}
+                  errorMsg={questionOne.errorMsg}
+                  radioButtons={questionOne.options}
+                  onChange={(e) => {
+                    radioContext.setOwnValue(e.selected, () => {
+                      //const newVal = Object.assign({}, inputContext.getOwnValue(), { disableInputs: !disableInputs, mass_employees: radioContext.getOwnValue() });
+                      //inputContext.setOwnValue(newVal, () => {
+                        const hasEmployees = (formContext.getInputProviderValue('mass_employees') === 'yes');
+                        // formContext.setInputProviderValue({ id: 'employeesW2', value: Number(formContext.getInputProviderValue('employeesW2')) });
+                        formContext.setInputProviderValue({ id: 'question_one_callout', value: !hasEmployees });
+                        onChangeMassEmp(hasEmployees);
+                      //});
+                    });
+                  }}
+                />
+              )
             }
+          </InputContext.Consumer>
+        </Input>
+        <InputSync inputProviderIds={['mass_employees']}>
+          {
+            () => (
+              <React.Fragment>
+                <Input id="question_one_callout" defaultValue={partOneDefaults.mass_employees === 'no'} useOwnStateValue>
+                  <InputContext.Consumer>
+                    {
+                      (questionContext) => (
+                        <Collapse in={questionContext.getOwnValue()} dimension="height" className="ma__callout-alert">
+                          <div className="ma__collapse">
+                            <CalloutAlert theme={questionOne.options[1].theme}>
+                              <Paragraph text={questionOne.options[1].message} />
+                            </CalloutAlert>
+                          </div>
+                        </Collapse>
+                      )
+                    }
+                  </InputContext.Consumer>
+                </Input>
+                <InputNumber
+                  labelText={questionTwo.question.helpText ? getHelpTip(questionTwo.question) : questionTwo.question.content}
+                  id="employeesW2"
+                  name="employeesW2"
+                  type="number"
+                  width={0}
+                  inline
+                  maxlength={0}
+                  min={0}
+                  placeholder="e.g. 50"
+                  errorMsg={questionTwo.errorMsg}
+                  defaultValue={employeesW2}
+                  disabled={formContext.getInputProviderValue('mass_employees') === 'no'}
+                  required
+                  unit=""
+                  onChange={() => {
+                    const empW2 = Number(formContext.getInputProviderValue('employeesW2'));
+                    //const current1099 = Number(formContext.getInputProviderValue('employees1099'));
+                    if (!Number.isNaN(empW2)) {
+                      onChangeW2(empW2);
+                      //const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
+                      //const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
+                      //const over25 = empCount >= minEmployees;
+                      // const newVal = Object.assign({}, inputContext.getOwnValue(), {
+                      //   emp1099: current1099,
+                      //   empCount,
+                      //   over50,
+                      //   over25,
+                      //   w2: empW2,
+                      //   medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                      //   famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
+                      // });
+                      // inputContext.setOwnValue(newVal, () => {
+                      //   onChangeW2(empW2);
+                      // });
+                    }
+                  }}
+                  showButtons
+                />
+                <InputNumber
+                  labelText={questionThree.question.helpText ? getHelpTip(questionThree.question) : questionThree.question.content}
+                  name="employees1099"
+                  id="employees1099"
+                  type="number"
+                  width={0}
+                  maxlength={0}
+                  min={0}
+                  placeholder="e.g. 50"
+                  inline
+                  errorMsg={questionThree.errorMsg}
+                  defaultValue={employees1099}
+                  disabled={formContext.getInputProviderValue('mass_employees') === 'no'}
+                  required
+                  onChange={() => {
+                    const empW2 = Number(formContext.getInputProviderValue('employeesW2'));
+                    const current1099 = Number(formContext.getInputProviderValue('employees1099'));
+                    if (!Number.isNaN(current1099)) {
+                      const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
+                      const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
+                      const over25 = empCount >= minEmployees;
+                      onChangeEmp1099(current1099);
+                      // const newVal = Object.assign({}, inputContext.getOwnValue(), {
+                      //   w2: empW2,
+                      //   empCount,
+                      //   over50,
+                      //   over25,
+                      //   emp1099: current1099,
+                      //   medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+                      //   famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
+                      // });
+                      // inputContext.setOwnValue(newVal, () => {
+                      //   onChangeEmp1099(newVal.emp1099);
+                      // });
+                    }
+                  }}
+                  showButtons
+                />
+                <InputSync inputProviderIds={['mass_employees', 'employees1099', 'employeesW2']}>
+                  {
+                    () => (
+                      <Collapse in={formContext.getInputProviderValue('mass_employees') === 'yes' && formContext.hasInputProviderId('employeesW2') && Number(formContext.getInputProviderValue('employeesW2')) > 0} dimension="height" className="ma__callout-alert">
+                        <div className="ma__collapse">
+                          <CalloutAlert theme="c-primary">
+                            { getConditionsMessage() }
+                          </CalloutAlert>
+                        </div>
+                      </Collapse>
+                    )
+                  }
+                </InputSync>
+              </React.Fragment>
+            )
           }
-        </InputContext.Consumer>
-      </Input>
+        </InputSync>
+      </React.Fragment>
     </fieldset>
   );
 };
