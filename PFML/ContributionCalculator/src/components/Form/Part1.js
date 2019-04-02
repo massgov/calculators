@@ -30,7 +30,7 @@ const Part1 = (props) => {
   const calloutParagraphClass = 'ma__help-tip-many';
   const getDangerousParagraph = (text, key) => (<div className={calloutParagraphClass} dangerouslySetInnerHTML={{ __html: text }} key={key} />);
 
-  const { employeesW2 = !Number.isNaN(props.w2) ? props.w2 : 0, employees1099 = !Number.isNaN(props.emp1099) ? props.emp1099 : 0 } = formContext.getInputProviderValues();
+  const { employeesW2 = !Number.isNaN(props.w2) ? Number(props.w2) : 0, employees1099 = !Number.isNaN(props.emp1099) ? Number(props.emp1099) : 0 } = formContext.getInputProviderValues();
   let over50per;
   let employeeCount;
   over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
@@ -41,21 +41,19 @@ const Part1 = (props) => {
     let conditionEmpCount;
     let conditionEmp1099;
     let conditionOver50;
-    if (formContext.hasInputProviderId('part_one')) {
-      const {
-        w2 = !Number.isNaN(props.w2) ? props.w2 : 0,
-        emp1099 = !Number.isNaN(props.emp1099) ? props.emp1099 : 0,
-        over50 = ((emp1099 / w2) + emp1099) >= emp1099Fraction,
-        empCount = over50 ? (w2 + emp1099) : w2,
-        outputMessage
-      } = formContext.getInputProviderValue('part_one');
+    if (formContext.hasInputProviderIds(['employeesW2', 'employees1099'])) {
+      let eW2 = formContext.getInputProviderValue('employeesW2');
+      let e1099 = formContext.getInputProviderValue('employees1099');
+      e1099 = props.emp1099 && !Number.isNaN(props.emp1099) ? Number(props.emp1099) : e1099;
+      eW2 = props.w2 && !Number.isNaN(props.w2) ? Number(props.w2) : eW2;
+      const over50 = (Number(e1099) / (Number(eW2) + Number(e1099))) >= emp1099Fraction;
+      const empCount = over50per ? (Number(eW2) + Number(e1099)) : Number(eW2);
       conditionEmpCount = empCount;
-      calloutMessage = outputMessage;
-      conditionEmp1099 = emp1099;
+      conditionEmp1099 = e1099;
       conditionOver50 = over50;
     } else {
-      const w2 = !Number.isNaN(props.w2) ? props.w2 : 0;
-      conditionEmp1099 = !Number.isNaN(props.emp1099) ? props.emp1099 : 0;
+      const w2 = props.w2 && !Number.isNaN(props.w2) ? Number(props.w2) : 0;
+      conditionEmp1099 = props.emp1099 && !Number.isNaN(props.emp1099) ? Number(props.emp1099) : 0;
       conditionOver50 = ((conditionEmp1099 / w2) + conditionEmp1099) >= emp1099Fraction;
       conditionEmpCount = conditionOver50 ? (w2 + conditionEmp1099) : w2;
     }
@@ -88,15 +86,15 @@ const Part1 = (props) => {
   };
 
   const partOneDefaults = {
-    w2: props.w2 ? Number(props.w2) : null,
-    emp1099: props.emp1099 ? Number(props.emp1099) : null,
+    w2: !Number.isNaN(props.w2) ? Number(props.w2) : null,
+    emp1099: !Number.isNaN(props.emp1099) ? Number(props.emp1099) : null,
     mass_employees: 'yes',
     empCount: Number.isNaN(employeeCount) ? 0 : employeeCount,
     over50: over50per,
     over25: Number.isNaN(employeeCount) ? minEmployees <= 0 : employeeCount >= minEmployees,
     disableInputs: false,
-    famLeaveCont: props.famCont ? Number(props.famCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
-    medLeaveCont: props.medCont ? Number(props.medCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+    famLeaveCont: !Number.isNaN(props.famCont) ? Number(props.famCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
+    medLeaveCont: !Number.isNaN(props.medCont) ? Number(props.medCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
   };
   if (typeof props.massEmp === 'string') {
     partOneDefaults.mass_employees = (props.massEmp && props.massEmp === 'true') ? 'yes' : 'no';

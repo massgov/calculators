@@ -32,9 +32,6 @@ const Part3 = (props) => {
     onChangeMedCont, onChangeFamCont, onChangeTimeValue, onChangeTimePeriod
   } = props;
 
-  const famLeaveDefault = formContext.getInputProviderValue('famLeaveCont');
-  const medLeaveDefault = formContext.getInputProviderValue('medLeaveCont');
-
   const getTimeValue = (text) => {
     let value = null;
     questionTwo.options.forEach((period) => {
@@ -44,23 +41,24 @@ const Part3 = (props) => {
     });
     return value;
   };
-
-  const leaveTableDefaults = {
-    famCont: props.famCont ? Number(props.famCont) : medLeaveDefault,
-    medCont: props.medCont ? Number(props.medCont) : famLeaveDefault,
-    timeValue: props.timeValue ? Number(props.timeValue) : 1,
-    timePeriod: props.timePeriod || 'Year'
-  };
-  leaveTableDefaults['family-leave'] = String(Math.round(leaveTableDefaults.famCont * 100));
-  leaveTableDefaults['medical-leave'] = String(Math.round(leaveTableDefaults.medCont * 100));
-
   const {
-    payroll1099, payrollW2, payWages, mass_employees, employeesW2, employees1099, timePeriod = leaveTableDefaults.timePeriod
+    payroll1099, payrollW2, payWages, mass_employees, employeesW2, employees1099, timePeriod = props.timePeriod || 'Year'
   } = formContext.getInputProviderValues();
+
   let payrollBase = formContext.getInputProviderValue('payrollBase');
   const empCount = employeesW2 + (employees1099 / (employees1099 + employeesW2) >= emp1099Fraction ? employees1099 : 0);
-  let medLeaveCont = (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont;
-  let famLeaveCont = (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont;
+  const famLeaveDefault = (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont;
+  const medLeaveDefault = (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont;
+  const leaveTableDefaults = {
+    famCont: props.famCont && !Number.isNaN(props.famCont) ? Number(props.famCont) : famLeaveDefault,
+    medCont: props.medCont && !Number.isNaN(props.medCont) ? Number(props.medCont) : medLeaveDefault,
+    timeValue: props.timeValue && !Number.isNaN(props.timeValue) ? Number(props.timeValue) : 1,
+    timePeriod
+  };
+  leaveTableDefaults['family-leave'] = String(Math.round(Number(leaveTableDefaults.famCont) * 100));
+  leaveTableDefaults['medical-leave'] = String(Math.round(Number(leaveTableDefaults.medCont) * 100));
+  let familyLeave = formContext.getInputProviderValue('family-leave') || leaveTableDefaults.famCont;
+  let medicalLeave = formContext.getInputProviderValue('medical-leave') || leaveTableDefaults.medCont;
   let over50 = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
   let over25 = empCount >= minEmployees;
   let totalPayroll;
@@ -71,21 +69,15 @@ const Part3 = (props) => {
   } else {
     totalPayroll = Number(numbro.unformat(payWages)) > socialSecCap ? socialSecCap : Number(numbro.unformat(payWages));
   }
-  const minMed = over25 ? largeCompMedCont : smallCompMedCont;
-  const maxMed = over25 ? (largeCompMedCont + empMedCont) : (smallCompMedCont + empMedCont);
-  const minFam = over25 ? largeCompFamCont : smallCompFamCont;
-  const minMedPer = Math.round(minMed * 100);
-  const maxMedPer = Math.round(maxMed * 100);
-  const minFamPer = Math.round(minFam * 100);
-  const famTicks = minFamPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minFamPer, 'Min Employer Contribution'], [100, '100%']];
-  let medTicks = [[0, '0%'], [empMedCont * 100, `${empMedCont * 100}%`]];
-  if (over25) {
-    medTicks = minMedPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minMedPer, 'Min Employer Contribution'], [100, '100%']];
-  }
+  let minMed = over25 ? largeCompMedCont : smallCompMedCont;
+  let maxMed = over25 ? (largeCompMedCont + empMedCont) : (smallCompMedCont + empMedCont);
+  let minFam = over25 ? largeCompFamCont : smallCompFamCont;
+  let minMedPer = Math.round(minMed * 100);
+  let maxMedPer = Math.round(maxMed * 100);
+  let minFamPer = Math.round(minFam * 100);
+  let medLeaveCont = medicalLeave > minMedPer ? medicalLeave / 100 : minMed;
+  let famLeaveCont = familyLeave > minFamPer ? familyLeave / 100 : minFam;
   let hasMassEmployees = mass_employees === 'yes';
-  let disableAll = payrollBase === 'all' && ((employeesW2 > 0 && Number(numbro.unformat(payrollW2)) > 0) || (!(employeesW2 > 0) && employees1099 > 0 && Number(numbro.unformat(payroll1099)) > 0)) && (over50 ? Number(numbro.unformat(payroll1099)) > 0 : true);
-  let disableOne = payrollBase === 'one' && Number(numbro.unformat(payWages)) > 0;
-  let enable = hasMassEmployees && (empCount > 0) && (disableOne || disableAll);
   let medPercent = totContribution * totMedPercent;
   let famPercent = totContribution * totFamPercent;
   let medLeave = totalPayroll * medPercent;
@@ -199,58 +191,53 @@ const Part3 = (props) => {
     // });
   };
 
-  const familyLeaveSliderProps = {
-    id: 'family-leave',
-    labelText: '',
-    required: true,
-    defaultValue: String(leaveTableDefaults['family-leave']),
-    axis: 'x',
-    max: 100,
-    min: minFamPer,
-    step: 1,
-    ticks: famTicks,
-    domain: [0, 100],
-    skipped: true,
-    disabled: !enable,
-    onChange: onFamSliderChange
-  };
-  const medLeaveSliderProps = {
-    id: 'medical-leave',
-    labelText: '',
-    required: true,
-    defaultValue: String(leaveTableDefaults['medical-leave']),
-    axis: 'x',
-    max: maxMedPer,
-    min: minMedPer,
-    step: 1,
-    domain: [0, maxMedPer],
-    ticks: medTicks,
-    skipped: true,
-    disabled: !enable,
-    onChange: onMedSliderChange
-  };
-  if (!formContext.hasInputProviderId('payroll1099') || !formContext.hasInputProviderId('payrollW2')) {
+  if (payrollBase === 'all' && !formContext.hasInputProviderIds(['payroll1099', 'payrollW2'])) {
     return null;
   }
+  if (payrollBase === 'one' && !formContext.hasInputProviderId(['payrollWages'])) {
+    return null;
+  }
+  const medEmployerContOverride = (sourceInputId, val) => {
+    if (['medEmployeeCont'].indexOf(sourceInputId) > -1) {
+      return String(Math.round(100 - Number(val)));
+    }
+    return String(val);
+  };
+  const medEmployeeContOverride = (sourceInputId, val) => {
+    if (['medEmployerCont', 'medical-leave'].indexOf(sourceInputId) > -1) {
+      return String(Math.round(100 - Number(val)));
+    }
+    return String(val);
+  };
   return(
-    <InputSync inputProviderIds={['payrollBase', 'employeesW2', 'employees1099', 'payroll1099', 'payrollW2']}>
+    <InputSync
+
+      inputProviderIds={['payrollBase', 'payrollWages', 'employeesW2', 'employees1099', 'payroll1099', 'payrollW2', 'family-leave', 'famEmployerCont', 'famEmployeeCont', 'medEmployerCont', 'medical-leave', 'medEmployeeCont', 'timePeriod']}
+    >
       {() => {
         const empw2 = Number(formContext.getInputProviderValue('employeesW2'));
         const emp1099 = Number(formContext.getInputProviderValue('employees1099'));
         const employeeCount = Number(empw2) + (Number(emp1099) / (Number(emp1099) + Number(empw2)) >= emp1099Fraction ? Number(emp1099) : 0);
         over25 = employeeCount >= minEmployees;
-        medLeaveCont = (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont;
-        famLeaveCont = (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont;
+        minMed = over25 ? largeCompMedCont : smallCompMedCont;
+        maxMed = over25 ? (largeCompMedCont + empMedCont) : (smallCompMedCont + empMedCont);
+        minFam = over25 ? largeCompFamCont : smallCompFamCont;
+        minMedPer = Math.round(minMed * 100);
+        maxMedPer = Math.round(maxMed * 100);
+        minFamPer = Math.round(minFam * 100);
+        familyLeave = formContext.getInputProviderValue('family-leave') || leaveTableDefaults.famCont;
+        medicalLeave = formContext.getInputProviderValue('medical-leave') || leaveTableDefaults.medCont;
+        medLeaveCont = medicalLeave > minMedPer ? medicalLeave / 100 : minMed;
+        famLeaveCont = familyLeave > minFamPer ? familyLeave / 100 : minFam;
         hasMassEmployees = formContext.getInputProviderValue('mass_employees') === 'yes';
-        const disableInput = !hasMassEmployees || Number.isNaN(employeeCount);
         over50 = (Number(emp1099) / (Number(empw2) + Number(emp1099))) >= emp1099Fraction;
         payrollBase = formContext.getInputProviderValue('payrollBase');
         const pay1099 = formContext.getInputProviderValue('payroll1099') || '';
-        const pWages = formContext.getInputProviderValue('payWages') || '';
+        const pWages = formContext.getInputProviderValue('payrollWages') || '';
         const payW2 = formContext.getInputProviderValue('payrollW2') || '';
         if (payrollBase === 'all' && Number(empw2) > 0) {
           totalPayroll = over50 ? (Number(numbro.unformat(pay1099)) + Number(numbro.unformat(payW2))) : Number(numbro.unformat(payW2));
-        } else if (payrollBase === 'all' && !(Number(empw2) > 0)) {
+        } else if (payrollBase === 'all' && (Number(empw2) <= 0)) {
           totalPayroll = Number(numbro.unformat(pay1099));
         } else {
           totalPayroll = Number(numbro.unformat(pWages)) > socialSecCap ? socialSecCap : Number(numbro.unformat(pWages));
@@ -266,17 +253,11 @@ const Part3 = (props) => {
         timeValue = Number(getTimeValue(formContext.getInputProviderValue('timePeriod')));
         medLeaveTotal = (medLeaveComp + medLeaveEmp) / timeValue;
         famLeaveTotal = (famLeaveComp + famLeaveEmp) / timeValue;
-        tBody = formContext.getInputProviderValue('payrollBase') === 'all' ? AllTableData.bodies[0] : SingleTableData.bodies[0];
+        tBody = payrollBase === 'all' ? AllTableData.bodies[0] : SingleTableData.bodies[0];
         tRow1 = tBody.rows[0];
         tRow2 = tBody.rows[1];
         tRow3 = tBody.rows[2];
-        console.log('pay1099', pay1099);
-        console.log('payW2', payW2);
-        console.log('medLeave', medLeave);
-        console.log('medLeaveCont', medLeaveCont);
-        console.log('medLeaveComp', medLeaveComp);
-        console.log('famLeaveComp', famLeaveComp);
-        console.log('timeValue', timeValue);
+
         tRow1.cells[1].text = toCurrency(medLeaveComp / timeValue);
         tRow1.cells[2].text = toCurrency(famLeaveComp / timeValue);
         tRow1.cells[3].text = toCurrency((medLeaveComp + famLeaveComp) / timeValue);
@@ -286,10 +267,56 @@ const Part3 = (props) => {
         tRow3.cells[1].text = toCurrency(medLeaveTotal);
         tRow3.cells[2].text = toCurrency(famLeaveTotal);
         tRow3.cells[3].text = toCurrency(medLeaveTotal + famLeaveTotal);
-        disableAll = payrollBase === 'all' && ((empw2 > 0 && Number(numbro.unformat(payW2)) > 0) || (!(empw2 > 0) && emp1099 > 0 && Number(numbro.unformat(pay1099)) > 0)) && (over50 ? Number(numbro.unformat(pay1099)) > 0 : true);
-        disableOne = payrollBase === 'one' && Number(numbro.unformat(pWages)) > 0;
-        enable = hasMassEmployees && (employeeCount > 0) && (disableOne || disableAll);
-        console.log(tBody);
+        const enableAll = payrollBase === 'all' && (Number(empw2) <= 0 || Number(numbro.unformat(payW2)) <= 0 || Number(emp1099) <= 0 || Number(numbro.unformat(pay1099)) <= 0 || (over50 ? Number(numbro.unformat(pay1099)) <= 0 : false));
+        const enableOne = payrollBase === 'one' && Number(numbro.unformat(pWages)) <= 0;
+        const enable = hasMassEmployees && (employeeCount > 0) && (payrollBase === 'all' ? !enableOne : !enableAll);
+        const famTicks = minFamPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minFamPer, 'Min Employer Contribution'], [100, '100%']];
+        let medTicks = [[0, '0%'], [empMedCont * 100, `${empMedCont * 100}%`]];
+        if (over25) {
+          medTicks = minMedPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minMedPer, 'Min Employer Contribution'], [100, '100%']];
+        }
+        const familyLeaveSliderProps = {
+          id: 'family-leave',
+          labelText: '',
+          required: true,
+          defaultValue: String(leaveTableDefaults['family-leave']),
+          axis: 'x',
+          max: 100,
+          min: minFamPer,
+          step: 1,
+          ticks: famTicks,
+          domain: [0, 100],
+          skipped: true,
+          disabled: !enable,
+          overrideLinkedValue: (sourceInputId, val) => {
+            if (sourceInputId === 'famEmployeeCont') {
+              return(String(Math.round(100 - Number(val))));
+            }
+            return String(val);
+          }
+        };
+        const medLeaveSliderProps = {
+          id: 'medical-leave',
+          labelText: '',
+          required: true,
+          defaultValue: String(leaveTableDefaults['medical-leave']),
+          axis: 'x',
+          max: maxMedPer,
+          min: minMedPer,
+          step: 1,
+          domain: [0, maxMedPer],
+          ticks: medTicks,
+          skipped: true,
+          disabled: !enable,
+          overrideLinkedValue: (sourceInputId, val) => {
+            if (['medEmployeeCont'].indexOf(sourceInputId) > -1) {
+              return(Math.round(100 - Number(val)).toString());
+            }
+            return val;
+          }
+        };
+        console.log('medLeaveCont', medLeaveCont);
+        console.log('minMedPer', minMedPer);
         return(
           <Fragment>
             <fieldset>
@@ -317,7 +344,13 @@ const Part3 = (props) => {
                         step={1}
                         showButtons={false}
                         disabled={!enable}
-                        onChange={onFamChange}
+                        linkedInputProviders={['family-leave', 'famEmployeeCont']}
+                        overrideLinkedValue={(sourceInputId, val) => {
+                          if (sourceInputId === 'famEmployeeCont') {
+                            return(100 - Number(val));
+                          }
+                          return Number(val);
+                        }}
                       />
                       <InputNumber
                         labelText={questionOne.left.right}
@@ -330,12 +363,17 @@ const Part3 = (props) => {
                         step={1}
                         max={100}
                         min={0}
-                        defaultValue={Math.round((1 - famLeaveCont) * 100)}
+                        defaultValue={Math.round((1 - Number(famLeaveCont)) * 100)}
                         unit="%"
                         required
                         disabled={!enable}
                         showButtons={false}
-                        onChange={onFamChange}
+                        overrideLinkedValue={(sourceInputId, val) => {
+                          if (['family-leave', 'famEmployerCont'].indexOf(sourceInputId) > -1) {
+                            return(100 - Number(val));
+                          }
+                          return Number(val);
+                        }}
                       />
                     </div>
                     <InputSlider {...familyLeaveSliderProps} />
@@ -355,13 +393,14 @@ const Part3 = (props) => {
                         inline={false}
                         max={maxMedPer}
                         min={minMedPer}
-                        defaultValue={Math.round(medLeaveCont * 100)}
+                        defaultValue={minMedPer}
                         unit="%"
                         required
                         step={1}
                         showButtons={false}
                         disabled={!enable}
-                        onChange={onMedChange}
+                        linkedInputProviders={['medEmployeeCont', 'medical-leave']}
+                        overrideLinkedValue={medEmployerContOverride}
                       />
                       <InputNumber
                         labelText={questionOne.right.right}
@@ -379,7 +418,7 @@ const Part3 = (props) => {
                         disabled={!enable}
                         showButtons={false}
                         step={1}
-                        onChange={onMedChange}
+                        overrideLinkedValue={medEmployeeContOverride}
                       />
                     </div>
                     <InputSlider {...medLeaveSliderProps} />

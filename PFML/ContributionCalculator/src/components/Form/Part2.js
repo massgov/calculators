@@ -101,7 +101,7 @@ const Part2 = (props) => {
             }
           </InputContext.Consumer>
         </Input>
-        <InputSync inputProviderIds={['mass_employees', 'employeesW2', 'employees1099', 'payrollBase']}>
+        <InputSync inputProviderIds={['mass_employees', 'employeesW2', 'employees1099', 'payrollBase', 'payrollW2']}>
           {
             () => {
               const empw2 = Number(formContext.getInputProviderValue('employeesW2'));
@@ -144,7 +144,7 @@ const Part2 = (props) => {
                           maxlength={200}
                           placeholder="e.g. $100,000"
                           errorMsg={questionTwo.errorMsg}
-                          defaultValue={payrollW2}
+                          defaultValue={toCurrency(payrollW2)}
                           min={0}
                           format={{
                             mantissa: 2,
@@ -172,7 +172,7 @@ const Part2 = (props) => {
                           maxlength={200}
                           placeholder="e.g. $100,000"
                           errorMsg={questionThree.errorMsg}
-                          defaultValue={payroll1099}
+                          defaultValue={toCurrency(payroll1099)}
                           min={0}
                           format={{
                             mantissa: 2,
@@ -267,7 +267,7 @@ const Part2 = (props) => {
                           maxlength={200}
                           placeholder="e.g. $100,000"
                           errorMsg={questionFour.errorMsg}
-                          defaultValue={payWages}
+                          defaultValue={toCurrency(payWages)}
                           min={0}
                           format={{
                             mantissa: 2,
