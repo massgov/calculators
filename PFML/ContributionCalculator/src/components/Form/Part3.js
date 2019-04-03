@@ -140,11 +140,31 @@ const Part3 = (props) => {
             if (val === '' || Number.isNaN(Number(val))) {
               return Math.round(minMedPer);
             }
+            let newVal = Number(val).valueOf();
+            // if (newVal > maxMedPer) {
+            //   newVal = maxMedPer;
+            // }
+            // if (newVal < minMedPer) {
+            //   newVal = minMedPer;
+            // }
             // If medEmployeeCont does have a value, 100 minus its value is the employer's value.
-            return Math.round(Math.abs(val - maxMedPer));
+            const test = Math.round(Math.abs(newVal - maxMedPer));
+            // if (val === maxMedPer) {
+            //   return minMedPer;
+            // }
+            // if (val > maxMedPer) {
+            //   test = minMedPer;
+            // }
+            // if (test < minMedPer) {
+            //   test = minMedPer;
+            // }
+            console.log('maxMedPer: ', maxMedPer);
+            console.log('employee val: ', val);
+            console.log('employer value becomes: ', test);
+            return test;
           }
           // Else, this is the slider updating. Employer has the same value as the slider always, so return val.
-          return val;
+          return Number(val).valueOf();
         };
         const medEmployeeContOverride = (sourceInputId, val) => {
           // If medEmployerCont or medical-leave are updating...
@@ -153,11 +173,36 @@ const Part3 = (props) => {
             if (val === '' || Number.isNaN(Number(val))) {
               return Math.round((maxMed - medLeaveCont) * 100);
             }
+            let newVal = Number(val).valueOf();
+            // if (newVal > maxMedPer) {
+            //   newVal = maxMedPer;
+            // }
+            // if (newVal < minMedPer) {
+            //   newVal = minMedPer;
+            // }
+            // console.log(newVal);
+            // console.log(val);
+            // if (newVal > maxMedPer) {
+            //   newVal = maxMedPer;
+            // }
+            // if (newVal < minMedPer) {
+            //   newVal = minMedPer;
+            // }
             // Else, employee value is the absolute value of val minus the max med percent.
-            return Math.round(Math.abs(val - maxMedPer));
+            let test = Math.round(Math.abs(newVal - maxMedPer));
+            // if (val === minMedPer) {
+            //   return maxMedPer - val;
+            // }
+            // if (test > maxMedPer) {
+            //   test = maxMedPer;
+            // }
+            // if (test < minMedPer) {
+            //   test = minMedPer;
+            // }
+            return test;
           }
           // No changes, return same value for updating with.
-          return Number(val);
+          return Number(val).valueOf();
         };
         hasMassEmployees = formContext.getInputProviderValue('mass_employees') === 'yes';
         over50 = (Number(emp1099) / (Number(empw2) + Number(emp1099))) >= emp1099Fraction;
@@ -243,6 +288,7 @@ const Part3 = (props) => {
           ticks: medTicks,
           skipped: true,
           disabled: !enable,
+          linkedInputProviders: ['medEmployerCont', 'medEmployeeCont'],
           overrideLinkedValue: medEmployerContOverride,
           onChange: (val) => {
             onChangeMedCont(val);
@@ -333,7 +379,6 @@ const Part3 = (props) => {
                         step={1}
                         showButtons={false}
                         disabled={!enable}
-                        linkedInputProviders={['medical-leave', 'medEmployeeCont']}
                         overrideLinkedValue={medEmployerContOverride}
                       />
                       <InputNumber
