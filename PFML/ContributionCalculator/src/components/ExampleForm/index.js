@@ -1,12 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { decode, addUrlProps, UrlQueryParamTypes } from 'react-url-query';
-import { Form, FormProvider, InputSync } from '@massds/mayflower-react';
+import { Form, FormProvider } from '@massds/mayflower-react';
 import Part1 from '../Form/Part1';
 import Part2 from '../Form/Part2';
 import Part3 from '../Form/Part3';
 import Reset from '../Form/Reset';
-
 
 import '../../css/index.css';
 
@@ -28,18 +27,17 @@ const mapUrlToProps = (url) => ({
   timePeriod: decode(UrlQueryParamTypes.string, url.timePeriod)
 });
 
-const ExampleForm = () => {
-  return(
-    <FormProvider>
-      <div className="page-content">
-        <Part1 />
-        <hr />
-        <Part2 />
-        <Part3 />
-      </div>
-    </FormProvider>
-  );
-};
+const ExampleForm = () => (
+  <FormProvider>
+    <div className="page-content">
+      <Part1 />
+      <hr />
+      <Part2 />
+    </div>
+    <Part3 />
+    <Reset />
+  </FormProvider>
+);
 
 ExampleForm.propTypes = {
   massEmp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
