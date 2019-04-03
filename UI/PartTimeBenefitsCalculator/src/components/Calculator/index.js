@@ -17,7 +17,7 @@ const Calculator = () => (
       {
           (formContext) => {
             const handleChange = (newVal, id) => {
-              console.log(newVal, id)
+              console.log(newVal, id);
               const weeklyBenefits = toNumber(formContext.getValue('weekly-benefits'));
               const weeklyEarnings = toNumber(formContext.getValue('weekly-earnings'));
               const earningsDisregard = toNumber(formContext.getValue('earnings-disregard'));
