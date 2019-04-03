@@ -37,7 +37,8 @@ const Output = (props) => {
   const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
 
   // max benefit credit
-  const maxBenefitOption1 = 30 * weeklyBenefitFinal;
+  const maxBenefitDuration = 26;
+  const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
   const maxBenefitOption2 = 0.36 * quartersSum;
   const maxBenefitFinal = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption2 : maxBenefitOption1;
   const maxBenefitOther = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption1 : maxBenefitOption2;
@@ -77,11 +78,13 @@ const Output = (props) => {
         <Paragraph text="Your maximum benefit credit is equal to the lesser of either:" />
         <ul>
           <li>
-30 times your weekly benefit amount:
-            <Paragraph text={`<strong>${toCurrency(maxBenefitOption1)}</strong> = 30 x ${toCurrency(weeklyBenefitFinal)}`} />
+            {maxBenefitDuration}
+            {' '}
+            times your weekly benefit amount:
+            <Paragraph text={`<strong>${toCurrency(maxBenefitOption1)}</strong> = ${maxBenefitDuration} x ${toCurrency(weeklyBenefitFinal)}`} />
           </li>
           <li>
-36% of the total wages in your base period:
+            36% of the total wages in your base period:
             <Paragraph text={`<strong>${toCurrency(maxBenefitOption2)}</strong> = 36% x ${toCurrency(quartersSum)}`} />
           </li>
         </ul>
