@@ -24,6 +24,9 @@ const mapUrlChangeHandlersToProps = () => ({
 
 const Part3 = (props) => {
   const formContext = useContext(FormContext);
+  if (!formContext.hasInputProviderIds(['payrollBase', 'mass_employees'])) {
+    return null;
+  }
   const {
     totContribution, totMedPercent, totFamPercent, largeCompFamCont, smallCompFamCont, empMedCont, largeCompMedCont, smallCompMedCont, socialSecCap, emp1099Fraction, minEmployees
   } = ContributionVariables.baseVariables;
@@ -42,21 +45,22 @@ const Part3 = (props) => {
     return value;
   };
   const {
-    payroll1099, payrollW2, payWages, mass_employees, employeesW2, employees1099, timePeriod = props.timePeriod || 'Year'
+    payroll1099, payrollW2, payWages, mass_employees, employeesW2, employees1099
   } = formContext.getInputProviderValues();
 
   let payrollBase = formContext.getInputProviderValue('payrollBase');
-  const empCount = employeesW2 + (employees1099 / (employees1099 + employeesW2) >= emp1099Fraction ? employees1099 : 0);
+  let timePeriod = formContext.getInputProviderValue('timePeriod');
+  const empCount = Number(employeesW2) + (Number(employees1099) / (Number(employees1099) + Number(employeesW2)) >= emp1099Fraction ? Number(employees1099) : 0);
   const famLeaveDefault = (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont;
   const medLeaveDefault = (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont;
   const leaveTableDefaults = {
-    famCont: props.famCont && !Number.isNaN(props.famCont) ? Number(props.famCont) : famLeaveDefault,
-    medCont: props.medCont && !Number.isNaN(props.medCont) ? Number(props.medCont) : medLeaveDefault,
+    famCont: props.famCont && !Number.isNaN(props.famCont) ? Number(props.famCont) : Math.round(famLeaveDefault * 100),
+    medCont: props.medCont && !Number.isNaN(props.medCont) ? Number(props.medCont) : Math.round(medLeaveDefault * 100),
     timeValue: props.timeValue && !Number.isNaN(props.timeValue) ? Number(props.timeValue) : 1,
-    timePeriod
+    timePeriod: props.timePeriod || timePeriod || 'Year'
   };
-  leaveTableDefaults['family-leave'] = String(Math.round(Number(leaveTableDefaults.famCont) * 100));
-  leaveTableDefaults['medical-leave'] = String(Math.round(Number(leaveTableDefaults.medCont) * 100));
+  leaveTableDefaults['family-leave'] = String(leaveTableDefaults.famCont);
+  leaveTableDefaults['medical-leave'] = String(leaveTableDefaults.medCont);
   let familyLeave = formContext.getInputProviderValue('family-leave') || leaveTableDefaults.famCont;
   let medicalLeave = formContext.getInputProviderValue('medical-leave') || leaveTableDefaults.medCont;
   let over50 = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
@@ -64,7 +68,7 @@ const Part3 = (props) => {
   let totalPayroll;
   if (payrollBase === 'all' && Number(employeesW2) > 0) {
     totalPayroll = over50 ? (Number(numbro.unformat(payroll1099)) + Number(numbro.unformat(payrollW2))) : Number(numbro.unformat(payrollW2));
-  } else if (payrollBase === 'all' && !(employeesW2 > 0)) {
+  } else if (payrollBase === 'all' && !(Number(employeesW2) > 0)) {
     totalPayroll = Number(numbro.unformat(payroll1099));
   } else {
     totalPayroll = Number(numbro.unformat(payWages)) > socialSecCap ? socialSecCap : Number(numbro.unformat(payWages));
@@ -103,116 +107,16 @@ const Part3 = (props) => {
   tRow3.cells[2].text = toCurrency(famLeaveTotal);
   tRow3.cells[3].text = toCurrency(medLeaveTotal + famLeaveTotal);
 
-  const onFamSliderChange = (value) => {
-    // const fracNum = value > minFamPer ? value / 100 : minFam;
-    // const newVal = Object.assign({}, leaveTableContext.getValue(), {
-    //   famCont: fracNum,
-    //   'family-leave': String(value)
-    // });
-    // const newPartOne = Object.assign({}, partOneContext.getValue(), {
-    //   famLeaveCont: fracNum
-    // });
-    // partOneContext.setValue(newPartOne, () => {
-    //   leaveTableContext.setValue(newVal, () => {
-    //     formContext.setValue({ id: 'famEmployerCont', value });
-    //     formContext.setValue({ id: 'famEmployeeCont', value: (100 - value) });
-    //     onChangeFamCont(fracNum);
-    //   });
-    // });
-  };
-  const onMedSliderChange = (value) => {
-    // const fracNum = value > minMedPer ? value / 100 : minMed;
-    // const newVal = Object.assign({}, leaveTableContext.getValue(), {
-    //   medCont: fracNum,
-    //   'medical-leave': String(value)
-    // });
-    // const newPartOne = Object.assign({}, partOneContext.getValue(), {
-    //   medLeaveCont: fracNum
-    // });
-    // partOneContext.setValue(newPartOne, () => {
-    //   leaveTableContext.setValue(newVal, () => {
-    //     formContext.setValue({ id: 'medEmployerCont', value });
-    //     formContext.setValue({ id: 'medEmployeeCont', value: (maxMedPer - value) });
-    //     onChangeMedCont(fracNum);
-    //   });
-    // });
-  };
-
-  const onFamChange = (event, value, id) => {
-    // const fam = formContext.getValue(id);
-    // const fracNum = fam > minFamPer ? fam / 100 : minFam;
-    // const newVal = Object.assign({}, leaveTableContext.getValue(), {
-    //   famCont: fracNum,
-    //   'family-leave': String(value)
-    // });
-    //
-    // const newPartOne = Object.assign({}, partOneContext.getValue(), {
-    //   famLeaveCont: fracNum
-    // });
-    // // Update part one content...
-    // partOneContext.setValue(newPartOne, () => {
-    //   // Then update the leave table content...
-    //   leaveTableContext.setValue(newVal, () => {
-    //     // Then keep the inputs in sync...
-    //     formContext.setValue({ id: 'family-leave', value: String(fam) });
-    //     const updateId = (id === 'famEmployeeCont') ? 'famEmployerCont' : 'famEmployeeCont';
-    //     formContext.setValue({
-    //       id: updateId,
-    //       value: (updateId === 'famEmployeeCont') ? (100 - fam) : fam
-    //     });
-    //     onChangeFamCont(fracNum);
-    //   });
-    // });
-  };
-  const onMedChange = (event, value, id) => {
-    // const med = formContext.getValue(id);
-    // const fracNum = med > minMedPer ? med / 100 : minMed;
-    // const newVal = Object.assign({}, leaveTableContext.getValue(), {
-    //   famCont: fracNum,
-    //   'medical-leave': String(value)
-    // });
-    //
-    // const newPartOne = Object.assign({}, partOneContext.getValue(), {
-    //   medLeaveCont: fracNum
-    // });
-    // // Update part one content...
-    // partOneContext.setValue(newPartOne, () => {
-    //   // Then update the leave table content...
-    //   leaveTableContext.setValue(newVal, () => {
-    //     // Then keep the inputs in sync...
-    //     formContext.setValue({ id: 'medical-leave', value: String(med) });
-    //     const updateId = (id === 'medEmployeeCont') ? 'medEmployerCont' : 'medEmployeeCont';
-    //     formContext.setValue({
-    //       id: updateId,
-    //       value: (updateId === 'medEmployeeCont') ? (100 - med) : med
-    //     });
-    //     onChangeMedCont(fracNum);
-    //   });
-    // });
-  };
-
   if (payrollBase === 'all' && !formContext.hasInputProviderIds(['payroll1099', 'payrollW2'])) {
     return null;
   }
   if (payrollBase === 'one' && !formContext.hasInputProviderId(['payrollWages'])) {
     return null;
   }
-  const medEmployerContOverride = (sourceInputId, val) => {
-    if (['medEmployeeCont'].indexOf(sourceInputId) > -1) {
-      return String(Math.round(100 - Number(val)));
-    }
-    return String(val);
-  };
-  const medEmployeeContOverride = (sourceInputId, val) => {
-    if (['medEmployerCont', 'medical-leave'].indexOf(sourceInputId) > -1) {
-      return String(Math.round(100 - Number(val)));
-    }
-    return String(val);
-  };
   return(
     <InputSync
 
-      inputProviderIds={['payrollBase', 'payrollWages', 'employeesW2', 'employees1099', 'payroll1099', 'payrollW2', 'family-leave', 'famEmployerCont', 'famEmployeeCont', 'medEmployerCont', 'medical-leave', 'medEmployeeCont', 'timePeriod']}
+      inputProviderIds={['mass_employees', 'payrollBase', 'payrollWages', 'employeesW2', 'employees1099', 'payroll1099', 'payrollW2', 'family-leave', 'famEmployerCont', 'famEmployeeCont', 'medEmployerCont', 'medical-leave', 'medEmployeeCont', 'timePeriod']}
     >
       {() => {
         const empw2 = Number(formContext.getInputProviderValue('employeesW2'));
@@ -229,12 +133,39 @@ const Part3 = (props) => {
         medicalLeave = formContext.getInputProviderValue('medical-leave') || leaveTableDefaults.medCont;
         medLeaveCont = medicalLeave > minMedPer ? medicalLeave / 100 : minMed;
         famLeaveCont = familyLeave > minFamPer ? familyLeave / 100 : minFam;
+        const medEmployerContOverride = (sourceInputId, val) => {
+          // If medEmployeeCont updated...
+          if (['medEmployeeCont'].indexOf(sourceInputId) > -1) {
+            // If medEmployeeCont doesn't have a value yet, then the employer should default to minMedPer.
+            if (val === '' || Number.isNaN(val)) {
+              return minMedPer;
+            }
+            // If medEmployeeCont does have a value, 100 minus its value is the employer's value.
+            return Math.round(100 - val);
+          }
+          // Else, this is the slider updating. Employer has the same value as the slider always, so return val.
+          return Number(val);
+        };
+        const medEmployeeContOverride = (sourceInputId, val) => {
+          // If medEmployerCont or medical-leave are updating...
+          if (['medEmployerCont', 'medical-leave'].indexOf(sourceInputId) > -1) {
+            // Set a default value for employee.
+            if (val === '' || Number.isNaN(val)) {
+              return Math.round((maxMed - medLeaveCont) * 100);
+            }
+            // Else, employee value is 100 minus the val of either the slider or employer.
+            return Math.round(100 - val);
+          }
+          // No changes, return same value for updating with.
+          return Number(val);
+        };
         hasMassEmployees = formContext.getInputProviderValue('mass_employees') === 'yes';
         over50 = (Number(emp1099) / (Number(empw2) + Number(emp1099))) >= emp1099Fraction;
         payrollBase = formContext.getInputProviderValue('payrollBase');
-        const pay1099 = formContext.getInputProviderValue('payroll1099') || '';
-        const pWages = formContext.getInputProviderValue('payrollWages') || '';
-        const payW2 = formContext.getInputProviderValue('payrollW2') || '';
+        const pay1099 = formContext.getInputProviderValue('payroll1099') || '0';
+        // You can't set the default for a component that hasn't been mounted yet, so check props.payWages first, then formcontext, then default to zero.
+        const pWages = props.payWages || formContext.getInputProviderValue('payrollWages') || '0';
+        const payW2 = formContext.getInputProviderValue('payrollW2') || '0';
         if (payrollBase === 'all' && Number(empw2) > 0) {
           totalPayroll = over50 ? (Number(numbro.unformat(pay1099)) + Number(numbro.unformat(payW2))) : Number(numbro.unformat(payW2));
         } else if (payrollBase === 'all' && (Number(empw2) <= 0)) {
@@ -250,14 +181,14 @@ const Part3 = (props) => {
         famLeaveComp = famLeave * famLeaveCont;
         medLeaveEmp = medLeave * (maxMed - medLeaveCont);
         famLeaveEmp = famLeave * (1 - famLeaveCont);
-        timeValue = Number(getTimeValue(formContext.getInputProviderValue('timePeriod')));
+        timePeriod = props.timePeriod || formContext.getInputProviderValue('timePeriod') || 'Year';
+        timeValue = Number(getTimeValue(timePeriod));
         medLeaveTotal = (medLeaveComp + medLeaveEmp) / timeValue;
         famLeaveTotal = (famLeaveComp + famLeaveEmp) / timeValue;
         tBody = payrollBase === 'all' ? AllTableData.bodies[0] : SingleTableData.bodies[0];
         tRow1 = tBody.rows[0];
         tRow2 = tBody.rows[1];
         tRow3 = tBody.rows[2];
-
         tRow1.cells[1].text = toCurrency(medLeaveComp / timeValue);
         tRow1.cells[2].text = toCurrency(famLeaveComp / timeValue);
         tRow1.cells[3].text = toCurrency((medLeaveComp + famLeaveComp) / timeValue);
@@ -267,9 +198,9 @@ const Part3 = (props) => {
         tRow3.cells[1].text = toCurrency(medLeaveTotal);
         tRow3.cells[2].text = toCurrency(famLeaveTotal);
         tRow3.cells[3].text = toCurrency(medLeaveTotal + famLeaveTotal);
-        const enableAll = payrollBase === 'all' && (Number(empw2) <= 0 || Number(numbro.unformat(payW2)) <= 0 || Number(emp1099) <= 0 || Number(numbro.unformat(pay1099)) <= 0 || (over50 ? Number(numbro.unformat(pay1099)) <= 0 : false));
-        const enableOne = payrollBase === 'one' && Number(numbro.unformat(pWages)) <= 0;
-        const enable = hasMassEmployees && (employeeCount > 0) && (payrollBase === 'all' ? !enableOne : !enableAll);
+        const enableAll = payrollBase === 'all' && (Number(empw2) > 0 && Number(numbro.unformat(payW2)) > 0 && Number(emp1099) > 0 && Number(numbro.unformat(pay1099)) > 0 && (over50 ? Number(numbro.unformat(pay1099)) > 0 : true));
+        const enableOne = payrollBase === 'one' && Number(numbro.unformat(pWages)) > 0;
+        const enable = hasMassEmployees && (employeeCount > 0) && (payrollBase === 'all' ? enableAll : enableOne);
         const famTicks = minFamPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minFamPer, 'Min Employer Contribution'], [100, '100%']];
         let medTicks = [[0, '0%'], [empMedCont * 100, `${empMedCont * 100}%`]];
         if (over25) {
@@ -279,7 +210,6 @@ const Part3 = (props) => {
           id: 'family-leave',
           labelText: '',
           required: true,
-          defaultValue: String(leaveTableDefaults['family-leave']),
           axis: 'x',
           max: 100,
           min: minFamPer,
@@ -290,16 +220,21 @@ const Part3 = (props) => {
           disabled: !enable,
           overrideLinkedValue: (sourceInputId, val) => {
             if (sourceInputId === 'famEmployeeCont') {
+              if (val === '' || Number.isNaN(val)) {
+                return String(familyLeave);
+              }
               return(String(Math.round(100 - Number(val))));
             }
             return String(val);
+          },
+          onComponentUpdate: (val) => {
+            onChangeFamCont(val);
           }
         };
         const medLeaveSliderProps = {
           id: 'medical-leave',
           labelText: '',
           required: true,
-          defaultValue: String(leaveTableDefaults['medical-leave']),
           axis: 'x',
           max: maxMedPer,
           min: minMedPer,
@@ -310,13 +245,17 @@ const Part3 = (props) => {
           disabled: !enable,
           overrideLinkedValue: (sourceInputId, val) => {
             if (['medEmployeeCont'].indexOf(sourceInputId) > -1) {
+              if (val === '' || Number.isNaN(val)) {
+                return String(leaveTableDefaults['medical-leave']);
+              }
               return(Math.round(100 - Number(val)).toString());
             }
             return val;
+          },
+          onComponentUpdate: (val) => {
+            onChangeMedCont(val);
           }
         };
-        console.log('medLeaveCont', medLeaveCont);
-        console.log('minMedPer', minMedPer);
         return(
           <Fragment>
             <fieldset>
@@ -336,7 +275,6 @@ const Part3 = (props) => {
                         maxlength={3}
                         placeholder="e.g. 50"
                         inline={false}
-                        defaultValue={Math.round(famLeaveCont * 100)}
                         unit="%"
                         required
                         max={100}
@@ -347,6 +285,9 @@ const Part3 = (props) => {
                         linkedInputProviders={['family-leave', 'famEmployeeCont']}
                         overrideLinkedValue={(sourceInputId, val) => {
                           if (sourceInputId === 'famEmployeeCont') {
+                            if (val === '' || Number.isNaN(val)) {
+                              return Number(familyLeave);
+                            }
                             return(100 - Number(val));
                           }
                           return Number(val);
@@ -363,13 +304,15 @@ const Part3 = (props) => {
                         step={1}
                         max={100}
                         min={0}
-                        defaultValue={Math.round((1 - Number(famLeaveCont)) * 100)}
                         unit="%"
                         required
                         disabled={!enable}
                         showButtons={false}
                         overrideLinkedValue={(sourceInputId, val) => {
                           if (['family-leave', 'famEmployerCont'].indexOf(sourceInputId) > -1) {
+                            if (val === '' || Number.isNaN(val)) {
+                              return(100 - Number(familyLeave));
+                            }
                             return(100 - Number(val));
                           }
                           return Number(val);
@@ -393,7 +336,6 @@ const Part3 = (props) => {
                         inline={false}
                         max={maxMedPer}
                         min={minMedPer}
-                        defaultValue={minMedPer}
                         unit="%"
                         required
                         step={1}
@@ -412,7 +354,6 @@ const Part3 = (props) => {
                         inline={false}
                         max={maxMedPer - minMedPer}
                         min={0}
-                        defaultValue={Math.round((maxMed - medLeaveCont) * 100)}
                         unit="%"
                         required
                         disabled={!enable}
@@ -443,10 +384,6 @@ const Part3 = (props) => {
                               selected={timeContext.getOwnValue()}
                               onChangeCallback={({ selected }) => {
                                 const value = getTimeValue(selected);
-                                // const newVal = Object.assign({}, leaveTableContext.getValue(), {
-                                //   timePeriod: selected,
-                                //   timeValue: value
-                                // });
                                 timeContext.setOwnValue(selected, () => {
                                   onChangeTimeValue(value);
                                   onChangeTimePeriod(selected);

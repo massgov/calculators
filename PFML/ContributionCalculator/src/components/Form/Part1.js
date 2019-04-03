@@ -21,7 +21,7 @@ const mapUrlChangeHandlersToProps = () => ({
 const Part1 = (props) => {
   const formContext = useContext(FormContext);
   const {
-    minEmployees, largeCompMedCont, smallCompMedCont, largeCompFamCont, smallCompFamCont, emp1099Fraction
+    minEmployees, emp1099Fraction
   } = ContributionVariables.baseVariables;
   const {
     questionOne, questionTwo, questionThree, output
@@ -30,11 +30,10 @@ const Part1 = (props) => {
   const calloutParagraphClass = 'ma__help-tip-many';
   const getDangerousParagraph = (text, key) => (<div className={calloutParagraphClass} dangerouslySetInnerHTML={{ __html: text }} key={key} />);
 
-  const { employeesW2 = !Number.isNaN(props.w2) ? Number(props.w2) : 0, employees1099 = !Number.isNaN(props.emp1099) ? Number(props.emp1099) : 0 } = formContext.getInputProviderValues();
-  let over50per;
-  let employeeCount;
-  over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
-  employeeCount = over50per ? (Number(employeesW2) + Number(employees1099)) : Number(employeesW2);
+  const employeesW2 = props.w2 && !Number.isNaN(props.w2) ? Number(props.w2) : 0;
+  const employees1099 = props.emp1099 && !Number.isNaN(props.emp1099) ? Number(props.emp1099) : 0;
+  const over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
+  const employeeCount = Number(employeesW2) + (Number(employees1099) / (Number(employees1099) + Number(employeesW2)) >= emp1099Fraction ? Number(employees1099) : 0);
 
   const getConditionsMessage = () => {
     let calloutMessage = null;
@@ -42,18 +41,16 @@ const Part1 = (props) => {
     let conditionEmp1099;
     let conditionOver50;
     if (formContext.hasInputProviderIds(['employeesW2', 'employees1099'])) {
-      let eW2 = formContext.getInputProviderValue('employeesW2');
-      let e1099 = formContext.getInputProviderValue('employees1099');
-      e1099 = props.emp1099 && !Number.isNaN(props.emp1099) ? Number(props.emp1099) : e1099;
-      eW2 = props.w2 && !Number.isNaN(props.w2) ? Number(props.w2) : eW2;
+      let eW2 = formContext.getInputProviderValue('employeesW2') || 0;
+      let e1099 = formContext.getInputProviderValue('employees1099') || 0;
       const over50 = (Number(e1099) / (Number(eW2) + Number(e1099))) >= emp1099Fraction;
       const empCount = over50per ? (Number(eW2) + Number(e1099)) : Number(eW2);
       conditionEmpCount = empCount;
       conditionEmp1099 = e1099;
       conditionOver50 = over50;
     } else {
-      const w2 = props.w2 && !Number.isNaN(props.w2) ? Number(props.w2) : 0;
-      conditionEmp1099 = props.emp1099 && !Number.isNaN(props.emp1099) ? Number(props.emp1099) : 0;
+      const w2 = formContext.getInputProviderValue('employeesW2') || 0;
+      conditionEmp1099 = formContext.getInputProviderValue('employees1099') || 0;
       conditionOver50 = ((conditionEmp1099 / w2) + conditionEmp1099) >= emp1099Fraction;
       conditionEmpCount = conditionOver50 ? (w2 + conditionEmp1099) : w2;
     }
@@ -86,19 +83,14 @@ const Part1 = (props) => {
   };
 
   const partOneDefaults = {
-    w2: !Number.isNaN(props.w2) ? Number(props.w2) : null,
-    emp1099: !Number.isNaN(props.emp1099) ? Number(props.emp1099) : null,
-    mass_employees: 'yes',
+    w2: props.w2 && !Number.isNaN(props.w2) ? Number(props.w2) : '',
+    emp1099: props.emp1099 && !Number.isNaN(props.emp1099) ? Number(props.emp1099) : '',
     empCount: Number.isNaN(employeeCount) ? 0 : employeeCount,
     over50: over50per,
     over25: Number.isNaN(employeeCount) ? minEmployees <= 0 : employeeCount >= minEmployees,
-    disableInputs: false,
-    famLeaveCont: !Number.isNaN(props.famCont) ? Number(props.famCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
-    medLeaveCont: !Number.isNaN(props.medCont) ? Number(props.medCont) : Number.isNaN(employeeCount) ? 0 : (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
+    disableInputs: false
   };
-  if (typeof props.massEmp === 'string') {
-    partOneDefaults.mass_employees = (props.massEmp && props.massEmp === 'true') ? 'yes' : 'no';
-  }
+  partOneDefaults.mass_employees = (!props.massEmp || (props.massEmp && props.massEmp === 'true')) ? 'yes' : 'no';
   return(
     <fieldset>
       <React.Fragment>
@@ -115,13 +107,9 @@ const Part1 = (props) => {
                   radioButtons={questionOne.options}
                   onChange={(e) => {
                     radioContext.setOwnValue(e.selected, () => {
-                      //const newVal = Object.assign({}, inputContext.getOwnValue(), { disableInputs: !disableInputs, mass_employees: radioContext.getOwnValue() });
-                      //inputContext.setOwnValue(newVal, () => {
                         const hasEmployees = (formContext.getInputProviderValue('mass_employees') === 'yes');
-                        // formContext.setInputProviderValue({ id: 'employeesW2', value: Number(formContext.getInputProviderValue('employeesW2')) });
                         formContext.setInputProviderValue({ id: 'question_one_callout', value: !hasEmployees });
                         onChangeMassEmp(hasEmployees);
-                      //});
                     });
                   }}
                 />
@@ -133,7 +121,7 @@ const Part1 = (props) => {
           {
             () => (
               <React.Fragment>
-                <Input id="question_one_callout" defaultValue={partOneDefaults.mass_employees === 'no'} useOwnStateValue>
+                <Input id="question_one_callout" defaultValue={formContext.getInputProviderValue('mass_employees') === 'no'} useOwnStateValue>
                   <InputContext.Consumer>
                     {
                       (questionContext) => (
@@ -159,30 +147,14 @@ const Part1 = (props) => {
                   min={0}
                   placeholder="e.g. 50"
                   errorMsg={questionTwo.errorMsg}
-                  defaultValue={employeesW2}
+                  defaultValue={partOneDefaults.w2}
                   disabled={formContext.getInputProviderValue('mass_employees') === 'no'}
                   required
                   unit=""
                   onChange={() => {
                     const empW2 = Number(formContext.getInputProviderValue('employeesW2'));
-                    //const current1099 = Number(formContext.getInputProviderValue('employees1099'));
                     if (!Number.isNaN(empW2)) {
                       onChangeW2(empW2);
-                      //const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
-                      //const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
-                      //const over25 = empCount >= minEmployees;
-                      // const newVal = Object.assign({}, inputContext.getOwnValue(), {
-                      //   emp1099: current1099,
-                      //   empCount,
-                      //   over50,
-                      //   over25,
-                      //   w2: empW2,
-                      //   medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                      //   famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
-                      // });
-                      // inputContext.setOwnValue(newVal, () => {
-                      //   onChangeW2(empW2);
-                      // });
                     }
                   }}
                   showButtons
@@ -198,29 +170,13 @@ const Part1 = (props) => {
                   placeholder="e.g. 50"
                   inline
                   errorMsg={questionThree.errorMsg}
-                  defaultValue={employees1099}
+                  defaultValue={partOneDefaults.emp1099}
                   disabled={formContext.getInputProviderValue('mass_employees') === 'no'}
                   required
                   onChange={() => {
-                    const empW2 = Number(formContext.getInputProviderValue('employeesW2'));
                     const current1099 = Number(formContext.getInputProviderValue('employees1099'));
                     if (!Number.isNaN(current1099)) {
-                      const empCount = empW2 + (current1099 / (current1099 + empW2) >= emp1099Fraction ? current1099 : 0);
-                      const over50 = (Number(current1099) / (Number(empW2) + Number(current1099))) >= emp1099Fraction;
-                      const over25 = empCount >= minEmployees;
                       onChangeEmp1099(current1099);
-                      // const newVal = Object.assign({}, inputContext.getOwnValue(), {
-                      //   w2: empW2,
-                      //   empCount,
-                      //   over50,
-                      //   over25,
-                      //   emp1099: current1099,
-                      //   medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
-                      //   famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont
-                      // });
-                      // inputContext.setOwnValue(newVal, () => {
-                      //   onChangeEmp1099(newVal.emp1099);
-                      // });
                     }
                   }}
                   showButtons
