@@ -16,7 +16,7 @@ const OutputOne = () => (
               <HelpTip
                 theme="c-white"
                 triggerText={[toCurrency(inputContext.getValue())]}
-                text={`Any earnings greater than ${toCurrency(inputContext.getValue())} will be deducted dollar-for-dollar from your weekly benefit payment.`}
+                text={`Any earnings greater than ${toCurrency(inputContext.getValue())} will be deducted dollar-for-dollar from your weekly benefit payment (this is your earnings exclusion).`}
                 id="help-tip-weekly-benefits"
                 labelID="help-tip-weekly-benefits-label"
               >

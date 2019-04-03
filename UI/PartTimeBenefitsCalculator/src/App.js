@@ -39,7 +39,7 @@ class App extends Component {
             optionalContents={[{
               paragraph: {
                 text:
-                'If you work part time, you may still qualify for unemployment benefits. The weekly benefit amount you receive may be adjusted based on how much you earn from your part-time job.'
+                'If you work part time, you may still qualify for unemployment benefits. The weekly benefit amount you receive may be adjusted based on how much you earn from your part-time job. This calculator helps you estimate your situation. It is only advisory, and actual adjustments may vary depending on your specific situation.'
               }
             }]}
           />

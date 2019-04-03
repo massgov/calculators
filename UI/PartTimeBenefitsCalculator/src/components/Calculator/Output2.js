@@ -40,7 +40,7 @@ export const ScenarioOne = () => {
                   >
                     <div className="ma__help-text">As you make less than 1/3 of your weekly benefits through your part time employment, your weekly benefit stays the same.</div>
                   </HelpTip>
-                  <Paragraph text={`You take home ${displayCurrency(weeklyBenefits)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(toNumber(weeklyBenefits) + toNumber(weeklyEarnings))} weekly.`} />
+                  <Paragraph text={`You take home ${displayCurrency(weeklyBenefits)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a gross total of ${displayCurrency(toNumber(weeklyBenefits) + toNumber(weeklyEarnings))} weekly (before taxes, deductions, and other adjustments).`} />
                 </CalloutAlert>
               </Fragment>
             );
