@@ -130,31 +130,31 @@ const Part3 = (props) => {
         maxMedPer = Math.round(maxMed * 100);
         minFamPer = Math.round(minFam * 100);
         familyLeave = formContext.getInputProviderValue('family-leave') || leaveTableDefaults.famCont;
-        medicalLeave = formContext.getInputProviderValue('medical-leave') || leaveTableDefaults.medCont;
-        medLeaveCont = medicalLeave > minMedPer ? medicalLeave / 100 : minMed;
+        medicalLeave = leaveTableDefaults.medCont;
+        medLeaveCont = Number(medicalLeave) > minMedPer ? Number(medicalLeave) / 100 : minMed;
         famLeaveCont = familyLeave > minFamPer ? familyLeave / 100 : minFam;
         const medEmployerContOverride = (sourceInputId, val) => {
           // If medEmployeeCont updated...
           if (['medEmployeeCont'].indexOf(sourceInputId) > -1) {
             // If medEmployeeCont doesn't have a value yet, then the employer should default to minMedPer.
-            if (val === '' || Number.isNaN(val)) {
-              return minMedPer;
+            if (val === '' || Number.isNaN(Number(val))) {
+              return Math.round(minMedPer);
             }
             // If medEmployeeCont does have a value, 100 minus its value is the employer's value.
-            return Math.round(100 - val);
+            return Math.round(Math.abs(val - maxMedPer));
           }
           // Else, this is the slider updating. Employer has the same value as the slider always, so return val.
-          return Number(val);
+          return val;
         };
         const medEmployeeContOverride = (sourceInputId, val) => {
           // If medEmployerCont or medical-leave are updating...
           if (['medEmployerCont', 'medical-leave'].indexOf(sourceInputId) > -1) {
             // Set a default value for employee.
-            if (val === '' || Number.isNaN(val)) {
+            if (val === '' || Number.isNaN(Number(val))) {
               return Math.round((maxMed - medLeaveCont) * 100);
             }
-            // Else, employee value is 100 minus the val of either the slider or employer.
-            return Math.round(100 - val);
+            // Else, employee value is the absolute value of val minus the max med percent.
+            return Math.round(Math.abs(val - maxMedPer));
           }
           // No changes, return same value for updating with.
           return Number(val);
@@ -227,7 +227,7 @@ const Part3 = (props) => {
             }
             return String(val);
           },
-          onComponentUpdate: (val) => {
+          onChange: (val) => {
             onChangeFamCont(val);
           }
         };
@@ -243,16 +243,8 @@ const Part3 = (props) => {
           ticks: medTicks,
           skipped: true,
           disabled: !enable,
-          overrideLinkedValue: (sourceInputId, val) => {
-            if (['medEmployeeCont'].indexOf(sourceInputId) > -1) {
-              if (val === '' || Number.isNaN(val)) {
-                return String(leaveTableDefaults['medical-leave']);
-              }
-              return(Math.round(100 - Number(val)).toString());
-            }
-            return val;
-          },
-          onComponentUpdate: (val) => {
+          overrideLinkedValue: medEmployerContOverride,
+          onChange: (val) => {
             onChangeMedCont(val);
           }
         };
@@ -341,7 +333,7 @@ const Part3 = (props) => {
                         step={1}
                         showButtons={false}
                         disabled={!enable}
-                        linkedInputProviders={['medEmployeeCont', 'medical-leave']}
+                        linkedInputProviders={['medical-leave', 'medEmployeeCont']}
                         overrideLinkedValue={medEmployerContOverride}
                       />
                       <InputNumber
