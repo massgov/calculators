@@ -125,7 +125,7 @@ const Part2 = (props) => {
               };
               return(
                 <Fragment>
-                  <Input id="payrollBase" defaultValue={payrollBase} useOwnStateValue>
+                  <Input id="payrollBase" defaultValue={partTwoDefaults.option} useOwnStateValue>
                     <InputContext.Consumer>
                       {
                         (radioContext) => (
@@ -134,7 +134,7 @@ const Part2 = (props) => {
                               title={questionOne.question}
                               name="payrollBase"
                               outline
-                              defaultSelected={payrollBase}
+                              defaultSelected={radioContext.getOwnValue()}
                               errorMsg={questionOne.errorMsg}
                               radioButtons={questionOne.options}
                               onChange={(e) => {
