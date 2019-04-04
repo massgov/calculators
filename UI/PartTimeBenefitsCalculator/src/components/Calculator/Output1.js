@@ -8,6 +8,8 @@ const OutputOne = () => (
   <Input id="earnings-disregard" defaultValue={0}>
     <InputContext.Consumer>
       { (inputContext) => {
+        const maxEarningsDisregard = 795 / 3;
+        const earningsDisregard = inputContext.getValue() > maxEarningsDisregard ? maxEarningsDisregard : inputContext.getValue();
         // This value is stored in formContext as well under id "earnings-disregard".
         // This input re-renders when earnings-disregard is updated with a new value.
         if (inputContext.getValue() > 0) {
@@ -15,8 +17,8 @@ const OutputOne = () => (
             <CalloutAlert theme="c-primary" icon={null}>
               <HelpTip
                 theme="c-white"
-                triggerText={[toCurrency(inputContext.getValue())]}
-                text={`Any earnings greater than ${toCurrency(inputContext.getValue())} will be deducted dollar-for-dollar from your weekly benefit payment (this is your earnings exclusion).`}
+                triggerText={[toCurrency(earningsDisregard)]}
+                text={`Any earnings greater than ${toCurrency(earningsDisregard)} will be deducted dollar-for-dollar from your weekly benefit payment (this is your earnings exclusion).`}
                 id="help-tip-weekly-benefits"
                 labelID="help-tip-weekly-benefits-label"
               >
