@@ -30,29 +30,23 @@ const Part1 = (props) => {
   const calloutParagraphClass = 'ma__help-tip-many';
   const getDangerousParagraph = (text, key) => (<div className={calloutParagraphClass} dangerouslySetInnerHTML={{ __html: text }} key={key} />);
 
-  const employeesW2 = props.w2 && !Number.isNaN(props.w2) ? Number(props.w2) : 0;
-  const employees1099 = props.emp1099 && !Number.isNaN(props.emp1099) ? Number(props.emp1099) : 0;
+  const employeesW2 = formContext.getInputProviderValue('employeesW2') || 0;
+  const employees1099 = formContext.getInputProviderValue('employees1099') || 0;
   const over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
   const employeeCount = Number(employeesW2) + (Number(employees1099) / (Number(employees1099) + Number(employeesW2)) >= emp1099Fraction ? Number(employees1099) : 0);
+  const mass_employees = formContext.getInputProviderValue('mass_employees');
 
   const getConditionsMessage = () => {
     let calloutMessage = null;
     let conditionEmpCount;
-    let conditionEmp1099;
+    const conditionEmp1099 = Number(employees1099);
     let conditionOver50;
     if (formContext.hasInputProviderIds(['employeesW2', 'employees1099'])) {
-      let eW2 = formContext.getInputProviderValue('employeesW2') || 0;
-      let e1099 = formContext.getInputProviderValue('employees1099') || 0;
-      const over50 = (Number(e1099) / (Number(eW2) + Number(e1099))) >= emp1099Fraction;
-      const empCount = over50per ? (Number(eW2) + Number(e1099)) : Number(eW2);
-      conditionEmpCount = empCount;
-      conditionEmp1099 = e1099;
-      conditionOver50 = over50;
+      conditionEmpCount = employeeCount;
+      conditionOver50 = over50per;
     } else {
-      const w2 = formContext.getInputProviderValue('employeesW2') || 0;
-      conditionEmp1099 = formContext.getInputProviderValue('employees1099') || 0;
-      conditionOver50 = ((conditionEmp1099 / w2) + conditionEmp1099) >= emp1099Fraction;
-      conditionEmpCount = conditionOver50 ? (w2 + conditionEmp1099) : w2;
+      conditionOver50 = ((conditionEmp1099 / employeesW2) + conditionEmp1099) >= emp1099Fraction;
+      conditionEmpCount = conditionOver50 ? (employeesW2 + conditionEmp1099) : employeesW2;
     }
     const over25 = conditionEmpCount >= minEmployees;
     const conditions = new Map([
@@ -90,11 +84,11 @@ const Part1 = (props) => {
     over25: Number.isNaN(employeeCount) ? minEmployees <= 0 : employeeCount >= minEmployees,
     disableInputs: false
   };
-  partOneDefaults.mass_employees = (!props.massEmp || (props.massEmp && props.massEmp === 'true')) ? 'yes' : 'no';
+  partOneDefaults.mass_employees = (!Object.prototype.hasOwnProperty.call(props, 'massEmp') || (props.massEmp === 'true')) ? 'yes' : 'no';
   return(
     <fieldset>
       <React.Fragment>
-        <Input id="mass_employees" defaultValue={partOneDefaults.mass_employees} useOwnStateValue>
+        <Input id="mass_employees" defaultValue={mass_employees || partOneDefaults.mass_employees} useOwnStateValue>
           <InputContext.Consumer>
             {
               (radioContext) => (
@@ -102,13 +96,12 @@ const Part1 = (props) => {
                   title={questionOne.question.helpText ? getHelpTip(questionOne.question) : questionOne.question.content}
                   name="mass_employees"
                   outline
-                  defaultSelected={radioContext.getOwnValue()}
+                  defaultSelected={partOneDefaults.mass_employees}
                   errorMsg={questionOne.errorMsg}
                   radioButtons={questionOne.options}
-                  onChange={(e) => {
-                    radioContext.setOwnValue(e.selected, () => {
+                  onChange={({ selected }) => {
+                    radioContext.setOwnValue(selected, () => {
                         const hasEmployees = (formContext.getInputProviderValue('mass_employees') === 'yes');
-                        formContext.setInputProviderValue({ id: 'question_one_callout', value: !hasEmployees });
                         onChangeMassEmp(hasEmployees);
                     });
                   }}
@@ -117,87 +110,67 @@ const Part1 = (props) => {
             }
           </InputContext.Consumer>
         </Input>
-        <InputSync inputProviderIds={['mass_employees']}>
-          {
-            () => (
-              <React.Fragment>
-                <Input id="question_one_callout" defaultValue={formContext.getInputProviderValue('mass_employees') === 'no'} useOwnStateValue>
-                  <InputContext.Consumer>
-                    {
-                      (questionContext) => (
-                        <Collapse in={questionContext.getOwnValue()} dimension="height" className="ma__callout-alert">
-                          <div className="ma__collapse">
-                            <CalloutAlert theme={questionOne.options[1].theme}>
-                              <Paragraph text={questionOne.options[1].message} />
-                            </CalloutAlert>
-                          </div>
-                        </Collapse>
-                      )
-                    }
-                  </InputContext.Consumer>
-                </Input>
-                <InputNumber
-                  labelText={questionTwo.question.helpText ? getHelpTip(questionTwo.question) : questionTwo.question.content}
-                  id="employeesW2"
-                  name="employeesW2"
-                  type="number"
-                  width={0}
-                  inline
-                  maxlength={0}
-                  min={0}
-                  placeholder="e.g. 50"
-                  errorMsg={questionTwo.errorMsg}
-                  defaultValue={partOneDefaults.w2}
-                  disabled={formContext.getInputProviderValue('mass_employees') === 'no'}
-                  required
-                  unit=""
-                  onChange={() => {
-                    const empW2 = Number(formContext.getInputProviderValue('employeesW2'));
-                    if (!Number.isNaN(empW2)) {
-                      onChangeW2(empW2);
-                    }
-                  }}
-                  showButtons
-                />
-                <InputNumber
-                  labelText={questionThree.question.helpText ? getHelpTip(questionThree.question) : questionThree.question.content}
-                  name="employees1099"
-                  id="employees1099"
-                  type="number"
-                  width={0}
-                  maxlength={0}
-                  min={0}
-                  placeholder="e.g. 50"
-                  inline
-                  errorMsg={questionThree.errorMsg}
-                  defaultValue={partOneDefaults.emp1099}
-                  disabled={formContext.getInputProviderValue('mass_employees') === 'no'}
-                  required
-                  onChange={() => {
-                    const current1099 = Number(formContext.getInputProviderValue('employees1099'));
-                    if (!Number.isNaN(current1099)) {
-                      onChangeEmp1099(current1099);
-                    }
-                  }}
-                  showButtons
-                />
-                <InputSync inputProviderIds={['mass_employees', 'employees1099', 'employeesW2']}>
-                  {
-                    () => (
-                      <Collapse in={formContext.getInputProviderValue('mass_employees') === 'yes' && formContext.hasInputProviderId('employeesW2') && Number(formContext.getInputProviderValue('employeesW2')) > 0} dimension="height" className="ma__callout-alert">
-                        <div className="ma__collapse">
-                          <CalloutAlert theme="c-primary">
-                            { getConditionsMessage() }
-                          </CalloutAlert>
-                        </div>
-                      </Collapse>
-                    )
-                  }
-                </InputSync>
-              </React.Fragment>
-            )
-          }
-        </InputSync>
+        <React.Fragment>
+          <Collapse in={mass_employees === 'no'} dimension="height" className="ma__callout-alert">
+            <div className="ma__collapse">
+              <CalloutAlert theme={questionOne.options[1].theme}>
+                <Paragraph text={questionOne.options[1].message} />
+              </CalloutAlert>
+            </div>
+          </Collapse>
+          <InputNumber
+            labelText={questionTwo.question.helpText ? getHelpTip(questionTwo.question) : questionTwo.question.content}
+            id="employeesW2"
+            name="employeesW2"
+            type="number"
+            width={0}
+            inline
+            maxlength={0}
+            min={0}
+            placeholder="e.g. 50"
+            errorMsg={questionTwo.errorMsg}
+            defaultValue={partOneDefaults.w2}
+            disabled={mass_employees === 'no'}
+            required
+            unit=""
+            onChange={() => {
+              const empW2 = Number(formContext.getInputProviderValue('employeesW2'));
+              if (!Number.isNaN(empW2)) {
+                onChangeW2(empW2);
+              }
+            }}
+            showButtons
+          />
+          <InputNumber
+            labelText={questionThree.question.helpText ? getHelpTip(questionThree.question) : questionThree.question.content}
+            name="employees1099"
+            id="employees1099"
+            type="number"
+            width={0}
+            maxlength={0}
+            min={0}
+            placeholder="e.g. 50"
+            inline
+            errorMsg={questionThree.errorMsg}
+            defaultValue={partOneDefaults.emp1099}
+            disabled={mass_employees === 'no'}
+            required
+            onChange={() => {
+              const current1099 = Number(formContext.getInputProviderValue('employees1099'));
+              if (!Number.isNaN(current1099)) {
+                onChangeEmp1099(current1099);
+              }
+            }}
+            showButtons
+          />
+          <Collapse in={mass_employees === 'yes' && formContext.hasInputProviderId('employeesW2') && Number(employeesW2) > 0} dimension="height" className="ma__callout-alert">
+            <div className="ma__collapse">
+              <CalloutAlert theme="c-primary">
+                { getConditionsMessage() }
+              </CalloutAlert>
+            </div>
+          </Collapse>
+        </React.Fragment>
       </React.Fragment>
     </fieldset>
   );
