@@ -95,7 +95,7 @@ export const ScenarioTwo = () => {
                     labelID="help-tip-scenario-two-label"
                   >
                     <div className="ma__help-text">
-                      <Paragraph text={`Earnings over earnings disregard: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyEarnings)} - ${toCurrency(earningsDisregard)}`} />
+                      <Paragraph text={`Earnings over earnings exclusion: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyEarnings)} - ${toCurrency(earningsDisregard)}`} />
                       <Paragraph text={`Reduced weekly benefit: <strong>${toCurrency(reducedBenefit)}</strong> = ${toCurrency(weeklyBenefits)} - ${toCurrency(earningsOverDis)}`} />
                     </div>
                   </HelpTip>
