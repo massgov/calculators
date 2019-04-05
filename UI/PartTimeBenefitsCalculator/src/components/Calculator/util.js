@@ -17,8 +17,5 @@ export const toNumber = (val) => {
   if ((typeof val === 'string' && val.length === 0) || !val) {
     return NaN;
   }
-  return Number(numbro(val).format({
-    trimMantissa: true,
-    mantissa: 2
-  }));
+  return Number(val);
 };
