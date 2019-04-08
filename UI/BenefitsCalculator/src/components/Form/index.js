@@ -16,10 +16,11 @@ class Calculator extends Component {
       applyAll: false
     };
     const format = 'MMM YYYY';
-    const quarter = moment().quarter() + 1;
-    const quarterDateRange = (quartersAgo, startOffset) => {
-      let qEnd = moment().subtract({ months: quarter + (quartersAgo - 1) * 3 }).endOf('month');
-      let qStart = qEnd.clone().subtract({ months: startOffset }).startOf('month');
+    const quarterCurrent = moment().quarter();
+    const quarterDateRange = (quartersAgo) => {
+      const quarter = quarterCurrent - quartersAgo;
+      let qEnd = moment().quarter(quarter).endOf('quarter');
+      let qStart = moment().quarter(quarter).startOf('quarter');
       qEnd = moment(qEnd).format(format);
       qStart = moment(qStart).format(format);
       return{ qEnd, qStart };
