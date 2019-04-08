@@ -34,7 +34,9 @@ const Output = (props) => {
   // qualifications
   const quartersSumThreshhold = 4700;
   const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
+  // qualification 1: total wages is no less than threshhold
   const qualification1 = !(quartersSum < quartersSumThreshhold);
+  // qualification 2: total wages is no less 30 times the weekly benefits
   const qualification2 = !(quartersSum < 30 * weeklyBenefit);
   const qualified = qualification1 && qualification2;
 
@@ -128,7 +130,7 @@ const Output = (props) => {
             labelID="help-tip-benefits-label"
           >
             <div className="ma__help-text">
-              <Paragraph text={qualification1 ? helpTextDisqualification2 : helpTextDisqualification1} />
+              <Paragraph text={!qualification1 ? helpTextDisqualification1 : helpTextDisqualification2} />
             </div>
           </HelpTip>
         </CalloutAlert>
