@@ -17,11 +17,6 @@ const Output = (props) => {
   const quartersHaveValue = quartersArray.filter((q) => typeof q === 'number' && q > 0);
   const quartersCount = quartersHaveValue.length;
 
-  // qualification
-  const quartersSumThreshhold = 4700;
-  const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
-  const qualified = !(quartersSum < quartersSumThreshhold);
-
   // weekly benefit
   let topQuarters;
   let weeksInTopQuarters = 26;
@@ -35,6 +30,13 @@ const Output = (props) => {
   const weeklyBenefit = 1 / 2 * topQuartersSum / weeksInTopQuarters;
   const weeklyBenefitMax = 795;
   const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
+
+  // qualifications
+  const quartersSumThreshhold = 4700;
+  const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
+  const qualification1 = !(quartersSum < quartersSumThreshhold);
+  const qualification2 = !(quartersSum < 30 * weeklyBenefit);
+  const qualified = qualification1 && qualification2;
 
   // max benefit credit
   const maxBenefitDuration = 26;
@@ -51,6 +53,8 @@ const Output = (props) => {
   const helpTextBasePeriod1Q = 'Your weekly benefit is equal to half of the highest-earning quarter divided by the number of weeks in the quarter:';
   const helpTextWeeks2Q = 'weeks in the combined quarters';
   const helpTextWeeks1Q = 'weeks in the quarter';
+  const helpTextDisqualification1 = `You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible.`;
+  const helpTextDisqualification2 = `Your total base period wages ${toCurrency(quartersSum)} must be equal to or greater than ${toCurrency(weeklyBenefit * 30)} (weekly benefit amount x 30) to be eligible.`;
 
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">
@@ -124,7 +128,7 @@ const Output = (props) => {
             labelID="help-tip-benefits-label"
           >
             <div className="ma__help-text">
-              <Paragraph text={`You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible`} />
+              <Paragraph text={qualification1 ? helpTextDisqualification2 : helpTextDisqualification1} />
             </div>
           </HelpTip>
         </CalloutAlert>
