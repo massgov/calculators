@@ -49,6 +49,8 @@ const Output = (props) => {
 
   const helpTextBasePeriod2Q = 'Your weekly benefit is equal to half of the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters:';
   const helpTextBasePeriod1Q = 'Your weekly benefit is equal to half of the highest-earning quarter divided by the number of weeks in the quarter:';
+  const helpTextWeeks2Q = 'weeks in the combined quarters';
+  const helpTextWeeks1Q = 'weeks in the quarter';
 
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">
@@ -57,7 +59,7 @@ const Output = (props) => {
       ) : (
         <Fragment>
           <Paragraph text={quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q} />
-          <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} weeks in the combined quarters`} /></div>
+          <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${quartersCount > 2 ? helpTextWeeks2Q : helpTextWeeks1Q}`} /></div>
         </Fragment>
       )}
     </div>
