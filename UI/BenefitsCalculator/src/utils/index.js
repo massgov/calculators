@@ -3,7 +3,7 @@ import numbro from 'numbro';
 import { HelpTip } from '@massds/mayflower-react';
 
 export const toCurrency = (number) => {
-  const currency = numbro(number).formatCurrency({ thousandSeparated: true, mantissa: 2, spaceSeparated: false });
+  const currency = numbro(number).formatCurrency({ thousandSeparated: true, mantissa: 0, spaceSeparated: false });
   return currency;
 };
 

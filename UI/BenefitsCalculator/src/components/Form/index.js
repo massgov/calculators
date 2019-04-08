@@ -36,7 +36,7 @@ class Calculator extends Component {
     const inputCurrencyProps = {
       placeholder: 'e.g. $10,000',
       format: {
-        mantissa: 2,
+        mantissa: 0,
         trimMantissa: false,
         thousandSeparated: true
       },
