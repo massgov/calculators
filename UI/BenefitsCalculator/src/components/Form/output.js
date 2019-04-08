@@ -37,7 +37,7 @@ const Output = (props) => {
   // qualification 1: total wages is no less than threshhold
   const qualification1 = !(quartersSum < quartersSumThreshhold);
   // qualification 2: total wages is no less 30 times the weekly benefits
-  const qualification2 = !(quartersSum < 30 * weeklyBenefit);
+  const qualification2 = !(quartersSum < 30 * weeklyBenefitFinal);
   const qualified = qualification1 && qualification2;
 
   // max benefit credit
