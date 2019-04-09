@@ -8,7 +8,7 @@ const OutputOne = () => (
   <Input id="earnings-disregard" defaultValue={0}>
     <InputContext.Consumer>
       { (inputContext) => {
-        const maxEarningsDisregard = 795 / 3;
+        const maxEarningsDisregard = Math.round(795/3);
         const earningsDisregard = inputContext.getValue() > maxEarningsDisregard ? maxEarningsDisregard : inputContext.getValue();
         const maxEarningsDisregardMessage = inputContext.getValue() > maxEarningsDisregard ? `Your weekly benefits is capped at ${toCurrency(795)}. ` : '';
         // This value is stored in formContext as well under id "earnings-disregard".

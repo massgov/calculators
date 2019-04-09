@@ -2,22 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { InputCurrency } from '@massds/mayflower-react';
 
+const inputCurrencyProps = {
+  inline: true,
+  required: true,
+  placeholder: 'e.g. $500',
+  defaultValue: null,
+  step: 1,
+  min: 0,
+  format: {
+    mantissa: 0,
+    trimMantissa: false,
+    thousandSeparated: true
+  }
+};
+
 export const QuestionOne = (props) => {
   const { handleChange } = props;
   return(
     <InputCurrency
       labelText="What is your weekly benefit amount?"
-      inline
-      required
       id="weekly-benefits"
       name="weekly-benefits"
-      placeholder="e.g. $500.00"
-      defaultValue={null}
-      step={1}
-      min={0}
       max={795}
       onChange={handleChange}
       onBlur={(val) => handleChange(val, 'weekly-benefits')}
+      {...inputCurrencyProps}
     />
   );
 };
@@ -31,11 +40,8 @@ export const QuestionTwo = (props) => {
       required
       id="weekly-earnings"
       name="weekly-earnings"
-      placeholder="e.g. $500.00"
-      defaultValue={null}
-      step={1}
-      min={0}
       onChange={handleChange}
+      {...inputCurrencyProps}
     />
   );
 };
