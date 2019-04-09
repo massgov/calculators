@@ -52,8 +52,8 @@ const Output = (props) => {
   const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
 
 
-  const helpTextBasePeriod2Q = 'Your weekly benefit is equal to half of the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters:';
-  const helpTextBasePeriod1Q = 'Your weekly benefit is equal to half of the highest-earning quarter divided by the number of weeks in the quarter:';
+  const helpTextBasePeriod2Q = 'Your weekly benefit amount is equal to half of the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters:';
+  const helpTextBasePeriod1Q = 'Your weekly benefit amount is equal to half of the highest-earning quarter divided by the number of weeks in the quarter:';
   const helpTextWeeks2Q = 'weeks in the combined quarters';
   const helpTextWeeks1Q = 'weeks in the quarter';
   const helpTextDisqualification1 = `You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible.`;
@@ -63,11 +63,11 @@ const Output = (props) => {
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">
       { weeklyBenefit > weeklyBenefitMax ? (
-        <Paragraph text={`Your weekly benefit is capped at ${toCurrency(weeklyBenefitMax)}.`} />
+        <Paragraph text={`Your weekly benefit amount is capped at ${toCurrency(weeklyBenefitMax)}.`} />
       ) : (
         <Fragment>
           <Paragraph text={quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q} />
-          <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${quartersCount > 2 ? helpTextWeeks2Q : helpTextWeeks1Q}`} /></div>
+          <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefitFinal)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${quartersCount > 2 ? helpTextWeeks2Q : helpTextWeeks1Q}`} /></div>
         </Fragment>
       )}
     </div>
@@ -135,7 +135,17 @@ const Output = (props) => {
             labelID="help-tip-benefits-label"
           >
             <div className="ma__help-text">
-              <Paragraph text={!qualification1 ? helpTextDisqualification1 : helpTextDisqualification2} />
+              {
+                !qualification1 ? (
+                  <Paragraph text={helpTextDisqualification1} />
+                ) : (
+                  <Fragment>
+                    <Paragraph text={helpTextDisqualification2} />
+                    <Paragraph text={quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q} />
+                    <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefitFinal)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${quartersCount > 2 ? helpTextWeeks2Q : helpTextWeeks1Q}`} /></div>
+                  </Fragment>
+                )
+              }
             </div>
           </HelpTip>
         </CalloutAlert>
