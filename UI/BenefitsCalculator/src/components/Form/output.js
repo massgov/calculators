@@ -29,7 +29,8 @@ const Output = (props) => {
   const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
   const weeklyBenefit = 1 / 2 * topQuartersSum / weeksInTopQuarters;
   const weeklyBenefitMax = 795;
-  const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
+  // final weekly benefit is rounded to the nearest dollar amount
+  const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : Math.round(weeklyBenefit);
 
   // qualifications
   const quartersSumThreshhold = 4700;
@@ -56,7 +57,7 @@ const Output = (props) => {
   const helpTextWeeks2Q = 'weeks in the combined quarters';
   const helpTextWeeks1Q = 'weeks in the quarter';
   const helpTextDisqualification1 = `You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible.`;
-  const helpTextDisqualification2 = `Your total base period wages of ${toCurrency(quartersSum)} must be equal to or greater than ${toCurrency(weeklyBenefit * 30)} (your weekly benefit amount x 30) to be eligible.`;
+  const helpTextDisqualification2 = `Your total base period wages of ${toCurrency(quartersSum)} must be equal to or greater than ${toCurrency(weeklyBenefitFinal * 30)} (your weekly benefit amount x 30) to be eligible.`;
   const maxBenefitDurationDisclaimer = 'The maximum number of weeks you can receive full unemployment benefits is 30 weeks (capped at 26 weeks during periods of extended benefits and low unemployment). However, many individuals qualify for less than 30 weeks of coverage.';
 
   const getBenefitsHelpText = () => (
