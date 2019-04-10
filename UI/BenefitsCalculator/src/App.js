@@ -53,8 +53,8 @@ class App extends Component {
               <h2>
                 <HelpTip
                   text="Enter the total wages you received in the last 4 quarters to estimate your benefits."
-                  triggerText={['total wages', 'the last 4 quarters']}
-                  helpText={['Total wages means the gross amount that appears on your paycheck or W-2. Do not use wages net of tax or other deductions.', 'Make sure to enter your wages for the quarter when you actually received them, not when you earned them.']}
+                  triggerText={['total wages you received in the last 4 quarters']}
+                  helpText={['Total wages means the gross amount that appears on your paycheck or W-2. Do not use wages net of tax or other deductions. Make sure to enter your wages for the quarter when you actually received them, not when you earned them.']}
                   id="helptext-total-wages"
                 />
               </h2>
