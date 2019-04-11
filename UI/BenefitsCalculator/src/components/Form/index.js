@@ -25,10 +25,10 @@ class Calculator extends Component {
       qStart = moment(qStart).format(format);
       return{ qEnd, qStart };
     };
-    this.q1 = quarterDateRange(1, 3);
-    this.q2 = quarterDateRange(2, 2);
-    this.q3 = quarterDateRange(3, 2);
-    this.q4 = quarterDateRange(4, 2);
+    this.q1 = quarterDateRange(1);
+    this.q2 = quarterDateRange(2);
+    this.q3 = quarterDateRange(3);
+    this.q4 = quarterDateRange(4);
   }
 
   render() {
