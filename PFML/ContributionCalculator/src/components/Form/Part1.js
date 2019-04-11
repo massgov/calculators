@@ -159,7 +159,6 @@ const Part1 = (props) => {
                   maxlength={100}
                   placeholder="e.g. 50"
                   errorMsg={questionTwo.errorMsg}
-                  max={1000000000}
                   min={0}
                   defaultValue={employeesW2 ? Number(employeesW2) : null}
                   required
@@ -195,7 +194,6 @@ const Part1 = (props) => {
                   maxlength={100}
                   placeholder="e.g. 50"
                   errorMsg={questionThree.errorMsg}
-                  max={1000000000}
                   min={0}
                   defaultValue={employees1099 ? Number(employees1099) : null}
                   required
