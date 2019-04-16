@@ -6,6 +6,7 @@ import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'reac
 import ContributionVariables from '../../data/ContributionVariables.json';
 import PartTwoProps from '../../data/PartTwo.json';
 import { toCurrency, toPercentage } from '../../utils';
+import { getEmpCount, hasMassEmployees, isOver25, isOver50, getTotalPayroll } from './form.utils';
 
 import '../../css/index.css';
 
@@ -26,57 +27,34 @@ const Part2 = (props) => {
     return null;
   }
   const {
-    totContribution, totMedPercent, totFamPercent, socialSecCap, empMedCont, largeCompMedCont, emp1099Fraction, minEmployees
+    totContribution, totMedPercent, totFamPercent, socialSecCap, empMedCont, largeCompMedCont
   } = ContributionVariables.baseVariables;
   const {
     questionOne, questionTwo, questionThree, questionFour, under25MedContDisclaimer
   } = PartTwoProps;
   const {
-    onChangeOption, onChangePayW2, onChangePay1099, onChangePayWages
+    onChangeOption, onChangePayW2, onChangePay1099, onChangePayWages, option = 'all'
   } = props;
   const partTwoDefaults = {
-    payrollBase: props.option || 'all',
     payW2: props.payW2 || '0',
     pay1099: props.pay1099 || '0',
     payWages: props.payWages || '0',
-    option: !props.option ? '' : (props.option === 'all') ? 'all' : 'one',
+    option: (['all', 'one'].indexOf(option) > -1) ? option : 'all',
     useDefault: true
   };
 
 
   const {
-    mass_employees,
-    employeesW2,
-    employees1099,
     payroll1099 = toCurrency(partTwoDefaults.pay1099),
     payrollW2 = toCurrency(partTwoDefaults.payW2),
     payrollWages = toCurrency(partTwoDefaults.payWages)
   } = formContext.getInputProviderValues();
-  // const payroll1099 = partTwoDefaults.pay1099;
-  // const payrollW2 = partTwoDefaults.payW2;
-  // const payWages = partTwoDefaults.payWages;
-  const employeeCount = Number(employeesW2) + (Number(employees1099) / (Number(employees1099) + Number(employeesW2)) >= emp1099Fraction ? Number(employees1099) : 0);
-  if (partTwoDefaults.option === '' && employeeCount > 0) {
-    partTwoDefaults.option = 'all';
-  }
-  const payrollBase = formContext.getInputProviderValue('payrollBase') || partTwoDefaults.option;
-  const over50per = (Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
-  const over25 = employeeCount >= minEmployees;
-  const hasMassEmployees = mass_employees === 'yes';
   const medPercent = totContribution * totMedPercent;
-  const medPayrollPercent = over25 ? (largeCompMedCont + empMedCont) : empMedCont;
+  const medPayrollPercent = isOver25(formContext) ? (largeCompMedCont + empMedCont) : empMedCont;
   const famPercent = totContribution * totFamPercent;
   const totalPercent = medPercent + famPercent;
-  let totalPayroll;
-  if (payrollBase === 'all' && Number(employeesW2) > 0) {
-    totalPayroll = over50per ? (Number(numbro.unformat(payroll1099)) + Number(numbro.unformat(payrollW2))) : Number(numbro.unformat(payrollW2));
-  } else if (payrollBase === 'all' && !(Number(employeesW2) > 0)) {
-    totalPayroll = Number(numbro.unformat(payroll1099));
-  } else {
-    totalPayroll = Number(numbro.unformat(payrollWages)) > socialSecCap ? socialSecCap : Number(numbro.unformat(payrollWages));
-  }
+  const totalPayroll = getTotalPayroll(formContext);
   const payrollWagesCap = Number(numbro.unformat(payrollWages)) > socialSecCap ? socialSecCap : Number(numbro.unformat(payrollWages));
-  const disableInput = !hasMassEmployees || !employeeCount;
   // all workers annual
   const medCompPayment = medPercent * totalPayroll * medPayrollPercent;
   const famCompPayment = famPercent * totalPayroll;
@@ -85,11 +63,12 @@ const Part2 = (props) => {
   const famPayment = famPercent * payrollWagesCap;
 
   const empMedContPercent = `${empMedCont * 100}%`;
+  const isDisabled = () => !hasMassEmployees(formContext) || !getEmpCount(formContext);
   return(
     <Fragment>
       <fieldset>
         <Fragment>
-          <Input id="payrollBase" defaultValue={payrollBase} useOwnStateValue>
+          <Input id="payrollBase" defaultValue={partTwoDefaults.option} useOwnStateValue>
             <InputContext.Consumer>
               {
                 (radioContext) => (
@@ -106,14 +85,14 @@ const Part2 = (props) => {
                           onChangeOption(selected);
                         });
                       }}
-                      disabled={disableInput}
+                      disabled={isDisabled()}
                     />
                   </div>
                 )
               }
             </InputContext.Consumer>
           </Input>
-          {payrollBase === 'all' && (
+          {formContext.getInputProviderValue('payrollBase') === 'all' && (
             <Fragment>
               <div>
                 <InputCurrency
@@ -131,11 +110,11 @@ const Part2 = (props) => {
                     trimMantissa: false,
                     thousandSeparated: true
                   }}
-                  onChange={(value, id) => {
+                  onChange={(value) => {
                     onChangePayW2(value);
                   }}
                   required
-                  disabled={disableInput || !over50per}
+                  disabled={isDisabled() || !isOver50(formContext)}
                   inline
                   step={1}
                 />
@@ -156,17 +135,17 @@ const Part2 = (props) => {
                     trimMantissa: false,
                     thousandSeparated: true
                   }}
-                  onChange={(value, id) => {
+                  onChange={(value) => {
                     onChangePay1099(value);
                   }}
-                  disabled={disableInput || !over50per}
+                  disabled={isDisabled() || !isOver50(formContext)}
                   required
                   inline
                   step={1}
                 />
               </div>
               <Collapse
-                in={(hasMassEmployees && (employeeCount > 0) && (Number(totalPayroll) > 0) && (over50per ? (Number(numbro.unformat(payroll1099)) > 0) : true))}
+                in={(hasMassEmployees(formContext) && (!!getEmpCount(formContext)) && (!!Number(totalPayroll)) && (isOver50(formContext) ? (!!Number(numbro.unformat(payroll1099))) : true))}
                 dimension="height"
                 className="ma__callout-alert"
               >
@@ -177,7 +156,7 @@ const Part2 = (props) => {
                       triggerText={[`<strong>${toCurrency(famCompPayment + medCompPayment)}</strong>`]}
                       id="help-tip-total-ann-cont"
                       theme="c-white"
-                      helpText={over25 ? (
+                      helpText={isOver25(formContext) ? (
                               // over 25 total medLeave calculation
                               [`${toCurrency(famCompPayment + medCompPayment)} = ${toCurrency(totalPayroll)} X ${toPercentage(totalPercent, 2)}`]
                             ) : (
@@ -199,12 +178,12 @@ const Part2 = (props) => {
                         </div>
                         <div className="ma__help-text">
                                 Medical
-                                Leave: {toCurrency(medPercent * totalPayroll * medPayrollPercent)} = {toCurrency(totalPayroll)} X {over25 ? toPercentage(medPercent, 2) :
+                                Leave: {toCurrency(medPercent * totalPayroll * medPayrollPercent)} = {toCurrency(totalPayroll)} X {isOver25(formContext) ? toPercentage(medPercent, 2) :
                                 <span>{toPercentage(medPercent, 2)} X {empMedContPercent}</span>}
                         </div>
                       </HelpTip>
                     </div>
-                    {!over25 &&
+                    {!isOver25(formContext) &&
                     <Paragraph className="ma__help-tip-many" text={under25MedContDisclaimer.content} />}
                     <div className="ma__disclaimer">
                       <Paragraph
@@ -216,7 +195,7 @@ const Part2 = (props) => {
               </Collapse>
             </Fragment>
           )}
-          {payrollBase === 'one' && (
+          {formContext.getInputProviderValue('payrollBase') === 'one' && (
             <Fragment>
               <div>
                 <InputCurrency
@@ -234,28 +213,28 @@ const Part2 = (props) => {
                     trimMantissa: false,
                     thousandSeparated: true
                   }}
-                  onChange={(value, id) => {
+                  onChange={(value) => {
                     onChangePayWages(value);
                   }}
                   required
                   inline
                   step={1}
-                  disabled={disableInput}
+                  disabled={isDisabled()}
                 />
               </div>
               <Collapse
-                in={hasMassEmployees && payrollWages && payrollWages.length > 0 && employeeCount > 0 && (Number(numbro.unformat(payrollWages)) > 0)}
+                in={hasMassEmployees(formContext) && payrollWages && !!payrollWages.length && !!getEmpCount(formContext) && !!(Number(numbro.unformat(payrollWages)))}
                 dimension="height"
               >
                 <div className="ma__collapse">
-                  {payrollWages && payrollWages.length > 0 && (
+                  {payrollWages && !!payrollWages.length && (
                     <CalloutAlert theme="c-primary" icon={null}>
                       <div className="ma__help-tip-many">
                         <HelpTip
                           text={`The total estimated minimum annual contribution for this covered individual is <strong>${toCurrency(famPayment + medPayment)}</strong>. `}
                           triggerText={[`<strong>${toCurrency(famPayment + medPayment)}</strong>`]}
                           id="help-tip-tot-emp-ann-cont"
-                          helpText={over25 ? (
+                          helpText={isOver25(formContext) ? (
                             // over 25 total medLeave calculation
                             [`Total Contribution: ${toCurrency(famPayment + medPayment)} = ${toCurrency(payrollWagesCap)} X ${toPercentage(totalPercent, 2)}`]
                           ) : (
@@ -275,12 +254,12 @@ const Part2 = (props) => {
                             Leave: {toCurrency(famPayment)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}
                           </div>
                           <div className="ma__help-text">Medical
-                            Leave: {toCurrency(medPayment)} = {toCurrency(payrollWagesCap)} X {over25 ? toPercentage(medPercent, 2) :
+                            Leave: {toCurrency(medPayment)} = {toCurrency(payrollWagesCap)} X {isOver25(formContext) ? toPercentage(medPercent, 2) :
                             <span>{toPercentage(medPercent, 2)} X {empMedContPercent}</span>}
                           </div>
                         </HelpTip>
                       </div>
-                      {!over25 &&
+                      {!isOver25(formContext) &&
                       <Paragraph className="ma__help-tip-many" text={under25MedContDisclaimer.content} />}
                       {Number(numbro.unformat(payrollWages)) > socialSecCap && (
                         <div className="ma__disclaimer">
