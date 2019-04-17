@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { decode, addUrlProps, UrlQueryParamTypes } from 'react-url-query';
-import { Form, FormProvider } from '@massds/mayflower-react';
+import { FormProvider } from '@massds/mayflower-react';
 import Part1 from '../Form/Part1';
 import Part2 from '../Form/Part2';
 import Part3 from '../Form/Part3';

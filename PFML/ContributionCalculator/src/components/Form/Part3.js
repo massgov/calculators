@@ -25,12 +25,22 @@ const mapUrlChangeHandlersToProps = () => ({
 
 const Part3 = (props) => {
   const formContext = useContext(FormContext);
-  if (!formContext.hasInputProviderIds(['payrollBase', 'mass_employees', 'employeesW2', 'employees1099'])) {
-    return null;
-  }
   const {
     totContribution, totMedPercent, totFamPercent, largeCompFamCont, smallCompFamCont, empMedCont, largeCompMedCont, smallCompMedCont, minEmployees
   } = ContributionVariables.baseVariables;
+  const empCount = getEmpCount(formContext);
+  const famLeaveDefault = (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont;
+  const medLeaveDefault = (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont;
+  const leaveTableDefaults = {
+    famCont: !Number.isNaN(Number(props.famCont)) ? Number(props.famCont) : Math.round(famLeaveDefault * 100),
+    medCont: !Number.isNaN(Number(props.medCont)) ? Number(props.medCont) : Math.round(medLeaveDefault * 100),
+    timeValue: props.timeValue && !Number.isNaN(props.timeValue) ? Number(props.timeValue) : 1,
+    timePeriod: props.timePeriod && props.timePeriod !== '' ? props.timePeriod : 'Year'
+  };
+  const {
+    payroll1099, payrollW2, payrollWages, timePeriod = leaveTableDefaults.timePeriod, payrollBase
+  } = formContext.getInputProviderValues();
+
   const { questionOne, questionTwo } = PartThreeProps;
   const {
     onChangeMedCont, onChangeFamCont, onChangeTimeValue, onChangeTimePeriod
@@ -47,20 +57,6 @@ const Part3 = (props) => {
     });
     return value;
   };
-  const empCount = getEmpCount(formContext);
-
-  const famLeaveDefault = (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont;
-  const medLeaveDefault = (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont;
-  const leaveTableDefaults = {
-    famCont: !Number.isNaN(Number(props.famCont)) ? Number(props.famCont) : Math.round(famLeaveDefault * 100),
-    medCont: !Number.isNaN(Number(props.medCont)) ? Number(props.medCont) : Math.round(medLeaveDefault * 100),
-    timeValue: props.timeValue && !Number.isNaN(props.timeValue) ? Number(props.timeValue) : 1,
-    timePeriod: props.timePeriod && props.timePeriod !== '' ? props.timePeriod : 'Year'
-  };
-  const {
-    payroll1099, payrollW2, payrollWages, timePeriod = leaveTableDefaults.timePeriod, payrollBase
-  } = formContext.getInputProviderValues();
-  console.log('payrollBase in part3: ', payrollBase);
   leaveTableDefaults['family-leave'] = String(leaveTableDefaults.famCont);
   leaveTableDefaults['medical-leave'] = String(leaveTableDefaults.medCont);
   const familyLeave = Number(formContext.getInputProviderValue('family-leave')) || Number(leaveTableDefaults.famCont);
@@ -121,12 +117,6 @@ const Part3 = (props) => {
     return tableProps;
   };
 
-  if (payrollBase === 'all' && !formContext.hasInputProviderIds(['payroll1099', 'payrollW2'])) {
-    return null;
-  }
-  if (payrollBase === 'one' && !formContext.hasInputProviderId(['payrollWages'])) {
-    return null;
-  }
   const enableAll = payrollBase === 'all' && (!!Number(employeesW2) && !!Number(numbro.unformat(payrollW2)) && !!Number(employees1099) && !!Number(numbro.unformat(payroll1099)) && (over50 ? !!Number(numbro.unformat(payroll1099)) : true));
   const enableOne = payrollBase === 'one' && !!Number(numbro.unformat(payrollWages));
   const enable = hasMassEmployees(formContext) && (!!empCount) && (payrollBase === 'all' ? enableAll : enableOne);
@@ -199,15 +189,11 @@ const Part3 = (props) => {
     return Math.round(min * 100);
   };
   const medOnChange = (defaultVal, sourceInputId) => {
-    console.log('in medOnChange, sourceInputId: ', sourceInputId);
     const val = Number.isNaN(Number(defaultVal)) ? 0 : Number(defaultVal);
     const maxPer = getMaxMedPer();
     if (['medical-leave', 'medEmployerCont'].indexOf(sourceInputId) > -1) {
       const newVal = Math.round(maxPer - val);
       const currentMedEmployee = Number(formContext.getInputProviderValue('medEmployeeCont'));
-      console.log('in medOnChange, newVal: ', newVal);
-      console.log('in medOnChange, currentMedEmployee: ', currentMedEmployee);
-      console.log(formContext.getInputProviderValue('medical-leave'));
       if (currentMedEmployee !== newVal) {
         formContext.setInputProviderValue({
           id: 'medEmployeeCont',
@@ -238,13 +224,26 @@ const Part3 = (props) => {
         formContext.setInputProviderValue({
           id: 'medEmployerCont',
           value: newVal
-        }, () => onChangeMedCont(newVal));
-      }
-      if (String(formContext.getInputProviderValue('medical-leave')) !== String(newVal)) {
+        }, () => {
+          if (String(formContext.getInputProviderValue('medical-leave')) !== String(newVal)) {
+            formContext.setInputProviderValue({
+              id: 'medical-leave',
+              value: String(newVal)
+            }, () => onChangeMedCont(newVal));
+          }
+        });
+      } else if (String(formContext.getInputProviderValue('medical-leave')) !== String(newVal)) {
         formContext.setInputProviderValue({
           id: 'medical-leave',
           value: String(newVal)
-        }, () => onChangeMedCont(newVal));
+        }, () => {
+          if (Number(formContext.getInputProviderValue('medEmployerCont')) !== newVal) {
+            formContext.setInputProviderValue({
+              id: 'medEmployerCont',
+              value: newVal
+            }, () => onChangeMedCont(newVal));
+          }
+        });
       }
     }
   };
@@ -252,7 +251,7 @@ const Part3 = (props) => {
   const medComponentUpdate = (defaultVal, sourceInputId) => {
     const maxPer = getMaxMedPer();
     const minPer = getMinMedPer();
-    if (defaultVal > maxPer || minPer > defaultVal) {
+    if (Number(defaultVal) > maxPer || minPer > Number(defaultVal)) {
       const newVal = minPer;
       if (String(newVal) !== String(formContext.getInputProviderValue(sourceInputId))) {
         formContext.setInputProviderValue({
@@ -302,7 +301,6 @@ const Part3 = (props) => {
     skipped: true,
     disabled: !enable,
     defaultValue: String(leaveTableDefaults.medCont),
-    useOwnStateValue: true,
     onChange: medSliderOnChange,
     onComponentUpdate: medComponentUpdate
   };

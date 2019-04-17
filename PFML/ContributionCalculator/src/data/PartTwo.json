@@ -5,11 +5,13 @@
         "options": [{
             "id": "payroll_base_all",
             "value": "all",
-            "label": "All Covered Individuals"
+            "label": "All Covered Individuals",
+            "class": ""
         }, {
             "id:": "payroll_base_one",
             "value": "one",
-            "label": "Single Covered Individual"
+            "label": "Single Covered Individual",
+            "class": ""
         }]
     },
     "questionTwo": {
@@ -25,6 +27,6 @@
         "errorMsg": "Please enter a value."
     },
     "under25MedContDisclaimer": {
-        "content": "Businesses with fewer than 25 covered individuals are exempt from paying the employer share of the medical leave contribution (<strong>60%</strong>) but are still required to send the employee share of the medical leave contribution (<strong>40%</strong>) on behalf of their covered individuals. "  
+        "content": "Businesses with fewer than 25 covered individuals are exempt from paying the employer share of the medical leave contribution (<strong>60%</strong>) but are still required to send the employee share of the medical leave contribution (<strong>40%</strong>) on behalf of their covered individuals. "
     }
 }

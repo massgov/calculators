@@ -2,7 +2,7 @@ import numbro from 'numbro';
 import ContributionVariables from '../../data/ContributionVariables';
 
 const {
-  totContribution, totMedPercent, totFamPercent, largeCompFamCont, smallCompFamCont, empMedCont, largeCompMedCont, smallCompMedCont, socialSecCap, emp1099Fraction, minEmployees
+  socialSecCap, emp1099Fraction, minEmployees
 } = ContributionVariables.baseVariables;
 export const getEmpCount = (formContext) => {
   const { employeesW2, employees1099 } = formContext.getInputProviderValues();
@@ -12,14 +12,6 @@ export const isOver25 = (formContext) => getEmpCount(formContext) >= minEmployee
 export const isOver50 = (formContext) => {
   const { employeesW2, employees1099 } = formContext.getInputProviderValues();
   return(Number(employees1099) / (Number(employeesW2) + Number(employees1099))) >= emp1099Fraction;
-};
-export const getMaxMedPer = (formContext) => {
-  const max = isOver25(formContext) ? (largeCompMedCont + empMedCont) : (smallCompMedCont + empMedCont);
-  return Math.round(max * 100);
-};
-export const getMinMedPer = (formContext) => {
-  const min = isOver25(formContext) ? largeCompMedCont : smallCompMedCont;
-  return Math.round(min * 100);
 };
 export const hasMassEmployees = (formContext) => {
   const { mass_employees } = formContext.getInputProviderValues();
