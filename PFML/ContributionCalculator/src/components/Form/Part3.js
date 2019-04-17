@@ -39,7 +39,7 @@ const Part3 = (props) => {
     timePeriod: props.timePeriod && props.timePeriod !== '' ? props.timePeriod : 'Year'
   };
   const {
-    payroll1099, payrollW2, payrollWages, payroll_frequency = leaveTableDefaults.timePeriod, payrollBase
+    payroll1099, payrollW2, payrollWages, payrollBase
   } = formContext.getInputProviderValues();
 
   const { questionOne, questionTwo } = PartThreeProps;
@@ -60,11 +60,8 @@ const Part3 = (props) => {
   };
   leaveTableDefaults['family-leave'] = String(leaveTableDefaults.famCont);
   leaveTableDefaults['medical-leave'] = String(leaveTableDefaults.medCont);
-  const familyLeave = Number(formContext.getInputProviderValue('family-leave')) || Number(leaveTableDefaults.famCont);
-  const medicalLeave = Number(formContext.getInputProviderValue('medical-leave')) || Number(leaveTableDefaults.medCont);
   const over50 = isOver50(formContext);
   const over25 = isOver25(formContext);
-  const totalPayroll = getTotalPayroll(formContext);
   const minMed = over25 ? largeCompMedCont : smallCompMedCont;
   const maxMed = over25 ? (largeCompMedCont + empMedCont) : (smallCompMedCont + empMedCont);
   const minFam = over25 ? largeCompFamCont : smallCompFamCont;
@@ -77,43 +74,55 @@ const Part3 = (props) => {
   if (leaveTableDefaults.medCont < minMedPer) {
     leaveTableDefaults.medCont = minMedPer;
   }
-  const medLeaveCont = medicalLeave > minMedPer ? medicalLeave / 100 : minMed;
-  const famLeaveCont = familyLeave > minFamPer ? familyLeave / 100 : minFam;
   const medPercent = totContribution * totMedPercent;
   const famPercent = totContribution * totFamPercent;
-  const medLeave = totalPayroll * medPercent;
-  const famLeave = totalPayroll * famPercent;
-  const medLeaveComp = medLeave * medLeaveCont;
-  const famLeaveComp = famLeave * famLeaveCont;
-  const medLeaveEmp = medLeave * (maxMed - medLeaveCont);
-  const famLeaveEmp = famLeave * (1 - famLeaveCont);
-  const timeValue = getTimeValue(payroll_frequency);
-  const medLeaveTotal = (medLeaveComp + medLeaveEmp) / timeValue;
-  const famLeaveTotal = (famLeaveComp + famLeaveEmp) / timeValue;
-
+  const getMaxMedPer = () => {
+    const max = isOver25(formContext) ? (largeCompMedCont + empMedCont) : (smallCompMedCont + empMedCont);
+    return Math.round(max * 100);
+  };
+  const getMinMedPer = () => {
+    const min = isOver25(formContext) ? largeCompMedCont : smallCompMedCont;
+    return Math.round(min * 100);
+  };
+  const getMinFamPer = () => {
+    const min = isOver25(formContext) ? largeCompFamCont : smallCompFamCont;
+    return Math.round(min * 100);
+  };
   const getTableProps = () => {
     const pBase = formContext.getInputProviderValue('payrollBase');
+    const localMedLeaveCont = Number(formContext.getInputProviderValue('medical-leave')) > getMinMedPer() ? Number(formContext.getInputProviderValue('medical-leave')) / 100 : getMinMedPer() / 100;
+    const localFamLeaveCont = Number(formContext.getInputProviderValue('family-leave')) > getMinFamPer() ? Number(formContext.getInputProviderValue('family-leave')) / 100 : getMinFamPer() / 100;
+    const localMedLeave = getTotalPayroll(formContext) * medPercent;
+    const localFamLeave = getTotalPayroll(formContext) * famPercent;
+    const localMedLeaveComp = localMedLeave * localMedLeaveCont;
+    const localFamLeaveComp = localFamLeave * localFamLeaveCont;
+    const localMedLeaveEmp = localMedLeave * (maxMed - localMedLeaveCont);
+    const localFamLeaveEmp = localFamLeave * (1 - localFamLeaveCont);
+    const thisTimeValue = getTimeValue(formContext.getInputProviderValue('payroll_frequency'));
+    const localMedLeaveTotal = (localMedLeaveComp + localMedLeaveEmp) / thisTimeValue;
+    const localFamLeaveTotal = (localFamLeaveComp + localFamLeaveEmp) / thisTimeValue;
+
     const tableProps = pBase === 'all' ? JSON.parse(JSON.stringify(AllTableData)) : JSON.parse(JSON.stringify(SingleTableData));
     const tRow1 = tableProps.bodies[0].rows[0];
     const tRow2 = tableProps.bodies[0].rows[1];
     const tRow3 = tableProps.bodies[0].rows[2];
-    tRow1.cells[1].text = toCurrency(medLeaveComp / timeValue);
+    tRow1.cells[1].text = toCurrency(localMedLeaveComp / thisTimeValue);
     tRow1.cells[1].heading = false;
-    tRow1.cells[2].text = toCurrency(famLeaveComp / timeValue);
+    tRow1.cells[2].text = toCurrency(localFamLeaveComp / thisTimeValue);
     tRow1.cells[2].heading = false;
-    tRow1.cells[3].text = toCurrency((medLeaveComp + famLeaveComp) / timeValue);
+    tRow1.cells[3].text = toCurrency((localMedLeaveComp + localFamLeaveComp) / thisTimeValue);
     tRow1.cells[3].heading = false;
-    tRow2.cells[1].text = toCurrency(medLeaveEmp / timeValue);
+    tRow2.cells[1].text = toCurrency(localMedLeaveEmp / thisTimeValue);
     tRow2.cells[1].heading = false;
-    tRow2.cells[2].text = toCurrency(famLeaveEmp / timeValue);
+    tRow2.cells[2].text = toCurrency(localFamLeaveEmp / thisTimeValue);
     tRow2.cells[2].heading = false;
-    tRow2.cells[3].text = toCurrency((medLeaveEmp + famLeaveEmp) / timeValue);
+    tRow2.cells[3].text = toCurrency((localMedLeaveEmp + localFamLeaveEmp) / thisTimeValue);
     tRow2.cells[3].heading = false;
-    tRow3.cells[1].text = toCurrency(medLeaveTotal);
+    tRow3.cells[1].text = toCurrency(localMedLeaveTotal);
     tRow3.cells[1].heading = false;
-    tRow3.cells[2].text = toCurrency(famLeaveTotal);
+    tRow3.cells[2].text = toCurrency(localFamLeaveTotal);
     tRow3.cells[2].heading = false;
-    tRow3.cells[3].text = toCurrency(medLeaveTotal + famLeaveTotal);
+    tRow3.cells[3].text = toCurrency(localMedLeaveTotal + localFamLeaveTotal);
     tRow3.cells[3].heading = false;
     return tableProps;
   };
@@ -194,14 +203,6 @@ const Part3 = (props) => {
       }
     });
     medOnChange(val, sourceInputId);
-  };
-  const getMaxMedPer = () => {
-    const max = isOver25(formContext) ? (largeCompMedCont + empMedCont) : (smallCompMedCont + empMedCont);
-    return Math.round(max * 100);
-  };
-  const getMinMedPer = () => {
-    const min = isOver25(formContext) ? largeCompMedCont : smallCompMedCont;
-    return Math.round(min * 100);
   };
   const medOnChange = (defaultVal, sourceInputId) => {
     const val = Number.isNaN(Number(defaultVal)) ? 0 : Number(defaultVal);
@@ -293,11 +294,6 @@ const Part3 = (props) => {
         formContext.setInputProviderValue({ id: 'famEmployeeCont', value: Math.round(maxPer - newVal) }, () => onChangeFamCont(newVal));
       });
     }
-  };
-
-  const getMinFamPer = () => {
-    const min = isOver25(formContext) ? largeCompFamCont : smallCompFamCont;
-    return Math.round(min * 100);
   };
   let medTicks = [[0, '0%'], [empMedCont * 100, `${empMedCont * 100}%`]];
   if (isOver25(formContext)) {
