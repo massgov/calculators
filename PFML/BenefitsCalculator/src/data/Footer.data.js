@@ -39,6 +39,10 @@ const footerLinks = {
         {
           "href": "https://mass.gov/site-policies",
           "text": "Site Policies"
+        },
+        {
+          "href": "https://mass.gov/topics/public-records-requests",
+          "text": "Public Records Requests"
         }
       ]
     }

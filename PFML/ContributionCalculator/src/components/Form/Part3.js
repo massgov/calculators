@@ -1,5 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
+import TagManager from 'react-gtm-module';
 import numbro from 'numbro';
 import { SelectBox, Input, InputSlider, InputNumber, FormContext, InputContext, Table } from '@massds/mayflower-react';
 import { encode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery } from 'react-url-query';
@@ -38,7 +39,7 @@ const Part3 = (props) => {
     timePeriod: props.timePeriod && props.timePeriod !== '' ? props.timePeriod : 'Year'
   };
   const {
-    payroll1099, payrollW2, payrollWages, timePeriod = leaveTableDefaults.timePeriod, payrollBase
+    payroll1099, payrollW2, payrollWages, payroll_frequency = leaveTableDefaults.timePeriod, payrollBase
   } = formContext.getInputProviderValues();
 
   const { questionOne, questionTwo } = PartThreeProps;
@@ -86,7 +87,7 @@ const Part3 = (props) => {
   const famLeaveComp = famLeave * famLeaveCont;
   const medLeaveEmp = medLeave * (maxMed - medLeaveCont);
   const famLeaveEmp = famLeave * (1 - famLeaveCont);
-  const timeValue = getTimeValue(timePeriod);
+  const timeValue = getTimeValue(payroll_frequency);
   const medLeaveTotal = (medLeaveComp + medLeaveEmp) / timeValue;
   const famLeaveTotal = (famLeaveComp + famLeaveEmp) / timeValue;
 
@@ -123,6 +124,13 @@ const Part3 = (props) => {
   const famTicks = minFamPer === 0 ? [[0, '0%'], [100, '100%']] : [[0, '0%'], [minFamPer, 'Min Employer Contribution'], [100, '100%']];
 
   const famSliderOnChange = (val, sourceInputId) => {
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'gtm.slider',
+        sliderValue: val,
+        sliderID: sourceInputId
+      }
+    });
     famOnChange(val, sourceInputId);
   };
   const famNumberOnChange = (event, val, sourceInputId) => {
@@ -178,6 +186,13 @@ const Part3 = (props) => {
     medOnChange(val, sourceInputId);
   };
   const medSliderOnChange = (val, sourceInputId) => {
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'gtm.slider',
+        sliderValue: val,
+        sliderID: sourceInputId
+      }
+    });
     medOnChange(val, sourceInputId);
   };
   const getMaxMedPer = () => {
@@ -423,7 +438,7 @@ const Part3 = (props) => {
       {
         enable && (
           <Fragment>
-            <Input id="timePeriod" defaultValue={timePeriod} useOwnStateValue>
+            <Input id="payroll_frequency" defaultValue={leaveTableDefaults.timePeriod} useOwnStateValue>
               <InputContext.Consumer>
                 {
                   (timeContext) => (
@@ -432,7 +447,7 @@ const Part3 = (props) => {
                         label={questionTwo.question}
                         stackLabel={false}
                         required
-                        id="timePeriod"
+                        id="payroll_frequency"
                         options={questionTwo.options}
                         selected={timeContext.getOwnValue()}
                         onChangeCallback={({ selected }) => {

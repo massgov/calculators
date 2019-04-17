@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Header, Footer, PageHeader, HelpTip
+  Header, Footer, PageHeader, HelpTip, ButtonFixedFeedback
 } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
@@ -40,6 +40,11 @@ class App extends Component {
                 text:
               'If you are eligible to receive unemployment benefits, you will receive a weekly benefit amount of approximately 50% of your average weekly wage, up to the maximum set by law. As of October 2018, the maximum weekly benefit amount is $795 per week.'
               }
+            }, {
+              paragraph: {
+                text:
+              'This calculator helps you estimate your benefits. It is only advisory. You will be notified of your outcome and benefit determination 3-4 weeks after you apply.'
+              }
             }]}
           />
           <section className="main-content main-content--two">
@@ -47,9 +52,9 @@ class App extends Component {
               <hr />
               <h2>
                 <HelpTip
-                  text="Enter your total wages for the last 4 quarters to estimate your benefits."
-                  triggerText={['total wages']}
-                  helpText={['Total wages means the gross amount that appears on your paycheck or W-2. Do not use wages net of tax or other deductions.']}
+                  text="Enter the total wages you received in the last 4 quarters to estimate your benefits."
+                  triggerText={['total wages you received in the last 4 quarters']}
+                  helpText={['Total wages means the gross amount that appears on your paycheck or W-2. Do not use wages net of tax or other deductions. Make sure to enter your wages for the quarter when you actually received them, not when you earned them.']}
                   id="helptext-total-wages"
                 />
               </h2>
@@ -57,6 +62,7 @@ class App extends Component {
               <Form />
             </div>
           </section>
+          {process.env.REACT_APP_IFRAME === 'false' && <ButtonFixedFeedback href="https://www.mass.gov/feedback" />}
         </main>
         {process.env.REACT_APP_IFRAME === 'false' && <Footer {...this.footerProps} />}
       </div>

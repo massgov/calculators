@@ -11,6 +11,16 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <meta name="robots" content="%REACT_APP_SITE_INDEX%">
+    <!-- metatags for social media -->
+    <meta property="og:title" content="PFML Contribution Calculator" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="%REACT_APP_CANONICAL_URL%" />
+    <meta property="og:image" content="https://www.mass.gov/files/2019-01/PFML%20mosaic%202.png" />
+    <meta name="twitter:image:src" content="https://www.mass.gov/files/2019-01/PFML%20mosaic%202.png">
+    <meta property="og:description" content="Under the PFML law, employers are responsible for sending family and medical leave contributions to the Department of Family and Medical Leave on behalf of their W2 employees and 1099-MISC contractors. If you’re a Massachusetts employer, use the calculator below to estimate the required contributions you will need to send." />
+    <meta property="og:site_name" content="Mass.gov" />
+    <!-- metatag for search.mass.gov -->
+    <meta name="mg_organization" content="departmentoffamilyandmedicalleave,executiveofficeoflaborandworkforcedevelopment">
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -21,11 +31,31 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>PFML Contribution Calculator | Mass.gov</title>
+    <!-- Google Tag Manager -->
+    <script>(
+      function(w,d,s,l,i){
+        w[l]=w[l]||[];w[l].push({
+          'gtm.start': new Date().getTime(),event:'gtm.js'
+        });
+        var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),
+            dl=l!='dataLayer'?'&l='+l:'';
+            j.async=true;
+            j.src=%REACT_APP_GTM_SCRPT%;
+            f.parentNode.insertBefore(j,f);
+      })
+      (window,document,'script','dataLayer','GTM-PJ224LR');
+    </script>
+    <!-- End Google Tag Manager -->
   </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="%REACT_APP_GTM_NOSCRPT%"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div id="root"></div>
     <!--
       This HTML file is a template.

@@ -15,7 +15,7 @@ defaults: &defaults
       - image: circleci/node:10.10.0
     parallelism: 2
     working_directory: ~/repo
-    
+
 jobs:
   # Test jobs for validating calculor code on all branches.
   pfml-cal-benefits-test:
@@ -47,7 +47,7 @@ jobs:
       - run:
           name: 'PFML Contribution Calculator Build App'
           command: cd PFML/ContributionCalculator && npm run build
-          
+
   ui-cal-benefits-test:
     <<: *defaults
     steps:
@@ -62,7 +62,7 @@ jobs:
       - run:
           name: 'UI Benefits Calculator Build App'
           command: cd UI/BenefitsCalculator && npm run build
-  
+
   ui-cal-part-time-benefits-test:
     <<: *defaults
     steps:
@@ -77,7 +77,7 @@ jobs:
       - run:
           name: 'UI Part Time Benefits Calculator Build App'
           command: cd UI/PartTimeBenefitsCalculator && npm run build
-          
+
   # Deploy develop branches to dev env.
   pfml-cal-benefits-deploy-dev:
     <<: *defaults
@@ -102,7 +102,7 @@ jobs:
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/yourbenefits/ --delete
               aws configure set preview.cloudfront true
               aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/pfml/yourbenefits/*'
-  
+
   pfml-cal-contribution-deploy-dev:
     <<: *defaults
     steps:
@@ -126,7 +126,7 @@ jobs:
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/contribution/ --delete
               aws configure set preview.cloudfront true
               aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/pfml/contribution/*'
-  
+
   ui-cal-benefits-deploy-dev:
     <<: *defaults
     steps:
@@ -150,7 +150,7 @@ jobs:
               aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/yourbenefits/ --delete
               aws configure set preview.cloudfront true
               aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/ui/yourbenefits/*'
-  
+
   ui-cal-parttime-deploy-dev:
     <<: *defaults
     steps:
@@ -237,7 +237,7 @@ jobs:
               aws s3 sync build s3://calculator.digital.mass.gov/iframe/pfml/contribution/ --delete
               aws configure set preview.cloudfront true
               aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/iframe/pfml/contribution/*'
-  
+
   ui-cal-benefits-deploy-prod:
     <<: *defaults
     steps:
@@ -268,7 +268,7 @@ jobs:
               aws s3 sync build s3://calculator.digital.mass.gov/iframe/ui/yourbenefits/ --delete
               aws configure set preview.cloudfront true
               aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/iframe/ui/yourbenefits/*'
-  
+
   ui-cal-parttime-deploy-prod:
     <<: *defaults
     steps:

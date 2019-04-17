@@ -5,8 +5,7 @@
         "partThree": "of what you make weekly today."
     },
     "paragraphTwo": {
-        "partOne": "If you take leave for the maximum benefit of ",
-        "partTwo": " weeks, your estimated total benefit will be "
+        "partOne": "If approved for the maximum number of weeks covered by the PFML program, your estimated total benefit would be"
     },
     "paragraphThree": {
         "more": {
@@ -19,7 +18,7 @@
             "partSeven": "per week."
         },
         "less": {
-        	"partOne": "Because you earned less than",
+        	"partOne": "Because you earned no more than",
             "partTwo": "(1/2 of the statewide average wage) in the last 12 months, you are eligible to receive",
             "partThree": "of your weekly income, up to",
             "partFour": "per week."
@@ -31,7 +30,7 @@
         }
     },
     "buttonLink": {
-        "text": "Learn more about filing a claim",
-        "link": "https://www.mass.gov/info-details/paid-family-medical-leave-for-employees-faq"
+        "text": "Learn more about PFML benefits",
+        "link": "https://www.mass.gov/guides/a-guide-to-paid-family-and-medical-leave-for-massachusetts-workers"
     }
 }

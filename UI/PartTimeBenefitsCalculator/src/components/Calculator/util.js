@@ -4,7 +4,7 @@ export const toCurrency = (val) => {
   if (typeof val === 'string' && val.length === 0) {
     return NaN;
   }
-  return numbro(val).formatCurrency({ mantissa: 2 });
+  return numbro(val).formatCurrency({ mantissa: 0 });
 };
 
 
@@ -14,11 +14,13 @@ export const displayCurrency = (val) => {
 };
 
 export const toNumber = (val) => {
-  if ((typeof val === 'string' && val.length === 0) || !val) {
-    return NaN;
+  if (typeof val === 'string') {
+    if (val.length > 0) {
+      return numbro.unformat(val);
+    }
+    if ((val.length === 0) || !val) {
+      return NaN;
+    }
   }
-  return Number(numbro(val).format({
-    trimMantissa: true,
-    mantissa: 2
-  }));
+  return Number(val);
 };

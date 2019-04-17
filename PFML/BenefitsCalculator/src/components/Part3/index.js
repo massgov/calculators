@@ -25,7 +25,6 @@ const Part3 = (props) => {
   const benefitBreak = maAvgYear * 0.5;
   const benefitBreakWeek = (benefitBreak / weeksPerYear) * lowBenefitFraction;
   const maxBenefit = ((maxBenefitWeek - benefitBreakWeek) * weeksPerYear * 2) + benefitBreak;
-  const maxBenefitDelta = maxBenefit - benefitBreak;
 
   let estBenefit;
   if (yearIncome <= benefitBreak) {
@@ -33,8 +32,8 @@ const Part3 = (props) => {
     estBenefit = yearIncome * lowBenefitFraction;
   } else {
     // If yearly income is greater than half the state wide avg income.
-    const addBenefit = (yearIncome - benefitBreak) > maxBenefitDelta ? (maxBenefitDelta * highBenefitFraction) : ((yearIncome - benefitBreak) * highBenefitFraction);
-    estBenefit = (benefitBreak * lowBenefitFraction) + addBenefit;
+    const addBenefit = yearIncome < maxBenefit ? ((yearIncome - benefitBreak) * highBenefitFraction) : ((maxBenefit - benefitBreak) * highBenefitFraction);
+    estBenefit = addBenefit + (benefitBreak * lowBenefitFraction);
   }
 
   // The estimated weekly benefit you would receive.
@@ -57,7 +56,7 @@ const Part3 = (props) => {
 
   const getHelpText = () => (
     <div className="ma__help-text">
-      { yearIncome < benefitBreak ? (
+      { yearIncome <= benefitBreak ? (
         <Fragment>
           <Paragraph text={`${less.partOne} ${toCurrency(benefitBreak)} ${less.partTwo} ${toPercentage(lowBenefitFraction)} ${less.partThree} ${toCurrency(benefitBreakWeek)} ${less.partFour}`} />
           <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = (${toCurrency(yearIncome)} x ${toPercentage(lowBenefitFraction)}) / ${weeksPerYear} weeks per year`} /></div>
@@ -68,12 +67,12 @@ const Part3 = (props) => {
           {yearIncome < maxBenefit ? (
             <Fragment>
               <Paragraph text={`${more.partOne} ${toCurrency(benefitBreak)} ${more.partTwo} ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreak)} ${more.partFive} ${toCurrency(maxBenefit)}${more.partSix} ${toCurrency(maxBenefitWeek)} ${more.partSeven}`} />
-              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${yearIncome > maxBenefit ? toCurrency(maxBenefit) : toCurrency(yearIncome)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
+              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${toCurrency(yearIncome)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
             </Fragment>
           ) : (
             <Fragment>
               <Paragraph text={`${max.partOne} ${toCurrency(maxBenefit)} ${max.partTwo} ${toCurrency(maxBenefitWeek)} ${max.partThree}`} />
-              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${yearIncome > maxBenefit ? toCurrency(maxBenefit) : toCurrency(yearIncome)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
+              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${toCurrency(maxBenefit)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
             </Fragment>
           )}
         </Fragment>
@@ -92,7 +91,7 @@ const Part3 = (props) => {
         >
           {getHelpText()}
         </HelpTip>
-        <Paragraph text={`${paragraphTwo.partOne} ${maxWeeks} ${paragraphTwo.partTwo} <strong>${toCurrency(totBenefit)}</strong>.`} className="ma__help-text--p" />
+        <Paragraph text={`${paragraphTwo.partOne} <strong>${toCurrency(totBenefit)}</strong>.`} className="ma__help-text--p" />
       </CalloutAlert>
       <Button type="submit" size="small" info={buttonLink.text} text={buttonLink.text} href={buttonLink.link} />
     </Fragment>

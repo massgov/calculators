@@ -17,11 +17,6 @@ const Output = (props) => {
   const quartersHaveValue = quartersArray.filter((q) => typeof q === 'number' && q > 0);
   const quartersCount = quartersHaveValue.length;
 
-  // qualification
-  const quartersSumThreshhold = 4700;
-  const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
-  const qualified = !(quartersSum < quartersSumThreshhold);
-
   // weekly benefit
   let topQuarters;
   let weeksInTopQuarters = 26;
@@ -34,10 +29,21 @@ const Output = (props) => {
   const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
   const weeklyBenefit = 1 / 2 * topQuartersSum / weeksInTopQuarters;
   const weeklyBenefitMax = 795;
-  const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
+  // final weekly benefit is rounded to the nearest dollar amount
+  const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : Math.round(weeklyBenefit);
+
+  // qualifications
+  const quartersSumThreshhold = 4700;
+  const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
+  // qualification 1: total wages is no less than threshhold
+  const qualification1 = !(quartersSum < quartersSumThreshhold);
+  // qualification 2: total wages is no less 30 times the weekly benefits
+  const qualification2 = !(quartersSum < 30 * weeklyBenefitFinal);
+  const qualified = qualification1 && qualification2;
 
   // max benefit credit
-  const maxBenefitOption1 = 30 * weeklyBenefitFinal;
+  const maxBenefitDuration = 30;
+  const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
   const maxBenefitOption2 = 0.36 * quartersSum;
   const maxBenefitFinal = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption2 : maxBenefitOption1;
   const maxBenefitOther = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption1 : maxBenefitOption2;
@@ -46,17 +52,22 @@ const Output = (props) => {
   const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
 
 
-  const helpTextBasePeriod2Q = 'Your weekly benefit is equal to half of the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters:';
-  const helpTextBasePeriod1Q = 'Your weekly benefit is equal to half of the highest-earning quarter divided by the number of weeks in the quarter:';
+  const helpTextBasePeriod2Q = 'Your weekly benefit amount is equal to half of the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters:';
+  const helpTextBasePeriod1Q = 'Your weekly benefit amount is equal to half of the highest-earning quarter divided by the number of weeks in the quarter:';
+  const helpTextWeeks2Q = 'weeks in the combined quarters';
+  const helpTextWeeks1Q = 'weeks in the quarter';
+  const helpTextDisqualification1 = `You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible.`;
+  const helpTextDisqualification2 = `Your total base period wages of ${toCurrency(quartersSum)} must be equal to or greater than ${toCurrency(weeklyBenefitFinal * 30)} (your weekly benefit amount x 30) to be eligible.`;
+  const maxBenefitDurationDisclaimer = 'The maximum number of weeks you can receive full unemployment benefits is 30 weeks (capped at 26 weeks during periods of extended benefits and low unemployment). However, many individuals qualify for less than 30 weeks of coverage.';
 
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">
       { weeklyBenefit > weeklyBenefitMax ? (
-        <Paragraph text={`Your weekly benefit is capped at ${toCurrency(weeklyBenefitMax)}.`} />
+        <Paragraph text={`Your weekly benefit amount is capped at ${toCurrency(weeklyBenefitMax)}.`} />
       ) : (
         <Fragment>
           <Paragraph text={quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q} />
-          <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} weeks in the combined quarters`} /></div>
+          <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefitFinal)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${quartersCount > 2 ? helpTextWeeks2Q : helpTextWeeks1Q}`} /></div>
         </Fragment>
       )}
     </div>
@@ -67,6 +78,9 @@ const Output = (props) => {
       <Fragment>
         <Paragraph text="Your duration of benefits is equal to your maximum benefit credit divided by your weekly benefit amount:" />
         <div className="ma__output-calculation"><Paragraph text={`${parseInt(benefitDuration, 10)} = ${toCurrency(maxBenefitFinal)} / ${toCurrency(weeklyBenefitFinal)}`} /></div>
+        <div className="ma__disclaimer">
+          <Paragraph text={maxBenefitDurationDisclaimer} />
+        </div>
       </Fragment>
     </div>
   );
@@ -77,11 +91,13 @@ const Output = (props) => {
         <Paragraph text="Your maximum benefit credit is equal to the lesser of either:" />
         <ul>
           <li>
-30 times your weekly benefit amount:
-            <Paragraph text={`<strong>${toCurrency(maxBenefitOption1)}</strong> = 30 x ${toCurrency(weeklyBenefitFinal)}`} />
+            {maxBenefitDuration}
+            {' '}
+            times your weekly benefit amount:
+            <Paragraph text={`<strong>${toCurrency(maxBenefitOption1)}</strong> = ${maxBenefitDuration} x ${toCurrency(weeklyBenefitFinal)}`} />
           </li>
           <li>
-36% of the total wages in your base period:
+            36% of the total wages in your base period:
             <Paragraph text={`<strong>${toCurrency(maxBenefitOption2)}</strong> = 36% x ${toCurrency(quartersSum)}`} />
           </li>
         </ul>
@@ -119,7 +135,17 @@ const Output = (props) => {
             labelID="help-tip-benefits-label"
           >
             <div className="ma__help-text">
-              <Paragraph text={`You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible`} />
+              {
+                !qualification1 ? (
+                  <Paragraph text={helpTextDisqualification1} />
+                ) : (
+                  <Fragment>
+                    <Paragraph text={helpTextDisqualification2} />
+                    <Paragraph text={quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q} />
+                    <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefitFinal)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${quartersCount > 2 ? helpTextWeeks2Q : helpTextWeeks1Q}`} /></div>
+                  </Fragment>
+                )
+              }
             </div>
           </HelpTip>
         </CalloutAlert>

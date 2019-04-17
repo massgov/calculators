@@ -16,18 +16,19 @@ class Calculator extends Component {
       applyAll: false
     };
     const format = 'MMM YYYY';
-    const quarter = moment().quarter() + 1;
-    const quarterDateRange = (quartersAgo, startOffset) => {
-      let qEnd = moment().subtract({ months: quarter + (quartersAgo - 1) * 3 }).endOf('month');
-      let qStart = qEnd.clone().subtract({ months: startOffset }).startOf('month');
+    const quarterCurrent = moment().quarter();
+    const quarterDateRange = (quartersAgo) => {
+      const quarter = quarterCurrent - quartersAgo;
+      let qEnd = moment().quarter(quarter).endOf('quarter');
+      let qStart = moment().quarter(quarter).startOf('quarter');
       qEnd = moment(qEnd).format(format);
       qStart = moment(qStart).format(format);
       return{ qEnd, qStart };
     };
-    this.q1 = quarterDateRange(1, 3);
-    this.q2 = quarterDateRange(2, 2);
-    this.q3 = quarterDateRange(3, 2);
-    this.q4 = quarterDateRange(4, 2);
+    this.q1 = quarterDateRange(1);
+    this.q2 = quarterDateRange(2);
+    this.q3 = quarterDateRange(3);
+    this.q4 = quarterDateRange(4);
   }
 
   render() {
@@ -35,7 +36,7 @@ class Calculator extends Component {
     const inputCurrencyProps = {
       placeholder: 'e.g. $10,000',
       format: {
-        mantissa: 2,
+        mantissa: 0,
         trimMantissa: false,
         thousandSeparated: true
       },

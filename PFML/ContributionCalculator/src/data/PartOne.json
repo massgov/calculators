@@ -1,200 +1,206 @@
 {
     "questionOne": {
         "question": {
-            "helpText": ["The statute distinguishes the two because…"],
-            "triggerText": ["Massachusetts W2 employees or Massachusetts 1099-MISC contractors"],
-            "text": "Do you have any Massachusetts W2 employees or Massachusetts 1099-MISC contractors performing services for you business?"
+            "content": "Do you have any Massachusetts W2 employees or Massachusetts 1099-MISC contractors in your workforce?"
         },
         "errorMsg": "Please select yes or no.",
         "options": [{
             "label": "Yes",
             "value": "yes",
-            "id": "yes",
+            "id": "mass_employees_yes",
             "message": "",
             "theme": "c-primary"
         }, {
             "label": "No",
             "value": "no",
-            "id": "no",
+            "id": "mass_employees_no",
             "message": "You are <strong>not required</strong> to participate in the PFML <strong>program</strong>.",
             "theme": "c-error-red"
         }]
     },
     "questionTwo": {
         "question": {
-            "helpText": ["Include a formal definition of a Massachusetts W2 employee."],
+            "helpText": ["A MA W2 employee is anyone to whom you are required to issue a W2 form for performing services in Massachusetts."],
             "triggerText": ["Massachusetts W2 employees"],
-            "text": "What is the average number of Massachusetts W2 employees in your workforce over the last 12 months?"
+            "text": "What is the average number of Massachusetts W2 employees in your workforce over the last calendar year?"
         },
         "errorMsg": "Please enter a value."
     },
     "questionThree": {
         "question": {
-            "helpText": ["Add formal definition of a Massachusetts 1099-MISC contractor."],
+            "helpText": ["A MA 1099-MISC contractor is an individual that resides in Massachusetts for whom you are required to report payment for services on IRS Form 1099-MISC."],
             "triggerText": ["Massachusetts 1099-MISC contractors"],
-            "text": "What is the average number of Massachusetts 1099-MISC contractors regularly performing services for your business over the last 12 months?"
+            "text": "What is the average number of Massachusetts 1099-MISC contractors in your workforce over the last calendar year?"
         },
         "errorMsg": "Please enter a value."
     },
     "output": {
         "overMinEmpOver1099": [{
             "paragraph": {
-                "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees and Massachusetts 1099-MISC contractors are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”",
-                "triggerText": ["Massachusetts W2 employees and Massachusetts 1099-MISC contractors"],
-                "helpText": ["If your Massachusetts 1099-MISC contractors are equal to or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf."]
+                "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees and Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
+                "triggerText": ["Massachusetts W2 employees and Massachusetts 1099-MISC contractors","<strong>covered individuals</strong>"],
+                "helpText": ["If your Massachusetts 1099-MISC contractors are equal to or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
-                "content": "Starting <strong>July 1, 2019</strong>, you are required to send your business’ full contribution every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and an <strong>employee share</strong>."
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send Paid Family and Medical Leave contributions every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and a <strong>covered individual share</strong>."
             }
         }, {
             "paragraph": {
-                "content": "The <strong>employee share</strong> of the total contribution includes 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct from your covered individuals’ wages to cover the <strong>employee share</strong>."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct from your covered individuals’ wages to cover the covered individual share. "
             }
         }, {
             "paragraph": {
                 "text": "You are required to pay the remaining employer share of the total contribution. The <strong>employer share</strong> is at least 60% of the medical leave contribution.",
                 "triggerText": ["required to pay the remaining employer share"],
-                "helpText": ["If you have 25 or more covered individuals, you are required to pay the employer share."]
+                "helpText": ["If you had 25 or more covered individuals in your average workforce last year, you are required to pay the employer share this year."]
             }
         }],
         "overMinEmpUnder1099": [{
             "paragraph": {
-                "text": "Based on the makeup of your workforce, only your Massachusetts W2 employees are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”",
-                "triggerText": ["only your Massachusetts W2 employees"],
-                "helpText": ["If you have fewer Massachusetts 1099-MISC contractors than Massachusetts W2 employees, the Massachusetts 1099-MISC contractors are not considered covered individuals and you are not responsible for sending contributions on their behalf."]
+                "text": "Based on the makeup of your workforce, only your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
+                "triggerText": ["only your Massachusetts W2 employees","<strong>covered individuals</strong>"],
+                "helpText": ["If you have fewer Massachusetts 1099-MISC contractors than Massachusetts W2 employees, the Massachusetts 1099-MISC contractors are not considered covered individuals and you are not responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
-                "content": "Starting <strong>July 1, 2019</strong>, you are required to send your business’ full contribution every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and an <strong>employee share</strong>."
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send Paid Family and Medical Leave contributions every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and a <strong>covered individual share</strong>."
             }
         }, {
             "paragraph": {
-                "content": "The <strong>employee share</strong> of the total contribution includes 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct from your covered individuals’ wages to cover the <strong>employee share</strong>."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct from your covered individuals’ wages to cover the covered individual share. "
             }
         }, {
             "paragraph": {
                 "text": "You are required to pay the remaining <strong>employer share</strong> of the total contribution. The employer share is at least 60% of the medical leave contribution.",
                 "triggerText": ["required to pay the remaining <strong>employer share</strong>"],
-                "helpText": ["If you have 25 or more covered individuals, you are required to pay the employer share."]
+                "helpText": ["If you had 25 or more covered individuals in your average workforce last year, you are required to pay the employer share this year."]
             }
         }],
         "underMinEmpOver1099": [{
             "paragraph": {
-                "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees and Massachusetts 1099-MISC contractors are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”",
-                "triggerText": ["Massachusetts W2 employees and Massachusetts 1099-MISC contractors"],
-                "helpText": ["If your Massachusetts 1099-MISC contractors are equal to or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf."]
+                "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees and Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
+                "triggerText": ["Massachusetts W2 employees and Massachusetts 1099-MISC contractors","<strong>covered individuals</strong>"],
+                "helpText": ["If your Massachusetts 1099-MISC contractors are equal to or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
-                "content": "Starting <strong>July 1, 2019</strong>, you are required to send your business’ full contribution every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and an <strong>employee share</strong>."
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send Paid Family and Medical Leave contributions every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and a <strong>covered individual share</strong>."
             }
         }, {
             "paragraph": {
-                "content": "The <strong>employee share</strong> of the total contribution includes 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct from your covered individuals’ wages to cover the <strong>employee share</strong>."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct from your covered individuals’ wages to cover the covered individual share. "
             }
         }, {
             "paragraph": {
-                "text": "Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution. You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution.",
+                "text": "You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution but you may elect to cover a portion of the covered individual share.",
                 "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
-                "helpText": ["If you have fewer than 25 covered individuals, you do not need to pay the employer share."]
+                "helpText": ["If you had fewer than 25 covered individuals in your average workforce last year, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
             }
         }],
         "underMinEmpUnder1099": [{
             "paragraph": {
-                "text": "Based on the makeup of your workforce, only your Massachusetts W2 employees are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”",
-                "triggerText": ["only your Massachusetts W2 employees"],
-                "helpText": ["If you have fewer Massachusetts 1099-MISC contractors than Massachusetts W2 employees, the Massachusetts 1099-MISC contractors are not considered covered individuals and you are not responsible for sending contributions on their behalf."]
+                "text": "Based on the makeup of your workforce, only your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
+                "triggerText": ["only your Massachusetts W2 employees","<strong>covered individuals</strong>"],
+                "helpText": ["If you have fewer Massachusetts 1099-MISC contractors than Massachusetts W2 employees, the Massachusetts 1099-MISC contractors are not considered covered individuals and you are not responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
-                "content": "Starting <strong>July 1, 2019</strong>, you are required to send your business’ full contribution every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and an <strong>employee share</strong>."
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send Paid Family and Medical Leave contributions every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and a <strong>covered individual share</strong>."
             }
         }, {
             "paragraph": {
-                "content": "The <strong>employee share</strong> of the total contribution includes 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct from your covered individuals’ wages to cover the <strong>employee share</strong>."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct from your covered individuals’ wages to cover the covered individual share. "
             }
         }, {
             "paragraph": {
-                "text": "Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution. You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution.",
+                "text": "You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution but you may elect to cover a portion of the covered individual share.",
                 "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
-                "helpText": ["If you have fewer than 25 covered individuals, you do not need to pay the employer share."]
+                "helpText": ["If you had fewer than 25 covered individuals in your average workforce last year, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
             }
         }],
         "underMinEmpNo1099": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, all your Massachusetts W2 employees are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”"
+                "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
+                "triggerText": ["<strong>covered individuals</strong>"],
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
-                "content": "Starting <strong>July 1, 2019</strong>, you are required to send your business’ full contribution every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and an <strong>employee share</strong>."
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send Paid Family and Medical Leave contributions every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and a <strong>covered individual share</strong>."
             }
         }, {
             "paragraph": {
-                "content": "The <strong>employee share</strong> of the total contribution includes 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct from your covered individuals’ wages to cover the <strong>employee share</strong>."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct from your covered individuals’ wages to cover the covered individual share. "
             }
         }, {
             "paragraph": {
-                "text": "Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution. You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution.",
+                "text": "You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution but you may elect to cover a portion of the covered individual share.",
                 "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
-                "helpText": ["If you have fewer than 25 covered individuals, you do not need to pay the employer share."]
+                "helpText": ["If you had fewer than 25 covered individuals in your average workforce last year, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
             }
         }],
         "underMinEmpNoW2": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, all your Massachusetts 1099-MSC contractors are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”"
+                "text": "Based on the makeup of your workforce, all your Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
+                "triggerText": ["<strong>covered individuals</strong>"],
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
-                "content": "Starting <strong>July 1, 2019</strong>, you are required to send your business’ full contribution every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and an <strong>employee share</strong>."
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send Paid Family and Medical Leave contributions every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and a <strong>covered individual share</strong>."
             }
         }, {
             "paragraph": {
-                "content": "The <strong>employee share</strong> of the total contribution includes 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct from your covered individuals’ wages to cover the <strong>employee share</strong>."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct from your covered individuals’ wages to cover the covered individual share. "
             }
         }, {
             "paragraph": {
-                "text": "Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution. You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution.",
+                "text": "You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution but you may elect to cover a portion of the covered individual share.",
                 "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
-                "helpText": ["If you have fewer than 25 covered individuals, you do not need to pay the employer share."]
+                "helpText": ["If you had fewer than 25 covered individuals in your average workforce last year, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
             }
         }],
         "overMinEmpNo1099": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, all your Massachusetts W2 employees are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”"
+                "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
+                "triggerText": ["<strong>covered individuals</strong>"],
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
-                "content": "Starting <strong>July 1, 2019</strong>, you are required to send your business’ full contribution every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and an <strong>employee share</strong>."
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send Paid Family and Medical Leave contributions every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and a <strong>covered individual share</strong>."
             }
         }, {
             "paragraph": {
-                "content": "The <strong>employee share</strong> of the total contribution includes 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct from your covered individuals’ wages to cover the <strong>employee share</strong>."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct from your covered individuals’ wages to cover the covered individual share. "
             }
         }, {
             "paragraph": {
                 "text": "You are required to pay the remaining <strong>employer share</strong> of the total contribution. The <strong>employer share</strong> is at least 60% of the medical leave contribution.",
                 "triggerText": ["required to pay the remaining <strong>employer share</strong>"],
-                "helpText": ["If you have 25 or more covered individuals, you are required to pay the employer share."]
+                "helpText": ["If you had 25 or more covered individuals in your average workforce last year, you are required to pay the employer share this year."]
             }
         }],
         "overMinEmpNoW2": [{
             "paragraph": {
-                "content": "Based on the makeup of your workforce, all your Massachusetts 1099-MISC contractors are eligible for PFML benefits and will be referred to as “<strong>covered individuals</strong>.”"
+                "text": "Based on the makeup of your workforce, all your Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
+                "triggerText": ["<strong>covered individuals</strong>"],
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
             }
         }, {
             "paragraph": {
-                "content": "Starting <strong>July 1, 2019</strong>, you are required to send your business’ full contribution every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and an <strong>employee share</strong>."
+                "content": "Starting <strong>July 1, 2019</strong>, you are required to send Paid Family and Medical Leave contributions every quarter to the Department of Family and Medical Leave. The full contribution is split between an <strong>employer share</strong> and a <strong>covered individual share</strong>."
             }
         }, {
             "paragraph": {
-                "content": "The <strong>employee share</strong> of the total contribution includes 100% of the family leave contribution and 40% of the medical leave contribution. You may deduct from your covered individuals’ wages to cover the <strong>employee share</strong>."
+                "content": "You are responsible for remitting contributions on behalf of your covered individuals. Covered individuals may be responsible for up to 100% of the family leave contribution and 40% of the medical leave contribution. You can deduct from your covered individuals’ wages to cover the covered individual share. "
             }
         }, {
             "paragraph": {
                 "text": "You are required to pay the remaining <strong>employer share</strong> of the total contribution. The <strong>employer share</strong> is at least 60% of the medical leave contribution.",
                 "triggerText": ["required to pay the remaining <strong>employer share</strong>"],
-                "helpText": ["If you have 25 or more covered individuals, you are required to pay the employer share."]
+                "helpText": ["If you had 25 or more covered individuals in your average workforce last year, you are required to pay the employer share this year."]
             }
         }]
     }
