@@ -8,6 +8,7 @@ import HeaderSearchData from './data/HeaderSearch.data';
 import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import Form from './components/Form';
+import { config, load } from './googlesheet-config';
 
 import './index.css';
 
@@ -27,6 +28,33 @@ class App extends Component {
       siteLogoDomain: { url: { domain: 'https://www.mass.gov/' } }
     };
   }
+
+  componentDidMount() {
+    // 1. Load the JavaScript client library.
+    window.gapi.load("client", this.initClient);
+  }
+
+  initClient = () => {
+    // 2. Initialize the JavaScript client library.
+    window.gapi.client
+      .init({
+        apiKey: config.apiKey,
+        // Your API key will be automatically added to the Discovery Document URLs.
+        discoveryDocs: config.discoveryDocs
+      })
+      .then(() => {
+      // 3. Initialize and make the API request.
+      load(this.onLoad);
+    });
+  };
+
+  onLoad = (data, error) => {
+    if (data) {
+      console.log(data)
+    } else {
+      console.log(error)
+    }
+  };
 
   render() {
     return(
