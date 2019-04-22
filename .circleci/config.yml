@@ -16,7 +16,7 @@ references:
   gpg_decrypt: &gpg_decrypt
     run:
       name: import GPG key
-      command: gpg --decrypt src/googlesheet-api.js.secret > src/googlesheet-api.js
+      command: cd UI/BenefitsCalculator && gpg --decrypt src/googlesheet-api.js.secret > src/googlesheet-api.js
 
 defaults: &defaults
     docker:
