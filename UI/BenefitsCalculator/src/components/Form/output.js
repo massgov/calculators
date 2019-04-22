@@ -7,7 +7,9 @@ import { toCurrency, toPercentage } from '../../utils';
 const sum = (a, b) => a + b;
 
 const Output = (props) => {
-  const { maxBenefitDuration, quartersSumThreshhold } = props;
+  const {
+    maxBenefitDuration, quartersSumThreshhold, weeklyBenefitMax, maxBenefitRatio
+  } = props;
   const {
     quarter1, quarter2, quarter3, quarter4
   } = props;
@@ -29,7 +31,6 @@ const Output = (props) => {
   }
   const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
   const weeklyBenefit = 1 / 2 * topQuartersSum / weeksInTopQuarters;
-  const weeklyBenefitMax = 795;
   // final weekly benefit is rounded to the nearest dollar amount
   const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : Math.round(weeklyBenefit);
 
@@ -43,7 +44,7 @@ const Output = (props) => {
 
   // max benefit credit
   const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
-  const maxBenefitOption2 = 0.36 * quartersSum;
+  const maxBenefitOption2 = maxBenefitRatio * quartersSum;
   const maxBenefitFinal = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption2 : maxBenefitOption1;
   const maxBenefitOther = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption1 : maxBenefitOption2;
 
@@ -96,8 +97,10 @@ const Output = (props) => {
             <Paragraph text={`<strong>${toCurrency(maxBenefitOption1)}</strong> = ${maxBenefitDuration} x ${toCurrency(weeklyBenefitFinal)}`} />
           </li>
           <li>
-            36% of the total wages in your base period:
-            <Paragraph text={`<strong>${toCurrency(maxBenefitOption2)}</strong> = 36% x ${toCurrency(quartersSum)}`} />
+            {toPercentage(maxBenefitRatio)}
+            {' '}
+            of the total wages in your base period:
+            <Paragraph text={`<strong>${toCurrency(maxBenefitOption2)}</strong> = ${toPercentage(maxBenefitRatio)} x ${toCurrency(quartersSum)}`} />
           </li>
         </ul>
         <Paragraph text={`Since ${toCurrency(maxBenefitFinal)} is less than ${toCurrency(maxBenefitOther)}, your maximum benefit credit is <strong>${toCurrency(maxBenefitFinal)}</strong>.`} />
@@ -160,7 +163,9 @@ Output.propTypes = {
   quarter3: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   quarter4: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   maxBenefitDuration: PropTypes.string,
-  quartersSumThreshhold: PropTypes.string
+  quartersSumThreshhold: PropTypes.string,
+  weeklyBenefitMax: PropTypes.string,
+  maxBenefitRatio: PropTypes.string
 };
 
 export default Output;
