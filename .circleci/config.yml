@@ -16,7 +16,7 @@ references:
   gpg_decrypt: &gpg_decrypt
     run:
       name: import GPG key
-      command: cd UI/BenefitsCalculator && gpg --pinentry-mode=loopback --passphrase $GPG_PW -d src/googlesheet-api.js.secret > src/googlesheet-api.js
+      command: cd UI/BenefitsCalculator && gpg --no-tty --batch --passphrase "$GPG_PW" --pinentry-mode loopback -d src/googlesheet-api.js.secret > src/googlesheet-api.js
 
 defaults: &defaults
     docker:
