@@ -10,11 +10,11 @@ references:
   install_aws: &install_aws
     run: {name: 'Install awscli', command: 'sudo apt-get install python-dev python-pip && sudo pip install awscli'}
   import_gpg_key: &import_gpg_key
-    - run:
+    run:
       name: import GPG key
       command: echo -e "$GPG_KEY" | gpg --import
   gpg_decrypt: &gpg_decrypt
-    - run:
+    run:
       name: import GPG key
       command: gpg --decrypt src/googlesheet-api.js.secret > src/googlesheet-api.js
 
