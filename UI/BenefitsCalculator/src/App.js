@@ -68,7 +68,7 @@ class App extends Component {
         {process.env.REACT_APP_IFRAME === 'false' && <Header {...this.headerProps} />}
         <main className="main-content">
           <PageHeader
-            title="UI Claimants Benefits Calculator"
+            title={(vars && vars.title) || 'UI Claimants Benefits Calculator'}
             optionalContents={[{
               paragraph: {
                 text:
