@@ -8,7 +8,8 @@ import HeaderSearchData from './data/HeaderSearch.data';
 import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import Form from './components/Form';
-import { config, load } from './googlesheet-config';
+import config from './googlesheet-api';
+import load from './googlesheet-config';
 
 import './index.css';
 
@@ -51,6 +52,7 @@ class App extends Component {
         load(this.onLoad);
       });
   };
+
 
   onLoad = (data, error) => {
     if (data) {
