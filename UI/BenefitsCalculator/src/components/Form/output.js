@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import numbro from 'numbro';
 import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
 import { toCurrency, toPercentage } from '../../utils';
+import variables from '../../data/variables';
 
 const sum = (a, b) => a + b;
 
 const Output = (props) => {
+  const { maxBenefitDuration, quartersSumThreshhold } = variables.baseVariables;
   const {
     quarter1, quarter2, quarter3, quarter4
   } = props;
@@ -33,16 +35,14 @@ const Output = (props) => {
   const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : Math.round(weeklyBenefit);
 
   // qualifications
-  const quartersSumThreshhold = 4700;
   const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
   // qualification 1: total wages is no less than threshhold
   const qualification1 = !(quartersSum < quartersSumThreshhold);
   // qualification 2: total wages is no less 30 times the weekly benefits
-  const qualification2 = !(quartersSum < 30 * weeklyBenefitFinal);
+  const qualification2 = !(quartersSum < maxBenefitDuration * weeklyBenefitFinal);
   const qualified = qualification1 && qualification2;
 
   // max benefit credit
-  const maxBenefitDuration = 30;
   const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
   const maxBenefitOption2 = 0.36 * quartersSum;
   const maxBenefitFinal = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption2 : maxBenefitOption1;
