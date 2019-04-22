@@ -27,11 +27,15 @@ class App extends Component {
       hideBackTo: true,
       siteLogoDomain: { url: { domain: 'https://www.mass.gov/' } }
     };
+    this.state = {
+      vars: null
+    };
   }
 
   componentDidMount() {
+    /* eslint no-undef: "off" */
     // 1. Load the JavaScript client library.
-    window.gapi.load("client", this.initClient);
+    window.gapi.load('client', this.initClient);
   }
 
   initClient = () => {
@@ -44,19 +48,21 @@ class App extends Component {
       })
       .then(() => {
       // 3. Initialize and make the API request.
-      load(this.onLoad);
-    });
+        load(this.onLoad);
+      });
   };
 
   onLoad = (data, error) => {
     if (data) {
-      console.log(data)
-    } else {
-      console.log(error)
+      const vars = {};
+      data.data.forEach((row) => { vars[row[0]] = row[1]; });
+      this.setState({ vars });
     }
+    return error;
   };
 
   render() {
+    const { vars } = this.state;
     return(
       <div className="App">
         {process.env.REACT_APP_IFRAME === 'false' && <Header {...this.headerProps} />}
@@ -86,8 +92,7 @@ class App extends Component {
                   id="helptext-total-wages"
                 />
               </h2>
-
-              <Form />
+              <Form {...vars} />
             </div>
           </section>
           {process.env.REACT_APP_IFRAME === 'false' && <ButtonFixedFeedback href="https://www.mass.gov/feedback" />}

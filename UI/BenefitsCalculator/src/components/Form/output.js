@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import numbro from 'numbro';
 import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
 import { toCurrency, toPercentage } from '../../utils';
-import variables from '../../data/variables';
 
 const sum = (a, b) => a + b;
 
 const Output = (props) => {
-  const { maxBenefitDuration, quartersSumThreshhold } = variables.baseVariables;
+  const { maxBenefitDuration, quartersSumThreshhold } = props;
   const {
     quarter1, quarter2, quarter3, quarter4
   } = props;
@@ -159,7 +158,9 @@ Output.propTypes = {
   quarter1: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   quarter2: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   quarter3: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  quarter4: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  quarter4: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  maxBenefitDuration: PropTypes.string,
+  quartersSumThreshhold: PropTypes.string
 };
 
 export default Output;

@@ -9,23 +9,23 @@ export const config = {
  * Get the right values from it and assign.
  */
 export const load = (callback) => {
-  window.gapi.client.load("sheets", "v4", () => {
+  /* eslint no-undef: "off" */
+  window.gapi.client.load('sheets', 'v4', () => {
     window.gapi.client.sheets.spreadsheets.values
       .get({
         spreadsheetId: config.spreadsheetId,
-        range: "Sheet1!A:B"
+        range: 'Sheet1!A:B'
       })
       .then(
-        response => {
-          console.log(response)
+        (response) => {
           const data = response.result.values;
           callback({
             data
           });
         },
-        response => {
+        (response) => {
           callback(false, response.result.error);
         }
       );
   });
-}
+};
