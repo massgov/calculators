@@ -153,10 +153,12 @@ jobs:
           key: dependency-cache-{{ checksum "UI/BenefitsCalculator/package.json" }}
           paths:
             - ./node_modules
+      - *import_gpg_key
+      - *gpg_decrypt
       - run:
           name: 'UI Benefits Calculator Deploy Dev App'
           command: |
-              cd UI/BenefitsCalculator/ && gpg --decrypt src/googlesheet-api.js.secret > src/googlesheet-api.js && npm run build:development
+              cd UI/BenefitsCalculator/ && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/yourbenefits/ --delete
               aws configure set preview.cloudfront true
               aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/ui/yourbenefits/*'
@@ -264,6 +266,8 @@ jobs:
           key: dependency-cache-{{ checksum "UI/BenefitsCalculator/package.json" }}
           paths:
             - ./node_modules
+      - *import_gpg_key
+      - *gpg_decrypt
       - run:
           name: 'UI Benefits Calculator Deploy Prod App'
           command: |
