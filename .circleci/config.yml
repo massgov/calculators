@@ -101,7 +101,7 @@ jobs:
               cd PFML/BenefitsCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/yourbenefits/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/pfml/yourbenefits/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/pfml/yourbenefits*'
 
   pfml-cal-contribution-deploy-dev:
     <<: *defaults
@@ -125,7 +125,7 @@ jobs:
               cd PFML/ContributionCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/pfml/contribution/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/pfml/contribution/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/pfml/contribution*'
 
   ui-cal-benefits-deploy-dev:
     <<: *defaults
@@ -149,7 +149,7 @@ jobs:
               cd UI/BenefitsCalculator/ && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/yourbenefits/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/ui/yourbenefits/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/ui/yourbenefits*'
 
   ui-cal-parttime-deploy-dev:
     <<: *defaults
@@ -173,7 +173,7 @@ jobs:
               cd UI/PartTimeBenefitsCalculator && npm run build:development
               aws s3 sync build s3://calculator.digital.mass.gov/dev/ui/parttimebenefits/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/ui/parttimebenefits/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/dev/ui/parttimebenefits*'
 
   # Deploy master branches to production ev.
   pfml-cal-benefits-deploy-prod:
@@ -198,14 +198,14 @@ jobs:
               cd PFML/BenefitsCalculator && npm run build
               aws s3 sync build s3://calculator.digital.mass.gov/pfml/yourbenefits/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/pfml/yourbenefits/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/pfml/yourbenefits*'
       - run:
           name: 'PFML Benefits Calculator Deploy Prod Iframe App'
           command: |
               cd PFML/BenefitsCalculator && npm run build:iframe
               aws s3 sync build s3://calculator.digital.mass.gov/iframe/pfml/yourbenefits/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/iframe/pfml/yourbenefits/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/iframe/pfml/yourbenefits*'
 
   pfml-cal-contribution-deploy-prod:
     <<: *defaults
@@ -229,14 +229,14 @@ jobs:
               cd PFML/ContributionCalculator && npm run build
               aws s3 sync build s3://calculator.digital.mass.gov/pfml/contribution/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/pfml/contribution/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/pfml/contribution*'
       - run:
           name: 'PFML Contribution Calculator Deploy Prod Iframe App'
           command: |
               cd PFML/ContributionCalculator && npm run build:iframe
               aws s3 sync build s3://calculator.digital.mass.gov/iframe/pfml/contribution/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/iframe/pfml/contribution/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/iframe/pfml/contribution*'
 
   ui-cal-benefits-deploy-prod:
     <<: *defaults
@@ -260,14 +260,14 @@ jobs:
               cd UI/BenefitsCalculator/ && npm run build
               aws s3 sync build s3://calculator.digital.mass.gov/ui/yourbenefits/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/ui/yourbenefits/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/ui/yourbenefits*'
       - run:
           name: 'UI Benefits Calculator Deploy Prod Iframe App'
           command: |
               cd UI/BenefitsCalculator/ && npm run build:iframe
               aws s3 sync build s3://calculator.digital.mass.gov/iframe/ui/yourbenefits/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/iframe/ui/yourbenefits/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/iframe/ui/yourbenefits*'
 
   ui-cal-parttime-deploy-prod:
     <<: *defaults
@@ -291,14 +291,14 @@ jobs:
               cd UI/PartTimeBenefitsCalculator && npm run build
               aws s3 sync build s3://calculator.digital.mass.gov/ui/parttimebenefits/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/ui/parttimebenefits/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/ui/parttimebenefits*'
       - run:
           name: 'UI Part Time Benefits Calculator Deploy Prod App'
           command: |
               cd UI/PartTimeBenefitsCalculator && npm run build:iframe
               aws s3 sync build s3://calculator.digital.mass.gov/iframe/ui/parttimebenefits/ --delete
               aws configure set preview.cloudfront true
-              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/iframe/ui/parttimebenefits/*'
+              aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths '/iframe/ui/parttimebenefits*'
 
 
 workflows:

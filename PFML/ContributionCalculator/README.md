@@ -45,7 +45,7 @@ The most common commands can be found in the package.json's ``scripts`` section:
 <img src="./documentation/images/pfml-cal1-part3-02052019.png" width="500">
 
 ### Form
-- The code merging parts 1-3 together and providing the context is [ExampleForm](.src/component/ExampleForm)
+- The code merging parts 1-3 together and providing the context is [ExampleForm](.src/components/ExampleForm/index.js)
 
 ### Base Variables
 - The [Base Variables](./src/data/ContributionVariables.json) that power the logic behind the calculators messaging and calculations are located in the base variables json.
