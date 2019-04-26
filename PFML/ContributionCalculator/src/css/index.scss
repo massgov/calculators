@@ -10,6 +10,7 @@ html, body {
 		float: left;
 		@media ($bp-large-min) {
 			float: none !important;
+			width: unset !important;
 		}
 
     & > * {

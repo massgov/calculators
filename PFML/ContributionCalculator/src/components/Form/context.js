@@ -21,4 +21,13 @@ export const defaultState = {
 
 const FormContext = React.createContext(defaultState);
 
-export default FormContext;
+const DisableInputContext = React.createContext({
+  disabled: false,
+  toggleDisabled: () => {}
+});
+
+export default DisableInputContext;
+export const PartOneContext = React.createContext(null);
+
+
+//export default FormContext;

@@ -4,21 +4,18 @@ import PropTypes from 'prop-types';
 import { HelpTip } from '@massds/mayflower-react';
 
 export const toCurrency = (number) => {
-  const currency = numbro(number).formatCurrency({ thousandSeparated: true, mantissa: 2, spaceSeparated: false });
-  return currency;
+  return numbro(number).formatCurrency({ thousandSeparated: true, mantissa: 2, spaceSeparated: false });
 };
 
 export const toPercentage = (number, decimal) => {
   const mantissa = decimal || 0;
-  const percent = numbro(number).format({ output: 'percent', mantissa, spaceSeparated: false });
-  return percent;
+  return numbro(number).format({ output: 'percent', mantissa, spaceSeparated: false });
 };
 
 export const getHelpTip = ({
   text, triggerText, helpText
 }, theme, key) => (
   <HelpTip
-    key={key}
     text={text}
     triggerText={triggerText}
     helpText={helpText}

@@ -6,7 +6,6 @@ import HeaderSearchData from './data/HeaderSearch.data';
 import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import ExampleForm from './components/ExampleForm';
-import history from './components/History';
 import ContributionVariables from './data/ContributionVariables.json';
 
 import './index.css';
@@ -27,10 +26,6 @@ class App extends Component {
       hideBackTo: true,
       siteLogoDomain: { url: { domain: 'https://www.mass.gov/' } }
     };
-  }
-  componentDidMount() {
-    // force an update if the URL changes
-    history.listen(() => this.forceUpdate());
   }
   render() {
     return(
