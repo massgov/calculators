@@ -20,6 +20,7 @@ const mapUrlChangeHandlersToProps = () => ({
 });
 
 const Part1 = (props) => {
+  // Base variables provided in the base variable json.
   const {
     minEmployees, largeCompMedCont, smallCompMedCont, largeCompFamCont, smallCompFamCont, emp1099Fraction
   } = ContributionVariables.baseVariables;

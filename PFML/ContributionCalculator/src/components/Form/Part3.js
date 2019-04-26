@@ -25,6 +25,7 @@ const mapUrlChangeHandlersToProps = () => ({
 });
 
 const Part3 = (props) => {
+  // Base variables provided in the base variable json.
   const {
     totContribution, totMedPercent, totFamPercent, largeCompFamCont, smallCompFamCont, empMedCont, largeCompMedCont, smallCompMedCont, socialSecCap
   } = ContributionVariables.baseVariables;
@@ -53,22 +54,31 @@ const Part3 = (props) => {
               }
             } = context;
 
+            // The medical leave contribution percent
             const medPercent = Math.round(totContribution * totMedPercent * 1e4) / 1e4;
+            // The family leave contribution percent
             const famPercent = Math.round(totContribution * totFamPercent * 1e4) / 1e4;
 
+            // The following determines the total payroll ($) to consider for the contribution calculations.
             let totalPayroll;
             if (payrollBase === 'all' && employeesW2 > 0) {
               totalPayroll = over50per ? (numbro.unformat(payroll1099) + numbro.unformat(payrollW2)) : numbro.unformat(payrollW2);
             } else if (payrollBase === 'all' && !(employeesW2 > 0)) {
               totalPayroll = numbro.unformat(payroll1099);
             } else {
+              // Only calculate employee (base one) calculation up to the social security cap.
               totalPayroll = numbro.unformat(payrollWages) > socialSecCap ? socialSecCap : numbro.unformat(payrollWages);
             }
+            // The total medical leave contribution.
             const medLeave = totalPayroll * medPercent;
+            // The total family leave contribution.
             const famLeave = totalPayroll * famPercent;
 
+            // The minimum medical contribution of the employer (fraction).
             const minMed = over25 ? largeCompMedCont : smallCompMedCont;
+            // The maximum faction medical contribution of the employer (fraction).
             const maxMed = over25 ? (largeCompMedCont + empMedCont) : (smallCompMedCont + empMedCont);
+            // The minimum fraction family contribution of the employer (fraction).
             const minFam = over25 ? largeCompFamCont : smallCompFamCont;
             const minMedPer = Math.round(minMed * 100);
             const maxMedPer = Math.round(maxMed * 100);
@@ -129,25 +139,27 @@ const Part3 = (props) => {
               const fracNum = value > minMedPer ? value / 100 : minMed;
               context.updateState({ medLeaveCont: fracNum });
               onChangeMedCont(fracNum);
+              // Code for tracking medical slider usage in Google Analytics.
               TagManager.dataLayer({
-dataLayer: {
-                event: 'gtm.slider',
-                sliderValue: fracNum,
-                sliderID: 'medical-leave'
-              }
-});
+                dataLayer: {
+                  event: 'gtm.slider',
+                  sliderValue: fracNum,
+                  sliderID: 'medical-leave'
+                }
+              });
             };
             const onFamSliderChange = (value) => {
               const fracNum = value > minFamPer ? value / 100 : minFam;
               context.updateState({ famLeaveCont: fracNum });
               onChangeFamCont(fracNum);
+              // Code for tracking family slider usage in Google Analytics.
               TagManager.dataLayer({
- dataLayer: {
-                event: 'gtm.slider',
-                sliderValue: fracNum,
-                sliderID: 'family-leave'
-              }
-});
+                dataLayer: {
+                  event: 'gtm.slider',
+                  sliderValue: fracNum,
+                  sliderID: 'family-leave'
+                }
+              });
             };
             const getTimeValue = (text) => {
               let value;
@@ -159,9 +171,13 @@ dataLayer: {
               return value;
             };
 
+            // The medical contribution the company is responsible for.
             const medLeaveComp = medLeave * medLeaveCont;
+            // The family contribution the company is responsible for.
             const famLeaveComp = famLeave * famLeaveCont;
+            // The medical contribution the emoloyee is responsible for.
             const medLeaveEmp = medLeave * (maxMed - medLeaveCont);
+            // The family contribution the emoloyee is responsible for.
             const famLeaveEmp = famLeave * (1 - famLeaveCont);
 
             const enableAll = payrollBase === 'all' && ((employeesW2 > 0 && numbro.unformat(payrollW2) > 0) || (!(employeesW2 > 0) && employees1099 > 0 && numbro.unformat(payroll1099) > 0)) && (over50per ? numbro.unformat(payroll1099) > 0 : true);
@@ -203,6 +219,7 @@ dataLayer: {
               onUpdate: (value) => onMedSliderChange(value)
             };
 
+            // Contribution totals rendered in the table based on the time period selected.
             const medLeaveTotal = (medLeaveComp + medLeaveEmp) / timeValue;
             const famLeaveTotal = (famLeaveComp + famLeaveEmp) / timeValue;
 
