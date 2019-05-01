@@ -30,13 +30,14 @@ class App extends Component {
   }
 
   render() {
+    const { title, description } = variables;
     return(
       <div className="App">
         {process.env.REACT_APP_IFRAME === 'false' && <Header {...this.headerProps} />}
         <main className="main-content">
           <PageHeader
-            title={variables.title}
-            optionalContents={variables.description.map((paragraph) => ({
+            title={title}
+            optionalContents={description.map((paragraph) => ({
               paragraph: {
                 text: paragraph
               }

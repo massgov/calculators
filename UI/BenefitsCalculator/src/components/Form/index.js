@@ -4,6 +4,7 @@ import {
   InputCurrency, Button, FormProvider, Form, FormContext, InputCheckBox
 } from '@massds/mayflower-react';
 import Output from './output';
+import inputProps from '../../data/input.json';
 
 import './index.css';
 
@@ -33,6 +34,7 @@ class Calculator extends Component {
 
   render() {
     const { applyAll, submitted } = this.state;
+    const { inputLabel } = inputProps;
     const inputCurrencyProps = {
       placeholder: 'e.g. $10,000',
       format: {
@@ -53,7 +55,7 @@ class Calculator extends Component {
             <Fragment>
               <InputCurrency
                 {... inputCurrencyProps}
-                labelText={`${this.q1.qStart} – ${this.q1.qEnd} total wages:`}
+                labelText={`${this.q1.qStart} – ${this.q1.qEnd} ${inputLabel}`}
                 id="quarter1"
                 name="quarter1"
                 onChange={(value, id) => {
@@ -83,7 +85,7 @@ class Calculator extends Component {
               />
               <InputCurrency
                 {... inputCurrencyProps}
-                labelText={`${this.q2.qStart} – ${this.q2.qEnd} total wages:`}
+                labelText={`${this.q2.qStart} – ${this.q2.qEnd} ${inputLabel}`}
                 id="quarter2"
                 name="quarter2"
                 disabled={applyAll}
@@ -93,7 +95,7 @@ class Calculator extends Component {
               />
               <InputCurrency
                 {... inputCurrencyProps}
-                labelText={`${this.q3.qStart} – ${this.q3.qEnd} total wages:`}
+                labelText={`${this.q3.qStart} – ${this.q3.qEnd} ${inputLabel}`}
                 id="quarter3"
                 name="quarter3"
                 disabled={applyAll}
@@ -103,7 +105,7 @@ class Calculator extends Component {
               />
               <InputCurrency
                 {... inputCurrencyProps}
-                labelText={`${this.q4.qStart} – ${this.q4.qEnd} total wages:`}
+                labelText={`${this.q4.qStart} – ${this.q4.qEnd} ${inputLabel}`}
                 id="quarter4"
                 name="quarter4"
                 disabled={applyAll}
