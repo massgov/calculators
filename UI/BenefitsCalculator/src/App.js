@@ -8,6 +8,7 @@ import HeaderSearchData from './data/HeaderSearch.data';
 import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import Form from './components/Form';
+import variables from './data/variables.json';
 
 import './index.css';
 
@@ -34,18 +35,12 @@ class App extends Component {
         {process.env.REACT_APP_IFRAME === 'false' && <Header {...this.headerProps} />}
         <main className="main-content">
           <PageHeader
-            title="UI Claimants Benefits Calculator"
-            optionalContents={[{
+            title={variables.title}
+            optionalContents={variables.description.map((paragraph) => ({
               paragraph: {
-                text:
-              'If you are eligible to receive unemployment benefits, you will receive a weekly benefit amount of approximately 50% of your average weekly wage, up to the maximum set by law. As of October 2018, the maximum weekly benefit amount is $795 per week.'
+                text: paragraph
               }
-            }, {
-              paragraph: {
-                text:
-              'This calculator helps you estimate your benefits. It is only advisory. You will be notified of your outcome and benefit determination 3-4 weeks after you apply.'
-              }
-            }]}
+            }))}
           />
           <section className="main-content main-content--two">
             <div className="page-content">
