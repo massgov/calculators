@@ -45,7 +45,7 @@ class Calculator extends Component {
       required: true,
       inline: true,
       min: 0,
-      step: 1,
+      step: 10,
       showButtons: false
     };
     return(
@@ -60,11 +60,16 @@ class Calculator extends Component {
                 id="quarter1"
                 name="quarter1"
                 onChange={(value, id) => {
-                  formContext.setValue({ id, value });
-                  if (applyAll) {
-                    formContext.setValue({ id: 'quarter2', value });
-                    formContext.setValue({ id: 'quarter3', value });
-                    formContext.setValue({ id: 'quarter4', value });
+                  console.log(value)
+                  console.log(!Number.isNaN(value))
+                  console.log(!isNaN(value))
+                  if (!Number.isNaN(value)) {
+                    formContext.setValue({ id, value });
+                    if (applyAll) {
+                      formContext.setValue({ id: 'quarter2', value });
+                      formContext.setValue({ id: 'quarter3', value });
+                      formContext.setValue({ id: 'quarter4', value });
+                    }
                   }
                 }}
               />
