@@ -34,7 +34,7 @@ class Calculator extends Component {
 
   render() {
     const { applyAll, submitted } = this.state;
-    const { inputLabel } = inputProps;
+    const { inputLabel, applyAllLabel } = inputProps;
     const inputCurrencyProps = {
       placeholder: 'e.g. $10,000',
       format: {
@@ -69,7 +69,7 @@ class Calculator extends Component {
               />
               <InputCheckBox
                 id="apply-all"
-                label="Apply this quarter's wages to the all quarters."
+                label={applyAllLabel}
                 icon={{ name: '', ariaHidden: true }}
                 defaultValue={false}
                 onChange={(e, value) => {
@@ -81,7 +81,6 @@ class Calculator extends Component {
                   formContext.setValue({ id: 'quarter3', value: quarter1 });
                   formContext.setValue({ id: 'quarter4', value: quarter1 });
                 }}
-                errorMsg="You are required to check this box."
               />
               <InputCurrency
                 {... inputCurrencyProps}
@@ -114,7 +113,7 @@ class Calculator extends Component {
                 }}
               />
               <Button
-                text="See Benefits"
+                text={inputProps.buttonText}
                 onClick={() => this.setState({ submitted: true })}
               />
             </Fragment>

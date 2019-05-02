@@ -9,6 +9,7 @@ import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import Form from './components/Form';
 import variables from './data/variables.json';
+import inputProps from './data/input.json';
 
 import './index.css';
 
@@ -47,12 +48,7 @@ class App extends Component {
             <div className="page-content">
               <hr />
               <h2>
-                <HelpTip
-                  text="Enter the total wages you received in the last 4 quarters to estimate your benefits."
-                  triggerText={['total wages you received in the last 4 quarters']}
-                  helpText={['Total wages means the gross amount that appears on your paycheck or W-2. Do not use wages net of tax or other deductions. Make sure to enter your wages for the quarter when you actually received them, not when you earned them.']}
-                  id="helptext-total-wages"
-                />
+                <HelpTip {...inputProps.inputTitle} id="helptext-total-wages" />
               </h2>
 
               <Form />
