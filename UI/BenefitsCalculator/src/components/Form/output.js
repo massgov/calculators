@@ -109,6 +109,12 @@ const Output = (props) => {
     </div>
   );
 
+  const helptipIframeProp = {};
+  if (process.env.REACT_APP_IFRAME === 'true') {
+    helptipIframeProp.bypassMobileStyle = true;
+  }
+  console.log(helptipIframeProp)
+
   return(
     <Fragment>
       {
@@ -122,6 +128,7 @@ const Output = (props) => {
             triggerText={[`<strong>${toCurrency(weeklyBenefitFinal)}</strong>`, `<strong>${parseInt(benefitDuration, 10)} weeks</strong>`, `<strong>${toCurrency(maxBenefitFinal)}</strong>`]}
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
+            {...helptipIframeProp}
           >
             { getBenefitsHelpText() }
             { getDurationHelpText() }
@@ -137,6 +144,7 @@ const Output = (props) => {
             triggerText={['<span>not eligible</span>']}
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
+            {...helptipIframeProp}
           >
             <div className="ma__help-text">
               {

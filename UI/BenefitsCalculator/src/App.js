@@ -28,35 +28,52 @@ class App extends Component {
       hideBackTo: true,
       siteLogoDomain: { url: { domain: 'https://www.mass.gov/' } }
     };
+    this.helptipIframeProp = {};
+    if (process.env.REACT_APP_IFRAME === 'true') {
+      this.helptipIframeProp.bypassMobileStyle = true;
+    }
   }
 
   render() {
     const { title, description } = variables;
     return(
       <div className="App">
-        {process.env.REACT_APP_IFRAME === 'false' && <Header {...this.headerProps} />}
-        <main className="main-content">
-          <PageHeader
-            title={title}
-            optionalContents={description.map((paragraph) => ({
-              paragraph: {
-                text: paragraph
-              }
-            }))}
-          />
-          <section className="main-content main-content--two">
-            <div className="page-content">
-              <hr />
-              <h2>
-                <HelpTip {...inputProps.inputTitle} id="helptext-total-wages" />
-              </h2>
+        {process.env.REACT_APP_IFRAME === 'true' ? (
+          <div className="page-content">
+            <hr />
+            <h2>
+              <HelpTip {...inputProps.inputTitle} {...this.helptipIframeProp} id="helptext-total-wages" />
+            </h2>
+            <Form />
+          </div>
+        ) : (
+          <div>
+            <Header {...this.headerProps} />
+            <main className="main-content">
+              <PageHeader
+                title={title}
+                optionalContents={description.map((paragraph) => ({
+                  paragraph: {
+                    text: paragraph
+                  }
+                }))}
+              />
+              <section className="main-content main-content--two">
+                <div className="page-content">
+                  <hr />
+                  <h2>
+                    <HelpTip {...inputProps.inputTitle} {...this.helptipIframeProp} id="helptext-total-wages" />
+                  </h2>
 
-              <Form />
-            </div>
-          </section>
-          {process.env.REACT_APP_IFRAME === 'false' && <ButtonFixedFeedback href="https://www.mass.gov/feedback" />}
-        </main>
-        {process.env.REACT_APP_IFRAME === 'false' && <Footer {...this.footerProps} />}
+                  <Form />
+                </div>
+              </section>
+              <ButtonFixedFeedback href="https://www.mass.gov/feedback" />
+            </main>
+            <Footer {...this.footerProps} />
+          </div>
+        )
+      }
       </div>
     );
   }
