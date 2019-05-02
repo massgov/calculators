@@ -52,7 +52,7 @@ const Output = (props) => {
   // benefit duration
   const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
 
-
+  const qualifyAddition = "You may be eligible for an additional weekly dependency allowance if you have dependent children."
   const helpTextBasePeriod2Q = 'Your weekly benefit amount is equal to half of the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters:';
   const helpTextBasePeriod1Q = 'Your weekly benefit amount is equal to half of the highest-earning quarter divided by the number of weeks in the quarter:';
   const helpTextWeeks2Q = 'weeks in the combined quarters';
@@ -127,6 +127,7 @@ const Output = (props) => {
             { getDurationHelpText() }
             { getTotalHelpText() }
           </HelpTip>
+          <Paragraph text={qualifyAddition} />
         </CalloutAlert>
       ) : (
         <CalloutAlert theme="c-error-red" icon={null}>
