@@ -125,7 +125,7 @@ class Calculator extends Component {
             const values = formContext.getValues();
             return(
               submitted && (
-                <Output {...values} />
+                <Output {...values} {...this.props} />
               )
             );
           }

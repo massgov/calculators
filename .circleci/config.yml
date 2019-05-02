@@ -9,6 +9,14 @@ references:
     run: {name: 'Install global packages', command: 'npm install'}
   install_aws: &install_aws
     run: {name: 'Install awscli', command: 'sudo apt-get install python-dev python-pip && sudo pip install awscli'}
+  import_gpg_key: &import_gpg_key
+    run:
+      name: import GPG key
+      command: echo -e "$GPG_KEY" | gpg --import
+  gpg_decrypt: &gpg_decrypt
+    run:
+      name: import GPG key
+      command: cd UI/BenefitsCalculator && gpg --no-tty --batch --passphrase "$GPG_PW" -d src/googlesheet-api.js.secret > src/googlesheet-api.js
 
 defaults: &defaults
     docker:
@@ -56,6 +64,8 @@ jobs:
       - run:
           name: 'UI Benefits Calculator Install Packages'
           command: cd UI/BenefitsCalculator && npm install
+      - *import_gpg_key
+      - *gpg_decrypt
       - run:
           name: 'UI Benefits Calculator Lint'
           command: cd UI/BenefitsCalculator && npm run build-css && npm run lint
@@ -143,6 +153,8 @@ jobs:
           key: dependency-cache-{{ checksum "UI/BenefitsCalculator/package.json" }}
           paths:
             - ./node_modules
+      - *import_gpg_key
+      - *gpg_decrypt
       - run:
           name: 'UI Benefits Calculator Deploy Dev App'
           command: |
@@ -254,6 +266,8 @@ jobs:
           key: dependency-cache-{{ checksum "UI/BenefitsCalculator/package.json" }}
           paths:
             - ./node_modules
+      - *import_gpg_key
+      - *gpg_decrypt
       - run:
           name: 'UI Benefits Calculator Deploy Prod App'
           command: |

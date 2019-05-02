@@ -8,6 +8,8 @@ import HeaderSearchData from './data/HeaderSearch.data';
 import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import Form from './components/Form';
+import config from './googlesheet-api';
+import load from './googlesheet-config';
 
 import './index.css';
 
@@ -26,15 +28,49 @@ class App extends Component {
       hideBackTo: true,
       siteLogoDomain: { url: { domain: 'https://www.mass.gov/' } }
     };
+    this.state = {
+      vars: null
+    };
   }
 
+  componentDidMount() {
+    /* eslint no-undef: "off" */
+    // 1. Load the JavaScript client library.
+    window.gapi.load('client', this.initClient);
+  }
+
+  initClient = () => {
+    // 2. Initialize the JavaScript client library.
+    window.gapi.client
+      .init({
+        apiKey: config.apiKey,
+        // Your API key will be automatically added to the Discovery Document URLs.
+        discoveryDocs: config.discoveryDocs
+      })
+      .then(() => {
+      // 3. Initialize and make the API request.
+        load(this.onLoad);
+      });
+  };
+
+
+  onLoad = (data, error) => {
+    if (data) {
+      const vars = {};
+      data.data.forEach((row) => { vars[row[0]] = row[1]; });
+      this.setState({ vars });
+    }
+    return error;
+  };
+
   render() {
+    const { vars } = this.state;
     return(
       <div className="App">
         {process.env.REACT_APP_IFRAME === 'false' && <Header {...this.headerProps} />}
         <main className="main-content">
           <PageHeader
-            title="UI Claimants Benefits Calculator"
+            title={(vars && vars.title) || 'UI Claimants Benefits Calculator'}
             optionalContents={[{
               paragraph: {
                 text:
@@ -58,8 +94,7 @@ class App extends Component {
                   id="helptext-total-wages"
                 />
               </h2>
-
-              <Form />
+              <Form {...vars} />
             </div>
           </section>
           {process.env.REACT_APP_IFRAME === 'false' && <ButtonFixedFeedback href="https://www.mass.gov/feedback" />}
