@@ -45,7 +45,8 @@ class Calculator extends Component {
       required: true,
       inline: true,
       min: 0,
-      step: 1
+      step: 1,
+      showButtons: false
     };
     return(
       <FormProvider>
