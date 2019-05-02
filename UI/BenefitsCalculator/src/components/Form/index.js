@@ -60,9 +60,6 @@ class Calculator extends Component {
                 id="quarter1"
                 name="quarter1"
                 onChange={(value, id) => {
-                  console.log(value)
-                  console.log(!Number.isNaN(value))
-                  console.log(!isNaN(value))
                   if (!Number.isNaN(value)) {
                     formContext.setValue({ id, value });
                     if (applyAll) {
@@ -119,6 +116,7 @@ class Calculator extends Component {
                 }}
               />
               <Button
+                type="submit"
                 text={inputProps.buttonText}
                 onClick={() => this.setState({ submitted: true })}
               />
