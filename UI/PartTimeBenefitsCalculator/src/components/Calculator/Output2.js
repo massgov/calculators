@@ -18,6 +18,10 @@ export const ScenarioOne = () => {
     <Input id="scenario-one" defaultValue={scenarioDefaults}>
       <InputContext.Consumer>
         { (inputContext) => {
+          const helptipIframeProp = {};
+          if (process.env.REACT_APP_IFRAME === 'true') {
+            helptipIframeProp.bypassMobileStyle = true;
+          }
           // Updated by handleChange.
           const { showScenario } = inputContext.getValue();
           const values = formContext.getValues();
@@ -37,6 +41,7 @@ export const ScenarioOne = () => {
                     text="Your weekly benefits are <strong>not affected</strong>."
                     id="help-tip-scenario-one"
                     labelID="help-tip-scenario-one-label"
+                    {...helptipIframeProp}
                   >
                     <div className="ma__help-text">As you make less than 1/3 of your weekly benefits through your part time employment, your weekly benefit stays the same.</div>
                   </HelpTip>
