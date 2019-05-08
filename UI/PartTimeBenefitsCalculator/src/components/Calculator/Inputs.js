@@ -9,6 +9,7 @@ const inputCurrencyProps = {
   defaultValue: null,
   step: 1,
   min: 0,
+  showButtons: false,
   format: {
     mantissa: 0,
     trimMantissa: false,
