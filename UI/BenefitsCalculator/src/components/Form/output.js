@@ -113,7 +113,6 @@ const Output = (props) => {
   if (process.env.REACT_APP_IFRAME === 'true') {
     helptipIframeProp.bypassMobileStyle = true;
   }
-  console.log(helptipIframeProp)
 
   return(
     <Fragment>
