@@ -114,8 +114,13 @@ const mainNav = [
         "active": false
       },
       {
-        "href": "https://www.mass.gov/topics/apprenticeships",
-        "text": "Apprenticeships",
+        "href": "https://www.mass.gov/topics/for-state-employees-in-management",
+        "text": "For State Employees in Management",
+        "active": false
+      },
+      {
+        "href": "https://www.mass.gov/topics/for-state-human-resources-professionals",
+        "text": "For State Human Resources Professionals",
         "active": false
       }
     ]
@@ -175,6 +180,11 @@ const mainNav = [
       {
         "href": "https://www.mass.gov/topics/hunting-fishing",
         "text": "Hunting & Fishing",
+        "active": false
+      },
+      {
+        "href": "https://www.mass.gov/camping-at-massachusetts-state-parks",
+        "text": "Camping at Massachusetts State Parks",
         "active": false
       }
     ]
