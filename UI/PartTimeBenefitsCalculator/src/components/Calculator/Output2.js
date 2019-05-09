@@ -104,7 +104,7 @@ export const ScenarioTwo = () => {
                       <Paragraph text={`Reduced weekly benefit: <strong>${toCurrency(reducedBenefit)}</strong> = ${toCurrency(weeklyBenefits)} - ${toCurrency(earningsOverDis)}`} />
                     </div>
                   </HelpTip>
-                  <Paragraph text={`You will take home ${displayCurrency(reducedBenefit)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(toNumber(reducedBenefit) + toNumber(weeklyEarnings))} weekly. `} />
+                  <Paragraph text={`You will take home ${displayCurrency(reducedBenefit)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a gross total of ${displayCurrency(toNumber(reducedBenefit) + toNumber(weeklyEarnings))} weekly (before taxes, deductions, and other adjustments). `} />
                 </CalloutAlert>
               </Fragment>
             );
