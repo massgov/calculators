@@ -4,6 +4,11 @@ import {
 } from '@massds/mayflower-react';
 import { toCurrency, displayCurrency, toNumber } from './util';
 
+const helptipIframeProp = {};
+if (process.env.REACT_APP_IFRAME === 'true') {
+  helptipIframeProp.bypassMobileStyle = true;
+}
+
 export const ScenarioOne = () => {
   // Do not make a copy of formContext with object destructuring.
   // eslint-disable-next-line react/destructuring-assignment
@@ -18,10 +23,6 @@ export const ScenarioOne = () => {
     <Input id="scenario-one" defaultValue={scenarioDefaults}>
       <InputContext.Consumer>
         { (inputContext) => {
-          const helptipIframeProp = {};
-          if (process.env.REACT_APP_IFRAME === 'true') {
-            helptipIframeProp.bypassMobileStyle = true;
-          }
           // Updated by handleChange.
           const { showScenario } = inputContext.getValue();
           const values = formContext.getValues();
@@ -98,6 +99,7 @@ export const ScenarioTwo = () => {
                     text={`Your reduced weekly benefit amount is ${toCurrency(reducedBenefit)}.`}
                     id="help-tip-scenario-two"
                     labelID="help-tip-scenario-two-label"
+                    {...helptipIframeProp}
                   >
                     <div className="ma__help-text">
                       <Paragraph text={`Earnings over earnings exclusion: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyEarnings)} - ${toCurrency(earningsDisregard)}`} />

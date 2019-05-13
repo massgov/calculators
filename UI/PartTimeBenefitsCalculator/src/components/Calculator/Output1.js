@@ -4,14 +4,15 @@ import {
 } from '@massds/mayflower-react';
 import { toCurrency } from './util';
 
+const helptipIframeProp = {};
+if (process.env.REACT_APP_IFRAME === 'true') {
+  helptipIframeProp.bypassMobileStyle = true;
+}
+
 const OutputOne = () => (
   <Input id="earnings-disregard" defaultValue={0}>
     <InputContext.Consumer>
       { (inputContext) => {
-        const helptipIframeProp = {};
-        if (process.env.REACT_APP_IFRAME === 'true') {
-          helptipIframeProp.bypassMobileStyle = true;
-        }
         const maxEarningsDisregard = Math.round(795 / 3);
         const earningsDisregard = inputContext.getValue() > maxEarningsDisregard ? maxEarningsDisregard : inputContext.getValue();
         const maxEarningsDisregardMessage = inputContext.getValue() > maxEarningsDisregard ? `Your weekly benefits is capped at ${toCurrency(795)}. ` : '';
