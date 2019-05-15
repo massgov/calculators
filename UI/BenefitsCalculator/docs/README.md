@@ -4,14 +4,14 @@ The main logic of the calculator live in these files:
 - [Output](../src/components/Form/output.js)
 - [Variables](../src/data/variables.json)
   - e.g. To change max benefit duration from 26 weeks to 30 weeks, change `maxBenefitDuration` in [Variables](../src/data/variables.json) to `30`.
-### Input
+## Input
 
 Input consists of 4 currency input for total quarterly wages, 1 checkbox for apply first quarter wages to all and a submit button.
 
 ![input screenshot](./media/input.png)
 
 
-#### Currency input:
+### Currency input:
 The labels for the 4 currency input are calculated based date ranges based on the current date.
 Quarter date range calculation logic:
 ```
@@ -26,17 +26,17 @@ const quarterDateRange = (quartersAgo) => {
 };
 ```
 
-#### Checkbox:
+### Checkbox:
 The apply-to-all checkbox is added for the convenience of the users inputing the same quarterly income for the last 4 quarters. Checking the box will keep the other 3 currency inputs in sync with the value in the first currency input; unchecking the box will break out of the sync and let the user edit the value in each of the other 3 currency inputs.
 
-#### Submit Button:
+### Submit Button:
 The submit button will take the values from the user input and render the new output below.
 
 
 
-### Output
+## Output
 
-#### Eligibility
+### Eligibility
 1. qualification 1: total wages is no less than the threshhold $4700 (`quartersSumThreshhold` in [Variables](../src/data/variables.json))
 ```
   const qualification1 = !(quartersSum < quartersSumThreshhold);
@@ -56,7 +56,7 @@ Please note: this qualification can only fail if the `maxBenefitDuration` [Varia
 ![enter image description here](./media/output-30-10000.png)
 
 
-#### Benefits Calculation
+### Benefits Calculation
 Weekly benefit calculation:
 ```
   let topQuarters;
