@@ -25,3 +25,5 @@ Welcome to the Commonwealth of Massachusetts' Single Page Application (SPA), pow
 - $ ``npm run lint-fix`` (Runs linter and fixes what it can automagically)
 - $ ``npm run build && serve`` (Serves production app after built)
 - $ ``npm run build-css`` (Compiles css files from scss)
+
+## [Business Logic](./docs/README.md)
