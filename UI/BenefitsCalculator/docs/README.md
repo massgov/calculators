@@ -27,7 +27,7 @@ const quarterDateRange = (quartersAgo) => {
 ```
 
 #### Checkbox:
-The apply-to-all checkbox is added for the convenience of the users making the same quarterly income in the last 4 quarters. Checking the box will keep the other 3 currency inputs in sync with the value in the first currency input; unchecking the box will break out of the sync and let the user edit the value in each of the other 3 currency inputs.
+The apply-to-all checkbox is added for the convenience of the users inputing the same quarterly income for the last 4 quarters. Checking the box will keep the other 3 currency inputs in sync with the value in the first currency input; unchecking the box will break out of the sync and let the user edit the value in each of the other 3 currency inputs.
 
 #### Submit Button:
 The submit button will take the values from the user input and render the new output below.
@@ -50,6 +50,10 @@ The submit button will take the values from the user input and render the new ou
 ```
 ![sample qualification 2 screenshot](./media/output-disqualification2.png)
 Please note: this qualification can only fail if the `maxBenefitDuration` [Variables](../src/data/variables.json) is 30 weeks instead of 26 weeks.
+
+??? This qualification rule creates this (unexpected?) discrepancy:
+![enter image description here](./media/output-30-4000.png)
+![enter image description here](./media/output-30-10000.png)
 
 
 #### Benefits Calculation
