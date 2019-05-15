@@ -37,9 +37,9 @@ const Output = (props) => {
 
   // qualifications
   const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
-  // qualification 1: total wages is no less than threshhold
+  // qualification 1: total wages is no less than the threshhold
   const qualification1 = !(quartersSum < quartersSumThreshhold);
-  // qualification 2: total wages is no less 30 times the weekly benefits
+  // qualification 2: total wages is no less than the maxBenefitFinal
   const qualification2 = !(quartersSum < (maxBenefitDuration * weeklyBenefitFinal));
   const qualified = qualification1 && qualification2;
 

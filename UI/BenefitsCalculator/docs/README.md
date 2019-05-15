@@ -1,8 +1,8 @@
 # Calculator Logic
 The main logic of the calculator live in these files:
-- [Input](./src/components/Form/index.js)
-- [Output](./src/components/Form/output.js)
-- [Variables](./src/data/variables.json)
+- [Input](../src/components/Form/index.js)
+- [Output](../src/components/Form/output.js)
+- [Variables](../src/data/variables.json)
 
 ### Input
 
@@ -31,3 +31,45 @@ The apply-to-all checkbox is added for the convenience of the users making the s
 
 #### Submit Button:
 The submit button will take the values from the user input and render the new output below.
+
+
+
+### Output
+
+#### Eligibility
+1. qualification 1: total wages is no less than the threshhold $4700 (`quartersSumThreshhold` in [Variables](../src/data/variables.json))
+```
+  const qualification1 = !(quartersSum < quartersSumThreshhold);
+```
+![sample qualification 1 screenshot](./media/output-disqualification1.png)
+
+2. qualification 2: total wages is no less than the maxBenefitFinal
+ (`quartersSumThreshhold` in [Variables](../src/data/variables.json))
+```
+  const qualification2 = !(quartersSum < (maxBenefitDuration * weeklyBenefitFinal));
+```
+![sample qualification 2 screenshot](./media/output-disqualification2.png)
+Please note: this qualification can only fail if the `maxBenefitDuration` [Variables](../src/data/variables.json) is 30 weeks instead of 26 weeks.
+
+
+#### Benefits Calculation
+Weekly benefit calculation:
+```
+  let topQuarters;
+  let weeksInTopQuarters = 26;
+  if (quartersCount > 2) {
+    topQuarters = quartersHaveValue.sort((q1, q2) => q2 - q1).slice(0, 2);
+  } else if (quartersCount > 0) {
+    topQuarters = quartersHaveValue.sort((q1, q2) => q2 - q1).slice(0, 1);
+    weeksInTopQuarters = 13;
+  }
+  const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
+  const weeklyBenefit = 1 / 2 * topQuartersSum / weeksInTopQuarters;
+```
+![30 weeks benefits based on each quarter income $10,000 for 4 quarters](./media/output-30.png)
+
+If max weekly benefits $795 reached set weekly benefits to `weeklyBenefitMax` in [Variables](../src/data/variables.json)
+```
+const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
+```
+![26 weeks benefits exceeding max weekly benefit amount](./media/output-26-max.png)
