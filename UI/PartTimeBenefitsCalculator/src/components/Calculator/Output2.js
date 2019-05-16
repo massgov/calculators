@@ -152,8 +152,8 @@ export const ScenarioThree = () => {
               <Fragment>
                 <hr />
                 <CalloutAlert theme="c-error-red" icon={null}>
-                  <Paragraph text="Because your weekly part-time earnings is over the UI benefits plus the earnings disregard (1/3 of the UI benefits). You are no longer eligible for the benefits. " />
-                  <Paragraph text={`You will take home ${displayCurrency(0)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(weeklyEarnings)} weekly. `} />
+                  <Paragraph text="Because your weekly part-time earnings is over the UI benefits plus the earnings disregard (1/3 of the UI benefits), you are no longer eligible for the benefits. " />
+                  <Paragraph text={`You will take home ${displayCurrency(0)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a total amount of ${displayCurrency(weeklyEarnings)} weekly (before taxes, deductions, and other adjustments).`} />
                 </CalloutAlert>
               </Fragment>
             );
