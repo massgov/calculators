@@ -3,7 +3,12 @@ The main logic of the calculator live in these files:
 - [Input](../src/components/Form/index.js)
 - [Output](../src/components/Form/output.js)
 - [Variables](../src/data/variables.json)
-  - e.g. To change max benefit duration from 26 weeks to 30 weeks, change `maxBenefitDuration` in [Variables](../src/data/variables.json) to `30`.
+
+----
+To change max benefit duration from 26 weeks to 30 weeks, change `maxBenefitDuration` in [Variables](../src/data/variables.json) to `30`.
+
+----
+
 ## Input
 
 Input consists of 4 currency input for total quarterly wages, 1 checkbox for apply first quarter wages to all and a submit button.
