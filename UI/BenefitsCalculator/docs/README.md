@@ -48,13 +48,25 @@ The submit button will take the values from the user input and render the new ou
 ```
 ![sample qualification 1 screenshot](./media/output-disqualification1.png)
 
-2. qualification 2: total wages is no less than the maxBenefitFinal
- (`quartersSumThreshhold` in [Variables](../src/data/variables.json))
+2. qualification 2: total wages is no less than 30 times the weeklyBenefitFinal
 ```
-  const qualification2 = !(quartersSum < (maxBenefitDuration * weeklyBenefitFinal));
+  const qualification2 = !(quartersSum < (30 * weeklyBenefitFinal));
 ```
 ![sample qualification 2 screenshot](./media/output-disqualification2.png)
-Please note: this qualification can only fail if the `maxBenefitDuration` [Variables](../src/data/variables.json) is 30 weeks instead of 26 weeks.
+
+To test this rule, put in 2 quarters wages, with the lower quarter's wage less than 2/13 of the higher quarter's wage.
+```
+For 2 quarters and Q1 >= Q2
+Q1 + Q2 >= 30 * 1/2 * Q1 / 13
+Q1 + Q2 >= 15 /13 * Q1
+Q2 >= 2/13 * Q1
+Q2 >≈ 0.153846 Q1
+```
+e.g.
+```
+Q1: $10,000
+Q2: $1,538 or anything amount that is less than $1,538
+```
 
 ??? This qualification rule creates this (unexpected?) discrepancy:
 ![enter image description here](./media/output-30-4000.png)
