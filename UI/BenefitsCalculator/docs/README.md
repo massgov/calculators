@@ -67,14 +67,12 @@ e.g.
 Q1: $10,000
 Q2: $1,538 or anything amount that is less than $1,538
 ```
+[Outstanding questions about this rule](./questions.md)
 
-??? This qualification rule creates this (unexpected?) discrepancy:
-![enter image description here](./media/output-30-4000.png)
-![enter image description here](./media/output-30-10000.png)
 
 
 ### Benefits Calculation
-Weekly benefit calculation:
+#### Weekly benefit calculation:
 ```
   let topQuarters;
   let weeksInTopQuarters = 26;
