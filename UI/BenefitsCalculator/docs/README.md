@@ -6,7 +6,7 @@ The main logic of the calculator live in these files:
 
 ----
 To change max benefit duration from 26 weeks to 30 weeks, change `maxBenefitDuration` in [Variables](../src/data/variables.json) to `30`.
-> This variable will impact the formula of calculating the maxBenefit total and hence the benefits duration outcome, but it will not impact
+> This variable will impact the formula of calculating the maxBenefit total and hence the benefits duration outcome.
 
 ----
 
