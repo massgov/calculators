@@ -6,6 +6,7 @@ The main logic of the calculator live in these files:
 
 ----
 To change max benefit duration from 26 weeks to 30 weeks, change `maxBenefitDuration` in [Variables](../src/data/variables.json) to `30`.
+> This variable will impact the formula of calculating the maxBenefit total and hence the benefits duration outcome, but it will not impact
 
 ----
 
@@ -92,3 +93,16 @@ If max weekly benefits $795 reached set weekly benefits to `weeklyBenefitMax` in
 const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
 ```
 ![26 weeks benefits exceeding max weekly benefit amount](./media/output-26-max.png)
+
+#### Max benefits credit calculation:
+```
+const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
+const maxBenefitOption2 = maxBenefitRatio * quartersSum;
+const maxBenefitFinal = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption2 : maxBenefitOption1;
+const maxBenefitOther = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption1 : maxBenefitOption2;
+```
+
+#### Benefits duration calculation:
+```
+const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
+```
