@@ -38,7 +38,7 @@ class ExampleForm extends Component {
     const {
       massEmp, w2, emp1099, option, payW2, pay1099, payWages, timeValue, timePeriod, famCont, medCont
     } = this.props;
-    const over50per = (Number(emp1099) / (Number(w2) + Number(emp1099))) >= emp1099Fraction;
+    const over50per = (Number(emp1099) / (Number(w2) + Number(emp1099))) > emp1099Fraction;
     const employeeCount = over50per ? (Number(w2) + Number(emp1099)) : Number(w2);
     const over25 = employeeCount >= minEmployees;
     const medLeaveCont = (employeeCount >= minEmployees) ? largeCompMedCont : smallCompMedCont;

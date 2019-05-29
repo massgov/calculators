@@ -50,7 +50,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.overMinEmpOver1099.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? <p className={calloutParagraphClass}>{getHelpTip(message.paragraph, 'c-white', `overMinEmpOver1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `overMinEmpOver1099-${messageIndex}`)
+                    message.paragraph.helpText ? <p className={calloutParagraphClass}>{getHelpTip(message.paragraph, 'c-white', `overMinEmpOver1099-${messageIndex}`, context[message.paragraph.variable])}</p> : getDangerousParagraph(message.paragraph.content, `overMinEmpOver1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );
@@ -60,7 +60,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.overMinEmpUnder1099.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `overMinEmpUnder1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `overMinEmpUnder1099-${messageIndex}`)
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `overMinEmpUnder1099-${messageIndex}`, context[message.paragraph.variable])}</p> : getDangerousParagraph(message.paragraph.content, `overMinEmpUnder1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );
@@ -70,7 +70,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.overMinEmpNo1099.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `overMinEmpNo1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `overMinEmpNo1099-${messageIndex}`)
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `overMinEmpNo1099-${messageIndex}`, context[message.paragraph.variable])}</p> : getDangerousParagraph(message.paragraph.content, `overMinEmpNo1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );
@@ -78,10 +78,9 @@ const Part1 = (props) => {
             if (!over25 && over50per) {
               outputMessage = (
                 <Fragment>
-                  {output.underMinEmpOver1099.map((message, messageIndex) => (
+                  {output.underMinEmpOver1099.map((message, messageIndex) =>
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpOver1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpOver1099-${messageIndex}`)
-                  ))}
+                     (message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpOver1099-${messageIndex}`, context[message.paragraph.variable])}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpOver1099-${messageIndex}`)))}
                 </Fragment>
               );
             }
@@ -90,7 +89,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.underMinEmpUnder1099.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpUnder1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpUnder1099-${messageIndex}`)
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpUnder1099-${messageIndex}`, context[message.paragraph.variable])}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpUnder1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );
@@ -100,7 +99,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.underMinEmpNo1099.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpNo1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpNo1099-${messageIndex}`)
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpNo1099-${messageIndex}`, context[message.paragraph.variable])}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpNo1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );
@@ -110,7 +109,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.underMinEmpNoW2.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpNo1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpNo1099-${messageIndex}`)
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpNo1099-${messageIndex}`, context[message.paragraph.variable])}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpNo1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );
@@ -120,7 +119,7 @@ const Part1 = (props) => {
                 <Fragment>
                   {output.overMinEmpNoW2.map((message, messageIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpNo1099-${messageIndex}`)}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpNo1099-${messageIndex}`)
+                    message.paragraph.helpText ? <p className="ma__help-tip-many">{getHelpTip(message.paragraph, 'c-white', `underMinEmpNo1099-${messageIndex}`, context[message.paragraph.variable])}</p> : getDangerousParagraph(message.paragraph.content, `underMinEmpNo1099-${messageIndex}`)
                   ))}
                 </Fragment>
               );
@@ -169,7 +168,7 @@ const Part1 = (props) => {
                     const value = { ...context.value };
                     value.payrollBase = 'all';
                     value.employeesW2 = empW2;
-                    const empCount = empW2 + (context.value.employees1099 / (context.value.employees1099 + empW2) >= emp1099Fraction ? context.value.employees1099 : 0);
+                    const empCount = empW2 + (context.value.employees1099 / (context.value.employees1099 + empW2) > emp1099Fraction ? context.value.employees1099 : 0);
                     // Use updateState for updating many form values, otherwise use setValue for a single form id.
                     onChangeW2(empW2);
                     context.updateState({
@@ -178,7 +177,7 @@ const Part1 = (props) => {
                       medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
                       famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
                       over25: empCount >= minEmployees,
-                      over50per: (Number(context.value.employees1099) / (Number(empW2) + Number(context.value.employees1099))) >= emp1099Fraction
+                      over50per: (Number(context.value.employees1099) / (Number(empW2) + Number(context.value.employees1099))) > emp1099Fraction
                     });
                     onChangeMedCont(value.medLeaveCont);
                   }}
@@ -204,14 +203,14 @@ const Part1 = (props) => {
                     // Pull value from form for updating.
                     const value = { ...context.value };
                     value.employees1099 = emp1099;
-                    const empCount = context.value.employeesW2 + (emp1099 / (emp1099 + context.value.employeesW2) >= emp1099Fraction ? emp1099 : 0);
+                    const empCount = context.value.employeesW2 + (emp1099 / (emp1099 + context.value.employeesW2) > emp1099Fraction ? emp1099 : 0);
                     context.updateState({
                       value,
                       employeeCount: empCount,
                       medLeaveCont: (empCount >= minEmployees) ? largeCompMedCont : smallCompMedCont,
                       famLeaveCont: (empCount >= minEmployees) ? largeCompFamCont : smallCompFamCont,
                       over25: empCount >= minEmployees,
-                      over50per: (Number(emp1099) / (Number(context.value.employeesW2) + Number(emp1099))) >= emp1099Fraction
+                      over50per: (Number(emp1099) / (Number(context.value.employeesW2) + Number(emp1099))) > emp1099Fraction
                     });
                     onChangeEmp1099(emp1099);
                     onChangeMedCont(value.medLeaveCont);

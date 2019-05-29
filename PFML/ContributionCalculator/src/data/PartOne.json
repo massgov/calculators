@@ -37,9 +37,10 @@
     "output": {
         "overMinEmpOver1099": [{
             "paragraph": {
-                "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees and Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
-                "triggerText": ["Massachusetts W2 employees and Massachusetts 1099-MISC contractors","<strong>covered individuals</strong>"],
-                "helpText": ["If your Massachusetts 1099-MISC contractors are equal to or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
+                "text": "<strong>You have employeeCount </strong><strong>“covered individual(s)”</strong> based on the makeup of your MA workforce. This includes your Massachusetts W2 Employees and your Massachusetts 1099-MISC contractors.",
+                "triggerText": ["<strong>“covered individual(s)”</strong>","your Massachusetts W2 Employees and your Massachusetts 1099-MISC contractors"],
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>","If you have more Massachusetts 1099-MISC contractors than Massachusetts W2 employees, they are considered covered individuals and you are responsible for sending contributions on their behalf."],
+                "variable": "employeeCount"
             }
         }, {
             "paragraph": {
@@ -53,14 +54,16 @@
             "paragraph": {
                 "text": "You are required to pay the remaining employer share of the total contribution. The <strong>employer share</strong> is at least 60% of the medical leave contribution.",
                 "triggerText": ["required to pay the remaining employer share"],
-                "helpText": ["If you had 25 or more covered individuals in your average workforce last year, you are required to pay the employer share this year."]
+                "helpText": ["Since you had employeeCount covered individual(s) in your average MA workforce last year, which is greater than or equal to the threshold of 25, you are required to pay the employer share this year."],
+                "variable": "employeeCount"
             }
         }],
         "overMinEmpUnder1099": [{
             "paragraph": {
-                "text": "Based on the makeup of your workforce, only your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
-                "triggerText": ["only your Massachusetts W2 employees","<strong>covered individuals</strong>"],
-                "helpText": ["If you have fewer Massachusetts 1099-MISC contractors than Massachusetts W2 employees, the Massachusetts 1099-MISC contractors are not considered covered individuals and you are not responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
+                "text": "<strong>You have employeeCount </strong><strong>“covered individual(s)”</strong> based on the makeup of your MA workforce. This includes your Massachusetts W2 Employees only and does not include your Massachusetts 1099-MISC contractors.",
+                "triggerText": ["<strong>“covered individual(s)”</strong>","your Massachusetts W2 Employees only and does not include your Massachusetts 1099-MISC contractors"],
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>","If your Massachusetts 1099-MISC contractors are equal to or less than the amount of Massachusetts W2 employees you employ, the Massachusetts 1099-MISC contractors are not considered covered individuals and you are not responsible for sending contributions on their behalf."],
+                "variable": "employeeCount"
             }
         }, {
             "paragraph": {
@@ -74,14 +77,16 @@
             "paragraph": {
                 "text": "You are required to pay the remaining <strong>employer share</strong> of the total contribution. The employer share is at least 60% of the medical leave contribution.",
                 "triggerText": ["required to pay the remaining <strong>employer share</strong>"],
-                "helpText": ["If you had 25 or more covered individuals in your average workforce last year, you are required to pay the employer share this year."]
+                "helpText": ["Since you had employeeCount covered individual(s) in your average MA workforce last year, which is greater than or equal to the threshold of 25, you are required to pay the employer share this year."],
+                "variable": "employeeCount"
             }
         }],
         "underMinEmpOver1099": [{
             "paragraph": {
-                "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees and Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
-                "triggerText": ["Massachusetts W2 employees and Massachusetts 1099-MISC contractors","<strong>covered individuals</strong>"],
-                "helpText": ["If your Massachusetts 1099-MISC contractors are equal to or greater than the amount of Massachusetts W2 employees you employ, they are considered covered individuals and you are responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
+                "text": "<strong>You have employeeCount </strong><strong>“covered individual(s)”</strong> based on the makeup of your MA workforce. This includes your Massachusetts W2 Employees and your Massachusetts 1099-MISC contractors.",
+                "triggerText": ["<strong>“covered individual(s)”</strong>","your Massachusetts W2 Employees and your Massachusetts 1099-MISC contractors"],
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>","If you have more Massachusetts 1099-MISC contractors than Massachusetts W2 employees, they are considered covered individuals and you are responsible for sending contributions on their behalf."],
+                "variable": "employeeCount"
             }
         }, {
             "paragraph": {
@@ -95,14 +100,16 @@
             "paragraph": {
                 "text": "You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution but you may elect to cover a portion of the covered individual share.",
                 "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
-                "helpText": ["If you had fewer than 25 covered individuals in your average workforce last year, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
+                "helpText": ["Since you had employeeCount covered individual(s) in your average MA workforce last year, which is fewer than the threshold of 25, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."],
+                "variable": "employeeCount"
             }
         }],
         "underMinEmpUnder1099": [{
             "paragraph": {
-                "text": "Based on the makeup of your workforce, only your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
-                "triggerText": ["only your Massachusetts W2 employees","<strong>covered individuals</strong>"],
-                "helpText": ["If you have fewer Massachusetts 1099-MISC contractors than Massachusetts W2 employees, the Massachusetts 1099-MISC contractors are not considered covered individuals and you are not responsible for sending contributions on their behalf.","<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
+                "text": "<strong>You have employeeCount </strong><strong>“covered individual(s)”</strong> based on the makeup of your MA workforce. This includes your Massachusetts W2 Employees only and does not include your Massachusetts 1099-MISC contractors.",
+                "triggerText": ["<strong>“covered individual(s)”</strong>","your Massachusetts W2 Employees only and does not include your Massachusetts 1099-MISC contractors"],
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>","If your Massachusetts 1099-MISC contractors are equal to or less than the amount of Massachusetts W2 employees you employ, the Massachusetts 1099-MISC contractors are not considered covered individuals and you are not responsible for sending contributions on their behalf."],
+                "variable": "employeeCount"
             }
         }, {
             "paragraph": {
@@ -116,14 +123,16 @@
             "paragraph": {
                 "text": "You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution but you may elect to cover a portion of the covered individual share.",
                 "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
-                "helpText": ["If you had fewer than 25 covered individuals in your average workforce last year, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
+                "helpText": ["Since you had employeeCount covered individual(s) in your average MA workforce last year, which is fewer than the threshold of 25, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."],
+                "variable": "employeeCount"
             }
         }],
         "underMinEmpNo1099": [{
             "paragraph": {
-                "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
+                "text": "Based on the makeup of your workforce, all <strong>employeeCount</strong> of your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
                 "triggerText": ["<strong>covered individuals</strong>"],
-                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"],
+                "variable": "employeeCount"
             }
         }, {
             "paragraph": {
@@ -137,14 +146,16 @@
             "paragraph": {
                 "text": "You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution but you may elect to cover a portion of the covered individual share.",
                 "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
-                "helpText": ["If you had fewer than 25 covered individuals in your average workforce last year, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
+                "helpText": ["Since you had employeeCount covered individual(s) in your average MA workforce last year, which is fewer than the threshold of 25, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."],
+                "variable": "employeeCount"
             }
         }],
         "underMinEmpNoW2": [{
             "paragraph": {
-                "text": "Based on the makeup of your workforce, all your Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
+                "text": "Based on the makeup of your workforce, all <strong>employeeCount</strong> of your Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
                 "triggerText": ["<strong>covered individuals</strong>"],
-                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"],
+                "variable": "employeeCount"
             }
         }, {
             "paragraph": {
@@ -158,14 +169,16 @@
             "paragraph": {
                 "text": "You are <strong>NOT</strong> required to pay the <strong>employer share</strong> of the medical leave contribution but you may elect to cover a portion of the covered individual share.",
                 "triggerText": ["<strong>NOT</strong> required to pay the <strong>employer share</strong>"],
-                "helpText": ["If you had fewer than 25 covered individuals in your average workforce last year, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."]
+                "helpText": ["Since you had employeeCount covered individual(s) in your average MA workforce last year, which is fewer than the threshold of 25, you do not need to pay the employer share this year, but you may elect to cover a portion of the covered individual share. Typically, the <strong>employer share</strong> of the total contribution is at least 60% of the medical leave contribution."],
+                "variable": "employeeCount"
             }
         }],
         "overMinEmpNo1099": [{
             "paragraph": {
-                "text": "Based on the makeup of your workforce, all your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
+                "text": "Based on the makeup of your workforce, all <strong>employeeCount</strong> of your Massachusetts W2 employees are “<strong>covered individuals</strong>.”",
                 "triggerText": ["<strong>covered individuals</strong>"],
-                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"],
+                "variable": "employeeCount"
             }
         }, {
             "paragraph": {
@@ -179,14 +192,16 @@
             "paragraph": {
                 "text": "You are required to pay the remaining <strong>employer share</strong> of the total contribution. The <strong>employer share</strong> is at least 60% of the medical leave contribution.",
                 "triggerText": ["required to pay the remaining <strong>employer share</strong>"],
-                "helpText": ["If you had 25 or more covered individuals in your average workforce last year, you are required to pay the employer share this year."]
+                "helpText": ["Since you had employeeCount covered individual(s) in your average MA workforce last year, which is greater than or equal to the threshold of 25, you are required to pay the employer share this year."],
+                "variable": "employeeCount"
             }
         }],
         "overMinEmpNoW2": [{
             "paragraph": {
-                "text": "Based on the makeup of your workforce, all your Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
+                "text": "Based on the makeup of your workforce, all <strong>employeeCount</strong> of your Massachusetts 1099-MISC contractors are “<strong>covered individuals</strong>.”",
                 "triggerText": ["<strong>covered individuals</strong>"],
-                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"]
+                "helpText": ["<ul><li>W2 employees will always count as covered individuals</li><li>1099-MISC contractors count toward your total number of covered individuals only if they make up more than 50 percent of your total workforce (W2 employees and 1099-MISC contractors combined)</li></ul>"],
+                "variable": "employeeCount"
             }
         }, {
             "paragraph": {
@@ -200,7 +215,8 @@
             "paragraph": {
                 "text": "You are required to pay the remaining <strong>employer share</strong> of the total contribution. The <strong>employer share</strong> is at least 60% of the medical leave contribution.",
                 "triggerText": ["required to pay the remaining <strong>employer share</strong>"],
-                "helpText": ["If you had 25 or more covered individuals in your average workforce last year, you are required to pay the employer share this year."]
+                "helpText": ["Since you had employeeCount covered individual(s) in your average MA workforce last year, which is greater than or equal to the threshold of 25, you are required to pay the employer share this year."],
+                "variable": "employeeCount"
             }
         }]
     }
