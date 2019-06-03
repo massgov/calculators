@@ -45,9 +45,9 @@ class App extends Component {
             <ExampleForm />
           </section>
           {process.env.REACT_APP_IFRAME === 'false' && <ButtonFixedFeedback href="https://www.mass.gov/feedback" />}
-          {//process.env.REACT_APP_IFRAME === 'false' && (
+          {process.env.REACT_APP_IFRAME === 'false' && (
             <div className="post-content">
-              <FeedbackForm 
+              <FeedbackForm
                 formId={2521317}
                 radioId={47054416}
                 yesFeedbackId={52940022}
@@ -57,8 +57,8 @@ class App extends Component {
                 successMessage={() => <p>Thanks, your message has been sent to Department of Family and Medical Leave!</p>}
               />
             </div>
-          //)
-  }
+          )
+        }
         </main>
         {process.env.REACT_APP_IFRAME === 'false' && <Footer {...this.footerProps} />}
       </div>
