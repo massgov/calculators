@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Footer, PageHeader, ButtonFixedFeedback } from '@massds/mayflower-react';
+import { Header, Footer, PageHeader, ButtonFixedFeedback, FeedbackForm } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
@@ -45,6 +45,20 @@ class App extends Component {
             <ExampleForm />
           </section>
           {process.env.REACT_APP_IFRAME === 'false' && <ButtonFixedFeedback href="https://www.mass.gov/feedback" />}
+          {//process.env.REACT_APP_IFRAME === 'false' && (
+            <div className="post-content">
+              <FeedbackForm 
+                formId={2521317}
+                radioId={47054416}
+                yesFeedbackId={52940022}
+                noFeedbackId={47054414}
+                refererId={47056299}
+                nodeId={444876}
+                successMessage={() => <p>Thanks, your message has been sent to Department of Family and Medical Leave!</p>}
+              />
+            </div>
+          //)
+  }
         </main>
         {process.env.REACT_APP_IFRAME === 'false' && <Footer {...this.footerProps} />}
       </div>
