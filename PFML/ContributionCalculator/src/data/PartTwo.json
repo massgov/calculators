@@ -13,7 +13,7 @@
         }]
     },
     "questionTwo": {
-        "question": "What were the total wages for Massachusetts W2 employees in the last 12 months?",
+        "question": "What were the total wages for Massachusetts W-2 employees in the last 12 months?",
         "errorMsg": "Please enter a value."
     },
     "questionThree": {
