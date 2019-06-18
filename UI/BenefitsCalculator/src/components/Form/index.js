@@ -4,6 +4,7 @@ import {
   InputCurrency, Button, FormProvider, Form, FormContext, InputCheckBox
 } from '@massds/mayflower-react';
 import Output from './output';
+import { toCurrency } from '../../utils';
 import inputProps from '../../data/input.json';
 
 import './index.css';
@@ -38,14 +39,14 @@ class Calculator extends Component {
     const inputCurrencyProps = {
       placeholder: 'e.g. $10,000',
       format: {
-        mantissa: 0,
+        mantissa: 2,
         trimMantissa: false,
         thousandSeparated: true
       },
       required: true,
       inline: true,
       min: 0,
-      step: 10,
+      step: 0.01,
       showButtons: false
     };
     return(
@@ -59,14 +60,14 @@ class Calculator extends Component {
                 labelText={`${this.q1.qStart} – ${this.q1.qEnd} ${inputLabel}`}
                 id="quarter1"
                 name="quarter1"
-                onChange={(value, id) => {
-                  if (!Number.isNaN(value)) {
-                    formContext.setValue({ id, value });
-                    if (applyAll) {
-                      formContext.setValue({ id: 'quarter2', value });
-                      formContext.setValue({ id: 'quarter3', value });
-                      formContext.setValue({ id: 'quarter4', value });
-                    }
+                onBlur={(val, id) => {
+                  // convert val to currency then set it to context
+                  const value = toCurrency(val);
+                  formContext.setValue({ id, value });
+                  if (applyAll) {
+                    formContext.setValue({ id: 'quarter2', value });
+                    formContext.setValue({ id: 'quarter3', value });
+                    formContext.setValue({ id: 'quarter4', value });
                   }
                 }}
               />
