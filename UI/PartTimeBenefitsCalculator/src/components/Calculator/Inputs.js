@@ -11,7 +11,7 @@ const inputCurrencyProps = {
   min: 0,
   showButtons: false,
   format: {
-    mantissa: 0,
+    mantissa: 2,
     trimMantissa: false,
     thousandSeparated: true
   }
