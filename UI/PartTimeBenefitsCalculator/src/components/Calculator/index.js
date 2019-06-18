@@ -16,7 +16,7 @@ const Calculator = () => (
     <Form>
       {
           (formContext) => {
-            const handleChange = (newVal, id) => {
+            const handleBlur = (newVal, { id }) => {
               const weeklyBenefits = toNumber(formContext.getValue('weekly-benefits'));
               const weeklyEarnings = toNumber(formContext.getValue('weekly-earnings'));
               const earningsDisregard = toNumber(formContext.getValue('earnings-disregard'));
@@ -69,9 +69,9 @@ const Calculator = () => (
             };
             return(
               <Fragment>
-                <QuestionOne handleChange={handleChange} />
+                <QuestionOne handleBlur={handleBlur} />
                 <OutputOne />
-                <QuestionTwo handleChange={handleChange} />
+                <QuestionTwo handleBlur={handleBlur} />
                 {
                     // Output2: benefits not impacted
                   }
