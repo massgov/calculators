@@ -18,21 +18,21 @@ const inputCurrencyProps = {
 };
 
 export const QuestionOne = (props) => {
-  const { handleBlur } = props;
+  const { handleChange } = props;
   return(
     <InputCurrency
       labelText="What is your weekly benefit amount?"
       id="weekly-benefits"
       name="weekly-benefits"
       max={795}
-      onBlur={handleBlur}
+      onChange={handleChange}
       {...inputCurrencyProps}
     />
   );
 };
 
 export const QuestionTwo = (props) => {
-  const { handleBlur } = props;
+  const { handleChange } = props;
   return(
     <InputCurrency
       labelText="How much do you earn weekly working part-time (before taxes)?"
@@ -40,16 +40,16 @@ export const QuestionTwo = (props) => {
       required
       id="weekly-earnings"
       name="weekly-earnings"
-      onBlur={handleBlur}
+      onChange={handleChange}
       {...inputCurrencyProps}
     />
   );
 };
 
 QuestionOne.propTypes = {
-  handleBlur: PropTypes.func
+  handleChange: PropTypes.func
 };
 
 QuestionTwo.propTypes = {
-  handleBlur: PropTypes.func
+  handleChange: PropTypes.func
 };
