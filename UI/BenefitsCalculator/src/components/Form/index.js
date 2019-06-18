@@ -31,12 +31,7 @@ class Calculator extends Component {
     this.q2 = quarterDateRange(2);
     this.q3 = quarterDateRange(3);
     this.q4 = quarterDateRange(4);
-  }
-
-  render() {
-    const { applyAll, submitted } = this.state;
-    const { inputLabel, applyAllLabel } = inputProps;
-    const inputCurrencyProps = {
+    this.inputCurrencyProps = {
       placeholder: 'e.g. $10,000',
       format: {
         mantissa: 2,
@@ -49,6 +44,12 @@ class Calculator extends Component {
       step: 0.01,
       showButtons: false
     };
+  }
+
+  render() {
+    const { applyAll, submitted } = this.state;
+    const { inputLabel, applyAllLabel } = inputProps;
+
     return(
       <FormProvider>
         <Form>
@@ -56,7 +57,7 @@ class Calculator extends Component {
           (formContext) => (
             <Fragment>
               <InputCurrency
-                {... inputCurrencyProps}
+                {... this.inputCurrencyProps}
                 labelText={`${this.q1.qStart} – ${this.q1.qEnd} ${inputLabel}`}
                 id="quarter1"
                 name="quarter1"
@@ -87,7 +88,7 @@ class Calculator extends Component {
                 }}
               />
               <InputCurrency
-                {... inputCurrencyProps}
+                {... this.inputCurrencyProps}
                 labelText={`${this.q2.qStart} – ${this.q2.qEnd} ${inputLabel}`}
                 id="quarter2"
                 name="quarter2"
@@ -99,7 +100,7 @@ class Calculator extends Component {
                 }}
               />
               <InputCurrency
-                {... inputCurrencyProps}
+                {... this.inputCurrencyProps}
                 labelText={`${this.q3.qStart} – ${this.q3.qEnd} ${inputLabel}`}
                 id="quarter3"
                 name="quarter3"
@@ -111,7 +112,7 @@ class Calculator extends Component {
                 }}
               />
               <InputCurrency
-                {... inputCurrencyProps}
+                {... this.inputCurrencyProps}
                 labelText={`${this.q4.qStart} – ${this.q4.qEnd} ${inputLabel}`}
                 id="quarter4"
                 name="quarter4"
