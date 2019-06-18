@@ -92,7 +92,9 @@ class Calculator extends Component {
                 id="quarter2"
                 name="quarter2"
                 disabled={applyAll}
-                onChange={(value, id) => {
+                onBlur={(val, id) => {
+                  // convert val to currency then set it to context
+                  const value = toCurrency(val);
                   formContext.setValue({ id, value });
                 }}
               />
@@ -102,7 +104,9 @@ class Calculator extends Component {
                 id="quarter3"
                 name="quarter3"
                 disabled={applyAll}
-                onChange={(value, id) => {
+                onBlur={(val, id) => {
+                  // convert val to currency then set it to context
+                  const value = toCurrency(val);
                   formContext.setValue({ id, value });
                 }}
               />
@@ -112,7 +116,9 @@ class Calculator extends Component {
                 id="quarter4"
                 name="quarter4"
                 disabled={applyAll}
-                onChange={(value, id) => {
+                onBlur={(val, id) => {
+                  // convert val to currency then set it to context
+                  const value = toCurrency(val);
                   formContext.setValue({ id, value });
                 }}
               />
