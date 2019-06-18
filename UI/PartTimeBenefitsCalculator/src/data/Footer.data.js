@@ -33,10 +33,6 @@ const footerLinks = {
       "id": "FooterLinks2",
       "links": [
         {
-          "href": "https://mass.govhttp://www.mass.gov/opendata/#/",
-          "text": "State Data"
-        },
-        {
           "href": "https://mass.gov/site-policies",
           "text": "Site Policies"
         },
