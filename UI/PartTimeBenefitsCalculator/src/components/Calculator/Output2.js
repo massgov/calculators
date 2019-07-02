@@ -82,6 +82,7 @@ export const ScenarioTwo = () => {
           const weeklyBenefits = toNumber(values['weekly-benefits']);
           const weeklyEarnings = toNumber(values['weekly-earnings']);
           const earningsDisregard = toNumber(values['earnings-disregard']);
+          const earningsOverDisDisclaimer = '*The earnings over earnings exclusion is always rounded up to the nearest dollar amount.';
           if (
             showScenario
             && !Number.isNaN(weeklyBenefits)
@@ -102,7 +103,10 @@ export const ScenarioTwo = () => {
                     {...helptipIframeProp}
                   >
                     <div className="ma__help-text">
-                      <Paragraph text={`Earnings over earnings exclusion: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyEarnings)} - ${toCurrency(earningsDisregard)}`} />
+                      <Paragraph text={`Earnings over earnings exclusion*: ${toCurrency(earningsOverDis)} = ${toCurrency(weeklyEarnings)} - ${toCurrency(earningsDisregard)}`} />
+                      <span className="ma__disclaimer">
+                        <Paragraph text={earningsOverDisDisclaimer} />
+                      </span>
                       <Paragraph text={`Reduced weekly benefit: <strong>${toCurrency(reducedBenefit)}</strong> = ${toCurrency(weeklyBenefits)} - ${toCurrency(earningsOverDis)}`} />
                     </div>
                   </HelpTip>
