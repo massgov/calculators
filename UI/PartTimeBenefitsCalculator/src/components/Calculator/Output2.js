@@ -44,7 +44,7 @@ export const ScenarioOne = () => {
                     labelID="help-tip-scenario-one-label"
                     {...helptipIframeProp}
                   >
-                    <div className="ma__help-text">As you make less than 1/3 of your weekly benefits through your part time employment, your weekly benefit stays the same.</div>
+                    <div className="ma__help-text">As you make no more than 1/3 of your weekly benefits through your part time employment, your weekly benefit stays the same.</div>
                   </HelpTip>
                   <Paragraph text={`You will take home ${displayCurrency(weeklyBenefits)} from UI benefits and ${displayCurrency(weeklyEarnings)} from your income, a gross total of ${displayCurrency(toNumber(weeklyBenefits) + toNumber(weeklyEarnings))} weekly (before taxes, deductions, and other adjustments).`} />
                 </CalloutAlert>

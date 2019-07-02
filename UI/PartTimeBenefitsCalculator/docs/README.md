@@ -51,7 +51,11 @@ See the conditions in [FormProvider](../src/components/Calculator/index.js)
 #### 2. Benefits reduced
 Conditions: if part-time earnings is greater than earnings exclusion and the part-time earnings is less than or equal to the weekly benefits plus the earnings disregard (1/3 of the weekly benefits)
 ```
-const earningsOverDis = weeklyEarnings - earningsDisregard;
+const earningsOverDis = Math.ceil(weeklyEarnings - earningsDisregard);
+```
+> round earningsOverDis up to the next dollar amount
+
+```
 const reducedBenefit = weeklyBenefits - earningsOverDis;
 earningsOverDis > 0 && reducedBenefit > 0
 ```
