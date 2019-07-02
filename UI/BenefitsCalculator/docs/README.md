@@ -39,7 +39,7 @@ The apply-to-all checkbox is added for the convenience of the users inputing the
 The submit button will take the values from the user input and render the new output below.
 
 
-
+----
 ## Output
 
 ### Eligibility
