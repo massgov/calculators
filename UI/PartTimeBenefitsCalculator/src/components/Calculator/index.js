@@ -21,7 +21,6 @@ const Calculator = () => (
               const weeklyEarnings = toNumber(formContext.getValue('weekly-earnings'));
               const earningsDisregard = toNumber(formContext.getValue('earnings-disregard'));
               // round earningsOverDis up to the next largest dollar amount
-              console.log(earningsDisregard)
               const earningsOverDis = Math.ceil(weeklyEarnings - earningsDisregard);
               const reducedBenefit = weeklyBenefits - earningsOverDis;
 
