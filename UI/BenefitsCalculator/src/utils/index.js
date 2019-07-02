@@ -28,3 +28,5 @@ export const getHelpTip = (question, theme, key) => {
     />
   );
 };
+
+export const round = (val, decimal) => Number(`${Math.round(`${val}e${decimal}`)}e-${decimal}`);

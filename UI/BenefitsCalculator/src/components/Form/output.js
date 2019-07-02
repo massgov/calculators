@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import numbro from 'numbro';
 import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
-import { toCurrency, toPercentage } from '../../utils';
+import { toCurrency, toPercentage, round } from '../../utils';
 import variables from '../../data/variables.json';
 
 const sum = (a, b) => a + b;
@@ -31,7 +31,8 @@ const Output = (props) => {
     weeksInTopQuarters = 13;
   }
   const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
-  const weeklyBenefit = 1 / 2 * topQuartersSum / weeksInTopQuarters;
+  // round weeklyBenefit to 2 decimal places (penny)
+  const weeklyBenefit = round(1 / 2 * topQuartersSum / weeksInTopQuarters, 2);
   // final weekly benefit is rounded to the nearest dollar amount
   const weeklyBenefitFinalRaw = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
   // final weekly benefit is rounded to the nearest dollar amount
