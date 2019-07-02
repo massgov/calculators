@@ -19,7 +19,7 @@ const footerLinks = {
           "text": "Learning"
         },
         {
-          "href": "https://mass.gov/topics/visiting-exploring",
+          "href": "https://mass.gov/topics/exploring-massachusetts",
           "text": "Visiting & Exploring"
         },
         {
