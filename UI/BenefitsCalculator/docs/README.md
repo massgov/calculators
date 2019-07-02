@@ -83,8 +83,8 @@ WBA calculation is broken down in 3 steps:
 
 > WeeklyBenefit is rounded to 2 decimal places (penny amount)
 > WeeklyBenefit is calculated based on the number of quarters that have wages out of the last 4 quarters:
-> - If only 2 or less quarters have wages, WBA is equal to half of the highest-earning quarter divided by the number of weeks in the quarter.
-> - If more than 2 quarters have wages, WBA is equal to half of the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters.
+> - If only 2 or less quarters have wages, WBA is equal to half of the highest-earning quarter divided by the number of weeks in the quarter (13).
+> - If more than 2 quarters have wages, WBA is equal to half of the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters (26).
 ```
   let topQuarters;
   let weeksInTopQuarters = 26;
@@ -103,13 +103,12 @@ WBA calculation is broken down in 3 steps:
 > WeeklyBenefitFinal is rounded to the nearest dollar amount
 > This is used in the calculation of the max benefits credit and the final display of WBA
 
-![30 weeks benefits based on each quarter income $10,000 for 4 quarters](./media/output-30.png)
+e.g. Enter `$10,000.00` in all 4 quarters
+![30 weeks benefits based on each quarter income $10,000 for 4 quarters](./media/output-30-wba.png)
 
-If max weekly benefits $795 reached set weekly benefits to `weeklyBenefitMax` in [Variables](../src/data/variables.json)
-```
-const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
-```
-![26 weeks benefits exceeding max weekly benefit amount](./media/output-26-max.png)
+If weeklyBenefitMax ([\$795](../src/data/variables.json)) is reached, WBA is set to `weeklyBenefitMax`.
+e.g. Enter `$25,000.00` in all 4 quarters
+![30 weeks benefits exceeding max weekly benefit amount](./media/output-30-max-wba.png)
 
 #### Max benefits credit calculation:
 ```
@@ -118,8 +117,11 @@ const maxBenefitOption2 = maxBenefitRatio * quartersSum;
 const maxBenefitFinal = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption2 : maxBenefitOption1;
 const maxBenefitOther = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption1 : maxBenefitOption2;
 ```
-
+e.g. Enter `$10,000.00` in all 4 quarters
+![30 weeks max benefits credit calculation](./media/output-30-max.png)
 #### Benefits duration calculation:
 ```
 const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
 ```
+e.g. Enter `$10,000.00` in all 4 quarters
+![30 weeks benefits exceeding max weekly benefit amount](./media/output-30-duration.png)
