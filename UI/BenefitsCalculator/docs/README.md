@@ -51,11 +51,22 @@ The submit button will take the values from the user input and render the new ou
 
 2. qualification 2: total wages is no less than 30 times the weeklyBenefitFinal
 ```
-  const qualification2 = !(quartersSum < (30 * weeklyBenefitFinal));
+  const qualification2 = !(quartersSum < (30 * weeklyBenefitFinalRaw));
 ```
-![sample qualification 2 screenshot](./media/output-disqualification2.png)
+Example and edge case handling:
+```
+Q1: $10,000
+Q2: $1,538.59 or anything amount that is less than $1,538
+```
+![sample qualification 2 screenshot](./media/output-disqualification2-fail.png)
 
-To test this rule, put in 2 quarters wages, with the lower quarter's wage less than 2/13 of the higher quarter's wage.
+```
+Q1: $10,000
+Q2: $1,538.60 or anything amount that is less than $1,538
+```
+![sample qualification 2 screenshot](./media/output-disqualification2-pass.png)
+
+To test an edge case with 2 quarter wages, put in a lower quarter's wage that is less than 2/13 of the higher quarter's wage, see formula:
 ```
 For 2 quarters and Q1 >= Q2
 Q1 + Q2 >= 30 * 1/2 * Q1 / 13
@@ -63,17 +74,10 @@ Q1 + Q2 >= 15 /13 * Q1
 Q2 >= 2/13 * Q1
 Q2 >≈ 0.153846 Q1
 ```
-e.g.
-```
-Q1: $10,000
-Q2: $1,538 or anything amount that is less than $1,538
-```
-[Outstanding questions about this rule](./questions.md)
-
 
 
 ### Benefits Calculation
-#### Weekly benefit calculation:
+#### Weekly benefit amount (WBA):
 ```
   let topQuarters;
   let weeksInTopQuarters = 26;
@@ -84,8 +88,16 @@ Q2: $1,538 or anything amount that is less than $1,538
     weeksInTopQuarters = 13;
   }
   const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
-  const weeklyBenefit = 1 / 2 * topQuartersSum / weeksInTopQuarters;
 ```
+WBA calculation is broken down in 3 steps:
+1. `const weeklyBenefit = round(1 / 2 * topQuartersSum / weeksInTopQuarters, 2);`
+> Round weeklyBenefit to 2 decimal places (penny amount)
+2. `const weeklyBenefitFinalRaw = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;`
+> WeeklyBenefitFinalRaw is making sure that the weeklyBenefit never exceeds the maximum
+> This is used in calculating the qualification 2 threshold `(30 * weeklyBenefitFinal)` before rounding to dollar amount
+3. `const weeklyBenefitFinal = Math.round(weeklyBenefitFinalRaw);``
+> Final weekly benefit is rounded to the nearest dollar amount
+> This is used in the calculation of the max benefits credit and the final display of WBA
 ![30 weeks benefits based on each quarter income $10,000 for 4 quarters](./media/output-30.png)
 
 If max weekly benefits $795 reached set weekly benefits to `weeklyBenefitMax` in [Variables](../src/data/variables.json)

@@ -33,7 +33,7 @@ const Output = (props) => {
   const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
   // round weeklyBenefit to 2 decimal places (penny)
   const weeklyBenefit = round(1 / 2 * topQuartersSum / weeksInTopQuarters, 2);
-  // final weekly benefit is rounded to the nearest dollar amount
+  // WeeklyBenefitFinalRaw is making sure that the weeklyBenefit never exceeds the maximum
   const weeklyBenefitFinalRaw = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
   // final weekly benefit is rounded to the nearest dollar amount
   const weeklyBenefitFinal = Math.round(weeklyBenefitFinalRaw);
