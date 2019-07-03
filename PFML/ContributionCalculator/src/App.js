@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Footer, PageHeader, ButtonFixedFeedback, FeedbackForm, EmergencyAlerts, DecorativeLink } from '@massds/mayflower-react';
+import { Header, Footer, PageHeader, ButtonFixedFeedback, FeedbackForm } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
@@ -7,6 +7,7 @@ import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import ExampleForm from './components/ExampleForm';
 import history from './components/History';
+import AlertBanner from './components/AlertBanner';
 import ContributionVariables from './data/ContributionVariables.json';
 
 import './index.css';
@@ -42,18 +43,7 @@ class App extends Component {
         {
           // eslint-disable-next-line no-undef
           typeof sessionStorage !== 'undefined' && !sessionStorage.getItem(bannerGUID) && stopDate > currentDate && (
-            <EmergencyAlerts
-              buttonClose
-              // eslint-disable-next-line no-undef, no-loop-func
-              onButtonCloseClick={({ close }) => sessionStorage.setItem(bannerGUID, close)}
-              emergencyHeader={{
-                icon: null,
-                prefix: 'Notice',
-                title: () => (<DecorativeLink text="PFML Statute Change – Contribution withholding date delayed until Oct. 1, 2019" href="https://www.mass.gov/news/notice-to-massachusetts-employers-about-pfml-delay" />)
-              }}
-              id={bannerGUID}
-              theme="c-warning"
-            />
+            <AlertBanner guid={bannerGUID} />
           )
         }
         <main className="main-content">
