@@ -87,11 +87,15 @@ This scenario happens when the weekly part-time earnings amount (`weeklyEarnings
 
 **Scenario conditions**
 
-> `weeklyEarnings` > `earningsDisregard`
-> (`earningsOverDis` >0)
-> and
-> `weeklyEarnings` <= `weeklyBenefits` + `earningsDisregard`
->(`reducedBenefit` > 0)
+> `weeklyEarnings` > `earningsDisregard` 
+
+> (`earningsOverDis` >0) 
+> and  
+
+
+> `weeklyEarnings` <= `weeklyBenefits` + `earningsDisregard`  
+
+>(`reducedBenefit` > 0)  
 
 **Calculation formula**
 ```
