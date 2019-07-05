@@ -70,8 +70,9 @@ This scenario happens when the weekly part-time earnings amount (`weeklyEarnings
 
 **Scenario conditions**
 
-> `weeklyEarnings` <= `earningsDisregard`
-> (`earningsOverDis` <=0), 
+> `weeklyEarnings` <= `earningsDisregard`  
+
+> (`earningsOverDis` <=0)  
 
 **Calculation formula**
 ```
@@ -90,8 +91,8 @@ This scenario happens when the weekly part-time earnings amount (`weeklyEarnings
 > `weeklyEarnings` > `earningsDisregard` 
 
 > (`earningsOverDis` >0) 
-> and  
 
+> and  
 
 > `weeklyEarnings` <= `weeklyBenefits` + `earningsDisregard`  
 
@@ -114,8 +115,9 @@ For more details, see the conditions in [FormProvider](../src/components/Calcula
 This scenario happens when the weekly part-time earnings amount (`weeklyEarnings`) is greater than the weekly benefits amount (`weeklyBenefits`) plus the earnings exlusion amount (`earningsDisregard`).  Below are the formulas for the scenario conditions and the calculaton that happens in this scenario. 
 
 **Scenario conditions**
->`weeklyEarnings` > `weeklyBenefits` + `earningsDisregard`
-> (`reducedBenefit` <= 0)
+>`weeklyEarnings` > `weeklyBenefits` + `earningsDisregard`  
+
+> (`reducedBenefit` <= 0)  
 
 **Calculation formula**
 ```
