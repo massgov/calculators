@@ -1,14 +1,12 @@
 # Unemployment Benefits calculator documentation
-Use this documentation to learn where the formulas live and how the calculator formula was created. 
+Use this documentation to learn where the formulas live and how the calculator formula was created.
 ## Calculator Logic
 The main logic of the calculator live in these files:
 - [Input](../src/components/Form/index.js)
 - [Output](../src/components/Form/output.js)
 - [Variables](../src/data/variables.json)
 
-# Understanding the formula
-
-## Constant variables
+### Variable constants
 There are 4 variables that are constants. Here are their values:
 
 `maxBenefitDuration` = 26
