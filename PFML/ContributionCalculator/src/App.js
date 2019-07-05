@@ -34,7 +34,7 @@ class App extends Component {
     history.listen(() => this.forceUpdate());
   }
   render() {
-    const bannerGUID = 'GUID18378923w38789';
+    const bannerGUID = 'pfmlcontributiondate10012019';
     const stopDate = new Date('07/18/2019 00:00');
     const currentDate = new Date();
     return(
