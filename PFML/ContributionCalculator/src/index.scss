@@ -3,17 +3,3 @@
 
 // @import "04-templates/form-page";
 // @import "01-atoms/forms";
-
-.ma__emergency-header__title {
-	.ma__decorative-link {
-	   a {
-	      color: $c-black;
-	      &:hover {
-	        border-bottom-color: rgba($c-black, 0.5);
-	      }
-	   }
-	   svg {
-	      fill: rgba($c-black, 0.5)
-	   }
-	}
-}

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { EmergencyAlerts, DecorativeLink } from '@massds/mayflower-react';
 
+import './index.css';
+
 const AlertBanner = (props) => (
   <EmergencyAlerts
     buttonClose
