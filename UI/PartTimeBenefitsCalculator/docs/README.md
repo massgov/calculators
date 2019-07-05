@@ -10,15 +10,15 @@ The main logic of the calculator lives in these files:
     - [Output2](../src/components/Calculator/output2.js)
 
 # Understanding the formula
-The calculator takes in 2 monetary inputs from the user, (1) weekly benefits amount and (2) weekly part-time work earning amount, and calculates 2 outputs, (1) earnings exclusion amount and (2) impact on weekly benefits amount. 
+The calculator takes in 2 monetary inputs from the user, (1) weekly benefits amount and (2) weekly part-time work earning amount, and calculates 2 outputs, (1) earnings exclusion amount and (2) impact on weekly benefits amount.
 
-The following sections explain the inputs, and the calculations uses to generate the outputs. 
+The following sections explain the inputs, and the calculations uses to generate the outputs.
 
 ## Inputs
 
 [Input](../src/components/Calculator/inputs.js) consists of 2 currency inputs:
 1. Weekly benefit amount (the variable name for this input is `weeklyBenefits`)
-2. Weekly part-time work earning (the variable name for this input is `weeklyEarnings`) 
+2. Weekly part-time work earning (the variable name for this input is `weeklyEarnings`)
 
 *Image 1: Input fields in the calculator*
 ![input screenshot](./media/input.png)
@@ -37,7 +37,7 @@ This input is what we'll use to calculate the outputs. Note that users can enter
 
 ## Outputs
 
-Each valid set of inputs will generate the corresponding output that is calculated based on the input value. The two outputs are the following: 
+Each valid set of inputs will generate the corresponding output that is calculated based on the input value. The two outputs are the following:
 1. Earnings exclusion (the variable name for this output is `earningsDisregard`)
 2. Impact on weekly benefits amount (the variable name for this output is `reducedBenefit`)
 
@@ -64,39 +64,36 @@ There are [three scenarios](../src/components/Calculator/output2.js) for how par
 3. Benefits void
 
 
-#### 1. Benefits not impacted 
+#### 1. Benefits not impacted
 
 This scenario happens when the weekly part-time earnings amount (`weeklyEarnings`) is less than or equal to the earnings exclusion amount (`earningsDisregard`). Below are the formulas for the scenario conditions and the calculation that happens in the scenario.  
 
 **Scenario conditions**
 
 > `weeklyEarnings` <= `earningsDisregard`  
-
-> (`earningsOverDis` <=0)  
+  (`earningsOverDis` <=0)  
 
 **Calculation formula**
 ```
 const earningsOverDis = weeklyEarnings - earningsDisregard;
 ```
-*Image 4: Benefits not impacted scenario description in the calculator* 
+*Image 4: Benefits not impacted scenario description in the calculator*
 ![sample output 2 screenshot](./media/output2-1.png)
 For more details, see the conditions in [FormProvider](../src/components/Calculator/index.js).
 
-#### 2. Benefits reduced (`earningsOverDis > 0` & `reducedBenefit > 0`)
+#### 2. Benefits reduced
 
-This scenario happens when the weekly part-time earnings amount (`weeklyEarnings`) is greater than the earnings exclusion amount (`earningsDisregard`) and the weekly-part time earnings (`weeklyEarnings`) is less than or equal to the weekly benefit amount (`weeklyBenefits`) plus the earnings exclusion amount (`earningsDisregard`). Below are the formulas for the scenario conditions and the calculaton that happens in this scenario. 
+This scenario happens when the weekly part-time earnings amount (`weeklyEarnings`) is greater than the earnings exclusion amount (`earningsDisregard`) and the weekly-part time earnings (`weeklyEarnings`) is less than or equal to the weekly benefit amount (`weeklyBenefits`) plus the earnings exclusion amount (`earningsDisregard`). Below are the formulas for the scenario conditions and the calculaton that happens in this scenario.
 
 **Scenario conditions**
 
-> `weeklyEarnings` > `earningsDisregard` 
-
-> (`earningsOverDis` >0) 
+> 1. `weeklyEarnings` > `earningsDisregard`
+  (`earningsOverDis` > 0)
 
 > and  
 
-> `weeklyEarnings` <= `weeklyBenefits` + `earningsDisregard`  
-
->(`reducedBenefit` > 0)  
+> 2. `weeklyEarnings` <= `weeklyBenefits` + `earningsDisregard`  
+(`reducedBenefit` > 0)
 
 **Calculation formula**
 ```
@@ -107,17 +104,16 @@ const earningsOverDis = Math.ceil(weeklyEarnings - earningsDisregard);
 ```
 const reducedBenefit = weeklyBenefits - earningsOverDis;
 ```
-*Image 5: Benefits reduced scenario description in the calculator* 
+*Image 5: Benefits reduced scenario description in the calculator*
 ![sample output 2 screenshot](./media/output2-2.png)
 For more details, see the conditions in [FormProvider](../src/components/Calculator/index.js).
 
 #### 3. Benefits void
-This scenario happens when the weekly part-time earnings amount (`weeklyEarnings`) is greater than the weekly benefits amount (`weeklyBenefits`) plus the earnings exlusion amount (`earningsDisregard`).  Below are the formulas for the scenario conditions and the calculaton that happens in this scenario. 
+This scenario happens when the weekly part-time earnings amount (`weeklyEarnings`) is greater than the weekly benefits amount (`weeklyBenefits`) plus the earnings exlusion amount (`earningsDisregard`).  Below are the formulas for the scenario conditions and the calculaton that happens in this scenario.
 
 **Scenario conditions**
 >`weeklyEarnings` > `weeklyBenefits` + `earningsDisregard`  
-
-> (`reducedBenefit` <= 0)  
+  (`reducedBenefit` <= 0)  
 
 **Calculation formula**
 ```
