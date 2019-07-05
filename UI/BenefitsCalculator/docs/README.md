@@ -1,14 +1,23 @@
-# Calculator Logic
+# Unemployment Benefits calculator documentation
+Use this documentation to learn where the formulas live and how the calculator formula was created. 
+## Calculator Logic
 The main logic of the calculator live in these files:
 - [Input](../src/components/Form/index.js)
 - [Output](../src/components/Form/output.js)
 - [Variables](../src/data/variables.json)
 
-----
+# Understanding the formula
+
+## Constant variables
+There are 4 variables that are constants. Here are their values:
+
+`maxBenefitDuration` = 26
+`quartersSumThreshhold` = 4700
+`weeklyBenefitMax` = 795
+`maxBenefitRatio` = 0.36
+
 To change max benefit duration from 26 weeks to 30 weeks, change `maxBenefitDuration` in [Variables](../src/data/variables.json) to `30`.
 > This variable will impact the formula of calculating the maxBenefit total and hence the benefits duration outcome.
-
-----
 
 ## Input
 
@@ -43,7 +52,7 @@ The submit button will take the values from the user input and render the new ou
 ## Output
 
 ### Eligibility
-1. qualification 1: total wages is no less than the threshhold $4700 (`quartersSumThreshhold` in [Variables](../src/data/variables.json))
+1. Qualification 1: total wages is no less than the threshhold $4700 (`quartersSumThreshhold` in [Variables](../src/data/variables.json))
 ```
   const qualification1 = !(quartersSum < quartersSumThreshhold);
 ```
