@@ -2,11 +2,11 @@
 Use this documentation to learn where the formulas live and how the calculator formula was created.
 ## Calculator Logic
 The main logic of the calculator live in these files:
+- [Variables](../src/data/variables.json)
 - [Input](../src/components/Form/index.js)
 - [Output](../src/components/Form/output.js)
-- [Variables](../src/data/variables.json)
 
-### Variable constants
+## Variable constants
 There are 4 variables that are constants. Here are their values:
 
 `maxBenefitDuration` = 26
