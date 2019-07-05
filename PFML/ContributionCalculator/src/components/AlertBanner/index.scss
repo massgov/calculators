@@ -14,7 +14,9 @@
 	}
 }
 
+
 .ma__emergency-alerts {
+  z-index: 80;
   @media ($bp-header-toggle-max) {
     top: 0;
   }
