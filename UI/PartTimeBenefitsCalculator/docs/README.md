@@ -71,7 +71,7 @@ This scenario happens when the weekly part-time earnings amount (`weeklyEarnings
 **Scenario conditions**
 
 > `weeklyEarnings` <= `earningsDisregard`  
-  (`earningsOverDis` <=0)  
+  (or `earningsOverDis` <=0)  
 
 **Calculation formula**
 ```
@@ -88,12 +88,12 @@ This scenario happens when the weekly part-time earnings amount (`weeklyEarnings
 **Scenario conditions**
 
 > 1. `weeklyEarnings` > `earningsDisregard`
-  (`earningsOverDis` > 0)
+  (or `earningsOverDis` > 0)
 
 > and  
 
 > 2. `weeklyEarnings` <= `weeklyBenefits` + `earningsDisregard`  
-(`reducedBenefit` > 0)
+(or `reducedBenefit` > 0)
 
 **Calculation formula**
 ```
@@ -113,7 +113,7 @@ This scenario happens when the weekly part-time earnings amount (`weeklyEarnings
 
 **Scenario conditions**
 >`weeklyEarnings` > `weeklyBenefits` + `earningsDisregard`  
-  (`reducedBenefit` <= 0)  
+  (or `reducedBenefit` <= 0)  
 
 **Calculation formula**
 ```
