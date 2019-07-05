@@ -1,14 +1,14 @@
 # Calculator Logic
 The main logic of the calculator live in these files:
 - [FormProvider](../src/components/Calculator/index.js)
-  - [Input](../src/components/Calculator/inputs.js)
+  - [Input](../src/components/Calculator/Inputs.js)
   - Output
-    - [Output1](../src/components/Calculator/output1.js)
-    - [Output2](../src/components/Calculator/output2.js)
+    - [Output1](../src/components/Calculator/Output1.js)
+    - [Output2](../src/components/Calculator/Output2.js)
 
 ## Input
 
-[Input](../src/components/Calculator/inputs.js) consists of 2 currency inputs:
+[Input](../src/components/Calculator/Inputs.js) consists of 2 currency inputs:
 1. Weekly benefit amount
 2. Weekly part-time work earning
 
@@ -19,7 +19,7 @@ The main logic of the calculator live in these files:
 This input is capped at the maximum `$795`, if the input is over the maximum an input validation along with a message output will be rendered and onBlur the value will be set to the maximum.
 
 ![sample input 1 exceeds maximum screenshot](./media/input1-validation.png)
-See more in `Question1` in [Input](../src/components/Calculator/inputs.js)
+See more in `Question1` in [Input](../src/components/Calculator/Inputs.js)
 
 
 ## Output
@@ -35,10 +35,10 @@ const earningsDisregardCalc = (weeklyBenefits * (1 / 3));
 ```
 ![sample output 2 screenshot](./media/output1.png)
 See the calculation in [FormProvider](../src/components/Calculator/index.js)
-For more earnings exclusion output settings, see [Output1](../src/components/Calculator/output1.js)
+For more earnings exclusion output settings, see [Output1](../src/components/Calculator/Output1.js)
 
 ### 2. Impact on weekly benefit amount
-There are [three scenarios](../src/components/Calculator/output2.js) for how part-time earnings will impact on weekly benefit amount:
+There are [three scenarios](../src/components/Calculator/Output2.js) for how part-time earnings will impact on weekly benefit amount:
 #### 1. Benefits not impacted
 Conditions: if part-time earnings is less than or equal to earnings exclusion (`earningsOverDis <= 0`)
 ```
