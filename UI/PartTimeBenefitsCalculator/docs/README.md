@@ -4,10 +4,10 @@ Use this documentation to learn where the formula files live and how the calcula
 ## Calculator Logic
 The main logic of the calculator lives in these files:
 - [FormProvider](../src/components/Calculator/index.js)
-  - [Input](../src/components/Calculator/inputs.js)
+  - [Input](../src/components/Calculator/Inputs.js)
   - Output
-    - [Output1](../src/components/Calculator/output1.js)
-    - [Output2](../src/components/Calculator/output2.js)
+    - [Output1](../src/components/Calculator/Output1.js)
+    - [Output2](../src/components/Calculator/Output2.js)
 
 # Understanding the formula
 The calculator takes in 2 monetary inputs from the user, (1) weekly benefits amount and (2) weekly part-time work earning amount, and calculates 2 outputs, (1) earnings exclusion amount and (2) impact on weekly benefits amount.
@@ -16,7 +16,7 @@ The following sections explain the inputs, and the calculations uses to generate
 
 ## Inputs
 
-[Input](../src/components/Calculator/inputs.js) consists of 2 currency inputs:
+[Input](../src/components/Calculator/Inputs.js) consists of 2 currency inputs:
 1. Weekly benefit amount (the variable name for this input is `weeklyBenefits`)
 2. Weekly part-time work earning (the variable name for this input is `weeklyEarnings`)
 
@@ -29,7 +29,7 @@ This input is capped at the maximum `$795`. If the user inputs any value larger 
 
 *Image 2: Example of the error message*
 ![sample input 1 exceeds maximum screenshot](./media/input1-validation.png)
-For more details, see more in `Question1` in [Input](../src/components/Calculator/inputs.js).
+For more details, see more in `Question1` in [Input](../src/components/Calculator/Inputs.js).
 
 ### 2. Weekly part-time work earning (`weeklyEarnings`)
 
@@ -52,13 +52,13 @@ const earningsDisregardCalc = (weeklyBenefits * (1 / 3));
 ![sample output 2 screenshot](./media/output1.png)
 
 For more details, see the calculation in [FormProvider](../src/components/Calculator/index.js)
-and to better understand the earnings exclusion output settings, see [Output1](../src/components/Calculator/output1.js).
+and to better understand the earnings exclusion output settings, see [Output1](../src/components/Calculator/Output1.js).
 
 ### 2. Impact on weekly benefits amount (`reducedBenefit`)
 
 The impact on weekly benefits amount is calculated based on both the weekly part-time work earning amount (`weeklyEarnings`) and on and the earnings exclusion amount (`earningsDisregard`).
 
-There are [three scenarios](../src/components/Calculator/output2.js) for how part-time earnings will impact the weekly benefit amount:
+There are [three scenarios](../src/components/Calculator/Output2.js) for how part-time earnings will impact the weekly benefit amount:
 1. Benefits not impacted
 2. Benefits reduced
 3. Benefits void
