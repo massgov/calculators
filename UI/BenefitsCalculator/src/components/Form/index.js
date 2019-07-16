@@ -38,7 +38,6 @@ class Calculator extends Component {
         trimMantissa: false,
         thousandSeparated: true
       },
-      required: true,
       inline: true,
       min: 0,
       step: 0.01,

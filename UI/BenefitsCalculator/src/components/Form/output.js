@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import numbro from 'numbro';
 import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
-import { toCurrency, toPercentage, round } from '../../utils';
+import { toCurrency, toPercentage } from '../../utils';
 import variables from '../../data/variables.json';
 
 const sum = (a, b) => a + b;
@@ -35,7 +35,7 @@ const Output = (props) => {
   const avgWeeklyPay = Math.ceil(topQuartersSum / weeksInTopQuarters);
   // weekly benefit is rounded down to the nearest dollar amount
   const weeklyBenefit = Math.floor(1 / 2 * avgWeeklyPay);
-  // WeeklyBenefitFinalRaw is making sure that the weeklyBenefit never exceeds the maximum
+  // WeeklyBenefitFinal is making sure that the weeklyBenefit never exceeds the maximum
   const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
 
   // qualifications
@@ -48,9 +48,10 @@ const Output = (props) => {
 
   // max benefit credit
   const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
-  const maxBenefitOption2 = maxBenefitRatio * quartersSum;
-  const maxBenefitFinal = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption2 : maxBenefitOption1;
-  const maxBenefitOther = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption1 : maxBenefitOption2;
+  // quartersSum will have cents when wages input contains cents, maxBeneiftFinal is rounded down to the nearest dollar
+  const maxBenefitOption2 = Math.floor(maxBenefitRatio * quartersSum);
+  const maxBenefitFinal = Math.min(maxBenefitOption1, maxBenefitOption2);
+  const maxBenefitOther = Math.max(maxBenefitOption1, maxBenefitOption2);
 
   // benefit duration
   const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
