@@ -64,15 +64,19 @@ const Output = (props) => {
   const helpTextDisqualification1 = `You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible.`;
   const helpTextDisqualification2 = `Your total base period wages of ${toCurrency(quartersSum)} must be equal to or greater than ${toCurrency(weeklyBenefitFinal * 30)} (your weekly benefit amount x 30) to be eligible.`;
   const maxBenefitDurationDisclaimer = 'The maximum number of weeks you can receive full unemployment benefits is 30 weeks (capped at 26 weeks during periods of extended benefits and low unemployment). However, many individuals qualify for less than 30 weeks of coverage.';
+  const roundingDisclaimer = 'Note: Calculations are rounded to whole dollar amounts.';
 
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">
-      { weeklyBenefitFinal > weeklyBenefitMax ? (
+      { weeklyBenefit > weeklyBenefitMax ? (
         <Paragraph text={`Your weekly benefit amount is capped at ${toCurrency(weeklyBenefitMax)}.`} />
       ) : (
         <Fragment>
           <Paragraph text={quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q} />
           <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefitFinal)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${quartersCount > 2 ? helpTextWeeks2Q : helpTextWeeks1Q}`} /></div>
+          <div className="ma__disclaimer">
+            {roundingDisclaimer}
+          </div>
         </Fragment>
       )}
     </div>
@@ -109,6 +113,9 @@ const Output = (props) => {
           </li>
         </ul>
         <Paragraph text={`Since ${toCurrency(maxBenefitFinal)} is less than ${toCurrency(maxBenefitOther)}, your maximum benefit credit is <strong>${toCurrency(maxBenefitFinal)}</strong>.`} />
+        <div className="ma__disclaimer">
+          {roundingDisclaimer}
+        </div>
       </Fragment>
     </div>
   );
