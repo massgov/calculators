@@ -133,6 +133,12 @@ Enter `$25,000.00` in all 4 quarters
 *Image 5: Scenario where weekly benefit maximum is reached*
 ![30 weeks benefits exceeding max weekly benefit amount](./media/output-30-max-wba.png)
 
+**Scenario for inputs with cents**
+Enter `$10,000.25` in all 4 quarters
+
+*Image 6: Scenario for inputs with cents*
+![weekly benefits amount and max weekly benefit amount rounding](./media/output-rounding.png)
+
 #### Max benefits credit calculation:
 ```
 const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
@@ -144,7 +150,7 @@ const maxBenefitOther = Math.max(maxBenefitOption1, maxBenefitOption2);
 
 e.g. Enter `$10,000.00` in all 4 quarters
 
-*Image 6: Max benefit credit explanation display*
+*Image 7: Max benefit credit explanation display*
 ![30 weeks max benefits credit calculation](./media/output-30-max.png)
 #### Benefits duration calculation:
 ```
@@ -152,5 +158,5 @@ const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
 ```
 e.g. Enter `$10,000.00` in all 4 quarters
 
-*Image 7: Benefits duration explanation display*
+*Image 8: Benefits duration explanation display*
 ![30 weeks benefits exceeding max weekly benefit amount](./media/output-30-duration.png)

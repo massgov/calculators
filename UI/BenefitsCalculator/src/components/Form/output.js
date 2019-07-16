@@ -74,9 +74,11 @@ const Output = (props) => {
         <Fragment>
           <Paragraph text={quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q} />
           <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefitFinal)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${quartersCount > 2 ? helpTextWeeks2Q : helpTextWeeks1Q}`} /></div>
-          <div className="ma__disclaimer">
-            {roundingDisclaimer}
-          </div>
+          { !Number.isInteger(topQuartersSum) && (
+            <div className="ma__disclaimer">
+              {roundingDisclaimer}
+            </div>
+          )}
         </Fragment>
       )}
     </div>
@@ -113,9 +115,11 @@ const Output = (props) => {
           </li>
         </ul>
         <Paragraph text={`Since ${toCurrency(maxBenefitFinal)} is less than ${toCurrency(maxBenefitOther)}, your maximum benefit credit is <strong>${toCurrency(maxBenefitFinal)}</strong>.`} />
-        <div className="ma__disclaimer">
-          {roundingDisclaimer}
-        </div>
+        { !Number.isInteger(quartersSum) && (
+          <div className="ma__disclaimer">
+            {roundingDisclaimer}
+          </div>
+        )}
       </Fragment>
     </div>
   );
