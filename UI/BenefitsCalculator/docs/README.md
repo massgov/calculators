@@ -22,6 +22,7 @@ To change max benefit duration from 26 weeks to 30 weeks, change `maxBenefitDura
 
 Input consists of 4 currency input for total quarterly wages, 1 checkbox for apply first quarter wages to all and a submit button.
 
+*Image 1: Input fields in the calculator*
 ![input screenshot](./media/input.png)
 
 
@@ -51,37 +52,36 @@ The submit button will take the values from the user input and render the new ou
 ## Output
 
 ### Eligibility
-1. Qualification 1: total wages is no less than the threshhold $4700 (`quartersSumThreshhold` in [Variables](../src/data/variables.json))
+There are two eligibility thresholds for the wages to meet for being qualified for unemployment benefits (See `qualification1` and `qualification2`):
+
+#### Qualification1: Total wages is no less than the threshhold $4700
+
+**Calculation formula**
 ```
   const qualification1 = !(quartersSum < quartersSumThreshhold);
 ```
+See `quartersSumThreshhold` in [Variables](../src/data/variables.json)
+
+**Scenario failing to meet qualification 1**
+Enter `$1,000.00` in all 4 quarters
+
+*Image 2: Scenario failing to meet qualification 1*
 ![sample qualification 1 screenshot](./media/output-disqualification1.png)
 
-2. qualification 2: total wages is no less than 30 times the weeklyBenefitFinal
+#### Qualification2: Total wages is no less than 30 times the weeklyBenefitFinal
+
+**Calculation formula**
 ```
-  const qualification2 = !(quartersSum < (30 * weeklyBenefitFinalRaw));
+  const qualification2 = !(quartersSum < (30 * weeklyBenefitFinal));
 ```
-Example and edge case handling:
+**Scenario failing to meet qualification 2**
 ```
 Q1: $10,000
-Q2: $1,538.59 or anything amount that is less than $1,538
+Q2: $1,538.59 or anything amount that is less than $1,550
 ```
+*Image 2: Scenario failing to meet qualification 2*
 ![sample qualification 2 screenshot](./media/output-disqualification2-fail.png)
 
-```
-Q1: $10,000
-Q2: $1,538.60 or anything amount that is less than $1,538
-```
-![sample qualification 2 screenshot](./media/output-disqualification2-pass.png)
-
-To test an edge case with 2 quarter wages, put in a lower quarter's wage that is less than 2/13 of the higher quarter's wage, see formula:
-```
-For 2 quarters and Q1 >= Q2
-Q1 + Q2 >= 30 * 1/2 * Q1 / 13
-Q1 + Q2 >= 15 /13 * Q1
-Q2 >= 2/13 * Q1
-Q2 >≈ 0.153846 Q1
-```
 
 
 ### Benefits Calculation
