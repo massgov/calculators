@@ -31,12 +31,14 @@ const Output = (props) => {
     weeksInTopQuarters = 13;
   }
   const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
-  // round weeklyBenefit to 2 decimal places (penny)
-  const weeklyBenefit = round(1 / 2 * topQuartersSum / weeksInTopQuarters, 2);
+  // average weekly pay is rounded up to the nearest dollar
+  const avgWeeklyPay = Math.ceil(topQuartersSum / weeksInTopQuarters);
+  // round intermdiate weeklyBenefit to 2 decimal places (penny) -> it's for calculating qualification2 to avoid edge case, e.g. Q1: 10000 Q2: 1538
+  const weeklyBenefit = round(1 / 2 * avgWeeklyPay, 2);
   // WeeklyBenefitFinalRaw is making sure that the weeklyBenefit never exceeds the maximum
   const weeklyBenefitFinalRaw = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
-  // final weekly benefit is rounded to the nearest dollar amount
-  const weeklyBenefitFinal = Math.round(weeklyBenefitFinalRaw);
+  // final weekly benefit is rounded down to the nearest dollar amount
+  const weeklyBenefitFinal = Math.floor(weeklyBenefitFinalRaw);
 
   // qualifications
   const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
@@ -66,7 +68,7 @@ const Output = (props) => {
 
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">
-      { weeklyBenefit > weeklyBenefitMax ? (
+      { weeklyBenefitFinal > weeklyBenefitMax ? (
         <Paragraph text={`Your weekly benefit amount is capped at ${toCurrency(weeklyBenefitMax)}.`} />
       ) : (
         <Fragment>
