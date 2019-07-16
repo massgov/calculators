@@ -18,6 +18,14 @@ form {
   }
 }
 
+input {
+  &::placeholder {
+    color: $c-gray;
+  }
+}
+
+
+
 .ma__help-text {
 	padding: 15px;
 }

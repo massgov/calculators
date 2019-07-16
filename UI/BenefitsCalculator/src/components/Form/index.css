@@ -18,6 +18,9 @@ form {
   .input_apply-all label {
     font-weight: 300; }
 
+input::placeholder {
+  color: #707070; }
+
 .ma__help-text {
   padding: 15px; }
 
