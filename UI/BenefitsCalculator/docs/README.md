@@ -143,10 +143,14 @@ const maxBenefitOther = Math.max(maxBenefitOption1, maxBenefitOption2);
 > `quartersSum` will have cents when wages input contains cents, `maxBenefitOption2` is rounded *down* to the nearest dollar
 
 e.g. Enter `$10,000.00` in all 4 quarters
+
+*Image 6: Max benefit credit explanation display*
 ![30 weeks max benefits credit calculation](./media/output-30-max.png)
 #### Benefits duration calculation:
 ```
 const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
 ```
 e.g. Enter `$10,000.00` in all 4 quarters
+
+*Image 7: Benefits duration explanation display*
 ![30 weeks benefits exceeding max weekly benefit amount](./media/output-30-duration.png)
