@@ -106,13 +106,13 @@ WBA calculation is broken down in 4 steps:
 ```
 const avgWeeklyPay = Math.ceil(topQuartersSum / weeksInTopQuarters);
 ```
-> Average weekly pay is rounded up to the nearest dollar
+> Average weekly pay is rounded *up* to the nearest dollar
 
 3. Calculate weekly benefit amount (`weeklyBenefit`) based on the average weekly pay from the previous step
 ```
 const weeklyBenefit = Math.floor(1 / 2 * avgWeeklyPay);
 ```
-> Weekly benefit is rounded down to the nearest dollar amount
+> Weekly benefit is rounded *down* to the nearest dollar amount
 
 4. Making sure that the final weekly benefit amount (`WeeklyBenefitFinal`) never exceeds the maximum
 ```
@@ -136,10 +136,12 @@ Enter `$25,000.00` in all 4 quarters
 #### Max benefits credit calculation:
 ```
 const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
-const maxBenefitOption2 = maxBenefitRatio * quartersSum;
-const maxBenefitFinal = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption2 : maxBenefitOption1;
-const maxBenefitOther = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption1 : maxBenefitOption2;
+const maxBenefitOption2 = Math.floor(maxBenefitRatio * quartersSum);
+const maxBenefitFinal = Math.min(maxBenefitOption1, maxBenefitOption2);
+const maxBenefitOther = Math.max(maxBenefitOption1, maxBenefitOption2);
 ```
+> `quartersSum` will have cents when wages input contains cents, `maxBenefitOption2` is rounded *down* to the nearest dollar
+
 e.g. Enter `$10,000.00` in all 4 quarters
 ![30 weeks max benefits credit calculation](./media/output-30-max.png)
 #### Benefits duration calculation:
