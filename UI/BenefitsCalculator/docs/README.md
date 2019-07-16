@@ -138,6 +138,7 @@ Enter `$10,000.25` in all 4 quarters
 
 *Image 6: Scenario for inputs with cents*
 ![weekly benefits amount and max weekly benefit amount rounding](./media/output-rounding.png)
+Rounding disclaimer is displayed in the help text conditionally
 
 #### Max benefits credit calculation:
 ```
