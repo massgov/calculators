@@ -77,7 +77,7 @@ Enter `$1,000.00` in all 4 quarters
 **Scenario failing to meet qualification 2**
 ```
 Q1: $10,000
-Q2: $1,538.59 or anything amount that is less than $1,550
+Q2: $1,538 or anything amount that is less than $1,550
 ```
 *Image 2: Scenario failing to meet qualification 2*
 ![sample qualification 2 screenshot](./media/output-disqualification2-fail.png)
@@ -86,11 +86,8 @@ Q2: $1,538.59 or anything amount that is less than $1,550
 
 ### Benefits Calculation
 #### Weekly benefit amount (WBA):
-WBA calculation is broken down in 3 steps:
-1. `const weeklyBenefit = round(1 / 2 * topQuartersSum / weeksInTopQuarters, 2);`
-
-> WeeklyBenefit is rounded to 2 decimal places (penny amount)
-> WeeklyBenefit is calculated based on the number of quarters that have wages out of the last 4 quarters:
+WBA calculation is broken down in 4 steps:
+1. Determine the top quarters based on the number of quarters that have wages out of the last 4 quarters
 > - If only 2 or less quarters have wages, WBA is equal to half of the highest-earning quarter divided by the number of weeks in the quarter (13).
 > - If more than 2 quarters have wages, WBA is equal to half of the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters (26).
 ```
@@ -104,11 +101,23 @@ WBA calculation is broken down in 3 steps:
   }
   const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
 ```
-2. `const weeklyBenefitFinalRaw = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;`
-> WeeklyBenefitFinalRaw is making sure that the weeklyBenefit never exceeds the maximum
-> This is used in calculating the qualification 2 threshold `(30 * weeklyBenefitFinal)` before rounding to dollar amount
-3. `const weeklyBenefitFinal = Math.round(weeklyBenefitFinalRaw);`
-> WeeklyBenefitFinal is rounded to the nearest dollar amount
+
+2. Calculate average weekly pay (`avgWeeklyPay`) in the top quarters
+```
+const avgWeeklyPay = Math.ceil(topQuartersSum / weeksInTopQuarters);
+```
+> Average weekly pay is rounded up to the nearest dollar
+
+3. Calculate weekly benefit amount (`weeklyBenefit`) based on the average weekly pay from the previous step
+```
+const weeklyBenefit = Math.floor(1 / 2 * avgWeeklyPay);
+```
+> Weekly benefit is rounded down to the nearest dollar amount
+
+4. Making sure that the final weekly benefit amount (`WeeklyBenefitFinal`) never exceeds the maximum
+```
+const weeklyBenefitFinal = Math.min(weeklyBenefit, weeklyBenefitMax);
+```
 > This is used in the calculation of the max benefits credit and the final display of WBA
 
 e.g. Enter `$10,000.00` in all 4 quarters

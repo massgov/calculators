@@ -36,7 +36,7 @@ const Output = (props) => {
   // weekly benefit is rounded down to the nearest dollar amount
   const weeklyBenefit = Math.floor(1 / 2 * avgWeeklyPay);
   // WeeklyBenefitFinal is making sure that the weeklyBenefit never exceeds the maximum
-  const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
+  const weeklyBenefitFinal = Math.min(weeklyBenefit, weeklyBenefitMax);
 
   // qualifications
   const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
