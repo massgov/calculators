@@ -33,19 +33,17 @@ const Output = (props) => {
   const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
   // average weekly pay is rounded up to the nearest dollar
   const avgWeeklyPay = Math.ceil(topQuartersSum / weeksInTopQuarters);
-  // round intermdiate weeklyBenefit to 2 decimal places (penny) -> it's for calculating qualification2 to avoid edge case, e.g. Q1: 10000 Q2: 1538
-  const weeklyBenefit = round(1 / 2 * avgWeeklyPay, 2);
+  // weekly benefit is rounded down to the nearest dollar amount
+  const weeklyBenefit = Math.floor(1 / 2 * avgWeeklyPay);
   // WeeklyBenefitFinalRaw is making sure that the weeklyBenefit never exceeds the maximum
-  const weeklyBenefitFinalRaw = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
-  // final weekly benefit is rounded down to the nearest dollar amount
-  const weeklyBenefitFinal = Math.floor(weeklyBenefitFinalRaw);
+  const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
 
   // qualifications
   const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
   // qualification 1: total wages is no less than the threshhold
   const qualification1 = !(quartersSum < quartersSumThreshhold);
-  // qualification 2: total wages is no less than 30 times the weeklyBenefitFinalRaw
-  const qualification2 = !(quartersSum < (30 * weeklyBenefitFinalRaw));
+  // qualification 2: total wages is no less than 30 times the weeklyBenefitFinal
+  const qualification2 = !(quartersSum < (30 * weeklyBenefitFinal));
   const qualified = qualification1 && qualification2;
 
   // max benefit credit
@@ -63,7 +61,7 @@ const Output = (props) => {
   const helpTextWeeks2Q = 'weeks in the combined quarters';
   const helpTextWeeks1Q = 'weeks in the quarter';
   const helpTextDisqualification1 = `You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible.`;
-  const helpTextDisqualification2 = `Your total base period wages of ${toCurrency(quartersSum)} must be equal to or greater than ${toCurrency(weeklyBenefitFinalRaw * 30)} (your weekly benefit amount x 30) to be eligible.`;
+  const helpTextDisqualification2 = `Your total base period wages of ${toCurrency(quartersSum)} must be equal to or greater than ${toCurrency(weeklyBenefitFinal * 30)} (your weekly benefit amount x 30) to be eligible.`;
   const maxBenefitDurationDisclaimer = 'The maximum number of weeks you can receive full unemployment benefits is 30 weeks (capped at 26 weeks during periods of extended benefits and low unemployment). However, many individuals qualify for less than 30 weeks of coverage.';
 
   const getBenefitsHelpText = () => (
