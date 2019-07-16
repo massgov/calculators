@@ -79,7 +79,7 @@ Enter `$1,000.00` in all 4 quarters
 Q1: $10,000
 Q2: $1,538 or anything amount that is less than $1,550
 ```
-*Image 2: Scenario failing to meet qualification 2*
+*Image 3: Scenario failing to meet qualification 2*
 ![sample qualification 2 screenshot](./media/output-disqualification2-fail.png)
 
 
@@ -118,13 +118,19 @@ const weeklyBenefit = Math.floor(1 / 2 * avgWeeklyPay);
 ```
 const weeklyBenefitFinal = Math.min(weeklyBenefit, weeklyBenefitMax);
 ```
-> This is used in the calculation of the max benefits credit and the final display of WBA
+See `weeklyBenefitMax` in [Variables](../src/data/variables.json)
+> WeeklyBenefitFinal is used in the calculation of the max benefits credit, benefits duration and the final display of WBA
 
-e.g. Enter `$10,000.00` in all 4 quarters
+**Scenario where weekly benefit amount does not exceed the maximum**
+Enter `$10,000.00` in all 4 quarters
+
+*Image 4: Scenario where weekly benefit amount does not exceed the maximum*
 ![30 weeks benefits based on each quarter income $10,000 for 4 quarters](./media/output-30-wba.png)
 
-If weeklyBenefitMax ([\$795](../src/data/variables.json)) is reached, WBA is set to `weeklyBenefitMax`.
-e.g. Enter `$25,000.00` in all 4 quarters
+**Scenario where weekly benefit maximum is reached**
+Enter `$25,000.00` in all 4 quarters
+
+*Image 5: Scenario where weekly benefit maximum is reached*
 ![30 weeks benefits exceeding max weekly benefit amount](./media/output-30-max-wba.png)
 
 #### Max benefits credit calculation:
