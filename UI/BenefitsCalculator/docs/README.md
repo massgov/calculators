@@ -56,12 +56,12 @@ The submit button will take the values from the user inputs and render the new o
 The calculator first checks if a person is eligible to qualify for unemployment benefits. If a person is eligible, then it calculates a weekly benefit amount, a max benefit credit amount, and the number of weeks a user will receive benefits. 
 
 1. Determining eligibility
-    1.a Qualification 1
-    1.b Qualification 2
+  * 1.a Qualification 1
+  * 1.b Qualification 2
 2. Determining benefits
-    2.a Weekly benefit amount
-    2.b Max benefits credit
-    2.c Benefits duration
+  * 2.a Weekly benefit amount
+  * 2.b Max benefits credit
+  * 2.c Benefits duration
 
 ## 1. Determining eligibility
 There are two eligibility thresholds for the wages to meet for being qualified for unemployment benefits (See `qualification1` and `qualification2`):
