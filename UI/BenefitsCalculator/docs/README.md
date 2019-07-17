@@ -1,6 +1,7 @@
 # Unemployment Benefits calculator documentation
 Use this documentation to learn where the formulas live and how the calculator formula was created.
 ## Calculator Logic
+The calculator takes in up to 4 inputs from the user for each of their quarterly wages, and tells the user if they are eligible to receive benefits or not. If they may be eligible to receive benefits, the calulator tells the user: (1) weekly benefit amount, (2) number of weeks they'll receive benefits, and (3) maximum benefit credit amount. 
 The main logic of the calculator lives in these files:
 - [Variables](../src/data/variables.json)
 - [Input](../src/components/Form/index.js)
@@ -17,9 +18,6 @@ maxBenefitRatio = 0.36
 
 To change max benefit duration from 26 weeks to 30 weeks, change `maxBenefitDuration` in [Variables](../src/data/variables.json) to `30`.
 > This variable will impact the formula of calculating the maxBenefit total and hence the benefits duration outcome.
-
-# Understanding the formula
-The calculator takes in up to 4 inputs from the user for each of their quarterly wages, and tells the user if they are eligible to receive benefits or not. If they may be eligible to receive benefits, the calulator tells the user: (1) weekly benefit amount, (2) number of weeks they'll receive benefits, and (3) maximum benefit credit amount. 
 
 ## Inputs
 
@@ -51,7 +49,7 @@ The submit button will take the values from the user inputs and render the new o
 
 
 ----
-## Output
+## Outputs
 
 The calculator first checks if a person is eligible to qualify for unemployment benefits. If a person is eligible, then it calculates a weekly benefit amount, a max benefit credit amount, and the number of weeks a user will receive benefits. 
 
@@ -63,10 +61,10 @@ The calculator first checks if a person is eligible to qualify for unemployment 
   * 2.b Max benefits credit
   * 2.c Benefits duration
 
-## 1. Determining eligibility
+### 1. Determining eligibility
 There are two eligibility thresholds for the wages to meet for being qualified for unemployment benefits (See `qualification1` and `qualification2`):
 
-### 1.a Qualification1
+#### 1.a Qualification1
 
 The first qualification is that the total wages is no less than the threshold of $4,700. This is the calculation formula: 
 ```
@@ -80,7 +78,7 @@ Enter `$1,000.00` in all 4 quarters
 *Image 2: Scenario failing to meet qualification 1*
 ![sample qualification 1 screenshot](./media/output-disqualification1.png)
 
-### 1.b Qualification2
+#### 1.b Qualification2
 The second qualification is that total wages is no less than 30 times the `weeklyBenefitFinal`. This is the calculation formula: 
 ```
   const qualification2 = !(quartersSum < (30 * weeklyBenefitFinal));
@@ -95,8 +93,8 @@ Q2: $1,538 or any amount that is less than $1,550
 
 
 
-## 2. Determining benefits 
-### 2.a Weekly benefit amount (WBA)
+### 2. Determining benefits 
+#### 2.a Weekly benefit amount (WBA)
 WBA calculation is broken down in 4 steps:
 
 **Step 1.** Determine the top quarters based on the number of quarters that have wages out of the last 4 quarters.
@@ -139,7 +137,7 @@ const weeklyBenefitFinal = Math.min(weeklyBenefit, weeklyBenefitMax);
 
 For more details, see `weeklyBenefitMax` in [Variables](../src/data/variables.json).
 
-#### Calculating benefits scenarios
+##### Calculating benefits scenarios
 This section explains how the calculator displays information to users in different scenarios. 
 
 **Scenario where weekly benefit amount does not exceed the maximum**  
@@ -166,7 +164,7 @@ Enter `$10,000.25` in all 4 quarters
 ![weekly benefits amount and max weekly benefit amount rounding](./media/output-rounding.png)
 
 
-### 2.b Max benefits credit calculation
+#### 2.b Max benefits credit calculation
 Here is the calculator formula for the max benefits credit: 
 ```
 const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
@@ -179,7 +177,7 @@ const maxBenefitOther = Math.max(maxBenefitOption1, maxBenefitOption2);
 *Image 7: Max benefit credit explanation display when entering $10,000 in all 4 quarters*
 ![30 weeks max benefits credit calculation](./media/output-30-max.png)
 
-### 2.c Benefits duration calculation
+#### 2.c Benefits duration calculation
 Here is the calculator formula for calculating benefits duration:
 ```
 const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
