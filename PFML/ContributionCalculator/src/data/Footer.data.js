@@ -19,7 +19,7 @@ const footerLinks = {
           "text": "Learning"
         },
         {
-          "href": "https://mass.gov/topics/visiting-exploring",
+          "href": "https://mass.gov/topics/exploring-massachusetts",
           "text": "Visiting & Exploring"
         },
         {
@@ -32,10 +32,6 @@ const footerLinks = {
       "heading": "FooterLinks2",
       "id": "FooterLinks2",
       "links": [
-        {
-          "href": "https://mass.govhttp://www.mass.gov/opendata/#/",
-          "text": "State Data"
-        },
         {
           "href": "https://mass.gov/site-policies",
           "text": "Site Policies"
