@@ -1,0 +1,23 @@
+@import "../../css/global";
+
+.ma__emergency-header__title {
+	.ma__decorative-link {
+	   a {
+	      color: $c-black;
+	      &:hover {
+	        border-bottom-color: rgba($c-black, 0.5);
+	      }
+	   }
+	   svg {
+	      fill: rgba($c-black, 0.5)
+	   }
+	}
+}
+
+
+.ma__emergency-alerts {
+  z-index: 80;
+  @media ($bp-header-toggle-max) {
+    top: 0;
+  }
+}
