@@ -4,5 +4,25 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0"
-  }
+  },
+  "scripts": {
+    "cy:verify": "cypress verify",
+    "cy:version": "cypress version",
+    "cy:run:record": "cypress run --record",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:chrome": "cypress run --browser chrome",
+    "cy:run:record:parallel": "cypress run --record --parallel",
+    "stop-only": "stop-only -f cypress/integration",
+    "warn-only": "stop-only -f cypress/integration --warn"
+  },
+  "devDependencies": {
+    "cypress": "^3.4.1"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
