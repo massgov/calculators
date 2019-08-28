@@ -58,7 +58,7 @@ const Part3 = (props) => {
     <div className="ma__help-text">
       { yearIncome <= benefitBreak ? (
         <Fragment>
-          <Paragraph text={`${less.partOne} ${toCurrency(benefitBreak)} ${less.partTwo} ${toPercentage(lowBenefitFraction)} ${less.partThree} ${toCurrency(benefitBreakWeek)} ${less.partFour}`} />
+          <Paragraph text={`${less.partOne} ${toCurrency(benefitBreak)} ${less.partTwo} <span id="benefitFraction">${toPercentage(lowBenefitFraction)}</span> ${less.partThree} ${toCurrency(benefitBreakWeek)} ${less.partFour}`} />
           <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = (${toCurrency(yearIncome)} x ${toPercentage(lowBenefitFraction)}) / ${weeksPerYear} weeks per year`} /></div>
         </Fragment>
 
@@ -66,7 +66,7 @@ const Part3 = (props) => {
         <Fragment>
           {yearIncome < maxBenefit ? (
             <Fragment>
-              <Paragraph text={`${more.partOne} ${toCurrency(benefitBreak)} ${more.partTwo} ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreak)} ${more.partFive} ${toCurrency(maxBenefit)}${more.partSix} ${toCurrency(maxBenefitWeek)} ${more.partSeven}`} />
+              <Paragraph text={`${more.partOne} ${toCurrency(benefitBreak)} ${more.partTwo} ${toCurrency(benefitBreakWeek)} ${more.partThree} <span id="benefitFraction">${toPercentage(highBenefitFraction)}</span> ${more.partFour} ${toCurrency(benefitBreak)} ${more.partFive} ${toCurrency(maxBenefit)}${more.partSix} ${toCurrency(maxBenefitWeek)} ${more.partSeven}`} />
               <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${toCurrency(yearIncome)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
             </Fragment>
           ) : (
@@ -84,7 +84,7 @@ const Part3 = (props) => {
       <CalloutAlert theme="c-primary" icon={{ name: '', ariaHidden: true }}>
         <HelpTip
           theme="c-white"
-          text={`${paragraphOne.partOne} <strong>${toCurrency(estWeeklyBenefit)}</strong>${paragraphOne.partTwo} <strong>${toPercentage(percentWeeklyIncome)}</strong> ${paragraphOne.partThree}`}
+          text={`${paragraphOne.partOne} <strong>${toCurrency(estWeeklyBenefit)}</strong>${paragraphOne.partTwo} <span id="percentWeeklyIncome"><strong>${toPercentage(percentWeeklyIncome)}</strong></span> ${paragraphOne.partThree}`}
           triggerText={[`<strong>${toCurrency(estWeeklyBenefit)}</strong>`]}
           id="help-tip-benefits"
           labelID="help-tip-benefits-label"
