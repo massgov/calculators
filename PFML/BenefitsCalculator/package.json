@@ -24,7 +24,8 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.1",
     "eslint-plugin-json": "^1.3.2",
-    "prettier": "1.14.2"
+    "prettier": "1.14.2",
+    "serve": "^11.1.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./node_modules/ --include-path ./node_modules/@massds/mayflower-react/es/assets/scss/ src/ -o src/",
@@ -35,11 +36,14 @@
     "start": "npm-run-all build-menus -p watch-css start-js",
     "build": "npm-run-all build-menus build-css build-js",
     "build:development": "env-cmd .env.development npm-run-all build-menus build-css build-js",
+    "build:test": "env-cmd .env.test npm-run-all build-menus build-css build-js",
     "build:iframe": "env-cmd .env.iframe npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/eslint .",
-    "lint-fix": "./node_modules/.bin/eslint --fix .; exit 0"
+    "lint-fix": "./node_modules/.bin/eslint --fix .; exit 0",
+    "serve": "serve build --listen ${PORT:-8000}",
+    "serve:ci": "serve build --no-clipboard --listen ${PORT:-8000}"
   },
   "browserslist": [
     ">0.2%",
