@@ -50,7 +50,7 @@ const Output = (props) => {
   const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
   // quartersSum will have cents when wages input contains cents, maxBeneiftFinal is rounded down to the nearest dollar
   const maxBenefitOption2 = Math.floor(maxBenefitRatio * quartersSum);
-  const maxBenefitFinal = Math.min(maxBenefitOption1, maxBenefitOption2);
+  const maxBenefitFinal = Math.floor(Math.min(maxBenefitOption1, maxBenefitOption2));
   const maxBenefitOther = Math.max(maxBenefitOption1, maxBenefitOption2);
 
   // benefit duration
