@@ -48,6 +48,8 @@ Earnings exclusion is calculated based on the weekly benefit amount (`weeklyBene
 ```
 const earningsDisregardCalc = (weeklyBenefits * (1 / 3));
 ```
+Note that we are rounding the `earningsdisregard` to two decimal places. 
+
 *Image 3: Earning exclusion calculation in the calculator*
 ![sample output 2 screenshot](./media/output1.png)
 
