@@ -1,20 +1,5 @@
 import React from 'react';
 
-// eslint-disable-next-line import/prefer-default-export
-export const getHelpTip = (question, theme, key) => (
-  <HelpTip
-    text={question.content}
-    triggerText={question.triggerText}
-    id={`help-tip-${question.triggerText}`}
-    labelID={`help-tip-${question.triggerText}-label`}
-    theme={theme || 'c-primary'}
-    helpText={question.helpText}
-    key={key}
-    hasMarkup
-    bypassMobileStyle={false}
-  />
-);
-
 export const benefitBreak = ({ maAvgYear }) => (
   return maAvgYear * 0.5;
 );
@@ -27,17 +12,14 @@ export const maxBenefit = ({ maAvgYear, weeksPerYear, maxBenefitWeek, lowBenefit
     return ((maxBenefitWeek - benefitBreakWeek(maAvgYear, weekly, lowBenefitFraction)) * weeksPerYear * 2) + benefitBreak;
 }
 
-const maxBenefit = ((maxBenefitWeek - benefitBreakWeek) * weeksPerYear * 2) + benefitBreak;
-
-  let estBenefit;
-  if (yearIncome <= benefitBreak) {
-    // If the yearly income is less than half the state wide avg income.
-    estBenefit = yearIncome * lowBenefitFraction;
-  } else {
-    // If yearly income is greater than half the state wide avg income.
-    const addBenefit = yearIncome < maxBenefit ? ((yearIncome - benefitBreak) * highBenefitFraction) : ((maxBenefit - benefitBreak) * highBenefitFraction);
-    estBenefit = addBenefit + (benefitBreak * lowBenefitFraction);
-  }
+export const estBenefit = ({ yearIncome, benefitBreak, lowBenefitFraction, highBenefitFraction, maxBenefit }) => {
+    if( yearIncome <= benefitBreak) {
+        const estimatedBenefit = yearIncome * lowBenefitFraction;
+    } else {
+        const addBenefit = yearIncome < maxBenefit ? ((yearIncome - benefitBreak) * highBenefitFraction) : ((maxBenefit - benefitBreak) * highBenefitFraction);
+        const estimatedBenefit = addBenefit + (benefitBreak * lowBenefitFraction);
+    }
+}
 
   // The estimated weekly benefit you would receive.
   const estWeeklyBenefit = estBenefit / weeksPerYear;
