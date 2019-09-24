@@ -2,7 +2,7 @@ import React from 'react';
 import {
   CalloutAlert, HelpTip, Input, InputContext
 } from '@massds/mayflower-react';
-import { toCurrency } from './util';
+import { toCurrency, toNumber } from './util';
 
 const helptipIframeProp = {};
 if (process.env.REACT_APP_IFRAME === 'true') {
@@ -13,9 +13,9 @@ const OutputOne = () => (
   <Input id="earnings-disregard" defaultValue={0}>
     <InputContext.Consumer>
       { (inputContext) => {
-        const maxEarningsDisregard = Math.round(795 / 3);
-        const earningsDisregard = inputContext.getValue() > maxEarningsDisregard ? maxEarningsDisregard : inputContext.getValue();
-        const maxEarningsDisregardMessage = inputContext.getValue() > maxEarningsDisregard ? `Your weekly benefits is capped at ${toCurrency(795)}. ` : '';
+        const maxEarningsDisregard = toNumber(795 / 3);
+        const earningsDisregard = inputContext.getValue() > maxEarningsDisregard ? maxEarningsDisregard : toNumber(inputContext.getValue());
+        const maxEarningsDisregardMessage = toNumber(inputContext.getValue()) > maxEarningsDisregard ? `Your weekly benefits is capped at ${toCurrency(795)}. ` : '';
         // This value is stored in formContext as well under id "earnings-disregard".
         // This input re-renders when earnings-disregard is updated with a new value.
         if (inputContext.getValue() > 0) {
