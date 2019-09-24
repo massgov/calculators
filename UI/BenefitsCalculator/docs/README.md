@@ -169,7 +169,7 @@ Here is the calculator formula for the max benefits credit:
 ```
 const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
 const maxBenefitOption2 = Math.floor(maxBenefitRatio * quartersSum);
-const maxBenefitFinal = Math.min(maxBenefitOption1, maxBenefitOption2);
+const maxBenefitFinal = Math.Floor(Math.min(maxBenefitOption1, maxBenefitOption2));
 const maxBenefitOther = Math.max(maxBenefitOption1, maxBenefitOption2);
 ```
 > Note: `quartersSum` will have cents when wages input contains cents, `maxBenefitOption2` is rounded *down* to the nearest dollar.
