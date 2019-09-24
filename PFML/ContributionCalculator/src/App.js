@@ -7,6 +7,7 @@ import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import ExampleForm from './components/ExampleForm';
 import history from './components/History';
+import AlertBanner from './components/AlertBanner';
 import ContributionVariables from './data/ContributionVariables.json';
 
 import './index.css';
@@ -33,9 +34,18 @@ class App extends Component {
     history.listen(() => this.forceUpdate());
   }
   render() {
+    const bannerGUID = 'pfmlcontributiondate10012019';
+    const stopDate = new Date('07/18/2019 00:00');
+    const currentDate = new Date();
     return(
       <div className="App">
         {process.env.REACT_APP_IFRAME === 'false' && <Header {...this.headerProps} />}
+        {
+          // eslint-disable-next-line no-undef
+          typeof sessionStorage !== 'undefined' && !sessionStorage.getItem(bannerGUID) && stopDate > currentDate && (
+            <AlertBanner guid={bannerGUID} />
+          )
+        }
         <main className="main-content">
           <PageHeader
             title={ContributionVariables.title}

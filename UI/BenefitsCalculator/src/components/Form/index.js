@@ -4,6 +4,7 @@ import {
   InputCurrency, Button, FormProvider, Form, FormContext, InputCheckBox
 } from '@massds/mayflower-react';
 import Output from './output';
+import { toCurrency } from '../../utils';
 import inputProps from '../../data/input.json';
 
 import './index.css';
@@ -30,24 +31,24 @@ class Calculator extends Component {
     this.q2 = quarterDateRange(2);
     this.q3 = quarterDateRange(3);
     this.q4 = quarterDateRange(4);
+    this.inputCurrencyProps = {
+      placeholder: 'e.g. $10,000',
+      format: {
+        mantissa: 2,
+        trimMantissa: false,
+        thousandSeparated: true
+      },
+      inline: true,
+      min: 0,
+      step: 0.01,
+      showButtons: false
+    };
   }
 
   render() {
     const { applyAll, submitted } = this.state;
     const { inputLabel, applyAllLabel } = inputProps;
-    const inputCurrencyProps = {
-      placeholder: 'e.g. $10,000',
-      format: {
-        mantissa: 0,
-        trimMantissa: false,
-        thousandSeparated: true
-      },
-      required: true,
-      inline: true,
-      min: 0,
-      step: 10,
-      showButtons: false
-    };
+
     return(
       <FormProvider>
         <Form>
@@ -55,18 +56,18 @@ class Calculator extends Component {
           (formContext) => (
             <Fragment>
               <InputCurrency
-                {... inputCurrencyProps}
+                {... this.inputCurrencyProps}
                 labelText={`${this.q1.qStart} – ${this.q1.qEnd} ${inputLabel}`}
                 id="quarter1"
                 name="quarter1"
-                onChange={(value, id) => {
-                  if (!Number.isNaN(value)) {
-                    formContext.setValue({ id, value });
-                    if (applyAll) {
-                      formContext.setValue({ id: 'quarter2', value });
-                      formContext.setValue({ id: 'quarter3', value });
-                      formContext.setValue({ id: 'quarter4', value });
-                    }
+                onBlur={(val, { id }) => {
+                  // convert val to currency then set it to context
+                  const value = toCurrency(val);
+                  formContext.setValue({ id, value });
+                  if (applyAll) {
+                    formContext.setValue({ id: 'quarter2', value });
+                    formContext.setValue({ id: 'quarter3', value });
+                    formContext.setValue({ id: 'quarter4', value });
                   }
                 }}
               />
@@ -86,32 +87,38 @@ class Calculator extends Component {
                 }}
               />
               <InputCurrency
-                {... inputCurrencyProps}
+                {... this.inputCurrencyProps}
                 labelText={`${this.q2.qStart} – ${this.q2.qEnd} ${inputLabel}`}
                 id="quarter2"
                 name="quarter2"
                 disabled={applyAll}
-                onChange={(value, id) => {
+                onBlur={(val, { id }) => {
+                  // convert val to currency then set it to context
+                  const value = toCurrency(val);
                   formContext.setValue({ id, value });
                 }}
               />
               <InputCurrency
-                {... inputCurrencyProps}
+                {... this.inputCurrencyProps}
                 labelText={`${this.q3.qStart} – ${this.q3.qEnd} ${inputLabel}`}
                 id="quarter3"
                 name="quarter3"
                 disabled={applyAll}
-                onChange={(value, id) => {
+                onBlur={(val, { id }) => {
+                  // convert val to currency then set it to context
+                  const value = toCurrency(val);
                   formContext.setValue({ id, value });
                 }}
               />
               <InputCurrency
-                {... inputCurrencyProps}
+                {... this.inputCurrencyProps}
                 labelText={`${this.q4.qStart} – ${this.q4.qEnd} ${inputLabel}`}
                 id="quarter4"
                 name="quarter4"
                 disabled={applyAll}
-                onChange={(value, id) => {
+                onBlur={(val, { id }) => {
+                  // convert val to currency then set it to context
+                  const value = toCurrency(val);
                   formContext.setValue({ id, value });
                 }}
               />

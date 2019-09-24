@@ -31,9 +31,12 @@ const Output = (props) => {
     weeksInTopQuarters = 13;
   }
   const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
-  const weeklyBenefit = 1 / 2 * topQuartersSum / weeksInTopQuarters;
-  // final weekly benefit is rounded to the nearest dollar amount
-  const weeklyBenefitFinal = weeklyBenefit > weeklyBenefitMax ? weeklyBenefitMax : weeklyBenefit;
+  // average weekly pay is rounded up to the nearest dollar
+  const avgWeeklyPay = Math.ceil(topQuartersSum / weeksInTopQuarters);
+  // weekly benefit is rounded down to the nearest dollar amount
+  const weeklyBenefit = Math.floor(1 / 2 * avgWeeklyPay);
+  // WeeklyBenefitFinal is making sure that the weeklyBenefit never exceeds the maximum
+  const weeklyBenefitFinal = Math.min(weeklyBenefit, weeklyBenefitMax);
 
   // qualifications
   const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
@@ -45,9 +48,10 @@ const Output = (props) => {
 
   // max benefit credit
   const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
-  const maxBenefitOption2 = maxBenefitRatio * quartersSum;
-  const maxBenefitFinal = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption2 : maxBenefitOption1;
-  const maxBenefitOther = maxBenefitOption1 > maxBenefitOption2 ? maxBenefitOption1 : maxBenefitOption2;
+  // quartersSum will have cents when wages input contains cents, maxBeneiftFinal is rounded down to the nearest dollar
+  const maxBenefitOption2 = Math.floor(maxBenefitRatio * quartersSum);
+  const maxBenefitFinal = Math.floor(Math.min(maxBenefitOption1, maxBenefitOption2));
+  const maxBenefitOther = Math.max(maxBenefitOption1, maxBenefitOption2);
 
   // benefit duration
   const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
@@ -60,6 +64,7 @@ const Output = (props) => {
   const helpTextDisqualification1 = `You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible.`;
   const helpTextDisqualification2 = `Your total base period wages of ${toCurrency(quartersSum)} must be equal to or greater than ${toCurrency(weeklyBenefitFinal * 30)} (your weekly benefit amount x 30) to be eligible.`;
   const maxBenefitDurationDisclaimer = 'The maximum number of weeks you can receive full unemployment benefits is 30 weeks (capped at 26 weeks during periods of extended benefits and low unemployment). However, many individuals qualify for less than 30 weeks of coverage.';
+  const roundingDisclaimer = 'Note: Calculations are rounded to whole dollar amounts.';
 
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">
@@ -69,6 +74,11 @@ const Output = (props) => {
         <Fragment>
           <Paragraph text={quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q} />
           <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefitFinal)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${quartersCount > 2 ? helpTextWeeks2Q : helpTextWeeks1Q}`} /></div>
+          { !Number.isInteger(topQuartersSum) && (
+            <div className="ma__disclaimer">
+              {roundingDisclaimer}
+            </div>
+          )}
         </Fragment>
       )}
     </div>
@@ -105,6 +115,11 @@ const Output = (props) => {
           </li>
         </ul>
         <Paragraph text={`Since ${toCurrency(maxBenefitFinal)} is less than ${toCurrency(maxBenefitOther)}, your maximum benefit credit is <strong>${toCurrency(maxBenefitFinal)}</strong>.`} />
+        { !Number.isInteger(quartersSum) && (
+          <div className="ma__disclaimer">
+            {roundingDisclaimer}
+          </div>
+        )}
       </Fragment>
     </div>
   );

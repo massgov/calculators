@@ -109,13 +109,8 @@ const mainNav = [
         "active": false
       },
       {
-        "href": "https://www.mass.gov/topics/for-state-employees",
+        "href": "https://www.mass.gov/topics/state-employee-resources",
         "text": "For State Employees",
-        "active": false
-      },
-      {
-        "href": "https://www.mass.gov/topics/apprenticeships",
-        "text": "Apprenticeships",
         "active": false
       }
     ]
@@ -158,7 +153,7 @@ const mainNav = [
     ]
   },
   {
-    "href": "https://www.mass.gov/topics/visiting-exploring",
+    "href": "https://www.mass.gov/topics/exploring-massachusetts",
     "text": "Visiting & Exploring",
     "active": false,
     "subNav": [
@@ -168,13 +163,33 @@ const mainNav = [
         "active": false
       },
       {
-        "href": "https://www.mass.gov/topics/visiting-massachusetts",
-        "text": "Visiting Massachusetts",
+        "href": "https://www.mass.gov/topics/fishing-hunting",
+        "text": "Hunting & Fishing",
         "active": false
       },
       {
-        "href": "https://www.mass.gov/topics/hunting-fishing",
-        "text": "Hunting & Fishing",
+        "href": "https://www.mass.gov/topics/historic-sites",
+        "text": "Historic Sites",
+        "active": false
+      },
+      {
+        "href": "https://www.mass.gov/topics/arts",
+        "text": "Arts",
+        "active": false
+      },
+      {
+        "href": "https://www.mass.gov/topics/family-fun",
+        "text": "Family Fun",
+        "active": false
+      },
+      {
+        "href": "https://www.mass.gov/topics/travel-options",
+        "text": "Travel Options",
+        "active": false
+      },
+      {
+        "href": "https://www.mass.gov/topics/seasonal-activities",
+        "text": "Seasonal Activities",
         "active": false
       }
     ]
