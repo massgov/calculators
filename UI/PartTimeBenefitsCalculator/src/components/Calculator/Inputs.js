@@ -9,12 +9,7 @@ const inputCurrencyProps = {
   defaultValue: null,
   step: 1,
   min: 0,
-  showButtons: false,
-  format: {
-    mantissa: 0,
-    trimMantissa: false,
-    thousandSeparated: true
-  }
+  showButtons: false
 };
 
 export const QuestionOne = (props) => {
@@ -26,6 +21,11 @@ export const QuestionOne = (props) => {
       name="weekly-benefits"
       max={795}
       onChange={handleChange}
+      format={{
+        mantissa: 0,
+        trimMantissa: false,
+        thousandSeparated: true
+      }}
       {...inputCurrencyProps}
     />
   );
@@ -40,6 +40,11 @@ export const QuestionTwo = (props) => {
       required
       id="weekly-earnings"
       name="weekly-earnings"
+      format={{
+        mantissa: 2,
+        trimMantissa: false,
+        thousandSeparated: true
+      }}
       onChange={handleChange}
       {...inputCurrencyProps}
     />

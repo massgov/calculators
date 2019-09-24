@@ -17,7 +17,7 @@ const Calculator = () => (
       {
           (formContext) => {
             const handleChange = (newVal, id) => {
-              const weeklyBenefits = toNumber(formContext.getValue('weekly-benefits'));
+              const weeklyBenefits = Math.round(toNumber(formContext.getValue('weekly-benefits')));
               const weeklyEarnings = toNumber(formContext.getValue('weekly-earnings'));
               const earningsDisregard = toNumber(formContext.getValue('earnings-disregard'));
               // round earningsOverDis up to the next largest dollar amount
