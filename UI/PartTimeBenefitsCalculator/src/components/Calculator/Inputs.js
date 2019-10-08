@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { InputCurrency } from '@massds/mayflower-react';
+import variables from '../../data/variables.json';
 
 const inputCurrencyProps = {
   inline: true,
@@ -12,6 +13,8 @@ const inputCurrencyProps = {
   showButtons: false
 };
 
+const { weeklyBenefitMax } = variables;
+
 export const QuestionOne = (props) => {
   const { handleChange } = props;
   return(
@@ -19,7 +22,7 @@ export const QuestionOne = (props) => {
       labelText="What is your weekly benefit amount?"
       id="weekly-benefits"
       name="weekly-benefits"
-      max={823}
+      max={weeklyBenefitMax}
       onChange={handleChange}
       format={{
         mantissa: 0,
