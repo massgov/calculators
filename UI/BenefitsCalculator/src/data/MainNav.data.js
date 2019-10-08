@@ -220,6 +220,11 @@ const mainNav = [
         "active": false
       },
       {
+        "href": "https://www.mass.gov/topics/cities-towns",
+        "text": "Cities & Towns",
+        "active": false
+      },
+      {
         "href": "https://www.mass.gov/state-a-to-z",
         "text": "State Offices & Courts A-Z",
         "active": false
