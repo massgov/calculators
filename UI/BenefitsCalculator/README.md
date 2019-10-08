@@ -29,5 +29,5 @@ Welcome to the Commonwealth of Massachusetts' Single Page Application (SPA), pow
 
 ## [Business Logic](./docs/README.md)
 ### Update the Max Benefits Duration
-Because the max benefits duration changes between 26 and 30 weeks based on the state unemployment level, it is pulled into the variable `maxBenefitDuration` in [Variables](../src/data/variables.json) so that it's easy to update. 
-To change max benefit duration from 26 weeks to 30 weeks, change `maxBenefitDuration` in [Variables](../src/data/variables.json) to `30`.
+Because the max benefits duration changes between 26 and 30 weeks based on the state unemployment level, it is pulled into the variable `maxBenefitDuration` in [Variables](../BenefitsCalculator/src/data/variables.json) so that it's easy to update. 
+To change max benefit duration from 26 weeks to 30 weeks, change `maxBenefitDuration` in [Variables](../BenefitsCalculator/src/data/variables.json) to `30`.
