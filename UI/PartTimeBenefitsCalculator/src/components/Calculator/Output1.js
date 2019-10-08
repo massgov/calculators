@@ -15,7 +15,7 @@ const OutputOne = () => (
       { (inputContext) => {
         const maxEarningsDisregard = toNumber(795 / 3);
         const earningsDisregard = inputContext.getValue() > maxEarningsDisregard ? maxEarningsDisregard : toNumber(inputContext.getValue());
-        const maxEarningsDisregardMessage = toNumber(inputContext.getValue()) > maxEarningsDisregard ? `Your weekly benefits is capped at ${toCurrency(795)}. ` : '';
+        const maxEarningsDisregardMessage = toNumber(inputContext.getValue()) > maxEarningsDisregard ? `Your weekly benefits is capped at ${toCurrency(823)}. ` : '';
         // This value is stored in formContext as well under id "earnings-disregard".
         // This input re-renders when earnings-disregard is updated with a new value.
         if (inputContext.getValue() > 0) {
