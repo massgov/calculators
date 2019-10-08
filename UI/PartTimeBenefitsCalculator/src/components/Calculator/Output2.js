@@ -82,7 +82,6 @@ export const ScenarioTwo = () => {
           const weeklyBenefits = toNumber(values['weekly-benefits']);
           const weeklyEarnings = toNumber(values['weekly-earnings']);
           const earningsDisregard = toNumber(values['earnings-disregard']);
-          console.log( earningsDisregard)
           const earningsOverDisDisclaimer = '*The earnings over earnings exclusion is always rounded up to the nearest dollar amount.';
           if (
             showScenario
