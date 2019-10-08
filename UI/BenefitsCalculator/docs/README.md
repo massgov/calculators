@@ -12,7 +12,7 @@ There are 4 variables that are constants. Here are their values:
 ```
 maxBenefitDuration = 26
 quartersSumThreshhold = 4700
-weeklyBenefitMax = 795
+weeklyBenefitMax = 823
 maxBenefitRatio = 0.36
 ```
 
