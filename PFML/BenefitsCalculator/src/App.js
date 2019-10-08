@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Footer, PageHeader, Collapse, ButtonFixedFeedback } from '@massds/mayflower-react';
+import { Header, Footer, PageHeader, Collapse } from '@massds/mayflower-react';
 import { decode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery, encode } from 'react-url-query';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
@@ -149,7 +149,6 @@ class App extends Component {
               </Collapse>
             }
           </section>
-          {process.env.REACT_APP_IFRAME === 'false' && <ButtonFixedFeedback href="https://www.mass.gov/feedback" />}
         </main>
         {process.env.REACT_APP_IFRAME === 'false' && <Footer {...this.footerProps} />}
       </div>
