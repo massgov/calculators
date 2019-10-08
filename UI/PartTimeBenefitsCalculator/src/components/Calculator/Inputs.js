@@ -19,7 +19,7 @@ export const QuestionOne = (props) => {
       labelText="What is your weekly benefit amount?"
       id="weekly-benefits"
       name="weekly-benefits"
-      max={795}
+      max={823}
       onChange={handleChange}
       format={{
         mantissa: 0,
