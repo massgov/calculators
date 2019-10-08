@@ -19,7 +19,7 @@ const Calculator = () => (
             const handleChange = (newVal, id) => {
               const weeklyBenefits = Math.round(toNumber(formContext.getValue('weekly-benefits')));
               const weeklyEarnings = toNumber(formContext.getValue('weekly-earnings'));
-              const earningsDisregard = toNumber(formContext.getValue('earnings-disregard'));
+              const earningsDisregard = toNumber(weeklyBenefits * (1 / 3));
               // round earningsOverDis up to the next largest dollar amount
               const earningsOverDis = Math.ceil(weeklyEarnings - earningsDisregard);
               const reducedBenefit = weeklyBenefits - earningsOverDis;
@@ -27,8 +27,7 @@ const Calculator = () => (
               if (id === 'weekly-benefits') {
                 if (formContext.hasId('weekly-benefits')) {
                   if (!Number.isNaN(weeklyBenefits)) {
-                    const earningsDisregardCalc = (weeklyBenefits * (1 / 3));
-                    formContext.setValue({ id: 'earnings-disregard', value: earningsDisregardCalc });
+                    formContext.setValue({ id: 'earnings-disregard', value: earningsDisregard });
                   } else {
                     formContext.setValue({ id: 'earnings-disregard', value: 0 });
                   }
