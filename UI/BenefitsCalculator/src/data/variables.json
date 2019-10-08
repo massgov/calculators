@@ -1,8 +1,8 @@
 {
   "title": "Unemployment Benefits Calculator",
-  "description": ["If you are eligible to receive unemployment benefits, you will receive a weekly benefit amount of approximately 50% of your average weekly wage, up to the maximum set by law. As of October 2018, the maximum weekly benefit amount is $795 per week.", "This calculator helps you estimate your benefits. It is only advisory. You will be notified of your outcome and benefit determination 3-4 weeks after you apply."],
+  "description": ["If you are eligible to receive unemployment benefits, you will receive a weekly benefit amount of approximately 50% of your average weekly wage, up to the maximum set by law. As of October 2019, the maximum weekly benefit amount is $823 per week.", "This calculator helps you estimate your benefits. It is only advisory. You will be notified of your outcome and benefit determination 3-4 weeks after you apply."],
 	"maxBenefitDuration": 26,
   "quartersSumThreshhold": 4700,
-  "weeklyBenefitMax": 795,
+  "weeklyBenefitMax": 823,
   "maxBenefitRatio": 0.36
 }
