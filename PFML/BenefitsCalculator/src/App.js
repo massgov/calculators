@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { Header, Footer, PageHeader, Collapse, ButtonFixedFeedback } from '@massds/mayflower-react';
-import { decode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery, encode } from 'react-url-query';
+import {
+  Header, Footer, PageHeader, Collapse, ButtonFixedFeedback
+} from '@massds/mayflower-react';
+import {
+  decode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery, encode
+} from 'react-url-query';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
@@ -90,7 +94,8 @@ class App extends Component {
     this.setState({
       yearIncome: numberValue
     });
-    this.props.onChangeYearIncome(value);
+    const { onChangeYearIncome } = this.props;
+    onChangeYearIncome(value);
     if (numberValue >= BenefitsVariables.baseVariables.minSalary) {
       this.setState({
         belowMinSalary: false
@@ -111,7 +116,8 @@ class App extends Component {
       maxWeeks,
       leaveReason: selected
     });
-    this.props.onChangeLeaveReason(selected);
+    const { onChangeLeaveReason } = this.props;
+    onChangeLeaveReason(selected);
   }
 
   handleBlur = (numberValue) => {
@@ -141,12 +147,14 @@ class App extends Component {
             <Part1 error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
             <hr />
             <Part2 onChange={this.handleInput} onBlur={this.handleBlur} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalaryConv} />
-            {yearIncome > 0 && maxWeeks > 0 &&
+            {yearIncome > 0 && maxWeeks > 0
+              && (
               <Collapse in={yearIncome >= BenefitsVariables.baseVariables.minSalary} dimension="height" className="ma__callout-alert">
                 <div className="ma__collapse">
                   <Part3 yearIncome={yearIncome} maxWeeks={maxWeeks} leaveReason={leaveReason} />
                 </div>
               </Collapse>
+              )
             }
           </section>
           {process.env.REACT_APP_IFRAME === 'false' && <ButtonFixedFeedback href="https://www.mass.gov/feedback" />}

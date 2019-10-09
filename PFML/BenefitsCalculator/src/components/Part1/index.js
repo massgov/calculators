@@ -64,9 +64,9 @@ class Part1 extends Component {
       theme: messageTheme,
       icon: messageTheme === 'c-error-red' ? {
         name: 'alert',
-        ariaHidden: true 
-      } : null 
-    }
+        ariaHidden: true
+      } : null
+    };
     return(
       <Fragment>
         <InputRadioGroup {...radioGroupProps} />

@@ -17,9 +17,9 @@ const Part2 = (props) => {
     theme: messageTheme,
     icon: messageTheme === 'c-error-red' ? {
       name: 'alert',
-      ariaHidden: true 
-    } : null 
-  }
+      ariaHidden: true
+    } : null
+  };
   return(
     <Fragment>
       <InputCurrency
@@ -46,7 +46,7 @@ const Part2 = (props) => {
       />
       {
         belowMinSalary && !disabled && defaultValue > 0 && (
-          <CalloutAlert {...callProps} >
+          <CalloutAlert {...callProps}>
             <Paragraph text={message} />
           </CalloutAlert>
         )
