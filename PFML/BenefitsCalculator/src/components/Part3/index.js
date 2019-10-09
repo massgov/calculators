@@ -81,7 +81,7 @@ const Part3 = (props) => {
   );
   return(
     <Fragment>
-      <CalloutAlert theme="c-primary" icon={{ name: '', ariaHidden: true }}>
+      <CalloutAlert theme="c-primary" icon={null}>
         <HelpTip
           theme="c-white"
           text={`${paragraphOne.partOne} <strong>${toCurrency(estWeeklyBenefit)}</strong>${paragraphOne.partTwo} <strong>${toPercentage(percentWeeklyIncome)}</strong> ${paragraphOne.partThree}`}

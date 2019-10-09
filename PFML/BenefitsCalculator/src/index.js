@@ -1,7 +1,8 @@
 import 'react-app-polyfill/ie9';
-import 'core-js/es6/number';
-import 'core-js/es6/object';
-import 'core-js/es6/array';
+import 'react-app-polyfill/stable';
+import 'core-js/features/object';
+import 'core-js/features/array';
+import 'core-js/features/number';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { configureUrlQuery } from 'react-url-query';

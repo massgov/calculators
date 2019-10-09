@@ -60,12 +60,19 @@ class Part1 extends Component {
     };
     const { message, messageTheme } = this.state;
     const open = !!message;
+    const callProps = {
+      theme: messageTheme,
+      icon: messageTheme === 'c-error-red' ? {
+        name: 'alert',
+        ariaHidden: true 
+      } : null 
+    }
     return(
       <Fragment>
         <InputRadioGroup {...radioGroupProps} />
         <Collapse in={open} dimension="height" className="ma__callout-alert">
           <div className="ma__collapse">
-            <CalloutAlert theme={messageTheme} icon={{ name: messageTheme === 'c-error-red' ? 'alert' : '', ariaHidden: true }}>
+            <CalloutAlert {...callProps}>
               <Paragraph text={message} />
             </CalloutAlert>
           </div>
