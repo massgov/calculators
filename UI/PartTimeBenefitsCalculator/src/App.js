@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import {
-  Header, Footer, PageHeader, ButtonFixedFeedback
+  Header, Footer, PageHeader
 } from '@massds/mayflower-react';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
@@ -55,7 +55,6 @@ class App extends Component {
                   <Calculator />
                 </div>
               </section>
-              <ButtonFixedFeedback href="https://www.mass.gov/feedback" />
             </main>
             <Footer {...this.footerProps} />
           </Fragment>
