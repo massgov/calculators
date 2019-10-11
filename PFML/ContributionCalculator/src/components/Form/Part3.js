@@ -55,9 +55,14 @@ const Part3 = (props) => {
             } = context;
 
             // The medical leave contribution percent
-            const medPercent = Math.round(totContribution * totMedPercent * 1e4) / 1e4;
+            const medPercent = totContribution * totMedPercent;
+            /* Keeping if desire to round to 4 decimal places in future
+               const medPercent = Math.round(totContribution * totMedPercent * 1e4) / 1e4; */
             // The family leave contribution percent
-            const famPercent = Math.round(totContribution * totFamPercent * 1e4) / 1e4;
+            const famPercent = totContribution * totFamPercent;
+            /* Keeping if desire to round to 4 decimal places in future
+               const famPercent = Math.round(totContribution * totFamPercent * 1e4) / 1e4; */
+
 
             // The following determines the total payroll ($) to consider for the contribution calculations.
             let totalPayroll;
