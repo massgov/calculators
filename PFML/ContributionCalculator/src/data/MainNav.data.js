@@ -109,13 +109,8 @@ const mainNav = [
         "active": false
       },
       {
-        "href": "https://www.mass.gov/topics/for-state-employees",
+        "href": "https://www.mass.gov/topics/state-employee-resources",
         "text": "For State Employees",
-        "active": false
-      },
-      {
-        "href": "https://www.mass.gov/topics/apprenticeships",
-        "text": "Apprenticeships",
         "active": false
       }
     ]
@@ -168,7 +163,7 @@ const mainNav = [
         "active": false
       },
       {
-        "href": "https://www.mass.gov/topics/hunting-fishing",
+        "href": "https://www.mass.gov/topics/fishing-hunting",
         "text": "Hunting & Fishing",
         "active": false
       },
@@ -222,6 +217,11 @@ const mainNav = [
       {
         "href": "https://www.mass.gov/topics/judicial-branch",
         "text": "Judicial",
+        "active": false
+      },
+      {
+        "href": "https://www.mass.gov/topics/cities-towns",
+        "text": "Cities & Towns",
         "active": false
       },
       {
