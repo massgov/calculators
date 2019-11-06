@@ -241,7 +241,7 @@ const Part2 = (props) => {
                               id="help-tip-tot-emp-ann-cont"
                               helpText={over25 ? (
                                 // over 25 total medLeave calculation
-                                [`Total Contribution: ${toCurrency(famPayment + medPayment)} = ${toCurrency(payrollWagesCap)} X ${toPercentage(totalPercent, 5)}`]
+                                [`Total Contribution: ${toCurrency(famPayment + medPayment)} = ${toCurrency(payrollWagesCap)} X ${toPercentage(totalPercent, 2)}`]
                               ) : (
                                 // under 25 total medLeave calculation
                                 [`Total Contribution: ${toCurrency(famPayment + medPayment)} = (${toCurrency(payrollWagesCap)} X ${toPercentage(famPercent, 5)}) + (${toCurrency(payrollWagesCap)} X ${toPercentage(medPercent, 5)} X ${empMedContPercent})`]
