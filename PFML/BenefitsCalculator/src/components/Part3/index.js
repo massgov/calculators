@@ -88,6 +88,7 @@ const Part3 = (props) => {
           triggerText={[`<strong>${toCurrency(estWeeklyBenefit)}</strong>`]}
           id="help-tip-benefits"
           labelID="help-tip-benefits-label"
+          bypassMobileStyle={process.env.REACT_APP_IFRAME !== 'false'}
         >
           {getHelpText()}
         </HelpTip>

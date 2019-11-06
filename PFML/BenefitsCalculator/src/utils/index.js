@@ -12,6 +12,6 @@ export const getHelpTip = (question, theme, key) => (
     helpText={question.helpText}
     key={key}
     hasMarkup
-    bypassMobileStyle={false}
+    bypassMobileStyle={process.env.REACT_APP_IFRAME !== 'false'}
   />
 );

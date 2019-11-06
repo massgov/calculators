@@ -25,6 +25,7 @@ export const getHelpTip = (question, theme, key) => {
       theme={theme || 'c-primary'}
       helpText={question.helpText}
       key={key}
+      bypassMobileStyle={process.env.REACT_APP_IFRAME !== 'false'}
     />
   );
 };

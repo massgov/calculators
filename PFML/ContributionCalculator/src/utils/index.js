@@ -28,7 +28,7 @@ export const getHelpTip = ({
       helpText={newHelpText}
       id={key}
       hasMarkup
-      bypassMobileStyle={false}
+      bypassMobileStyle={process.env.REACT_APP_IFRAME !== 'false'}
       theme={theme || 'c-primary'}
     />
   );
