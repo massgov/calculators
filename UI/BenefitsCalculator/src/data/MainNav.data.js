@@ -164,7 +164,7 @@ const mainNav = [
       },
       {
         "href": "https://www.mass.gov/topics/fishing-hunting",
-        "text": "Hunting & Fishing",
+        "text": "Fishing & Hunting",
         "active": false
       },
       {
