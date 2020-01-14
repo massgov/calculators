@@ -1,7 +1,7 @@
 # Unemployment Benefits calculator documentation
 Use this documentation to learn where the formulas live and how the calculator formula was created.
 ## Calculator Logic
-The calculator takes in up to 4 inputs from the user for each of their quarterly wages, and tells the user if they are eligible to receive benefits or not. If they may be eligible to receive benefits, the calulator tells the user: (1) weekly benefit amount, (2) number of weeks they'll receive benefits, and (3) maximum benefit credit amount. 
+The calculator takes in up to 4 inputs from the user for each of their quarterly wages, and tells the user if they are eligible to receive benefits or not. If they may be eligible to receive benefits, the calulator tells the user: (1) weekly benefit amount, (2) number of weeks they'll receive benefits, and (3) maximum benefit credit amount.
 The main logic of the calculator lives in these files:
 - [Variables](../src/data/variables.json)
 - [Input](../src/components/Form/index.js)
@@ -11,7 +11,7 @@ The main logic of the calculator lives in these files:
 There are 4 variables that are constants. Here are their values:
 ```
 maxBenefitDuration = 26
-quartersSumThreshhold = 4700
+quartersSumThreshhold = 5100
 weeklyBenefitMax = 823
 maxBenefitRatio = 0.36
 ```
@@ -21,14 +21,14 @@ To change max benefit duration from 26 weeks to 30 weeks, change `maxBenefitDura
 
 ## Inputs
 
-Inputs consist of 4 currency inputs for total quarterly wages. The user can use the checkbox to apply the first quarter wages to all quarters. Once they add the wages, they click the "See benefits" button. 
+Inputs consist of 4 currency inputs for total quarterly wages. The user can use the checkbox to apply the first quarter wages to all quarters. Once they add the wages, they click the "See benefits" button.
 
 *Image 1: Input fields in the calculator*
 ![input screenshot](./media/input.png)
 
 
 ### 1. Currency input
-The labels for the 4 currency inputs are date ranges calculated based on the current date. This is the quarter data range calculator logic: 
+The labels for the 4 currency inputs are date ranges calculated based on the current date. This is the quarter data range calculator logic:
 ```
 const quarterCurrent = moment().quarter();
 const quarterDateRange = (quartersAgo) => {
@@ -51,7 +51,7 @@ The submit button will take the values from the user inputs and render the new o
 ----
 ## Outputs
 
-The calculator first checks if a person is eligible to qualify for unemployment benefits. If a person is eligible, then it calculates a weekly benefit amount, a max benefit credit amount, and the number of weeks a user will receive benefits. 
+The calculator first checks if a person is eligible to qualify for unemployment benefits. If a person is eligible, then it calculates a weekly benefit amount, a max benefit credit amount, and the number of weeks a user will receive benefits.
 
 1. Determining eligibility
   * 1.a Qualification 1
@@ -66,7 +66,7 @@ There are two eligibility thresholds for the wages to meet for being qualified f
 
 #### 1.a Qualification1
 
-The first qualification is that the total wages is no less than the threshold of $4,700. This is the calculation formula: 
+The first qualification is that the total wages is no less than the threshold of $5,100. This is the calculation formula:
 ```
   const qualification1 = !(quartersSum < quartersSumThreshhold);
 ```
@@ -79,7 +79,7 @@ Enter `$1,000.00` in all 4 quarters
 ![sample qualification 1 screenshot](./media/output-disqualification1.png)
 
 #### 1.b Qualification2
-The second qualification is that total wages is no less than 30 times the `weeklyBenefitFinal`. This is the calculation formula: 
+The second qualification is that total wages is no less than 30 times the `weeklyBenefitFinal`. This is the calculation formula:
 ```
   const qualification2 = !(quartersSum < (30 * weeklyBenefitFinal));
 ```
@@ -93,7 +93,7 @@ Q2: $1,538 or any amount that is less than $1,550
 
 
 
-### 2. Determining benefits 
+### 2. Determining benefits
 #### 2.a Weekly benefit amount (WBA)
 WBA calculation is broken down in 4 steps:
 
@@ -129,7 +129,7 @@ const weeklyBenefit = Math.floor(1 / 2 * avgWeeklyPay);
 > Note: weekly benefit is rounded *down* to the nearest dollar amount
 
 **Step 4.** Make sure that the final weekly benefit amount (`WeeklyBenefitFinal`) never exceeds the maximum weekly benefits amount (`weeklyBenefitMax`).
-This is the calculation formula: 
+This is the calculation formula:
 ```
 const weeklyBenefitFinal = Math.min(weeklyBenefit, weeklyBenefitMax);
 ```
@@ -138,7 +138,7 @@ const weeklyBenefitFinal = Math.min(weeklyBenefit, weeklyBenefitMax);
 For more details, see `weeklyBenefitMax` in [Variables](../src/data/variables.json).
 
 ##### Calculating benefits scenarios
-This section explains how the calculator displays information to users in different scenarios. 
+This section explains how the calculator displays information to users in different scenarios.
 
 **Scenario where weekly benefit amount does not exceed the maximum**  
 
@@ -165,7 +165,7 @@ Enter `$10,000.25` in all 4 quarters
 
 
 #### 2.b Max benefits credit calculation
-Here is the calculator formula for the max benefits credit: 
+Here is the calculator formula for the max benefits credit:
 ```
 const maxBenefitOption1 = maxBenefitDuration * weeklyBenefitFinal;
 const maxBenefitOption2 = Math.floor(maxBenefitRatio * quartersSum);
