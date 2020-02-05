@@ -45,13 +45,9 @@ const Part2 = (props) => {
                 payrollW2, payroll1099, payrollWages, employeesW2
               }
             } = context;
-            const medPercent = ((totContribution * 1e4) * (totMedPercent * 1e4)) / (1e4 * 1e4);
-            /* Keeping if desire to round to 4 decimal places in future
-               const medPercent = Math.round(totContribution * totMedPercent * 1e4) / 1e4; */
+            const medPercent = Math.round(totContribution * totMedPercent * 1e4) / 1e4;
             const medPayrollPercent = over25 ? (largeCompMedCont + empMedCont) : empMedCont;
-            const famPercent = ((totContribution * 1e4) * (totFamPercent * 1e4)) / (1e4 * 1e4);
-            /* Keeping if desire to round to 4 decimal places in future
-               const famPercent = Math.round(totContribution * totFamPercent * 1e4) / 1e4; */
+            const famPercent = Math.round(totContribution * totFamPercent * 1e4) / 1e4;
             const totalPercent = medPercent + famPercent;
             let totalPayroll;
             if (payrollBase === 'all' && employeesW2 > 0) {
