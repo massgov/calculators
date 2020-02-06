@@ -45,13 +45,9 @@ const Part2 = (props) => {
                 payrollW2, payroll1099, payrollWages, employeesW2
               }
             } = context;
-            const medPercent = ((totContribution * 1e4) * (totMedPercent * 1e4)) / (1e4 * 1e4);
-            /* Keeping if desire to round to 4 decimal places in future
-               const medPercent = Math.round(totContribution * totMedPercent * 1e4) / 1e4; */
+            const medPercent = Math.round(totContribution * totMedPercent * 1e4) / 1e4;
             const medPayrollPercent = over25 ? (largeCompMedCont + empMedCont) : empMedCont;
-            const famPercent = ((totContribution * 1e4) * (totFamPercent * 1e4)) / (1e4 * 1e4);
-            /* Keeping if desire to round to 4 decimal places in future
-               const famPercent = Math.round(totContribution * totFamPercent * 1e4) / 1e4; */
+            const famPercent = Math.round(totContribution * totFamPercent * 1e4) / 1e4;
             const totalPercent = medPercent + famPercent;
             let totalPayroll;
             if (payrollBase === 'all' && employeesW2 > 0) {
@@ -168,7 +164,7 @@ const Part2 = (props) => {
                               [`${toCurrency(famCompPayment + medCompPayment)} = ${toCurrency(totalPayroll)} X ${toPercentage(totalPercent, 2)}`]
                             ) : (
                               // under 25 total medLeave calculation
-                              [`${toCurrency(famCompPayment + medCompPayment)} = (${toCurrency(totalPayroll)} X ${toPercentage(famPercent, 5)}) + (${toCurrency(totalPayroll)} X ${toPercentage(medPercent, 5)} X ${empMedContPercent})`]
+                              [`${toCurrency(famCompPayment + medCompPayment)} = (${toCurrency(totalPayroll)} X ${toPercentage(famPercent, 2)}) + (${toCurrency(totalPayroll)} X ${toPercentage(medPercent, 2)} X ${empMedContPercent})`]
                             )
                             }
                           />
@@ -181,10 +177,10 @@ const Part2 = (props) => {
                               bypassMobileStyle={process.env.REACT_APP_IFRAME !== 'false'}
                             >
                               <div className="ma__help-text">
-                                Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent, 5)}
+                                Family Leave: {toCurrency(famPercent * totalPayroll)} = {toCurrency(totalPayroll)} X {toPercentage(famPercent, 2)}
                               </div>
                               <div className="ma__help-text">
-                                Medical Leave: {toCurrency(medPercent * totalPayroll * medPayrollPercent)} = {toCurrency(totalPayroll)} X { over25 ? toPercentage(medPercent, 5) : <span>{toPercentage(medPercent, 5)} X {empMedContPercent}</span>}
+                                Medical Leave: {toCurrency(medPercent * totalPayroll * medPayrollPercent)} = {toCurrency(totalPayroll)} X { over25 ? toPercentage(medPercent, 2) : <span>{toPercentage(medPercent, 2)} X {empMedContPercent}</span>}
                               </div>
                             </HelpTip>
                           </p>
@@ -244,7 +240,7 @@ const Part2 = (props) => {
                                 [`Total Contribution: ${toCurrency(famPayment + medPayment)} = ${toCurrency(payrollWagesCap)} X ${toPercentage(totalPercent, 2)}`]
                               ) : (
                                 // under 25 total medLeave calculation
-                                [`Total Contribution: ${toCurrency(famPayment + medPayment)} = (${toCurrency(payrollWagesCap)} X ${toPercentage(famPercent, 5)}) + (${toCurrency(payrollWagesCap)} X ${toPercentage(medPercent, 5)} X ${empMedContPercent})`]
+                                [`Total Contribution: ${toCurrency(famPayment + medPayment)} = (${toCurrency(payrollWagesCap)} X ${toPercentage(famPercent, 2)}) + (${toCurrency(payrollWagesCap)} X ${toPercentage(medPercent, 2)} X ${empMedContPercent})`]
                               )
                               }
                               theme="c-white"
@@ -257,9 +253,9 @@ const Part2 = (props) => {
                               theme="c-white"
                               bypassMobileStyle={process.env.REACT_APP_IFRAME !== 'false'}
                             >
-                              <div className="ma__help-text">Family Leave: {toCurrency(famPayment)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 5)}
+                              <div className="ma__help-text">Family Leave: {toCurrency(famPayment)} = {toCurrency(payrollWagesCap)} X {toPercentage(famPercent, 2)}
                               </div>
-                              <div className="ma__help-text">Medical Leave: {toCurrency(medPayment)} = {toCurrency(payrollWagesCap)} X { over25 ? toPercentage(medPercent, 5) : <span>{toPercentage(medPercent, 5)} X {empMedContPercent}</span>}
+                              <div className="ma__help-text">Medical Leave: {toCurrency(medPayment)} = {toCurrency(payrollWagesCap)} X { over25 ? toPercentage(medPercent, 2) : <span>{toPercentage(medPercent, 2)} X {empMedContPercent}</span>}
                               </div>
                             </HelpTip>
                           </p>
