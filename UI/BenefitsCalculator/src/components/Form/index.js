@@ -73,6 +73,7 @@ class Calculator extends Component {
               />
               <InputCheckBox
                 id="apply-all"
+                value="apply-all"
                 label={applyAllLabel}
                 icon={{ name: '', ariaHidden: true }}
                 defaultValue={false}
