@@ -164,7 +164,7 @@ const mainNav = [
       },
       {
         "href": "https://www.mass.gov/topics/fishing-hunting",
-        "text": "Hunting & Fishing",
+        "text": "Fishing & Hunting",
         "active": false
       },
       {
@@ -225,11 +225,17 @@ const mainNav = [
         "active": false
       },
       {
-        "href": "https://www.mass.gov/state-a-to-z",
+        "href": "https://www.mass.gov/info-details/massachusetts-state-organizations-a-to-z",
         "text": "State Offices & Courts A-Z",
         "active": false
       }
     ]
+  },
+  {
+    "href": "https://www.mass.gov/info-details/covid-19-updates-and-information",
+    "text": "COVID-19",
+    "active": false,
+    "subNav": []
   }
 ];
 export default { mainNav };
