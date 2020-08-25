@@ -13,6 +13,7 @@ import SocialLinksLiveData from './data/SocialLinksLive.json';
 import Part1 from './components/Part1';
 import Part2 from './components/Part2';
 import Part3 from './components/Part3';
+import WagesInput from './components/WagesInput';
 import history from './components/History';
 import BenefitsVariables from './data/BenefitsVariables.json';
 import PartOneProps from './data/PartOne.json';
@@ -89,27 +90,27 @@ class App extends Component {
     history.listen();
   }
 
-  handleInput = (value, id, type) => {
-    const numberValue = value;
-    this.setState({
-      yearIncome: numberValue
-    });
-    const { onChangeYearIncome } = this.props;
-    onChangeYearIncome(value);
-    if (numberValue >= BenefitsVariables.baseVariables.minSalary) {
-      this.setState({
-        belowMinSalary: false
-      });
-    }
-    // Allow rendering belowMinSalary callout on inputCurrency up/down button click.
-    if (type === 'click') {
-      if (numberValue < BenefitsVariables.baseVariables.minSalary) {
-        this.setState({
-          belowMinSalary: true
-        });
-      }
-    }
-  };
+  // handleInput = (value, id, type) => {
+  //   const numberValue = value;
+  //   this.setState({
+  //     yearIncome: numberValue
+  //   });
+  //   const { onChangeYearIncome } = this.props;
+  //   onChangeYearIncome(value);
+  //   if (numberValue >= BenefitsVariables.baseVariables.minSalary) {
+  //     this.setState({
+  //       belowMinSalary: false
+  //     });
+  //   }
+  //   // Allow rendering belowMinSalary callout on inputCurrency up/down button click.
+  //   if (type === 'click') {
+  //     if (numberValue < BenefitsVariables.baseVariables.minSalary) {
+  //       this.setState({
+  //         belowMinSalary: true
+  //       });
+  //     }
+  //   }
+  // };
 
   handleRadio = ({ selected, maxWeeks }) => {
     this.setState({
@@ -144,10 +145,12 @@ class App extends Component {
         <main className="main-content">
           <PageHeader title={BenefitsVariables.title} optionalContents={[{ paragraph: { text: BenefitsVariables.description } }]} />
           <section className="main-content--two">
+            <WagesInput />
             <Part1 error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
             <hr />
-            <Part2 onChange={this.handleInput} onBlur={this.handleBlur} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalaryConv} />
-            {yearIncome > 0 && maxWeeks > 0
+            {/*
+              <Part2 onChange={this.handleInput} onBlur={this.handleBlur} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalaryConv} />
+              yearIncome > 0 && maxWeeks > 0
               && (
               <Collapse in={yearIncome >= BenefitsVariables.baseVariables.minSalary} dimension="height" className="ma__callout-alert">
                 <div className="ma__collapse">
@@ -155,6 +158,7 @@ class App extends Component {
                 </div>
               </Collapse>
               )
+              */
             }
           </section>
         </main>
