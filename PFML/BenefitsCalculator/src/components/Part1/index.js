@@ -51,7 +51,7 @@ class Part1 extends Component {
       title: getHelpTip(question, 'c-primary', 'question-1-helptip'),
       name: 'question-one',
       outline: true,
-      inline: true,
+      inline: false,
       error,
       disabled,
       defaultSelected,

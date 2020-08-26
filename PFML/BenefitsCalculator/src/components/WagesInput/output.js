@@ -4,6 +4,8 @@ import numbro from 'numbro';
 import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
 import { toCurrency, toPercentage } from '../../utils';
 import variables from '../../data/variables.json';
+import BenefitsVariables from '../../data/BenefitsVariables.json';
+import PartThreeProps from '../../data/PartThree.json';
 
 const sum = (a, b) => a + b;
 
@@ -56,7 +58,7 @@ const Output = (props) => {
   // benefit duration
   const benefitDuration = maxBenefitFinal / weeklyBenefitFinal;
 
-  const qualifyAddition = 'You may be eligible for an additional weekly dependency allowance if you have dependent children.';
+  const qualifyAddition = 'Choose a reason of leave to determine if you will be eligible and estimate for how many weeks.';
   const helpTextBasePeriod2Q = 'Your weekly benefit amount is equal to half of the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters:';
   const helpTextBasePeriod1Q = 'Your weekly benefit amount is equal to half of the highest-earning quarter divided by the number of weeks in the quarter:';
   const helpTextWeeks2Q = 'weeks in the combined quarters';
@@ -66,24 +68,77 @@ const Output = (props) => {
   const maxBenefitDurationDisclaimer = 'The maximum number of weeks you can receive full unemployment benefits is 30 weeks (capped at 26 weeks during periods of extended benefits and low unemployment). However, many individuals qualify for less than 30 weeks of coverage.';
   const roundingDisclaimer = 'Note: Calculations are rounded to whole dollar amounts.';
 
+  // const getBenefitsHelpText = () => (
+  //   <div className="ma__help-text">
+  //     { weeklyBenefit > weeklyBenefitMax ? (
+  //       <Paragraph text={`Your weekly benefit amount is capped at ${toCurrency(weeklyBenefitMax)}.`} />
+  //     ) : (
+  //       <Fragment>
+  //         <Paragraph text={quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q} />
+  //         <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefitFinal)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${quartersCount > 2 ? helpTextWeeks2Q : helpTextWeeks1Q}`} /></div>
+  //         { !Number.isInteger(topQuartersSum) && (
+  //           <div className="ma__disclaimer">
+  //             {roundingDisclaimer}
+  //           </div>
+  //         )}
+  //       </Fragment>
+  //     )}
+  //   </div>
+  // );
+  const {
+    maAvgYear, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction
+  } = BenefitsVariables.baseVariables;
+
+  const yearIncome = avgWeeklyPay * 52;
+  const benefitBreak = maAvgYear * 0.5;
+  const benefitBreakWeek = (benefitBreak / weeksPerYear) * lowBenefitFraction;
+  const maxBenefit = ((maxBenefitWeek - benefitBreakWeek) * weeksPerYear * 2) + benefitBreak;
+
+  let estBenefit;
+  if (yearIncome <= benefitBreak) {
+    // If the yearly income is less than half the state wide avg income.
+    estBenefit = yearIncome * lowBenefitFraction;
+  } else {
+    // If yearly income is greater than half the state wide avg income.
+    const addBenefit = yearIncome < maxBenefit ? ((yearIncome - benefitBreak) * highBenefitFraction) : ((maxBenefit - benefitBreak) * highBenefitFraction);
+    estBenefit = addBenefit + (benefitBreak * lowBenefitFraction);
+  }
+
+  // The estimated weekly benefit you would receive.
+  const estWeeklyBenefit = estBenefit / weeksPerYear;
+  // The estimated total benefit you can receive based on the number of weeks you are covered.
+  // const totBenefit = estWeeklyBenefit * maxWeeks;
+
+  const {
+    paragraphOne, paragraphTwo, paragraphThree, buttonLink
+  } = PartThreeProps;
+  const { more, less, max } = paragraphThree;
+
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">
-      { weeklyBenefit > weeklyBenefitMax ? (
-        <Paragraph text={`Your weekly benefit amount is capped at ${toCurrency(weeklyBenefitMax)}.`} />
+      { yearIncome <= benefitBreak ? (
+        <Fragment>
+          <Paragraph text={`${less.partOne} ${toCurrency(benefitBreak)} ${less.partTwo} ${toPercentage(lowBenefitFraction)} ${less.partThree} ${toCurrency(benefitBreakWeek)} ${less.partFour}`} />
+          <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = (${toCurrency(yearIncome)} x ${toPercentage(lowBenefitFraction)}) / ${weeksPerYear} weeks per year`} /></div>
+        </Fragment>
+
       ) : (
         <Fragment>
-          <Paragraph text={quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q} />
-          <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefitFinal)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${quartersCount > 2 ? helpTextWeeks2Q : helpTextWeeks1Q}`} /></div>
-          { !Number.isInteger(topQuartersSum) && (
-            <div className="ma__disclaimer">
-              {roundingDisclaimer}
-            </div>
+          {yearIncome < maxBenefit ? (
+            <Fragment>
+              <Paragraph text={`${more.partOne} ${toCurrency(benefitBreak)} ${more.partTwo} ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreak)} ${more.partFive} ${toCurrency(maxBenefit)}${more.partSix} ${toCurrency(maxBenefitWeek)} ${more.partSeven}`} />
+              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${toCurrency(yearIncome)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Paragraph text={`${max.partOne} ${toCurrency(maxBenefit)} ${max.partTwo} ${toCurrency(maxBenefitWeek)} ${max.partThree}`} />
+              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(estWeeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${toCurrency(maxBenefit)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
+            </Fragment>
           )}
         </Fragment>
       )}
     </div>
   );
-
   const getDurationHelpText = () => (
     <div className="ma__help-text">
       <Fragment>
@@ -137,16 +192,13 @@ const Output = (props) => {
           <HelpTip
             theme="c-white"
             text={`Based on the information you provided, you may be eligible to receive
-              <strong>${toCurrency(weeklyBenefitFinal)}</strong> for <strong>${parseInt(benefitDuration, 10)} weeks</strong>,
-              based on your maximum benefit credit of <strong>${toCurrency(maxBenefitFinal)}</strong>.`}
-            triggerText={[`<strong>${toCurrency(weeklyBenefitFinal)}</strong>`, `<strong>${parseInt(benefitDuration, 10)} weeks</strong>`, `<strong>${toCurrency(maxBenefitFinal)}</strong>`]}
+              <strong>${toCurrency(weeklyBenefitFinal)}</strong> weekly from the PFML benefits.`}
+            triggerText={[`<strong>${toCurrency(weeklyBenefitFinal)}</strong>`]}
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
             {...helptipIframeProp}
           >
             { getBenefitsHelpText() }
-            { getDurationHelpText() }
-            { getTotalHelpText() }
           </HelpTip>
           <Paragraph text={qualifyAddition} />
         </CalloutAlert>

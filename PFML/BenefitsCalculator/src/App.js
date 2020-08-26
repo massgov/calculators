@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Header, Footer, PageHeader, Collapse
+  Header, Footer, PageHeader, Collapse, HelpTip
 } from '@massds/mayflower-react';
 import {
   decode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery, encode
@@ -17,6 +17,7 @@ import WagesInput from './components/WagesInput';
 import history from './components/History';
 import BenefitsVariables from './data/BenefitsVariables.json';
 import PartOneProps from './data/PartOne.json';
+import inputProps from './data/input.json';
 
 import './index.css';
 
@@ -141,28 +142,41 @@ class App extends Component {
     const questTwoDisabled = !(maxWeeks > 0);
     return(
       <div className="App">
-        {process.env.REACT_APP_IFRAME === 'false' && <Header {...this.headerProps} />}
-        <main className="main-content">
-          <PageHeader title={BenefitsVariables.title} optionalContents={[{ paragraph: { text: BenefitsVariables.description } }]} />
-          <section className="main-content--two">
+        {process.env.REACT_APP_IFRAME === 'true' ? (
+          <div className="page-content">
+            <hr />
+            <HelpTip {...inputProps.inputTitle} {...this.helptipIframeProp} id="helptext-total-wages" />
             <WagesInput />
             <Part1 error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
-            <hr />
-            {/*
-              <Part2 onChange={this.handleInput} onBlur={this.handleBlur} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalaryConv} />
-              yearIncome > 0 && maxWeeks > 0
-              && (
-              <Collapse in={yearIncome >= BenefitsVariables.baseVariables.minSalary} dimension="height" className="ma__callout-alert">
-                <div className="ma__collapse">
-                  <Part3 yearIncome={yearIncome} maxWeeks={maxWeeks} leaveReason={leaveReason} />
+          </div>
+        ) : (
+          <div>
+            <Header {...this.headerProps} />
+            <main className="main-content">
+              <PageHeader
+                title={BenefitsVariables.title}
+                optionalContents={[{
+                  paragraph: {
+                    text: BenefitsVariables.description
+                  }
+                }]}
+              />
+              <section className="main-content main-content--two">
+                <div className="page-content">
+                  <hr />
+                  <h2>
+                    <HelpTip {...inputProps.inputTitle} {...this.helptipIframeProp} id="helptext-total-wages" />
+                  </h2>
+
+                  <WagesInput />
+                  <Part1 error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
                 </div>
-              </Collapse>
-              )
-              */
-            }
-          </section>
-        </main>
-        {process.env.REACT_APP_IFRAME === 'false' && <Footer {...this.footerProps} />}
+              </section>
+            </main>
+            <Footer {...this.footerProps} />
+          </div>
+        )
+      }
       </div>
     );
   }

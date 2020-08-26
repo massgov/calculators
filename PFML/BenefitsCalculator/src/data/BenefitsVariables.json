@@ -4,7 +4,7 @@
   "baseVariables": {
   	"maAvgYear": 74446.32,
   	"weeksPerYear": 52,
-  	"maxBenefitWeek": 850.00,
+  	"maxBenefitWeek": 916.26,
   	"lowBenefitFraction": 0.8,
   	"highBenefitFraction": 0.5,
   	"minSalary": 4700
