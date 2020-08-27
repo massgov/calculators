@@ -1,12 +1,7 @@
 import numbro from 'numbro';
 import { sum } from '../../utils';
 
-import variables from '../../data/variables.json';
 import BenefitsVariables from '../../data/BenefitsVariables.json';
-
-const {
-  maxBenefitDuration, quartersSumThreshhold, weeklyBenefitMax, maxBenefitRatio
-} = variables;
 
 
 export const buildQuartersArray = ({
@@ -19,13 +14,11 @@ export const buildQuartersArray = ({
 
 export const paidQuarters = (quartersArray) => {
   const quartersHaveValue = quartersArray.filter((q) => typeof q === 'number' && q > 0);
-  return quartersHaveValue;
+  const quartersCount = quartersHaveValue.length;
+  return{ quartersHaveValue, quartersCount };
 };
 
-export const calcAvgWages = (quartersHaveValue) => {
-  const quartersCount = quartersHaveValue.length;
-
-  // weekly pay
+export const calcWeeklyPay = ({ quartersHaveValue, quartersCount }) => {
   let topQuarters;
   let weeksInTopQuarters = 26;
   if (quartersCount > 2) {
@@ -61,19 +54,30 @@ export const calcWeeklyBenefit = (avgWeeklyPay) => {
   }
 
   // The estimated weekly benefit you would receive.
-  const estWeeklyBenefit = estBenefit / weeksPerYear;
+  const weeklyBenefit = estBenefit / weeksPerYear;
   // The estimated total benefit you can receive based on the number of weeks you are covered.
-  // const totBenefit = estWeeklyBenefit * maxWeeks;
-  return estWeeklyBenefit;
+  // const totBenefit = weeklyBenefit * maxWeeks;
+  return weeklyBenefit;
 };
 
-export const calcEligibility = ({ estWeeklyBenefit, quartersHaveValue }) => {
+export const calcEligibility = ({ weeklyBenefit, quartersHaveValue, quartersSumThreshhold }) => {
   // qualifications
   const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
   // qualification 1: total wages is no less than the threshhold
   const qualification1 = !(quartersSum < quartersSumThreshhold);
   // qualification 2: total wages is no less than 30 times the PFML weeklyBenefitFinal
-  const qualification2 = !(quartersSum < (30 * estWeeklyBenefit));
+  const qualification2 = !(quartersSum < (30 * weeklyBenefit));
   const qualified = qualification1 && qualification2;
-  return qualified;
+  return{ qualified, qualification1, qualification2 };
+};
+
+
+export const calcTotalBenefit = ({ maxBenefitDuration, weeklyBenefit }) => {
+  // total benefit credit
+  const totalBenefit = maxBenefitDuration * weeklyBenefit;
+  return totalBenefit;
+  // quartersSum will have cents when wages input contains cents, maxBeneiftFinal is rounded down to the nearest dollar
+  // const maxBenefitOption2 = Math.floor(maxBenefitRatio * quartersSum);
+  // const maxBenefitFinal = Math.floor(Math.min(maxBenefitOption1, maxBenefitOption2));
+  // const maxBenefitOther = Math.max(maxBenefitOption1, maxBenefitOption2);
 };

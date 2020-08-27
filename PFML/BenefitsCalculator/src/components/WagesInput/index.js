@@ -1,21 +1,30 @@
 import React, { Component, Fragment } from 'react';
 import moment from 'moment';
+import numbro from 'numbro';
 import {
   InputCurrency, Button, FormProvider, Form, FormContext, InputCheckBox
 } from '@massds/mayflower-react';
 import Output from './output';
-import { toCurrency } from '../../utils';
+import { toCurrency, sum } from '../../utils';
 import inputProps from '../../data/input.json';
+import variables from '../../data/variables.json';
+import BenefitsVariables from '../../data/BenefitsVariables.json';
+
 
 import './index.css';
-
 
 class Calculator extends Component {
   constructor(props) {
     super(props);
     this.state = {
       submitted: false,
-      applyAll: false
+      applyAll: false,
+      values: {
+        quarter1: null,
+        quarter2: null,
+        quarter3: null,
+        quarter4: null
+      }
     };
     const format = 'MMM YYYY';
     const quarterCurrent = moment().quarter();
@@ -43,11 +52,68 @@ class Calculator extends Component {
       step: 0.01,
       showButtons: false
     };
+
+    this.setValueState = ({ id, value }) => {
+      if (Object.prototype.hasOwnProperty.call(this.state.values, id)) {
+        this.setState((state) => {
+          return {
+            values: {
+              ...state.values,
+              [id]: value
+          }};
+        });
+      }
+    };
   }
 
   render() {
-    const { applyAll, submitted } = this.state;
+    const {
+      maxBenefitDuration, quartersSumThreshhold, weeklyBenefitMax, maxBenefitRatio
+    } = variables;
+
+    const {
+      applyAll,
+      submitted,
+      values: {
+        quarter1, quarter2, quarter3, quarter4
+      }
+    } = this.state;
+    console.log(quarter1, quarter2, quarter3, quarter4)
+
     const { inputLabel, applyAllLabel } = inputProps;
+
+    let quartersArray = [quarter1, quarter2, quarter3, quarter4];
+    quartersArray = quartersArray.map((q) => ((typeof q === 'string') ? numbro.unformat(q) : q));
+
+    const quartersHaveValue = quartersArray.filter((q) => typeof q === 'number' && q > 0);
+    const quartersCount = quartersHaveValue.length;
+
+    // weekly benefit
+    let topQuarters;
+    let weeksInTopQuarters = 26;
+    if (quartersCount > 2) {
+      topQuarters = quartersHaveValue.sort((q1, q2) => q2 - q1).slice(0, 2);
+    } else if (quartersCount > 0) {
+      topQuarters = quartersHaveValue.sort((q1, q2) => q2 - q1).slice(0, 1);
+      weeksInTopQuarters = 13;
+    }
+    const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
+    // average weekly pay is rounded up to the nearest dollar
+    const avgWeeklyPay = Math.ceil(topQuartersSum / weeksInTopQuarters);
+    // weekly benefit is rounded down to the nearest dollar amount
+    const weeklyBenefit = Math.floor(1 / 2 * avgWeeklyPay);
+    // WeeklyBenefitFinal is making sure that the weeklyBenefit never exceeds the maximum
+    const weeklyBenefitFinal = Math.min(weeklyBenefit, weeklyBenefitMax);
+
+    // qualifications
+    const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
+    // qualification 1: total wages is no less than the threshhold
+    const qualification1 = !(quartersSum < quartersSumThreshhold);
+    // qualification 2: total wages is no less than 30 times the weeklyBenefitFinal
+    const qualification2 = !(quartersSum < (30 * weeklyBenefitFinal));
+    const qualified = qualification1 && qualification2;
+    console.log(quarter1)
+
 
     return(
       <FormProvider>
@@ -63,11 +129,13 @@ class Calculator extends Component {
                 onBlur={(val, { id }) => {
                   // convert val to currency then set it to context
                   const value = toCurrency(val);
-                  formContext.setValue({ id, value });
+                  this.setValueState({ id, value });
+
+                  this.setValueState({ id: 'quarter2', value })
                   if (applyAll) {
-                    formContext.setValue({ id: 'quarter2', value });
-                    formContext.setValue({ id: 'quarter3', value });
-                    formContext.setValue({ id: 'quarter4', value });
+                    this.setValueState({ id: 'quarter2', value });
+                    this.setValueState({ id: 'quarter3', value });
+                    this.setValueState({ id: 'quarter4', value });
                   }
                 }}
               />
@@ -80,10 +148,10 @@ class Calculator extends Component {
                   this.setState({
                     applyAll: value
                   });
-                  const { quarter1 } = formContext.getValues();
-                  formContext.setValue({ id: 'quarter2', value: quarter1 });
-                  formContext.setValue({ id: 'quarter3', value: quarter1 });
-                  formContext.setValue({ id: 'quarter4', value: quarter1 });
+                  const { quarter1 } = this.state.values;
+                  this.setValueState({ id: 'quarter2', value: quarter1 });
+                  this.setValueState({ id: 'quarter3', value: quarter1 });
+                  this.setValueState({ id: 'quarter4', value: quarter1 });
                 }}
               />
               <InputCurrency
@@ -95,7 +163,7 @@ class Calculator extends Component {
                 onBlur={(val, { id }) => {
                   // convert val to currency then set it to context
                   const value = toCurrency(val);
-                  formContext.setValue({ id, value });
+                  this.setValueState({ id, value });
                 }}
               />
               <InputCurrency
@@ -107,7 +175,7 @@ class Calculator extends Component {
                 onBlur={(val, { id }) => {
                   // convert val to currency then set it to context
                   const value = toCurrency(val);
-                  formContext.setValue({ id, value });
+                  this.setValueState({ id, value });
                 }}
               />
               <InputCurrency
@@ -119,13 +187,16 @@ class Calculator extends Component {
                 onBlur={(val, { id }) => {
                   // convert val to currency then set it to context
                   const value = toCurrency(val);
-                  formContext.setValue({ id, value });
+                  this.setValueState({ id, value });
                 }}
               />
               <Button
                 type="submit"
                 text={inputProps.buttonText}
-                onClick={() => this.setState({ submitted: true })}
+                onClick={() => {
+                  this.setState({ submitted: true })
+                  this.props.onSubmit(this.state.submitted)
+                }}
               />
             </Fragment>
           )
@@ -134,7 +205,7 @@ class Calculator extends Component {
         <FormContext.Consumer>
           {
           (formContext) => {
-            const values = formContext.getValues();
+            const values = this.state.values;
             return(
               submitted && (
                 <Output {...values} />

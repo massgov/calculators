@@ -28,3 +28,5 @@ export const toPercentage = (number, decimal) => {
   const percent = numbro(number).format({ output: 'percent', mantissa, spaceSeparated: false });
   return percent;
 };
+
+export const sum = (a, b) => a + b;

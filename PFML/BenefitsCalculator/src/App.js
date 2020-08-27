@@ -11,8 +11,8 @@ import HeaderSearchData from './data/HeaderSearch.data';
 import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import Part1 from './components/Part1';
-import Part2 from './components/Part2';
-import Part3 from './components/Part3';
+// import Part2 from './components/Part2';
+// import Part3 from './components/Part3';
 import WagesInput from './components/WagesInput';
 import history from './components/History';
 import BenefitsVariables from './data/BenefitsVariables.json';
@@ -26,7 +26,7 @@ import './index.css';
  * as strings since we did not pass a `urlPropsQueryConfig` to addUrlProps.
  */
 const mapUrlToProps = (url) => ({
-  yearIncome: decode(UrlQueryParamTypes.number, url.yearIncome),
+  weeklyBenefit: decode(UrlQueryParamTypes.number, url.weeklyBenefit),
   leaveReason: decode(UrlQueryParamTypes.string, url.leaveReason)
 });
 
@@ -35,7 +35,7 @@ const mapUrlToProps = (url) => ({
  * We do this since we are not using a urlPropsQueryConfig.
  */
 const mapUrlChangeHandlersToProps = () => ({
-  onChangeYearIncome: (value) => replaceInUrlQuery('yearIncome', encode(UrlQueryParamTypes.string, value)),
+  onChangeWeeklyBenefit: (value) => replaceInUrlQuery('weeklyBenefit', encode(UrlQueryParamTypes.string, value)),
   onChangeLeaveReason: (value) => replaceInUrlQuery('leaveReason', encode(UrlQueryParamTypes.string, value))
 });
 
@@ -57,14 +57,14 @@ class App extends Component {
     super(props);
     // const hasLocalStore = typeof localStorage !== 'undefined';
     const {
-      yearIncome, leaveReason
+      weeklyBenefit, leaveReason
     } = props;
     /* eslint-disable no-undef */
     this.state = {
-      yearIncome: getDefaultNumber(yearIncome),
+      weeklyBenefit: getDefaultNumber(weeklyBenefit),
       maxWeeks: getWeeks(PartOneProps, leaveReason),
       leaveReason,
-      belowMinSalary: !!((getDefaultNumber(yearIncome) && getDefaultNumber(yearIncome) < BenefitsVariables.baseVariables.minSalary))
+      belowMinSalary: !!((getDefaultNumber(weeklyBenefit) && getDefaultNumber(weeklyBenefit) < BenefitsVariables.baseVariables.minSalary))
     };
     /* eslint-enable react/no-unused-state */
     this.footerProps = {
@@ -91,27 +91,26 @@ class App extends Component {
     history.listen();
   }
 
-  // handleInput = (value, id, type) => {
-  //   const numberValue = value;
-  //   this.setState({
-  //     yearIncome: numberValue
-  //   });
-  //   const { onChangeYearIncome } = this.props;
-  //   onChangeYearIncome(value);
-  //   if (numberValue >= BenefitsVariables.baseVariables.minSalary) {
-  //     this.setState({
-  //       belowMinSalary: false
-  //     });
-  //   }
-  //   // Allow rendering belowMinSalary callout on inputCurrency up/down button click.
-  //   if (type === 'click') {
-  //     if (numberValue < BenefitsVariables.baseVariables.minSalary) {
-  //       this.setState({
-  //         belowMinSalary: true
-  //       });
-  //     }
-  //   }
-  // };
+  handleWagesSubmit = (weeklyBenefit) => {
+    this.setState({
+      weeklyBenefit
+    });
+    // const { onChangeweeklyBenefit } = this.props;
+    // onChangeweeklyBenefit(value);
+    // if (numberValue >= BenefitsVariables.baseVariables.minSalary) {
+    //   this.setState({
+    //     belowMinSalary: false
+    //   });
+    // }
+    // // Allow rendering belowMinSalary callout on inputCurrency up/down button click.
+    // if (type === 'click') {
+    //   if (numberValue < BenefitsVariables.baseVariables.minSalary) {
+    //     this.setState({
+    //       belowMinSalary: true
+    //     });
+    //   }
+    // }
+  };
 
   handleRadio = ({ selected, maxWeeks }) => {
     this.setState({
@@ -132,12 +131,13 @@ class App extends Component {
 
   render() {
     const {
-      leaveReason, yearIncome, maxWeeks, belowMinSalary
+      leaveReason, weeklyBenefit, maxWeeks, belowMinSalary
     } = this.state;
     let belowMinSalaryConv;
     if (typeof belowMinSalary === 'string') {
       belowMinSalaryConv = belowMinSalary === 'true';
     } else { belowMinSalaryConv = belowMinSalary; }
+
 
     const questTwoDisabled = !(maxWeeks > 0);
     return(
@@ -146,7 +146,7 @@ class App extends Component {
           <div className="page-content">
             <hr />
             <HelpTip {...inputProps.inputTitle} {...this.helptipIframeProp} id="helptext-total-wages" />
-            <WagesInput />
+            <WagesInput onCalculate={(value) => this.handleWagesSubmit(value)} />
             <Part1 error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
           </div>
         ) : (
@@ -168,7 +168,7 @@ class App extends Component {
                     <HelpTip {...inputProps.inputTitle} {...this.helptipIframeProp} id="helptext-total-wages" />
                   </h2>
 
-                  <WagesInput />
+                  <WagesInput onSubmit={this.handleWagesSubmit} />
                   <Part1 error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
                 </div>
               </section>
