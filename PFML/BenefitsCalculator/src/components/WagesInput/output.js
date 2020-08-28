@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
 import { toCurrency, toPercentage, sum } from '../../utils';
 import BenefitsVariables from '../../data/BenefitsVariables.json';
-import PartThreeProps from '../../data/PartThree.json';
+import wagesInputData from '../../data/WagesInput.json';
 import {
   buildQuartersArray, paidQuarters, calcWeeklyPay, calcWeeklyBenefit, calcEligibility
 } from '../formula';
 
 const Output = (props) => {
   const {
-    maAvgYear, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction, quartersSumThreshhold
+    maAvgWeek, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction, quartersSumThreshhold
   } = BenefitsVariables.baseVariables;
 
   const {
@@ -49,39 +49,42 @@ const Output = (props) => {
   const helpTextDisqualification2 = `Your total base period wages of ${toCurrency(quartersSum)} must be equal to or greater than ${toCurrency(weeklyBenefit * 30)} (your weekly benefit amount x 30) to be eligible.`;
 
 
-  const yearIncome = weeklyPay * 52;
-  const benefitBreak = maAvgYear * 0.5;
-  const benefitBreakWeek = (benefitBreak / weeksPerYear) * lowBenefitFraction;
-  const maxBenefit = ((maxBenefitWeek - benefitBreakWeek) * weeksPerYear * 2) + benefitBreak;
+  const benefitBreakWeek = maAvgWeek * 0.5;
+  console.log(benefitBreakWeek, toCurrency(benefitBreakWeek))
+  const maxBenefit = ((maxBenefitWeek - benefitBreakWeek) * 2) + benefitBreakWeek;
 
 
   const {
     paragraphThree
-  } = PartThreeProps;
+  } = wagesInputData;
   const { more, less, max } = paragraphThree;
 
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">
-      { yearIncome <= benefitBreak ? (
-        <Fragment>
-          <Paragraph text={`${less.partOne} ${toCurrency(benefitBreak)} ${less.partTwo} ${toPercentage(lowBenefitFraction)} ${less.partThree} ${toCurrency(benefitBreakWeek)} ${less.partFour}`} />
-          <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = (${toCurrency(yearIncome)} x ${toPercentage(lowBenefitFraction)}) / ${weeksPerYear} weeks per year`} /></div>
-        </Fragment>
-      ) : (
-        <Fragment>
-          {yearIncome < maxBenefit ? (
-            <Fragment>
-              <Paragraph text={`${more.partOne} ${toCurrency(benefitBreak)} ${more.partTwo} ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreak)} ${more.partFive} ${toCurrency(maxBenefit)}${more.partSix} ${toCurrency(maxBenefitWeek)} ${more.partSeven}`} />
-              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${toCurrency(yearIncome)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
-            </Fragment>
-          ) : (
-            <Fragment>
-              <Paragraph text={`${max.partOne} ${toCurrency(maxBenefit)} ${max.partTwo} ${toCurrency(maxBenefitWeek)} ${max.partThree}`} />
-              <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${toCurrency(maxBenefit)} - ${toCurrency(benefitBreak)}) / ${weeksPerYear} weeks per year ]`} /></div>
-            </Fragment>
-          )}
-        </Fragment>
-      )}
+      {
+        weeklyPay <= benefitBreakWeek ? (
+          <Fragment>
+            <Paragraph text={`${less.partOne} ${toCurrency(benefitBreakWeek)} ${less.partTwo} ${toPercentage(lowBenefitFraction)} ${less.partThree} ${toCurrency(benefitBreakWeek)} ${less.partFour}`} />
+            <div className="ma__output-calculation">
+              <Paragraph text={`${toCurrency(weeklyBenefit)} = (${toCurrency(weeklyPay)} x ${toPercentage(lowBenefitFraction)}) / ${weeksPerYear} weeks per year`} />
+            </div>
+          </Fragment>
+        ) : (
+          <Fragment>
+            {weeklyPay < maxBenefit ? (
+              <Fragment>
+                <Paragraph text={`${more.partOne} ${toCurrency(benefitBreakWeek)} ${more.partTwo} ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreakWeek)} ${more.partFive} ${toCurrency(maxBenefit)}${more.partSix} ${toCurrency(maxBenefitWeek)} ${more.partSeven}`} />
+                <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${toCurrency(weeklyPay)} - ${toCurrency(benefitBreakWeek)}) / ${weeksPerYear} weeks per year ]`} /></div>
+              </Fragment>
+            ) : (
+              // over max
+              <Fragment>
+                <Paragraph text={`${max.partOne} ${toCurrency(maxBenefitWeek)}.`} />
+              </Fragment>
+            )}
+          </Fragment>
+        )
+      }
     </div>
   );
 
@@ -104,6 +107,7 @@ const Output = (props) => {
             labelID="help-tip-benefits-label"
             {...helptipIframeProp}
           >
+
             { getBenefitsHelpText() }
           </HelpTip>
           <div className="ma__disclaimer">

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   InputRadioGroup, CalloutAlert, Paragraph, Collapse, HelpTip
 } from '@massds/mayflower-react';
-import leaveTypeProps from '../../data/LeaveType.json';
+import wagesInputData from '../../data/LeaveType.json';
 import './index.css';
 import { getHelpTip, toCurrency } from '../../utils';
 import { calcTotalBenefit } from '../formula';
@@ -11,7 +11,7 @@ import { calcTotalBenefit } from '../formula';
 class LeaveType extends Component {
   constructor(props) {
     super(props);
-    const message = this.getMessage(leaveTypeProps, props.defaultSelected);
+    const message = this.getMessage(wagesInputData, props.defaultSelected);
     this.state = {
       message: (message && message.message) ? message.message : '',
       messageTheme: (message && message.messageTheme) ? message.messageTheme : '',
@@ -34,7 +34,7 @@ class LeaveType extends Component {
   }
 
   handleChange = ({ selected, event }) => {
-    const message = this.getMessage(leaveTypeProps, selected);
+    const message = this.getMessage(wagesInputData, selected);
     this.setState({
       message: message.message,
       messageTheme: message.messageTheme,
@@ -48,7 +48,7 @@ class LeaveType extends Component {
   }
 
   render() {
-    const { question, options } = leaveTypeProps;
+    const { question, options } = wagesInputData;
     const { defaultSelected, qualified, weeklyBenefit } = this.props;
     const radioGroupProps = {
       title: getHelpTip(question, 'c-primary', 'question-1-helptip'),
@@ -74,7 +74,7 @@ class LeaveType extends Component {
     const totalBenefit = calcTotalBenefit({ benefitDuration: weeks, weeklyBenefit });
     const approvedMessage = `If approved, you may be covered <strong>up to ${weeks} weeks</strong> by the PFML program. Your total benefit credit is estimated to be <strong>${toCurrency(totalBenefit)}</strong>.`;
     const totalFormulaDescription = 'Your total benefit credit is equal to your estimated weekly benefit multiplied by the number of paid weeks (the first 7 days of your leave is a waiting period which is unpaid):';
-    const startDateDisclaimer = 'This benefit will be available starting <strong>July 1, 2021</strong>.';
+    const startDateDisclaimer = 'This benefit will be available starting <strong>January 1, 2021</strong>.';
 
     const getHelpText = () => (
       <div className="ma__help-text">
