@@ -59,7 +59,7 @@ const Output = (props) => {
 
 
   const {
-    paragraphOne, paragraphTwo, paragraphThree, buttonLink
+    paragraphThree
   } = PartThreeProps;
   const { more, less, max } = paragraphThree;
 

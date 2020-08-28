@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Header, Footer, PageHeader, Collapse, HelpTip
+  Header, Footer, PageHeader, HelpTip
 } from '@massds/mayflower-react';
 import {
   decode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery, encode
@@ -87,9 +87,8 @@ class App extends Component {
     });
   };
 
-  handleRadio = ({ selected, maxWeeks }) => {
+  handleRadio = ({ selected }) => {
     this.setState({
-      maxWeeks,
       leaveReason: selected
     });
     const { onChangeLeaveReason } = this.props;
@@ -108,7 +107,7 @@ class App extends Component {
     const {
       leaveReason, weeklyBenefit, belowMinSalary, qualified
     } = this.state;
-    let belowMinSalaryConv;
+
     if (typeof belowMinSalary === 'string') {
       belowMinSalaryConv = belowMinSalary === 'true';
     } else { belowMinSalaryConv = belowMinSalary; }
