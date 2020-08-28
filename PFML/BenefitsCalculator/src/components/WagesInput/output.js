@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import numbro from 'numbro';
 import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
 import { toCurrency, toPercentage, sum } from '../../utils';
 import variables from '../../data/variables.json';
@@ -12,7 +11,7 @@ import {
 
 const Output = (props) => {
   const {
-    maxBenefitDuration, quartersSumThreshhold, weeklyBenefitMax, maxBenefitRatio
+    quartersSumThreshhold
   } = variables;
   const {
     quarter1, quarter2, quarter3, quarter4

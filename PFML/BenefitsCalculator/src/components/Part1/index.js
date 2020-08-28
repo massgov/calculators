@@ -87,6 +87,11 @@ class Part1 extends Component {
       </div>
     );
 
+    const helptipIframeProp = {};
+    if (process.env.REACT_APP_IFRAME === 'true') {
+      helptipIframeProp.bypassMobileStyle = true;
+    }
+
     return(
       <Fragment>
         <InputRadioGroup {...radioGroupProps} />
@@ -107,6 +112,7 @@ class Part1 extends Component {
                         triggerText={[`<strong>${toCurrency(totalBenefit)}</strong>`]}
                         id="help-tip-benefits"
                         labelID="help-tip-benefits-label"
+                        {...helptipIframeProp}
                       >
                         {getHelpText()}
                       </HelpTip>

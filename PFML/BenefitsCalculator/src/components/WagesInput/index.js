@@ -1,14 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import moment from 'moment';
-import numbro from 'numbro';
 import {
   InputCurrency, Button, FormProvider, Form, FormContext, InputCheckBox
 } from '@massds/mayflower-react';
 import Output from './output';
-import { toCurrency, sum } from '../../utils';
+import { toCurrency } from '../../utils';
 import inputProps from '../../data/input.json';
-import variables from '../../data/variables.json';
-import BenefitsVariables from '../../data/BenefitsVariables.json';
 import {
   buildQuartersArray, paidQuarters, calcWeeklyPay, calcWeeklyBenefit, calcEligibility
 } from '../formula';
@@ -57,7 +54,8 @@ class Calculator extends Component {
     };
 
     this.setValueState = ({ id, value }) => {
-      if (Object.prototype.hasOwnProperty.call(this.state.values, id)) {
+      const { values } = this.state;
+      if (Object.prototype.hasOwnProperty.call(values, id)) {
         this.setState((state) => ({
           values: {
             ...state.values,
@@ -70,10 +68,6 @@ class Calculator extends Component {
 
   render() {
     const {
-      maxBenefitDuration, quartersSumThreshhold, weeklyBenefitMax, maxBenefitRatio
-    } = variables;
-
-    const {
       applyAll,
       submitted,
       values: {
@@ -81,7 +75,7 @@ class Calculator extends Component {
       }
     } = this.state;
 
-    console.log(this.state.values);
+    const { onSubmit } = this.props;
 
     const { inputLabel, applyAllLabel } = inputProps;
 
@@ -174,7 +168,7 @@ class Calculator extends Component {
                 text={inputProps.buttonText}
                 onClick={() => {
                   this.setState({ submitted: true });
-                  this.props.onSubmit({ qualified, weeklyBenefit });
+                  onSubmit({ qualified, weeklyBenefit });
                 }}
               />
             </Fragment>
@@ -183,8 +177,8 @@ class Calculator extends Component {
         </Form>
         <FormContext.Consumer>
           {
-          (formContext) => {
-            const values = this.state.values;
+          () => {
+            const { values } = this.state;
             return(
               submitted && (
                 <Output {...values} />
