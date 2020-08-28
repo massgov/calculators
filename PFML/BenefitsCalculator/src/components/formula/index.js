@@ -4,7 +4,7 @@ import { sum } from '../../utils';
 import BenefitsVariables from '../../data/BenefitsVariables.json';
 
 const {
-  maAvgYear, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction, quartersSumThreshhold
+  maAvgYear, maAvgWeek, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction, quartersSumThreshhold
 } = BenefitsVariables.baseVariables;
 
 export const buildQuartersArray = ({
@@ -37,25 +37,11 @@ export const calcWeeklyPay = ({ quartersHaveValue, quartersCount }) => {
 };
 
 export const calcWeeklyBenefit = (avgWeeklyPay) => {
-  const yearIncome = avgWeeklyPay * 52;
-  const benefitBreak = maAvgYear * 0.5;
-  const benefitBreakWeek = (benefitBreak / weeksPerYear) * lowBenefitFraction;
-  const maxBenefit = ((maxBenefitWeek - benefitBreakWeek) * weeksPerYear * 2) + benefitBreak;
-
-  let estBenefit;
-  if (yearIncome <= benefitBreak) {
-    // If the yearly income is less than half the state wide avg income.
-    estBenefit = yearIncome * lowBenefitFraction;
-  } else {
-    // If yearly income is greater than half the state wide avg income.
-    const addBenefit = yearIncome < maxBenefit ? ((yearIncome - benefitBreak) * highBenefitFraction) : ((maxBenefit - benefitBreak) * highBenefitFraction);
-    estBenefit = addBenefit + (benefitBreak * lowBenefitFraction);
-  }
-
-  // The estimated weekly benefit you would receive.
-  const weeklyBenefit = estBenefit / weeksPerYear;
-  // The estimated total benefit you can receive based on the number of weeks you are covered.
-  // const totBenefit = weeklyBenefit * maxWeeks;
+  const benefitBreakWeek = maAvgWeek * 0.5;
+  // // The estimated weekly benefit you would receive.
+  const weeklyBenefit = Math.min(maxBenefitWeek, (lowBenefitFraction * Math.min(avgWeeklyPay, benefitBreakWeek)) + (highBenefitFraction * Math.max(avgWeeklyPay - benefitBreakWeek, 0)));
+  // // The estimated total benefit you can receive based on the number of weeks you are covered.
+  // // const totBenefit = weeklyBenefit * maxWeeks;
   return weeklyBenefit;
 };
 
