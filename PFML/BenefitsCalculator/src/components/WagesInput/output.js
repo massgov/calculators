@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
 import { toCurrency, toPercentage, sum } from '../../utils';
-import variables from '../../data/variables.json';
 import BenefitsVariables from '../../data/BenefitsVariables.json';
 import PartThreeProps from '../../data/PartThree.json';
 import {
@@ -11,8 +10,9 @@ import {
 
 const Output = (props) => {
   const {
-    quartersSumThreshhold
-  } = variables;
+    maAvgYear, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction, quartersSumThreshhold
+  } = BenefitsVariables.baseVariables;
+
   const {
     quarter1, quarter2, quarter3, quarter4
   } = props;
@@ -48,9 +48,6 @@ const Output = (props) => {
   const helpTextDisqualification1 = `You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible.`;
   const helpTextDisqualification2 = `Your total base period wages of ${toCurrency(quartersSum)} must be equal to or greater than ${toCurrency(weeklyBenefit * 30)} (your weekly benefit amount x 30) to be eligible.`;
 
-  const {
-    maAvgYear, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction
-  } = BenefitsVariables.baseVariables;
 
   const yearIncome = weeklyPay * 52;
   const benefitBreak = maAvgYear * 0.5;

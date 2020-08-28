@@ -3,6 +3,9 @@ import { sum } from '../../utils';
 
 import BenefitsVariables from '../../data/BenefitsVariables.json';
 
+const {
+  maAvgYear, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction, quartersSumThreshhold
+} = BenefitsVariables.baseVariables;
 
 export const buildQuartersArray = ({
   quarter1, quarter2, quarter3, quarter4
@@ -34,10 +37,6 @@ export const calcWeeklyPay = ({ quartersHaveValue, quartersCount }) => {
 };
 
 export const calcWeeklyBenefit = (avgWeeklyPay) => {
-  const {
-    maAvgYear, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction
-  } = BenefitsVariables.baseVariables;
-
   const yearIncome = avgWeeklyPay * 52;
   const benefitBreak = maAvgYear * 0.5;
   const benefitBreakWeek = (benefitBreak / weeksPerYear) * lowBenefitFraction;
@@ -60,7 +59,7 @@ export const calcWeeklyBenefit = (avgWeeklyPay) => {
   return weeklyBenefit;
 };
 
-export const calcEligibility = ({ weeklyBenefit, quartersHaveValue, quartersSumThreshhold }) => {
+export const calcEligibility = ({ weeklyBenefit, quartersHaveValue }) => {
   // qualifications
   const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
   // qualification 1: total wages is no less than the threshhold
@@ -76,8 +75,4 @@ export const calcTotalBenefit = ({ benefitDuration, weeklyBenefit }) => {
   // the first week is unpaid
   const totalBenefit = (benefitDuration - 1) * weeklyBenefit;
   return totalBenefit;
-  // quartersSum will have cents when wages input contains cents, maxBeneiftFinal is rounded down to the nearest dollar
-  // const maxBenefitOption2 = Math.floor(maxBenefitRatio * quartersSum);
-  // const maxBenefitFinal = Math.floor(Math.min(maxBenefitOption1, maxBenefitOption2));
-  // const maxBenefitOther = Math.max(maxBenefitOption1, maxBenefitOption2);
 };
