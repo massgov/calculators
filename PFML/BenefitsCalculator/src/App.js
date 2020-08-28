@@ -16,7 +16,6 @@ import Part1 from './components/Part1';
 import WagesInput from './components/WagesInput';
 import history from './components/History';
 import BenefitsVariables from './data/BenefitsVariables.json';
-import PartOneProps from './data/PartOne.json';
 import inputProps from './data/input.json';
 
 import './index.css';
@@ -42,16 +41,6 @@ const mapUrlChangeHandlersToProps = () => ({
 const validNumber = (num) => (num || (num !== null && num !== undefined));
 const getDefaultNumber = (num) => ((validNumber(num)) ? Number(num) : null);
 
-const getWeeks = (qOneProps, selected) => {
-  let maxWeeks;
-  qOneProps.options.forEach((option) => {
-    if (option.value === selected) {
-      maxWeeks = option.weeks;
-    }
-  });
-  return maxWeeks;
-};
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -63,7 +52,6 @@ class App extends Component {
     this.state = {
       qualified: false,
       weeklyBenefit: getDefaultNumber(weeklyBenefit),
-      maxWeeks: getWeeks(PartOneProps, leaveReason),
       leaveReason,
       belowMinSalary: !!((getDefaultNumber(weeklyBenefit) && getDefaultNumber(weeklyBenefit) < BenefitsVariables.baseVariables.minSalary))
     };
@@ -118,9 +106,8 @@ class App extends Component {
 
   render() {
     const {
-      leaveReason, weeklyBenefit, maxWeeks, belowMinSalary, qualified
+      leaveReason, weeklyBenefit, belowMinSalary, qualified
     } = this.state;
-    console.log(qualified, weeklyBenefit)
     let belowMinSalaryConv;
     if (typeof belowMinSalary === 'string') {
       belowMinSalaryConv = belowMinSalary === 'true';

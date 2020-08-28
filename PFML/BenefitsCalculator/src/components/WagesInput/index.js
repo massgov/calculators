@@ -82,6 +82,8 @@ class Calculator extends Component {
       }
     } = this.state;
 
+    console.log(this.state.values)
+
     const { inputLabel, applyAllLabel } = inputProps;
 
     const quartersArray = buildQuartersArray({ quarter1, quarter2, quarter3, quarter4 });
@@ -125,7 +127,6 @@ class Calculator extends Component {
                   this.setState({
                     applyAll: value
                   });
-                  const { quarter1 } = this.state.values;
                   this.setValueState({ id: 'quarter2', value: quarter1 });
                   this.setValueState({ id: 'quarter3', value: quarter1 });
                   this.setValueState({ id: 'quarter4', value: quarter1 });
