@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import {
   InputRadioGroup, CalloutAlert, Paragraph, Collapse, HelpTip
 } from '@massds/mayflower-react';
-import PartOneProps from '../../data/PartOne.json';
+import leaveTypeProps from '../../data/LeaveType.json';
 import './index.css';
 import { getHelpTip, toCurrency } from '../../utils';
 import { calcTotalBenefit } from '../formula';
 
-class Part1 extends Component {
+class LeaveType extends Component {
   constructor(props) {
     super(props);
-    const message = this.getMessage(PartOneProps, props.defaultSelected);
+    const message = this.getMessage(leaveTypeProps, props.defaultSelected);
     this.state = {
       message: (message && message.message) ? message.message : '',
       messageTheme: (message && message.messageTheme) ? message.messageTheme : '',
@@ -34,7 +34,7 @@ class Part1 extends Component {
   }
 
   handleChange = ({ selected, event }) => {
-    const message = this.getMessage(PartOneProps, selected);
+    const message = this.getMessage(leaveTypeProps, selected);
     this.setState({
       message: message.message,
       messageTheme: message.messageTheme,
@@ -48,7 +48,7 @@ class Part1 extends Component {
   }
 
   render() {
-    const { question, options } = PartOneProps;
+    const { question, options } = leaveTypeProps;
     const { defaultSelected, qualified, weeklyBenefit } = this.props;
     const radioGroupProps = {
       title: getHelpTip(question, 'c-primary', 'question-1-helptip'),
@@ -131,7 +131,7 @@ class Part1 extends Component {
   }
 }
 
-Part1.propTypes = {
+LeaveType.propTypes = {
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
@@ -139,4 +139,4 @@ Part1.propTypes = {
   belowMinSalary: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
 };
 
-export default Part1;
+export default LeaveType;

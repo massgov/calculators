@@ -30,3 +30,10 @@ export const toPercentage = (number, decimal) => {
 };
 
 export const sum = (a, b) => a + b;
+
+export const toBoolean = (string) => {
+  if (typeof string === 'string') {
+    return(string === 'true');
+  }
+  return string;
+};

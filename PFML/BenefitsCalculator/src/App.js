@@ -10,9 +10,7 @@ import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
 import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
-import Part1 from './components/Part1';
-// import Part2 from './components/Part2';
-// import Part3 from './components/Part3';
+import LeaveType from './components/LeaveType';
 import WagesInput from './components/WagesInput';
 import history from './components/History';
 import BenefitsVariables from './data/BenefitsVariables.json';
@@ -52,8 +50,7 @@ class App extends Component {
     this.state = {
       qualified: false,
       weeklyBenefit: getDefaultNumber(weeklyBenefit),
-      leaveReason,
-      belowMinSalary: !!((getDefaultNumber(weeklyBenefit) && getDefaultNumber(weeklyBenefit) < BenefitsVariables.baseVariables.minSalary))
+      leaveReason
     };
     /* eslint-enable react/no-unused-state */
     this.footerProps = {
@@ -95,24 +92,20 @@ class App extends Component {
     onChangeLeaveReason(selected);
   }
 
-  handleBlur = (numberValue) => {
-    if (numberValue < BenefitsVariables.baseVariables.minSalary) {
-      this.setState({
-        belowMinSalary: true
-      });
-    }
-  }
+  // handleBlur = (numberValue) => {
+  //   if (numberValue < BenefitsVariables.baseVariables.minSalary) {
+  //     this.setState({
+  //       belowMinSalary: true
+  //     });
+  //   }
+  // }
 
   render() {
     const {
-      leaveReason, weeklyBenefit, belowMinSalary, qualified
+      leaveReason, weeklyBenefit, qualified
     } = this.state;
 
-    if (typeof belowMinSalary === 'string') {
-      belowMinSalaryConv = belowMinSalary === 'true';
-    } else { belowMinSalaryConv = belowMinSalary; }
-
-    const part1Props = {
+    const leaveTypeProps = {
       qualified,
       weeklyBenefit,
       defaultSelected: leaveReason,
@@ -126,7 +119,7 @@ class App extends Component {
             <hr />
             <HelpTip {...inputProps.inputTitle} {...this.helptipIframeProp} id="helptext-total-wages" />
             <WagesInput onCalculate={(value) => this.handleWagesSubmit(value)} />
-            <Part1 {...part1Props} />
+            <LeaveType {...leaveTypeProps} />
           </div>
         ) : (
           <div>
@@ -148,7 +141,7 @@ class App extends Component {
                   </h2>
 
                   <WagesInput onSubmit={this.handleWagesSubmit} />
-                  <Part1 {...part1Props} />
+                  <LeaveType {...leaveTypeProps} />
                 </div>
               </section>
             </main>
