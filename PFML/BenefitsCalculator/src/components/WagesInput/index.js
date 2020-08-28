@@ -58,13 +58,12 @@ class Calculator extends Component {
 
     this.setValueState = ({ id, value }) => {
       if (Object.prototype.hasOwnProperty.call(this.state.values, id)) {
-        this.setState((state) => {
-          return {
-            values: {
-              ...state.values,
-              [id]: value
-          }};
-        });
+        this.setState((state) => ({
+          values: {
+            ...state.values,
+            [id]: value
+          }
+        }));
       }
     };
   }
@@ -82,11 +81,13 @@ class Calculator extends Component {
       }
     } = this.state;
 
-    console.log(this.state.values)
+    console.log(this.state.values);
 
     const { inputLabel, applyAllLabel } = inputProps;
 
-    const quartersArray = buildQuartersArray({ quarter1, quarter2, quarter3, quarter4 });
+    const quartersArray = buildQuartersArray({
+      quarter1, quarter2, quarter3, quarter4
+    });
     const { quartersHaveValue, quartersCount } = paidQuarters(quartersArray);
 
     const weeklyPay = calcWeeklyPay({ quartersHaveValue, quartersCount });
@@ -172,8 +173,8 @@ class Calculator extends Component {
                 type="submit"
                 text={inputProps.buttonText}
                 onClick={() => {
-                  this.setState({ submitted: true })
-                  this.props.onSubmit({ qualified, weeklyBenefit })
+                  this.setState({ submitted: true });
+                  this.props.onSubmit({ qualified, weeklyBenefit });
                 }}
               />
             </Fragment>

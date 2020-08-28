@@ -18,7 +18,9 @@ const Output = (props) => {
     quarter1, quarter2, quarter3, quarter4
   } = props;
 
-  const quartersArray = buildQuartersArray({ quarter1, quarter2, quarter3, quarter4 });
+  const quartersArray = buildQuartersArray({
+    quarter1, quarter2, quarter3, quarter4
+  });
   const { quartersHaveValue, quartersCount } = paidQuarters(quartersArray);
 
   const weeklyPay = calcWeeklyPay({ quartersHaveValue, quartersCount });
