@@ -13,7 +13,8 @@ class Part1 extends Component {
     const message = this.getMessage(PartOneProps, props.defaultSelected);
     this.state = {
       message: (message && message.message) ? message.message : '',
-      messageTheme: (message && message.messageTheme) ? message.messageTheme : ''
+      messageTheme: (message && message.messageTheme) ? message.messageTheme : '',
+      weeks: (message && message.weeks) ? message.weeks : null
     };
   }
 
@@ -35,7 +36,8 @@ class Part1 extends Component {
     const message = this.getMessage(PartOneProps, selected);
     this.setState({
       message: message.message,
-      messageTheme: message.messageTheme
+      messageTheme: message.messageTheme,
+      weeks: message.weeks
     });
     const maxWeeks = message.weeks;
     const { onChange } = this.props;
@@ -59,8 +61,8 @@ class Part1 extends Component {
       radioButtons: options
     };
 
-    const { message, messageTheme } = this.state;
-    const open = !!message;
+    const { messageTheme, weeks } = this.state;
+    const open = !(weeks < 0);
     const callProps = {
       theme: messageTheme,
       icon: messageTheme === 'c-error-red' ? {
@@ -68,6 +70,10 @@ class Part1 extends Component {
         ariaHidden: true
       } : null
     };
+
+    const message = `If approved, you may be covered <strong>up to ${weeks} weeks</strong> by the PFML program. This benefit will be available starting <strong>July 1, 2021</strong>.`
+    const disclaimer = 'This benefit will be available starting <strong>July 1, 2021</strong>.'
+    console.log(message)
     return(
       <Fragment>
         <InputRadioGroup {...radioGroupProps} />
@@ -76,7 +82,9 @@ class Part1 extends Component {
             <Collapse in={open} dimension="height" className="ma__callout-alert">
               <div className="ma__collapse">
                 <CalloutAlert {...callProps}>
-                  <Paragraph text={message} />
+                  <Paragraph>
+                    {disclaimer}
+                  </Paragraph>
                 </CalloutAlert>
               </div>
             </Collapse>
