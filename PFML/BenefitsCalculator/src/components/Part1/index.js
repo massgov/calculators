@@ -49,20 +49,19 @@ class Part1 extends Component {
 
   render() {
     const { question, options } = PartOneProps;
-    const { error, disabled, defaultSelected, qualified, weeklyBenefit } = this.props;
+    const { defaultSelected, qualified, weeklyBenefit } = this.props;
     const radioGroupProps = {
       title: getHelpTip(question, 'c-primary', 'question-1-helptip'),
       name: 'question-one',
       outline: true,
       inline: false,
-      error,
       disabled: !qualified,
       defaultSelected,
       onChange: this.handleChange,
       radioButtons: options
     };
 
-    const { messageTheme, weeks } = this.state;
+    const { message, messageTheme, weeks } = this.state;
     const open = !(weeks < 0);
     const callProps = {
       theme: messageTheme,
@@ -73,13 +72,20 @@ class Part1 extends Component {
     };
 
     const totalBenefit = calcTotalBenefit({ benefitDuration: weeks, weeklyBenefit });
+    const approvedMessage = `If approved, you may be covered <strong>up to ${weeks} weeks</strong> by the PFML program. Your total benefit credit is estimated to be <strong>${toCurrency(totalBenefit)}</strong>.`;
+    const totalFormulaDescription = 'Your total benefit credit is equal to your estimated weekly benefit multiplied by the number of paid weeks (the first 7 days of your leave is a waiting period which is unpaid):';
+    const startDateDisclaimer = 'This benefit will be available starting <strong>July 1, 2021</strong>.';
 
-    console.log(totalBenefit);
-    const message = `If approved, you may be covered <strong>up to ${weeks} weeks</strong> by the PFML program. Your maximum benefit credit is estimated to be <strong>${toCurrency(totalBenefit)}</strong>.`
-    
-    const startDate = 'This benefit will be available starting <strong>July 1, 2021</strong>.'
-
-
+    const getHelpText = () => (
+      <div className="ma__help-text">
+        <Fragment>
+          <Paragraph text={totalFormulaDescription} />
+          <div className="ma__output-calculation">
+            <Paragraph text={`${toCurrency(totalBenefit)} = ${toCurrency(weeklyBenefit)} x (${weeks} - 1) weeks`} />
+          </div>
+        </Fragment>
+      </div>
+    );
 
     return(
       <Fragment>
@@ -89,18 +95,26 @@ class Part1 extends Component {
             <Collapse in={open} dimension="height" className="ma__callout-alert">
               <div className="ma__collapse">
                 <CalloutAlert {...callProps}>
-                  <HelpTip
-                    theme="c-white"
-                    text={message}
-                    triggerText={[`<strong>${toCurrency(totalBenefit)}</strong>`]}
-                    id="help-tip-benefits"
-                    labelID="help-tip-benefits-label"
-                  >
-
-                  </HelpTip>
-                  <Paragraph>
-                    {startDate}
-                  </Paragraph>
+                  { (Number(weeks) === 0) ? (
+                    <div className="ma__help-text">
+                      <Paragraph text={message} />
+                    </div>
+                  ) : (
+                    <Fragment>
+                      <HelpTip
+                        theme="c-white"
+                        text={approvedMessage}
+                        triggerText={[`<strong>${toCurrency(totalBenefit)}</strong>`]}
+                        id="help-tip-benefits"
+                        labelID="help-tip-benefits-label"
+                      >
+                        {getHelpText()}
+                      </HelpTip>
+                      <Paragraph>
+                        {startDateDisclaimer}
+                      </Paragraph>
+                    </Fragment>
+                  )}
                 </CalloutAlert>
               </div>
             </Collapse>
