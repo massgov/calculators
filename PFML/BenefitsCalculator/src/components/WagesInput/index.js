@@ -9,6 +9,9 @@ import { toCurrency, sum } from '../../utils';
 import inputProps from '../../data/input.json';
 import variables from '../../data/variables.json';
 import BenefitsVariables from '../../data/BenefitsVariables.json';
+import {
+  buildQuartersArray, paidQuarters, calcWeeklyPay, calcWeeklyBenefit, calcEligibility
+} from './formula';
 
 
 import './index.css';
@@ -78,42 +81,15 @@ class Calculator extends Component {
         quarter1, quarter2, quarter3, quarter4
       }
     } = this.state;
-    console.log(quarter1, quarter2, quarter3, quarter4)
 
     const { inputLabel, applyAllLabel } = inputProps;
 
-    let quartersArray = [quarter1, quarter2, quarter3, quarter4];
-    quartersArray = quartersArray.map((q) => ((typeof q === 'string') ? numbro.unformat(q) : q));
+    const quartersArray = buildQuartersArray({ quarter1, quarter2, quarter3, quarter4 });
+    const { quartersHaveValue, quartersCount } = paidQuarters(quartersArray);
 
-    const quartersHaveValue = quartersArray.filter((q) => typeof q === 'number' && q > 0);
-    const quartersCount = quartersHaveValue.length;
-
-    // weekly benefit
-    let topQuarters;
-    let weeksInTopQuarters = 26;
-    if (quartersCount > 2) {
-      topQuarters = quartersHaveValue.sort((q1, q2) => q2 - q1).slice(0, 2);
-    } else if (quartersCount > 0) {
-      topQuarters = quartersHaveValue.sort((q1, q2) => q2 - q1).slice(0, 1);
-      weeksInTopQuarters = 13;
-    }
-    const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
-    // average weekly pay is rounded up to the nearest dollar
-    const avgWeeklyPay = Math.ceil(topQuartersSum / weeksInTopQuarters);
-    // weekly benefit is rounded down to the nearest dollar amount
-    const weeklyBenefit = Math.floor(1 / 2 * avgWeeklyPay);
-    // WeeklyBenefitFinal is making sure that the weeklyBenefit never exceeds the maximum
-    const weeklyBenefitFinal = Math.min(weeklyBenefit, weeklyBenefitMax);
-
-    // qualifications
-    const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
-    // qualification 1: total wages is no less than the threshhold
-    const qualification1 = !(quartersSum < quartersSumThreshhold);
-    // qualification 2: total wages is no less than 30 times the weeklyBenefitFinal
-    const qualification2 = !(quartersSum < (30 * weeklyBenefitFinal));
-    const qualified = qualification1 && qualification2;
-    console.log(quarter1)
-
+    const weeklyPay = calcWeeklyPay({ quartersHaveValue, quartersCount });
+    const weeklyBenefit = calcWeeklyBenefit(weeklyPay);
+    const { qualified } = calcEligibility({ weeklyBenefit, quartersHaveValue });
 
     return(
       <FormProvider>
@@ -130,12 +106,13 @@ class Calculator extends Component {
                   // convert val to currency then set it to context
                   const value = toCurrency(val);
                   this.setValueState({ id, value });
-
-                  this.setValueState({ id: 'quarter2', value })
                   if (applyAll) {
                     this.setValueState({ id: 'quarter2', value });
                     this.setValueState({ id: 'quarter3', value });
                     this.setValueState({ id: 'quarter4', value });
+                    formContext.setValue({ id: 'quarter2', value });
+                    formContext.setValue({ id: 'quarter3', value });
+                    formContext.setValue({ id: 'quarter4', value });
                   }
                 }}
               />
@@ -195,7 +172,7 @@ class Calculator extends Component {
                 text={inputProps.buttonText}
                 onClick={() => {
                   this.setState({ submitted: true })
-                  this.props.onSubmit(this.state.submitted)
+                  this.props.onSubmit({ qualified, weeklyBenefit })
                 }}
               />
             </Fragment>

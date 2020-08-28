@@ -61,6 +61,7 @@ class App extends Component {
     } = props;
     /* eslint-disable no-undef */
     this.state = {
+      qualified: false,
       weeklyBenefit: getDefaultNumber(weeklyBenefit),
       maxWeeks: getWeeks(PartOneProps, leaveReason),
       leaveReason,
@@ -91,25 +92,11 @@ class App extends Component {
     history.listen();
   }
 
-  handleWagesSubmit = (weeklyBenefit) => {
+  handleWagesSubmit = ({ qualified, weeklyBenefit }) => {
     this.setState({
+      qualified,
       weeklyBenefit
     });
-    // const { onChangeweeklyBenefit } = this.props;
-    // onChangeweeklyBenefit(value);
-    // if (numberValue >= BenefitsVariables.baseVariables.minSalary) {
-    //   this.setState({
-    //     belowMinSalary: false
-    //   });
-    // }
-    // // Allow rendering belowMinSalary callout on inputCurrency up/down button click.
-    // if (type === 'click') {
-    //   if (numberValue < BenefitsVariables.baseVariables.minSalary) {
-    //     this.setState({
-    //       belowMinSalary: true
-    //     });
-    //   }
-    // }
   };
 
   handleRadio = ({ selected, maxWeeks }) => {
@@ -131,15 +118,21 @@ class App extends Component {
 
   render() {
     const {
-      leaveReason, weeklyBenefit, maxWeeks, belowMinSalary
+      leaveReason, weeklyBenefit, maxWeeks, belowMinSalary, qualified
     } = this.state;
+    console.log(qualified, weeklyBenefit)
     let belowMinSalaryConv;
     if (typeof belowMinSalary === 'string') {
       belowMinSalaryConv = belowMinSalary === 'true';
     } else { belowMinSalaryConv = belowMinSalary; }
 
+    const part1Props = {
+      qualified,
+      weeklyBenefit,
+      defaultSelected: leaveReason,
+      onChange: this.handleRadio
+    };
 
-    const questTwoDisabled = !(maxWeeks > 0);
     return(
       <div className="App">
         {process.env.REACT_APP_IFRAME === 'true' ? (
@@ -147,7 +140,7 @@ class App extends Component {
             <hr />
             <HelpTip {...inputProps.inputTitle} {...this.helptipIframeProp} id="helptext-total-wages" />
             <WagesInput onCalculate={(value) => this.handleWagesSubmit(value)} />
-            <Part1 error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
+            <Part1 {...part1Props} />
           </div>
         ) : (
           <div>
@@ -169,7 +162,7 @@ class App extends Component {
                   </h2>
 
                   <WagesInput onSubmit={this.handleWagesSubmit} />
-                  <Part1 error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
+                  <Part1 {...part1Props} />
                 </div>
               </section>
             </main>

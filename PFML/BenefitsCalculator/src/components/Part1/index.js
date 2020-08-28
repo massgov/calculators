@@ -46,18 +46,19 @@ class Part1 extends Component {
 
   render() {
     const { question, options } = PartOneProps;
-    const { error, disabled, defaultSelected } = this.props;
+    const { error, disabled, defaultSelected, qualified, weeklyBenefit } = this.props;
     const radioGroupProps = {
       title: getHelpTip(question, 'c-primary', 'question-1-helptip'),
       name: 'question-one',
       outline: true,
       inline: false,
       error,
-      disabled,
+      disabled: !qualified,
       defaultSelected,
       onChange: this.handleChange,
       radioButtons: options
     };
+
     const { message, messageTheme } = this.state;
     const open = !!message;
     const callProps = {
@@ -70,13 +71,17 @@ class Part1 extends Component {
     return(
       <Fragment>
         <InputRadioGroup {...radioGroupProps} />
-        <Collapse in={open} dimension="height" className="ma__callout-alert">
-          <div className="ma__collapse">
-            <CalloutAlert {...callProps}>
-              <Paragraph text={message} />
-            </CalloutAlert>
-          </div>
-        </Collapse>
+        {
+          qualified && (
+            <Collapse in={open} dimension="height" className="ma__callout-alert">
+              <div className="ma__collapse">
+                <CalloutAlert {...callProps}>
+                  <Paragraph text={message} />
+                </CalloutAlert>
+              </div>
+            </Collapse>
+          )
+        }
       </Fragment>
     );
   }

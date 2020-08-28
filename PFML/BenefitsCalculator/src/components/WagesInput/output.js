@@ -21,7 +21,7 @@ const Output = (props) => {
   const quartersArray = buildQuartersArray({ quarter1, quarter2, quarter3, quarter4 });
   const { quartersHaveValue, quartersCount } = paidQuarters(quartersArray);
 
-  const weeklyPay = calcWeeklyPay(quartersHaveValue);
+  const weeklyPay = calcWeeklyPay({ quartersHaveValue, quartersCount });
   const weeklyBenefit = calcWeeklyBenefit(weeklyPay);
   const { qualified, qualification1 } = calcEligibility({ weeklyBenefit, quartersHaveValue });
 
@@ -35,8 +35,6 @@ const Output = (props) => {
     weeksInTopQuarters = 13;
   }
   const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
-  // average weekly pay is rounded up to the nearest dollar
-  const avgWeeklyPay = Math.ceil(topQuartersSum / weeksInTopQuarters);
 
   // qualifications
   const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
@@ -53,7 +51,7 @@ const Output = (props) => {
     maAvgYear, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction
   } = BenefitsVariables.baseVariables;
 
-  const yearIncome = avgWeeklyPay * 52;
+  const yearIncome = weeklyPay * 52;
   const benefitBreak = maAvgYear * 0.5;
   const benefitBreakWeek = (benefitBreak / weeksPerYear) * lowBenefitFraction;
   const maxBenefit = ((maxBenefitWeek - benefitBreakWeek) * weeksPerYear * 2) + benefitBreak;
