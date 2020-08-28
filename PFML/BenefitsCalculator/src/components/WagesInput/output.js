@@ -8,7 +8,7 @@ import BenefitsVariables from '../../data/BenefitsVariables.json';
 import PartThreeProps from '../../data/PartThree.json';
 import {
   buildQuartersArray, paidQuarters, calcWeeklyPay, calcWeeklyBenefit, calcEligibility
-} from './formula';
+} from '../formula';
 
 const Output = (props) => {
   const {

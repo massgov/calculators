@@ -11,7 +11,7 @@ import variables from '../../data/variables.json';
 import BenefitsVariables from '../../data/BenefitsVariables.json';
 import {
   buildQuartersArray, paidQuarters, calcWeeklyPay, calcWeeklyBenefit, calcEligibility
-} from './formula';
+} from '../formula';
 
 
 import './index.css';

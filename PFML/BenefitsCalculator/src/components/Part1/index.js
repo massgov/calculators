@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
-  InputRadioGroup, CalloutAlert, Paragraph, Collapse
+  InputRadioGroup, CalloutAlert, Paragraph, Collapse, HelpTip
 } from '@massds/mayflower-react';
 import PartOneProps from '../../data/PartOne.json';
 import './index.css';
-import { getHelpTip } from '../../utils';
+import { getHelpTip, toCurrency } from '../../utils';
+import { calcTotalBenefit } from '../formula';
 
 class Part1 extends Component {
   constructor(props) {
@@ -71,9 +72,15 @@ class Part1 extends Component {
       } : null
     };
 
-    const message = `If approved, you may be covered <strong>up to ${weeks} weeks</strong> by the PFML program. This benefit will be available starting <strong>July 1, 2021</strong>.`
-    const disclaimer = 'This benefit will be available starting <strong>July 1, 2021</strong>.'
-    console.log(message)
+    const totalBenefit = calcTotalBenefit({ benefitDuration: weeks, weeklyBenefit });
+
+    console.log(totalBenefit);
+    const message = `If approved, you may be covered <strong>up to ${weeks} weeks</strong> by the PFML program. Your maximum benefit credit is estimated to be <strong>${toCurrency(totalBenefit)}</strong>.`
+    
+    const startDate = 'This benefit will be available starting <strong>July 1, 2021</strong>.'
+
+
+
     return(
       <Fragment>
         <InputRadioGroup {...radioGroupProps} />
@@ -82,8 +89,17 @@ class Part1 extends Component {
             <Collapse in={open} dimension="height" className="ma__callout-alert">
               <div className="ma__collapse">
                 <CalloutAlert {...callProps}>
+                  <HelpTip
+                    theme="c-white"
+                    text={message}
+                    triggerText={[`<strong>${toCurrency(totalBenefit)}</strong>`]}
+                    id="help-tip-benefits"
+                    labelID="help-tip-benefits-label"
+                  >
+
+                  </HelpTip>
                   <Paragraph>
-                    {disclaimer}
+                    {startDate}
                   </Paragraph>
                 </CalloutAlert>
               </div>

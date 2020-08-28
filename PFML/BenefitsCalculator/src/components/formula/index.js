@@ -72,9 +72,9 @@ export const calcEligibility = ({ weeklyBenefit, quartersHaveValue, quartersSumT
 };
 
 
-export const calcTotalBenefit = ({ maxBenefitDuration, weeklyBenefit }) => {
-  // total benefit credit
-  const totalBenefit = maxBenefitDuration * weeklyBenefit;
+export const calcTotalBenefit = ({ benefitDuration, weeklyBenefit }) => {
+  // the first week is unpaid
+  const totalBenefit = (benefitDuration - 1) * weeklyBenefit;
   return totalBenefit;
   // quartersSum will have cents when wages input contains cents, maxBeneiftFinal is rounded down to the nearest dollar
   // const maxBenefitOption2 = Math.floor(maxBenefitRatio * quartersSum);
