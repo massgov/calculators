@@ -26,33 +26,47 @@ const Output = (props) => {
   const weeklyBenefit = calcWeeklyBenefit(weeklyPay);
   const { qualified, qualification1 } = calcEligibility({ weeklyBenefit, quartersHaveValue });
 
+  const helpTextBasePeriod2Q = 'Your average weekly income equals to the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters:';
+  const helpTextBasePeriod1Q = 'Your average weekly income equals to the highest-earning quarter divided by the number of weeks in the quarter:';
+  const helpTextWeeks2Q = 'weeks in the combined quarters';
+  const helpTextWeeks1Q = 'weeks in the quarter';
+
   // weekly benefit
   let topQuarters;
   let weeksInTopQuarters = 26;
+  let helpTextWeeklyPay = helpTextBasePeriod2Q;
+  let helpTextWeeks = helpTextWeeks2Q;
   if (quartersCount > 2) {
     topQuarters = quartersHaveValue.sort((q1, q2) => q2 - q1).slice(0, 2);
   } else if (quartersCount > 0) {
     topQuarters = quartersHaveValue.sort((q1, q2) => q2 - q1).slice(0, 1);
     weeksInTopQuarters = 13;
+    helpTextWeeklyPay = helpTextBasePeriod1Q;
+    helpTextWeeks = helpTextWeeks1Q;
   }
   const topQuartersSum = topQuarters && topQuarters.length > 0 && topQuarters.reduce(sum);
+
+  console.log(quartersHaveValue, quartersCount)
 
   // qualifications
   const quartersSum = quartersHaveValue.length > 0 && quartersHaveValue.reduce(sum);
 
   const qualifyAddition = 'Choose a reason of leave to determine if you will be eligible and estimate for the duration of your benefit.';
-  const helpTextBasePeriod2Q = 'Your weekly benefit amount is equal to half of the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters:';
-  const helpTextBasePeriod1Q = 'Your weekly benefit amount is equal to half of the highest-earning quarter divided by the number of weeks in the quarter:';
-  const helpTextWeeks2Q = 'weeks in the combined quarters';
-  const helpTextWeeks1Q = 'weeks in the quarter';
   const helpTextDisqualification1 = `You must have earned at least ${toCurrency(quartersSumThreshhold)} during the last 4 completed calendar quarters to be eligible.`;
   const helpTextDisqualification2 = `Your total base period wages of ${toCurrency(quartersSum)} must be equal to or greater than ${toCurrency(weeklyBenefit * 30)} (your weekly benefit amount x 30) to be eligible.`;
 
 
   const benefitBreakWeek = maAvgWeek * 0.5;
-  console.log(benefitBreakWeek, toCurrency(benefitBreakWeek))
   const maxBenefit = ((maxBenefitWeek - benefitBreakWeek) * 2) + benefitBreakWeek;
 
+  const getWeeklyPayDisclaimer = () => (
+    <div className="ma__disclaimer">
+      {helpTextWeeklyPay}
+      <div className="ma__output-calculation">
+        <Paragraph text={`${toCurrency(weeklyPay)} = ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${helpTextWeeks}`} />
+      </div>
+    </div>
+  );
 
   const {
     paragraphThree
@@ -68,13 +82,17 @@ const Output = (props) => {
             <div className="ma__output-calculation">
               <Paragraph text={`${toCurrency(weeklyBenefit)} = (${toCurrency(weeklyPay)} x ${toPercentage(lowBenefitFraction)}) / ${weeksPerYear} weeks per year`} />
             </div>
+            {getWeeklyPayDisclaimer()}
           </Fragment>
         ) : (
           <Fragment>
             {weeklyPay < maxBenefit ? (
               <Fragment>
-                <Paragraph text={`${more.partOne} ${toCurrency(benefitBreakWeek)} ${more.partTwo} ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreakWeek)} ${more.partFive} ${toCurrency(maxBenefit)}${more.partSix} ${toCurrency(maxBenefitWeek)} ${more.partSeven}`} />
-                <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toCurrency(benefitBreakWeek)} + [ ${toPercentage(highBenefitFraction)} x (${toCurrency(weeklyPay)} - ${toCurrency(benefitBreakWeek)}) / ${weeksPerYear} weeks per year ]`} /></div>
+                <Paragraph text={`${more.partOne} ${toCurrency(benefitBreakWeek)} ${more.partTwo} ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreakWeek)} ${more.partFive} ${toCurrency(maxBenefit)}.`} />
+                <div className="ma__output-calculation">
+                  <Paragraph text={`${toCurrency(weeklyBenefit)} = ${toCurrency(benefitBreakWeek)} x ${toPercentage(lowBenefitFraction)} + [ ${toPercentage(highBenefitFraction)} x (${toCurrency(weeklyPay)} - ${toCurrency(benefitBreakWeek)})`} />
+                </div>
+                {getWeeklyPayDisclaimer()}
               </Fragment>
             ) : (
               // over max
