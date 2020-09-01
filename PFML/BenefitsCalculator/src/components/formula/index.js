@@ -4,7 +4,7 @@ import { sum } from '../../utils';
 import BenefitsVariables from '../../data/BenefitsVariables.json';
 
 const {
-  maAvgYear, maAvgWeek, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction, quartersSumThreshhold
+  maAvgWeek, maxBenefitWeek, lowBenefitFraction, highBenefitFraction, quartersSumThreshhold
 } = BenefitsVariables.baseVariables;
 
 export const buildQuartersArray = ({

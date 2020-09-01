@@ -10,7 +10,7 @@ import {
 
 const Output = (props) => {
   const {
-    maAvgWeek, weeksPerYear, maxBenefitWeek, lowBenefitFraction, highBenefitFraction, quartersSumThreshhold
+    maAvgWeek, maxBenefitWeek, lowBenefitFraction, highBenefitFraction, quartersSumThreshhold
   } = BenefitsVariables.baseVariables;
 
   const {
