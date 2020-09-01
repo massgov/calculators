@@ -52,30 +52,11 @@ class Calculator extends Component {
       step: 0.01,
       showButtons: false
     };
-
-    this.setValueState = (newValues) => {
-      this.setState((state) => ({
-        values: {
-          ...state.values,
-          ...newValues
-        }
-      }));
-    };
   }
 
-  render() {
-    const {
-      applyAll,
-      submitted,
-      values: {
-        quarter1, quarter2, quarter3, quarter4
-      }
-    } = this.state;
-
-    const { onSubmit } = this.props;
-
-    const { inputLabel, applyAllLabel } = inputProps;
-
+  onSubmit = ({
+    quarter1, quarter2, quarter3, quarter4
+  }) => {
     const quartersArray = buildQuartersArray({
       quarter1, quarter2, quarter3, quarter4
     });
@@ -84,6 +65,35 @@ class Calculator extends Component {
     const weeklyPay = calcWeeklyPay({ quartersHaveValue, quartersCount });
     const weeklyBenefit = calcWeeklyBenefit(weeklyPay);
     const { qualified } = calcEligibility({ weeklyBenefit, quartersHaveValue });
+
+    const { onSubmit } = this.props;
+    const { submitted } = this.state;
+
+    if (typeof onSubmit === 'function' && submitted) {
+      onSubmit({ qualified, weeklyBenefit });
+    }
+  }
+
+  setValueState = (newValues) => {
+    this.setState((state) => ({
+      values: {
+        ...state.values,
+        ...newValues
+      }
+    }), () => {
+      const { values } = this.state;
+      this.onSubmit(values);
+    });
+  };
+
+  render() {
+    const {
+      applyAll,
+      submitted,
+      values
+    } = this.state;
+
+    const { inputLabel, applyAllLabel } = inputProps;
 
     return(
       <FormProvider>
@@ -110,7 +120,6 @@ class Calculator extends Component {
                       quarter4: value
                     });
                   }
-                  onSubmit({ qualified, weeklyBenefit });
                 }}
               />
               <InputCheckBox
@@ -122,6 +131,7 @@ class Calculator extends Component {
                   this.setState({
                     applyAll: value
                   });
+                  const { quarter1 } = values;
                   formContext.setValue({ id: 'quarter2', value: quarter1 });
                   formContext.setValue({ id: 'quarter3', value: quarter1 });
                   formContext.setValue({ id: 'quarter4', value: quarter1 });
@@ -142,7 +152,7 @@ class Calculator extends Component {
                   // convert val to currency then set it to context
                   const value = toCurrency(val);
                   this.setValueState({ [id]: value });
-                  onSubmit({ qualified, weeklyBenefit });
+                  this.onSubmit(values);
                 }}
               />
               <InputCurrency
@@ -155,7 +165,7 @@ class Calculator extends Component {
                   // convert val to currency then set it to context
                   const value = toCurrency(val);
                   this.setValueState({ [id]: value });
-                  onSubmit({ qualified, weeklyBenefit });
+                  this.onSubmit(values);
                 }}
               />
               <InputCurrency
@@ -168,7 +178,7 @@ class Calculator extends Component {
                   // convert val to currency then set it to context
                   const value = toCurrency(val);
                   this.setValueState({ [id]: value });
-                  onSubmit({ qualified, weeklyBenefit });
+                  this.onSubmit(values);
                 }}
               />
               <Button
@@ -176,7 +186,7 @@ class Calculator extends Component {
                 text={inputProps.buttonText}
                 onClick={() => {
                   this.setState({ submitted: true });
-                  onSubmit({ qualified, weeklyBenefit });
+                  this.onSubmit(values);
                 }}
               />
             </Fragment>
@@ -185,14 +195,11 @@ class Calculator extends Component {
         </Form>
         <FormContext.Consumer>
           {
-          () => {
-            const { values } = this.state;
-            return(
-              submitted && (
-                <Output {...values} />
-              )
-            );
-          }
+          () => (
+            submitted && (
+              <Output {...values} />
+            )
+          )
         }
         </FormContext.Consumer>
       </FormProvider>
