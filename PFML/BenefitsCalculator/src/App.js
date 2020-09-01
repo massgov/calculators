@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {
-  Header, Footer, PageHeader, HelpTip
-} from '@massds/mayflower-react';
+import HelpTip from '@massds/mayflower-react/es/components/organisms/HelpTip';
+import PageHeader from '@massds/mayflower-react/es/components/organisms/PageHeader';
+import Header from '@massds/mayflower-react/es/components/organisms/Header';
+import Footer from '@massds/mayflower-react/es/components/organisms/Footer';
 import {
   decode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery, encode
 } from 'react-url-query';

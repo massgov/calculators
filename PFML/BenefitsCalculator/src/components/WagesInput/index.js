@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import moment from 'moment';
-import {
-  InputCurrency, Button, FormProvider, Form, FormContext, InputCheckBox
-} from '@massds/mayflower-react/';
+import InputCurrency from '@massds/mayflower-react/es/components/forms/InputCurrency';
+import InputCheckBox from '@massds/mayflower-react/es/components/forms/InputCheckBox';
+import Button from '@massds/mayflower-react/es/components/atoms/buttons/Button';
+import Form, { FormProvider } from '@massds/mayflower-react/es/components/forms/Form';
+import { FormContext } from '@massds/mayflower-react/es/components/forms/Input/context';
 import Output from './output';
 import { toCurrency } from '../../utils';
 import inputProps from '../../data/input.json';
@@ -124,6 +126,7 @@ class Calculator extends Component {
               />
               <InputCheckBox
                 id="apply-all"
+                value="apply-all"
                 label={applyAllLabel}
                 icon={{ name: '', ariaHidden: true }}
                 defaultValue={false}

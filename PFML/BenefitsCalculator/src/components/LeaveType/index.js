@@ -1,8 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import {
-  InputRadioGroup, CalloutAlert, Paragraph, Collapse, HelpTip
-} from '@massds/mayflower-react';
+import CalloutAlert from '@massds/mayflower-react/es/components/organisms/CalloutAlert';
+import HelpTip from '@massds/mayflower-react/es/components/organisms/HelpTip';
+import Paragraph from '@massds/mayflower-react/es/components/atoms/text/Paragraph';
+import Collapse from '@massds/mayflower-react/es/components/animations/Collapse';
+import InputRadioGroup from '@massds/mayflower-react/es/components/forms/InputRadioGroup';
+
 import leaveTypeData from '../../data/LeaveType.json';
 import './index.css';
 import { getHelpTip, getIframeProps, toCurrency } from '../../utils';

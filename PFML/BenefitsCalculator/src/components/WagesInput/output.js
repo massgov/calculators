@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
+import CalloutAlert from '@massds/mayflower-react/es/components/organisms/CalloutAlert';
+import HelpTip from '@massds/mayflower-react/es/components/organisms/HelpTip';
+import Paragraph from '@massds/mayflower-react/es/components/atoms/text/Paragraph';
+
 import {
   toCurrency, toPercentage, sum, getIframeProps
 } from '../../utils';
