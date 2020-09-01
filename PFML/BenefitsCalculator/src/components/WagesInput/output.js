@@ -136,7 +136,7 @@ const Output = (props) => {
         <CalloutAlert theme="c-error-red" icon={null}>
           <HelpTip
             theme="c-white"
-            text="You are <span>not eligible</span> for unemployment benefits."
+            text="You are <span>not eligible</span> for the PFML benefits."
             triggerText={['<span>not eligible</span>']}
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
