@@ -149,8 +149,7 @@ const Output = (props) => {
                 ) : (
                   <Fragment>
                     <Paragraph text={helpTextDisqualification2} />
-                    <Paragraph text={quartersCount > 2 ? helpTextBasePeriod2Q : helpTextBasePeriod1Q} />
-                    <div className="ma__output-calculation"><Paragraph text={`${toCurrency(weeklyBenefit)} = ${toPercentage(1 / 2)} x  ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${quartersCount > 2 ? helpTextWeeks2Q : helpTextWeeks1Q}`} /></div>
+                    { getBenefitsHelpText() }
                   </Fragment>
                 )
               }
