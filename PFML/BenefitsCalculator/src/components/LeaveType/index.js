@@ -62,7 +62,7 @@ class LeaveType extends Component {
     };
 
     const { message, messageTheme, weeks } = this.state;
-    const open = !(weeks < 0);
+    const open = !!weeks;
     const callProps = {
       theme: messageTheme,
       icon: messageTheme === 'c-error-red' ? {
@@ -100,7 +100,7 @@ class LeaveType extends Component {
             <Collapse in={open} dimension="height" className="ma__callout-alert">
               <div className="ma__collapse">
                 <CalloutAlert {...callProps}>
-                  { (Number(weeks) === 0) ? (
+                  { (Number(weeks) === -1) ? (
                     <div className="ma__help-text">
                       <Paragraph text={message} />
                     </div>

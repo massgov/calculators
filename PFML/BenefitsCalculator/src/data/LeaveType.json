@@ -48,7 +48,7 @@
 	    "label": "Other",
 	    "value": "other",
 			"class": "col-large-1",
-	    "weeks": 0,
+	    "weeks": -1,
 	    "id": "other",
 	    "message": "You <strong>may not be covered</strong> by the PFML Program. For more information please visit our <a href=\"https://www.mass.gov/info-details/paid-family-and-medical-leave-benefits-eligibility\">Paid Family and Medical Leave benefits eligibility<\/a> page.",
 	    "theme": "c-error-red"
