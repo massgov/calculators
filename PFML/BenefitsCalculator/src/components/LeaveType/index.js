@@ -96,7 +96,7 @@ class LeaveType extends Component {
       <Fragment>
         <InputRadioGroup {...radioGroupProps} />
         {
-          qualified && (
+          qualified && weeks && (
             <Collapse in={open} dimension="height" className="ma__callout-alert">
               <div className="ma__collapse">
                 <CalloutAlert {...callProps}>
