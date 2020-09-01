@@ -12,13 +12,13 @@
       "partOne": "Because your average weekly income* was more than",
       "partTwo": "(1/2 of the statewide average wage) in the last 4 quarters, you are eligible to receive",
       "partThree": "plus",
-      "partFour": "of your earnings above",
+      "partFour": "of your average weekly income* above",
       "partFive": "per week"
     },
     "less": {
       "partOne": "Because your average weekly income* was no more than",
       "partTwo": "(1/2 of the statewide average wage) in the last 12 months, you are eligible to receive",
-      "partThree": "of your weekly income"
+      "partThree": "of your average weekly income*"
     },
     "max": {
       "partOne": "Your weekly benefit amount is capped at"
