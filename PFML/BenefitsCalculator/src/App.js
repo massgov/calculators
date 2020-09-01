@@ -118,7 +118,7 @@ class App extends Component {
           <div className="page-content">
             <hr />
             <HelpTip {...inputProps.inputTitle} {...this.helptipIframeProp} id="helptext-total-wages" />
-            <WagesInput onCalculate={(value) => this.handleWagesSubmit(value)} />
+            <WagesInput onSubmit={this.handleWagesSubmit} />
             <LeaveType {...leaveTypeProps} />
           </div>
         ) : (

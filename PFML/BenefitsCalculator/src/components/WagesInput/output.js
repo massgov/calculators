@@ -73,7 +73,7 @@ const Output = (props) => {
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">
       {
-        // less than or equal to benefitBreakWeek
+        // weeklyPay is less than or equal to benefitBreakWeek
         weeklyPay <= benefitBreakWeek ? (
           <Fragment>
             <Paragraph text={`${less.partOne} ${toCurrency(benefitBreakWeek)} ${less.partTwo} ${toPercentage(lowBenefitFraction)} ${less.partThree}.`} />
@@ -85,8 +85,8 @@ const Output = (props) => {
         ) : (
           <Fragment>
             {
-              // more than benefitBreakWeek but less than maxBenefitWeek
-              weeklyPay < maxBenefitWeek ? (
+              // weeklyPay is more than benefitBreakWeek and benefit is less than maxBenefitWeek
+              weeklyBenefit < maxBenefitWeek ? (
                 <Fragment>
                   <Paragraph text={`${more.partOne} ${toCurrency(benefitBreakWeek)} ${more.partTwo} ${toPercentage(lowBenefitFraction)} of ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreakWeek)} ${more.partFive}.`} />
                   <div className="ma__output-calculation">
@@ -95,7 +95,7 @@ const Output = (props) => {
                   {getWeeklyPayDisclaimer()}
                 </Fragment>
               ) : (
-                // over max
+                // benefit is over maxBenefitWeek
                 <Fragment>
                   <Paragraph text={`${max.partOne} ${toCurrency(maxBenefitWeek)}.`} />
                 </Fragment>
