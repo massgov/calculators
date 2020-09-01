@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import moment from 'moment';
 import {
   InputCurrency, Button, FormProvider, Form, FormContext, InputCheckBox
-} from '@massds/mayflower-react';
+} from '@massds/mayflower-react/';
 import Output from './output';
 import { toCurrency } from '../../utils';
 import inputProps from '../../data/input.json';

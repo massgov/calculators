@@ -10,7 +10,7 @@
 			"class": "col-large-1",
 	    "weeks": 12,
 	    "id": "birth-adoption",
-	    "message": "If approved, you may be covered <strong>up to 12 weeks</strong> by the PFML program. This benefit will be available starting <strong>January 1, 2021</strong>.",
+	    "startDate": "January 1, 2021",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Personal serious health condition",
@@ -18,7 +18,7 @@
 			"class": "col-large-1",
 	    "weeks": 20,
 	    "id": "own-medical",
-	    "message": "If approved, you may be covered <strong>up to 20 weeks</strong> by the PFML program. This benefit will be available starting <strong>January 1, 2021</strong>.",
+	    "startDate": "January 1, 2021",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Caring for a family member with a serious health condition",
@@ -26,7 +26,7 @@
 			"class": "col-large-1",
 	    "weeks": 12,
 	    "id": "caring-loved-one",
-	    "message": "If approved, you may be covered <strong>up to 12 weeks</strong> by the PFML program. This benefit will be available starting <strong>July 1, 2021</strong>.",
+	    "startDate": "July 1, 2021",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Family member called to active duty in the armed forces",
@@ -34,7 +34,7 @@
 			"class": "col-large-1",
 	    "weeks": 12,
 	    "id": "active-duty",
-	    "message": "If approved, you may be covered <strong>up to 12 weeks</strong> by the PFML program. This benefit will be available starting <strong>January 1, 2021</strong>.",
+	    "startDate": "January 1, 2021",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Caring for a family member who serves in the armed forces",
@@ -42,7 +42,7 @@
 			"class": "col-large-1",
 	    "weeks": 26,
 	    "id": "injured-duty",
-	    "message": "If approved, you may be covered <strong>up to 26 weeks</strong> by the PFML program. This benefit will be available starting <strong>January 1, 2021</strong>.",
+	    "startDate": "January 1, 2021",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Other",
