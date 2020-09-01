@@ -125,6 +125,9 @@ class Calculator extends Component {
                   this.setValueState({ id: 'quarter2', value: quarter1 });
                   this.setValueState({ id: 'quarter3', value: quarter1 });
                   this.setValueState({ id: 'quarter4', value: quarter1 });
+                  formContext.setValue({ id: 'quarter2', value: quarter1 });
+                  formContext.setValue({ id: 'quarter3', value: quarter1 });
+                  formContext.setValue({ id: 'quarter4', value: quarter1 });
                 }}
               />
               <InputCurrency
