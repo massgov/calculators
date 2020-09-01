@@ -26,8 +26,8 @@ const Output = (props) => {
   const weeklyBenefit = calcWeeklyBenefit(weeklyPay);
   const { qualified, qualification1 } = calcEligibility({ weeklyBenefit, quartersHaveValue });
 
-  const helpTextBasePeriod2Q = 'Your average weekly income equals to the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters:';
-  const helpTextBasePeriod1Q = 'Your average weekly income equals to the highest-earning quarter divided by the number of weeks in the quarter:';
+  const helpTextBasePeriod2Q = '*Your <b>average weekly income</b> equals to the sum of total wages for the 2 highest-earning quarters divided by the number of weeks in the combined quarters:';
+  const helpTextBasePeriod1Q = '*Your <b>average weekly income</b> equals to the highest-earning quarter divided by the number of weeks in the quarter:';
   const helpTextWeeks2Q = 'weeks in the combined quarters';
   const helpTextWeeks1Q = 'weeks in the quarter';
 
@@ -58,7 +58,7 @@ const Output = (props) => {
 
   const getWeeklyPayDisclaimer = () => (
     <div className="ma__disclaimer">
-      {`*${helpTextWeeklyPay}`}
+      <Paragraph>{helpTextWeeklyPay}</Paragraph>
       <div className="ma__output-calculation">
         <Paragraph text={`${toCurrency(weeklyPay)} = ${toCurrency(topQuartersSum)} / ${weeksInTopQuarters} ${helpTextWeeks}`} />
       </div>
