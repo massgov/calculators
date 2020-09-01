@@ -92,14 +92,6 @@ class App extends Component {
     onChangeLeaveReason(selected);
   }
 
-  // handleBlur = (numberValue) => {
-  //   if (numberValue < BenefitsVariables.baseVariables.minSalary) {
-  //     this.setState({
-  //       belowMinSalary: true
-  //     });
-  //   }
-  // }
-
   render() {
     const {
       leaveReason, weeklyBenefit, qualified

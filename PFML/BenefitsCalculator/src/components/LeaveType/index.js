@@ -5,7 +5,7 @@ import {
 } from '@massds/mayflower-react';
 import wagesInputData from '../../data/LeaveType.json';
 import './index.css';
-import { getHelpTip, toCurrency } from '../../utils';
+import { getHelpTip, getIframeProps, toCurrency } from '../../utils';
 import { calcTotalBenefit } from '../formula';
 
 class LeaveType extends Component {
@@ -87,11 +87,6 @@ class LeaveType extends Component {
       </div>
     );
 
-    const helptipIframeProp = {};
-    if (process.env.REACT_APP_IFRAME === 'true') {
-      helptipIframeProp.bypassMobileStyle = true;
-    }
-
     return(
       <Fragment>
         <InputRadioGroup {...radioGroupProps} />
@@ -112,7 +107,7 @@ class LeaveType extends Component {
                         triggerText={[`<strong>${toCurrency(totalBenefit)}</strong>`]}
                         id="help-tip-benefits"
                         labelID="help-tip-benefits-label"
-                        {...helptipIframeProp}
+                        {...getIframeProps()}
                       >
                         {getHelpText()}
                       </HelpTip>

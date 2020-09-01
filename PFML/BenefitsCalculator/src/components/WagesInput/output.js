@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { CalloutAlert, HelpTip, Paragraph } from '@massds/mayflower-react';
-import { toCurrency, toPercentage, sum } from '../../utils';
+import {
+  toCurrency, toPercentage, sum, getIframeProps
+} from '../../utils';
 import BenefitsVariables from '../../data/BenefitsVariables.json';
 import wagesInputData from '../../data/WagesInput.json';
 import {
@@ -106,11 +108,6 @@ const Output = (props) => {
     </div>
   );
 
-  const helptipIframeProp = {};
-  if (process.env.REACT_APP_IFRAME === 'true') {
-    helptipIframeProp.bypassMobileStyle = true;
-  }
-
   return(
     <Fragment>
       {
@@ -123,7 +120,7 @@ const Output = (props) => {
             triggerText={[`<strong>${toCurrency(weeklyBenefit)}</strong>`]}
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
-            {...helptipIframeProp}
+            {...getIframeProps()}
           >
 
             { getBenefitsHelpText() }
@@ -140,7 +137,7 @@ const Output = (props) => {
             triggerText={['<span>not eligible</span>']}
             id="help-tip-benefits"
             labelID="help-tip-benefits-label"
-            {...helptipIframeProp}
+            {...getIframeProps()}
           >
             <div className="ma__help-text">
               {

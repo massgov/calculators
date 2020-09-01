@@ -17,6 +17,14 @@ export const getHelpTip = (question, theme, key) => (
   />
 );
 
+export const getIframeProps = () => {
+  const helptipIframeProp = {};
+  if (process.env.REACT_APP_IFRAME === 'true') {
+    helptipIframeProp.bypassMobileStyle = true;
+  }
+  return helptipIframeProp;
+};
+
 
 export const toCurrency = (number) => {
   const currency = numbro(number).formatCurrency({ thousandSeparated: true, mantissa: 2, spaceSeparated: false });
