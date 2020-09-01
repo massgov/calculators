@@ -185,8 +185,7 @@ class Calculator extends Component {
                 type="submit"
                 text={inputProps.buttonText}
                 onClick={() => {
-                  this.setState({ submitted: true });
-                  this.onSubmit(values);
+                  this.setState({ submitted: true }, () => this.onSubmit(values));
                 }}
               />
             </Fragment>
