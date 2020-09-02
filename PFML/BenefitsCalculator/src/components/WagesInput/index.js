@@ -22,10 +22,10 @@ class Calculator extends Component {
       submitted: false,
       applyAll: false,
       values: {
-        quarter1: null,
-        quarter2: null,
-        quarter3: null,
-        quarter4: null
+        quarter1: '',
+        quarter2: '',
+        quarter3: '',
+        quarter4: ''
       }
     };
     const format = 'MMM YYYY';
@@ -129,7 +129,6 @@ class Calculator extends Component {
                 value="apply-all"
                 label={applyAllLabel}
                 icon={{ name: '', ariaHidden: true }}
-                defaultValue={false}
                 onChange={(e, value) => {
                   this.setState({
                     applyAll: value
