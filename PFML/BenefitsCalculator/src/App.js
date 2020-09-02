@@ -3,9 +3,6 @@ import HelpTip from '@massds/mayflower-react/es/components/organisms/HelpTip';
 import PageHeader from '@massds/mayflower-react/es/components/organisms/PageHeader';
 import Header from '@massds/mayflower-react/es/components/organisms/Header';
 import Footer from '@massds/mayflower-react/es/components/organisms/Footer';
-import {
-  decode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery, encode
-} from 'react-url-query';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
@@ -13,45 +10,19 @@ import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
 import LeaveType from './components/LeaveType';
 import WagesInput from './components/WagesInput';
-import history from './components/History';
 import BenefitsVariables from './data/BenefitsVariables.json';
 import inputProps from './data/input.json';
 
 import './index.css';
 
-/**
- * Map from url query params to props. The values in `url` will still be encoded
- * as strings since we did not pass a `urlPropsQueryConfig` to addUrlProps.
- */
-const mapUrlToProps = (url) => ({
-  weeklyBenefit: decode(UrlQueryParamTypes.number, url.weeklyBenefit),
-  leaveReason: decode(UrlQueryParamTypes.string, url.leaveReason)
-});
-
-/**
- * Manually specify how to deal with changes to URL query param props.
- * We do this since we are not using a urlPropsQueryConfig.
- */
-const mapUrlChangeHandlersToProps = () => ({
-  onChangeWeeklyBenefit: (value) => replaceInUrlQuery('weeklyBenefit', encode(UrlQueryParamTypes.string, value)),
-  onChangeLeaveReason: (value) => replaceInUrlQuery('leaveReason', encode(UrlQueryParamTypes.string, value))
-});
-
-const validNumber = (num) => (num || (num !== null && num !== undefined));
-const getDefaultNumber = (num) => ((validNumber(num)) ? Number(num) : null);
-
 class App extends Component {
   constructor(props) {
     super(props);
-    // const hasLocalStore = typeof localStorage !== 'undefined';
-    const {
-      weeklyBenefit, leaveReason
-    } = props;
     /* eslint-disable no-undef */
     this.state = {
       qualified: false,
-      weeklyBenefit: getDefaultNumber(weeklyBenefit),
-      leaveReason
+      weeklyBenefit: null,
+      leaveReason: ''
     };
     /* eslint-enable react/no-unused-state */
     this.footerProps = {
@@ -68,16 +39,6 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    // force an update if the URL changes
-    history.listen(() => this.forceUpdate());
-  }
-
-  componentWillUnmount() {
-    // remove force update on URL changes
-    history.listen();
-  }
-
   handleWagesSubmit = ({ qualified, weeklyBenefit }) => {
     this.setState({
       qualified,
@@ -89,8 +50,6 @@ class App extends Component {
     this.setState({
       leaveReason: selected
     });
-    const { onChangeLeaveReason } = this.props;
-    onChangeLeaveReason(selected);
   }
 
   render() {
@@ -147,4 +106,4 @@ class App extends Component {
   }
 }
 
-export default addUrlProps({ mapUrlToProps, mapUrlChangeHandlersToProps })(App);
+export default App;
