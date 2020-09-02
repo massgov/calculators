@@ -27,13 +27,13 @@ export const getIframeProps = () => {
 
 
 export const toCurrency = (number) => {
-  const currency = numbro(number).formatCurrency({ thousandSeparated: true, mantissa: 2, spaceSeparated: false });
+  const currency = number && numbro(number).formatCurrency({ thousandSeparated: true, mantissa: 2, spaceSeparated: false });
   return currency;
 };
 
 export const toPercentage = (number, decimal) => {
   const mantissa = decimal || 0;
-  const percent = numbro(number).format({ output: 'percent', mantissa, spaceSeparated: false });
+  const percent = number && numbro(number).format({ output: 'percent', mantissa, spaceSeparated: false });
   return percent;
 };
 
