@@ -8,7 +8,7 @@ import {
   toCurrency, toPercentage, sum, getIframeProps
 } from '../../utils';
 import BenefitsVariables from '../../data/BenefitsVariables.json';
-import wagesInputData from '../../data/WagesInput.json';
+import wagesInputData from '../../data/wagesOutput.json';
 import {
   buildQuartersArray, paidQuarters, calcWeeklyPay, calcWeeklyBenefit, calcEligibility
 } from '../formula';
@@ -71,9 +71,9 @@ const Output = (props) => {
   );
 
   const {
-    paragraphThree
+    benefitsHelpText
   } = wagesInputData;
-  const { more, less, max } = paragraphThree;
+  const { more, less, max } = benefitsHelpText;
 
   const getBenefitsHelpText = () => (
     <div className="ma__help-text">

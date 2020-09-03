@@ -7,7 +7,7 @@ import Form, { FormProvider } from '@massds/mayflower-react/es/components/forms/
 import { FormContext } from '@massds/mayflower-react/es/components/forms/Input/context';
 import Output from './output';
 import { toCurrency } from '../../utils';
-import inputProps from '../../data/input.json';
+import inputProps from '../../data/wagesInput.json';
 import {
   buildQuartersArray, paidQuarters, calcWeeklyPay, calcWeeklyBenefit, calcEligibility
 } from '../formula';

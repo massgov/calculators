@@ -1,0 +1,21 @@
+{
+  "benefitsHelpText": {
+    "more": {
+      "partOne": "Because your <b>average weekly income*</b> was more than",
+      "partTwo": "(1/2 of the statewide average wage) in the last 4 quarters, you are eligible to receive",
+      "partTwoIneligible": "(1/2 of the statewide average wage) in the last 4 quarters, you would be receiving",
+      "partThree": "plus",
+      "partFour": "of your average weekly income above",
+      "partFive": "per week"
+    },
+    "less": {
+      "partOne": "Because your <b>average weekly income*</b> was no more than",
+      "partTwo": "(1/2 of the statewide average wage) in the last 4 quarters, you are eligible to receive",
+      "partTwoIneligible": "(1/2 of the statewide average wage) in the last 4 quarters, you would be receiving",
+      "partThree": "of your average weekly income"
+    },
+    "max": {
+      "partOne": "Your weekly benefit amount is capped at"
+    }
+  }
+}

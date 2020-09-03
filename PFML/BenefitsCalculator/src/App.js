@@ -11,7 +11,7 @@ import SocialLinksLiveData from './data/SocialLinksLive.json';
 import LeaveType from './components/LeaveType';
 import WagesInput from './components/WagesInput';
 import BenefitsVariables from './data/BenefitsVariables.json';
-import inputProps from './data/input.json';
+import inputProps from './data/wagesInput.json';
 
 import './index.css';
 
