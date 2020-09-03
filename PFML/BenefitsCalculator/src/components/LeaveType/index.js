@@ -70,8 +70,8 @@ class LeaveType extends Component {
     };
 
     const totalBenefit = calcTotalBenefit({ benefitDuration: weeks, weeklyBenefit });
-    const approvedMessage = `If approved, you may be covered <strong>up to ${weeks} weeks</strong> by the PFML program. Your total benefit credit is estimated to be <strong>${toCurrency(totalBenefit)}</strong>.`;
-    const totalFormulaDescription = 'Your total benefit credit is equal to your estimated weekly benefit multiplied by the number of paid weeks (the first 7 days of your leave is a waiting period which is unpaid):';
+    const approvedMessage = `If approved, you may be covered <strong>up to ${weeks} weeks</strong> by the PFML program. Your maximum benefit credit is estimated to be <strong>${toCurrency(totalBenefit)}</strong>.`;
+    const totalFormulaDescription = 'Your maximum benefit credit is equal to your estimated weekly benefit multiplied by the number of paid weeks (the first 7 days of your leave is a waiting period which is unpaid):';
     const startDateDisclaimer = `This benefit will be available starting <strong>${startDate}</strong>.`;
 
     const getHelpText = () => (
