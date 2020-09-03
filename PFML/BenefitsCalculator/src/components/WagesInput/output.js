@@ -81,7 +81,7 @@ const Output = (props) => {
         // weeklyPay is less than or equal to benefitBreakWeek
         weeklyPay <= benefitBreakWeek ? (
           <Fragment>
-            <Paragraph text={`${less.partOne} ${toCurrency(benefitBreakWeek)} ${less.partTwo} ${toPercentage(lowBenefitFraction)} ${less.partThree}.`} />
+            <Paragraph text={`${less.partOne} ${toCurrency(benefitBreakWeek)} ${qualified ? less.partTwo : less.partTwoIneligible} ${toPercentage(lowBenefitFraction)} ${less.partThree}.`} />
             <div className="ma__output-calculation">
               <Paragraph text={`${toCurrency(weeklyBenefit)} = (${toCurrency(weeklyPay)} x ${toPercentage(lowBenefitFraction)})`} />
             </div>
@@ -93,7 +93,7 @@ const Output = (props) => {
               // weeklyPay is more than benefitBreakWeek and benefit is less than maxBenefitWeek
               weeklyBenefit < maxBenefitWeek ? (
                 <Fragment>
-                  <Paragraph text={`${more.partOne} ${toCurrency(benefitBreakWeek)} ${more.partTwo} ${toPercentage(lowBenefitFraction)} of ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreakWeek)} ${more.partFive}.`} />
+                  <Paragraph text={`${more.partOne} ${toCurrency(benefitBreakWeek)} ${qualified ? more.partTwo : more.partTwoIneligible} ${toPercentage(lowBenefitFraction)} of ${toCurrency(benefitBreakWeek)} ${more.partThree} ${toPercentage(highBenefitFraction)} ${more.partFour} ${toCurrency(benefitBreakWeek)} ${more.partFive}.`} />
                   <div className="ma__output-calculation">
                     <Paragraph text={`${toCurrency(weeklyBenefit)} = ${toCurrency(benefitBreakWeek)} x ${toPercentage(lowBenefitFraction)} + [ ${toPercentage(highBenefitFraction)} x (${toCurrency(weeklyPay)} - ${toCurrency(benefitBreakWeek)})]`} />
                   </div>
