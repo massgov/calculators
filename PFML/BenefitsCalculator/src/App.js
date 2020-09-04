@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import HelpTip from '@massds/mayflower-react/es/components/organisms/HelpTip';
 import PageHeader from '@massds/mayflower-react/es/components/organisms/PageHeader';
+import Paragraph from '@massds/mayflower-react/es/components/atoms/text/Paragraph';
 import Header from '@massds/mayflower-react/es/components/organisms/Header';
 import Footer from '@massds/mayflower-react/es/components/organisms/Footer';
+import FeedbackForm from '@massds/mayflower-react/es/components/forms/FeedbackForm';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
@@ -64,12 +66,18 @@ class App extends Component {
       onChange: this.handleRadio
     };
 
+    const { helpText, ...helpTipProps } = inputProps.inputTitle;
+
     return(
       <div className="App">
         {process.env.REACT_APP_IFRAME === 'true' ? (
           <div className="page-content">
             <hr />
-            <HelpTip {...inputProps.inputTitle} {...this.helptipIframeProp} id="helptext-total-wages" />
+            <HelpTip {...helpTipProps} {...this.helptipIframeProp} id="helptext-total-wages">
+              <div className="ma__disclaimer">
+                {helpText.map((p) => (<Paragraph>{p}</Paragraph>))}
+              </div>
+            </HelpTip>
             <WagesInput onSubmit={this.handleWagesSubmit} />
             <LeaveType {...leaveTypeProps} />
           </div>
@@ -89,11 +97,31 @@ class App extends Component {
                 <div className="page-content">
                   <hr />
                   <h2>
-                    <HelpTip {...inputProps.inputTitle} {...this.helptipIframeProp} id="helptext-total-wages" />
+                    <HelpTip {...helpTipProps} {...this.helptipIframeProp} id="helptext-total-wages">
+                      <div className="ma__disclaimer">
+                        {helpText.map((p) => (<Paragraph>{p}</Paragraph>))}
+                      </div>
+                    </HelpTip>
                   </h2>
 
                   <WagesInput onSubmit={this.handleWagesSubmit} />
                   <LeaveType {...leaveTypeProps} />
+
+                  <hr />
+                  {process.env.REACT_APP_IFRAME === 'false' && (
+                    <div className="post-content">
+                      <FeedbackForm
+                        formId={2521317}
+                        radioId={47054416}
+                        yesFeedbackId={52940022}
+                        noFeedbackId={47054414}
+                        refererId={47056299}
+                        nodeId={444876}
+                        successMessage={() => <p>Thanks, your message has been sent to Department of Family and Medical Leave!</p>}
+                      />
+                    </div>
+                  )
+                }
                 </div>
               </section>
             </main>
