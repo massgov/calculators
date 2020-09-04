@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Button from '@massds/mayflower-react/es/components/atoms/buttons/Button';
 import CalloutAlert from '@massds/mayflower-react/es/components/organisms/CalloutAlert';
 import HelpTip from '@massds/mayflower-react/es/components/organisms/HelpTip';
 import Paragraph from '@massds/mayflower-react/es/components/atoms/text/Paragraph';
@@ -112,6 +113,13 @@ class LeaveType extends Component {
                       <Paragraph>
                         {startDateDisclaimer}
                       </Paragraph>
+                      <hr />
+                      <Button
+                        usage="secondary"
+                        size="small"
+                        text="Learn more about PFML benefits"
+                        href="https://www.mass.gov/guides/workers-guide-to-paid-family-and-medical-leave"
+                      />
                     </Fragment>
                   )}
                 </CalloutAlert>
