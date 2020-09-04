@@ -74,7 +74,7 @@ class App extends Component {
           <div className="page-content">
             <hr />
             <HelpTip {...helpTipProps} {...this.helptipIframeProp} id="helptext-total-wages">
-              <div className="ma__disclaimer">
+              <div className="ma__help-text">
                 {helpText.map((p) => (<Paragraph>{p}</Paragraph>))}
               </div>
             </HelpTip>
