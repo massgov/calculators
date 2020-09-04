@@ -68,16 +68,22 @@ class App extends Component {
 
     const { helpText, ...helpTipProps } = inputProps.inputTitle;
 
+    const getHelpTip = () => (
+      <h2>
+        <HelpTip {...helpTipProps} {...this.helptipIframeProp} id="helptext-total-wages">
+          <div className="ma__help-text">
+            {helpText.map((p) => (<Paragraph>{p}</Paragraph>))}
+          </div>
+        </HelpTip>
+      </h2>
+    );
+
     return(
       <div className="App">
         {process.env.REACT_APP_IFRAME === 'true' ? (
           <div className="page-content">
             <hr />
-            <HelpTip {...helpTipProps} {...this.helptipIframeProp} id="helptext-total-wages">
-              <div className="ma__help-text">
-                {helpText.map((p) => (<Paragraph>{p}</Paragraph>))}
-              </div>
-            </HelpTip>
+            {getHelpTip()}
             <WagesInput onSubmit={this.handleWagesSubmit} />
             <LeaveType {...leaveTypeProps} />
           </div>
@@ -96,13 +102,7 @@ class App extends Component {
               <section className="main-content main-content--two">
                 <div className="page-content">
                   <hr />
-                  <h2>
-                    <HelpTip {...helpTipProps} {...this.helptipIframeProp} id="helptext-total-wages">
-                      <div className="ma__disclaimer">
-                        {helpText.map((p) => (<Paragraph>{p}</Paragraph>))}
-                      </div>
-                    </HelpTip>
-                  </h2>
+                  {getHelpTip()}
 
                   <WagesInput onSubmit={this.handleWagesSubmit} />
                   <LeaveType {...leaveTypeProps} />
