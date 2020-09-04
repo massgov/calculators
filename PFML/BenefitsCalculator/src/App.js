@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '@massds/mayflower-react/es/components/atoms/buttons/Button';
 import HelpTip from '@massds/mayflower-react/es/components/organisms/HelpTip';
 import PageHeader from '@massds/mayflower-react/es/components/organisms/PageHeader';
 import Paragraph from '@massds/mayflower-react/es/components/atoms/text/Paragraph';
@@ -106,7 +107,12 @@ class App extends Component {
 
                   <WagesInput onSubmit={this.handleWagesSubmit} />
                   <LeaveType {...leaveTypeProps} />
-
+                  <Button
+                    usage="secondary"
+                    size="small"
+                    text="Learn more about PFML benefits"
+                    href="https://www.mass.gov/guides/workers-guide-to-paid-family-and-medical-leave"
+                  />
                   <hr />
                   {process.env.REACT_APP_IFRAME === 'false' && (
                     <div className="post-content">
