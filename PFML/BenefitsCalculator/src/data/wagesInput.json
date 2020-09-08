@@ -1,0 +1,10 @@
+{
+  "inputTitle": {
+    "text":"Enter the total wages you received in the last 4 quarters to estimate your benefits.",
+    "triggerText": ["total wages you received in the last 4 quarters"],
+    "helpText": ["Make sure you enter your total wage that appears on your pay stub, <b>before taxes or other deductions</b> have been made. To find your quarterly wage if you're a <b>salaried worker</b>, divide your annual wage by 4. ","If you’re an <b>hourly worker</b> with a predictable schedule, multiply your hourly wage by the number of hours you work per week, and then multiply that number by 13. Someone working full time for the Massachusetts minimum wage will earn $6,630 per quarter - ($12.75 per hour x 40 hours per week) x 13 weeks in a quarter.","If you <b>had multiple employers</b>, add up the wages you earned from all of your employers in the quarter and enter that number."]
+  },
+  "inputLabel": "total quarterly wages:",
+  "applyAllLabel": "Apply this quarter's wages to the all quarters.",
+  "buttonText": "Calculate Weekly Benefit"
+}
