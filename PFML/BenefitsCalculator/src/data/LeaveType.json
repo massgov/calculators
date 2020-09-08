@@ -2,7 +2,7 @@
 	"question": {
 		"content": "For which of the following reasons are you planning to take leave?",
 		"triggerText": ["following reasons"],
-		"helpText": ["Learn more about <a href=\"https://www.mass.gov/info-details/paid-family-and-medical-leave-pfml-benefits-guide\">Paid Family and Medical Leave benefits.<\/a>"]
+		"helpText": ["Learn more about <a href=\"https://www.mass.gov/info-details/paid-family-and-medical-leave-pfml-benefits-guide#eligible-types-of-leave-\">the types of Paid Family and Medical Leave<\/a>."]
 	},
 	"options": [{
 	    "label": "Birth, adoption, or placement of a foster child",
@@ -50,7 +50,7 @@
 			"class": "col-large-1",
 	    "weeks": -1,
 	    "id": "other",
-	    "message": "You <strong>may not be covered</strong> by the PFML Program. For more information please visit our <a href=\"https://www.mass.gov/info-details/paid-family-and-medical-leave-benefits-eligibility\">Paid Family and Medical Leave benefits eligibility<\/a> page.",
+	    "message": "You <strong>may not be covered</strong> by the PFML Program. For more information, learn more about <a href=\"https://www.mass.gov/info-details/paid-family-and-medical-leave-pfml-benefits-guide#eligible-types-of-leave-\">the types of Paid Family and Medical Leave<\/a>.",
 	    "theme": "c-error-red"
 	}]
 }
