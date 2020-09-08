@@ -2,7 +2,7 @@
 	"question": {
 		"content": "For which of the following reasons are you planning to take leave?",
 		"triggerText": ["following reasons"],
-		"helpText": ["Learn more about <a href=\"https://www.mass.gov/info-details/paid-family-and-medical-leave-pfml-benefits-guide\">Paid Family and Medical Leave benefits eligibility.<\/a>"]
+		"helpText": ["Learn more about <a href=\"https://www.mass.gov/info-details/paid-family-and-medical-leave-pfml-benefits-guide\">Paid Family and Medical Leave benefits.<\/a>"]
 	},
 	"options": [{
 	    "label": "Birth, adoption, or placement of a foster child",
