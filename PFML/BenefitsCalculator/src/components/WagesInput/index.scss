@@ -1,0 +1,54 @@
+@import "./node_modules/@massds/mayflower-react/es/components/styles/global";
+
+form {
+  margin: 40px 0 !important;
+}
+.ma__input-group:not(:first-child) {
+  margin-bottom: 30px;
+}
+
+.input_apply-all{
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin-bottom: 30px;
+
+  label {
+    font-weight: 300;
+  }
+}
+
+input {
+  &::placeholder {
+    color: $c-gray;
+  }
+}
+
+
+
+.ma__help-text {
+	padding: 15px;
+}
+
+
+.ma__output-calculation {
+	display: flex;
+  	align-items: center;
+  	justify-content: center;
+	margin: 20px 0px 10px;
+	p {
+	  background-color: $c-gray-lightest;
+  border: 2px solid $c-gray-light;
+  padding: 5px 10px;
+	}
+}
+
+// remove if fixed in mayflower-react
+.ma__input-group--inline .ma__input-group-right {
+  align-items: unset;
+}
+
+.ma__disclaimer {
+  margin-top: 10px;
+  font-size: 1.1rem;
+}

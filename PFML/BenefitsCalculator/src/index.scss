@@ -1,6 +1,16 @@
 @import "css/global";
 @import "css/layout";
 
+#helptext-total-wages {
+  font-size: 1.5rem;
+  font-weight: bold;
+
+  .ma__help-text {
+    font-weight: normal;
+    font-size: 20px;
+  }
+}
+
 .ma__part {
 	margin-top: 20px;
 	margin-bottom: 20px;

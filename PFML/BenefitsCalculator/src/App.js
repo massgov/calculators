@@ -1,68 +1,30 @@
 import React, { Component } from 'react';
-import {
-  Header, Footer, PageHeader, Collapse
-} from '@massds/mayflower-react';
-import {
-  decode, addUrlProps, UrlQueryParamTypes, replaceInUrlQuery, encode
-} from 'react-url-query';
+import HelpTip from '@massds/mayflower-react/es/components/organisms/HelpTip';
+import PageHeader from '@massds/mayflower-react/es/components/organisms/PageHeader';
+import Paragraph from '@massds/mayflower-react/es/components/atoms/text/Paragraph';
+import Header from '@massds/mayflower-react/es/components/organisms/Header';
+import Footer from '@massds/mayflower-react/es/components/organisms/Footer';
+import FeedbackForm from '@massds/mayflower-react/es/components/forms/FeedbackForm';
 import UtilityNavData from './data/UtilityNav.data';
 import MainNavData from './data/MainNav.data';
 import HeaderSearchData from './data/HeaderSearch.data';
 import FooterData from './data/Footer.data';
 import SocialLinksLiveData from './data/SocialLinksLive.json';
-import Part1 from './components/Part1';
-import Part2 from './components/Part2';
-import Part3 from './components/Part3';
-import history from './components/History';
+import LeaveType from './components/LeaveType';
+import WagesInput from './components/WagesInput';
 import BenefitsVariables from './data/BenefitsVariables.json';
-import PartOneProps from './data/PartOne.json';
+import inputProps from './data/wagesInput.json';
 
 import './index.css';
-
-/**
- * Map from url query params to props. The values in `url` will still be encoded
- * as strings since we did not pass a `urlPropsQueryConfig` to addUrlProps.
- */
-const mapUrlToProps = (url) => ({
-  yearIncome: decode(UrlQueryParamTypes.number, url.yearIncome),
-  leaveReason: decode(UrlQueryParamTypes.string, url.leaveReason)
-});
-
-/**
- * Manually specify how to deal with changes to URL query param props.
- * We do this since we are not using a urlPropsQueryConfig.
- */
-const mapUrlChangeHandlersToProps = () => ({
-  onChangeYearIncome: (value) => replaceInUrlQuery('yearIncome', encode(UrlQueryParamTypes.string, value)),
-  onChangeLeaveReason: (value) => replaceInUrlQuery('leaveReason', encode(UrlQueryParamTypes.string, value))
-});
-
-const validNumber = (num) => (num || (num !== null && num !== undefined));
-const getDefaultNumber = (num) => ((validNumber(num)) ? Number(num) : null);
-
-const getWeeks = (qOneProps, selected) => {
-  let maxWeeks;
-  qOneProps.options.forEach((option) => {
-    if (option.value === selected) {
-      maxWeeks = option.weeks;
-    }
-  });
-  return maxWeeks;
-};
 
 class App extends Component {
   constructor(props) {
     super(props);
-    // const hasLocalStore = typeof localStorage !== 'undefined';
-    const {
-      yearIncome, leaveReason
-    } = props;
     /* eslint-disable no-undef */
     this.state = {
-      yearIncome: getDefaultNumber(yearIncome),
-      maxWeeks: getWeeks(PartOneProps, leaveReason),
-      leaveReason,
-      belowMinSalary: !!((getDefaultNumber(yearIncome) && getDefaultNumber(yearIncome) < BenefitsVariables.baseVariables.minSalary))
+      qualified: false,
+      weeklyBenefit: null,
+      leaveReason: ''
     };
     /* eslint-enable react/no-unused-state */
     this.footerProps = {
@@ -79,89 +41,96 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    // force an update if the URL changes
-    history.listen(() => this.forceUpdate());
-  }
-
-  componentWillUnmount() {
-    // remove force update on URL changes
-    history.listen();
-  }
-
-  handleInput = (value, id, type) => {
-    const numberValue = value;
+  handleWagesSubmit = ({ qualified, weeklyBenefit }) => {
     this.setState({
-      yearIncome: numberValue
+      qualified,
+      weeklyBenefit
     });
-    const { onChangeYearIncome } = this.props;
-    onChangeYearIncome(value);
-    if (numberValue >= BenefitsVariables.baseVariables.minSalary) {
-      this.setState({
-        belowMinSalary: false
-      });
-    }
-    // Allow rendering belowMinSalary callout on inputCurrency up/down button click.
-    if (type === 'click') {
-      if (numberValue < BenefitsVariables.baseVariables.minSalary) {
-        this.setState({
-          belowMinSalary: true
-        });
-      }
-    }
   };
 
-  handleRadio = ({ selected, maxWeeks }) => {
+  handleRadio = ({ selected }) => {
     this.setState({
-      maxWeeks,
       leaveReason: selected
     });
-    const { onChangeLeaveReason } = this.props;
-    onChangeLeaveReason(selected);
-  }
-
-  handleBlur = (numberValue) => {
-    if (numberValue < BenefitsVariables.baseVariables.minSalary) {
-      this.setState({
-        belowMinSalary: true
-      });
-    }
   }
 
   render() {
     const {
-      leaveReason, yearIncome, maxWeeks, belowMinSalary
+      leaveReason, weeklyBenefit, qualified
     } = this.state;
-    let belowMinSalaryConv;
-    if (typeof belowMinSalary === 'string') {
-      belowMinSalaryConv = belowMinSalary === 'true';
-    } else { belowMinSalaryConv = belowMinSalary; }
 
-    const questTwoDisabled = !(maxWeeks > 0);
+    const leaveTypeProps = {
+      qualified,
+      weeklyBenefit,
+      defaultSelected: leaveReason,
+      onChange: this.handleRadio
+    };
+
+    const { helpText, ...helpTipProps } = inputProps.inputTitle;
+
+    const getHelpTip = () => (
+      <h2>
+        <HelpTip {...helpTipProps} {...this.helptipIframeProp} id="helptext-total-wages">
+          <div className="ma__help-text">
+            {helpText.map((p) => (<Paragraph>{p}</Paragraph>))}
+          </div>
+        </HelpTip>
+      </h2>
+    );
+
     return(
       <div className="App">
-        {process.env.REACT_APP_IFRAME === 'false' && <Header {...this.headerProps} />}
-        <main className="main-content">
-          <PageHeader title={BenefitsVariables.title} optionalContents={[{ paragraph: { text: BenefitsVariables.description } }]} />
-          <section className="main-content--two">
-            <Part1 error={false} disabled={false} defaultSelected={leaveReason} onChange={this.handleRadio} />
+        {process.env.REACT_APP_IFRAME === 'true' ? (
+          <div className="page-content">
             <hr />
-            <Part2 onChange={this.handleInput} onBlur={this.handleBlur} disabled={questTwoDisabled} defaultValue={yearIncome} belowMinSalary={belowMinSalaryConv} />
-            {yearIncome > 0 && maxWeeks > 0
-              && (
-              <Collapse in={yearIncome >= BenefitsVariables.baseVariables.minSalary} dimension="height" className="ma__callout-alert">
-                <div className="ma__collapse">
-                  <Part3 yearIncome={yearIncome} maxWeeks={maxWeeks} leaveReason={leaveReason} />
+            {getHelpTip()}
+            <WagesInput onSubmit={this.handleWagesSubmit} />
+            <LeaveType {...leaveTypeProps} />
+          </div>
+        ) : (
+          <div>
+            <Header {...this.headerProps} />
+            <main className="main-content">
+              <PageHeader
+                title={BenefitsVariables.title}
+                optionalContents={[{
+                  paragraph: {
+                    text: BenefitsVariables.description
+                  }
+                }]}
+              />
+              <section className="main-content main-content--two">
+                <div className="page-content">
+                  <hr />
+                  {getHelpTip()}
+
+                  <WagesInput onSubmit={this.handleWagesSubmit} />
+                  <LeaveType {...leaveTypeProps} />
+                  <hr />
+                  {process.env.REACT_APP_IFRAME === 'false' && (
+                    <div className="post-content">
+                      <FeedbackForm
+                        formId={2521317}
+                        radioId={47054416}
+                        yesFeedbackId={52940022}
+                        noFeedbackId={47054414}
+                        refererId={47056299}
+                        nodeId={539571}
+                        successMessage={() => <p>Thanks, your message has been sent to Department of Family and Medical Leave!</p>}
+                      />
+                    </div>
+                  )
+                }
                 </div>
-              </Collapse>
-              )
-            }
-          </section>
-        </main>
-        {process.env.REACT_APP_IFRAME === 'false' && <Footer {...this.footerProps} />}
+              </section>
+            </main>
+            <Footer {...this.footerProps} />
+          </div>
+        )
+      }
       </div>
     );
   }
 }
 
-export default addUrlProps({ mapUrlToProps, mapUrlChangeHandlersToProps })(App);
+export default App;

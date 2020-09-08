@@ -2,53 +2,53 @@
 	"question": {
 		"content": "For which of the following reasons are you planning to take leave?",
 		"triggerText": ["following reasons"],
-		"helpText": ["Learn more about <a href=\"https://www.mass.gov/info-details/paid-family-and-medical-leave-benefits-eligibility\">Paid Family and Medical Leave benefits eligibility.<\/a>"]
+		"helpText": ["Learn more about <a href=\"https://www.mass.gov/info-details/paid-family-and-medical-leave-pfml-benefits-guide\">Paid Family and Medical Leave benefits eligibility.<\/a>"]
 	},
 	"options": [{
 	    "label": "Birth, adoption, or placement of a foster child",
 	    "value": "birth-adoption",
 			"class": "col-large-1",
-	    "weeks": "12",
+	    "weeks": 12,
 	    "id": "birth-adoption",
-	    "message": "If approved, you may be covered <strong>up to 12 weeks</strong> by the PFML program. This benefit will be available starting <strong>January 1, 2021</strong>.",
+	    "startDate": "January 1, 2021",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Personal serious health condition",
 	    "value": "own-medical",
 			"class": "col-large-1",
-	    "weeks": "20",
+	    "weeks": 20,
 	    "id": "own-medical",
-	    "message": "If approved, you may be covered <strong>up to 20 weeks</strong> by the PFML program. This benefit will be available starting <strong>January 1, 2021</strong>.",
+	    "startDate": "January 1, 2021",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Caring for a family member with a serious health condition",
 	    "value": "caring-loved-one",
 			"class": "col-large-1",
-	    "weeks": "12",
+	    "weeks": 12,
 	    "id": "caring-loved-one",
-	    "message": "If approved, you may be covered <strong>up to 12 weeks</strong> by the PFML program. This benefit will be available starting <strong>July 1, 2021</strong>.",
+	    "startDate": "July 1, 2021",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Family member called to active duty in the armed forces",
 	    "value": "active-duty",
 			"class": "col-large-1",
-	    "weeks": "12",
+	    "weeks": 12,
 	    "id": "active-duty",
-	    "message": "If approved, you may be covered <strong>up to 12 weeks</strong> by the PFML program. This benefit will be available starting <strong>January 1, 2021</strong>.",
+	    "startDate": "January 1, 2021",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Caring for a family member who serves in the armed forces",
 	    "value": "injured-duty",
 			"class": "col-large-1",
-	    "weeks": "26",
+	    "weeks": 26,
 	    "id": "injured-duty",
-	    "message": "If approved, you may be covered <strong>up to 26 weeks</strong> by the PFML program. This benefit will be available starting <strong>January 1, 2021</strong>.",
+	    "startDate": "January 1, 2021",
 	    "theme": "c-primary"
 	}, {
 	    "label": "Other",
 	    "value": "other",
 			"class": "col-large-1",
-	    "weeks": "0",
+	    "weeks": -1,
 	    "id": "other",
 	    "message": "You <strong>may not be covered</strong> by the PFML Program. For more information please visit our <a href=\"https://www.mass.gov/info-details/paid-family-and-medical-leave-benefits-eligibility\">Paid Family and Medical Leave benefits eligibility<\/a> page.",
 	    "theme": "c-error-red"

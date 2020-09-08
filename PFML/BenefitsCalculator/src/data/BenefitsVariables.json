@@ -2,11 +2,14 @@
   "title": "Paid Family and Medical Leave Benefits Calculator",
   "description": "Under the <a href=\"https://www.mass.gov/info-details/paid-family-medical-leave-for-employees-faq\">PFML law</a>, Massachusetts workers are eligible for family and medical leave benefits beginning in January 2021. If you work in Massachusetts, use the calculator below to estimate the benefits you're eligible for if you plan to take leave.",
   "baseVariables": {
-  	"maAvgYear": 74446.32,
-  	"weeksPerYear": 52,
-  	"maxBenefitWeek": 850.00,
+    "maAvgWeek": 1431.66,
+  	"maxBenefitWeek": 916.26,
   	"lowBenefitFraction": 0.8,
   	"highBenefitFraction": 0.5,
-  	"minSalary": 4700
+    "quartersSumThreshhold": 5100
+  },
+  "buttonLink": {
+    "text": "Learn more about PFML benefits",
+    "link": "https://www.mass.gov/guides/a-guide-to-paid-family-and-medical-leave-for-massachusetts-workers"
   }
 }
