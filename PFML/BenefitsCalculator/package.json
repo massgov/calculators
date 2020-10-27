@@ -24,7 +24,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.6.1",
     "prettier": "1.18.2",
-    "react-scripts": "3.0.1"
+    "react-scripts": "4.0.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./node_modules/ --include-path ./node_modules/@massds/mayflower-react/es/assets/scss/ src/ -o src/",
