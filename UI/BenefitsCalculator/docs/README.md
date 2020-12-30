@@ -11,7 +11,7 @@ The main logic of the calculator lives in these files:
 There are 4 variables that are constants. Here are their values:
 ```
 maxBenefitDuration = 26
-quartersSumThreshhold = 5100
+quartersSumThreshhold = 5400
 weeklyBenefitMax = 823
 maxBenefitRatio = 0.36
 ```
