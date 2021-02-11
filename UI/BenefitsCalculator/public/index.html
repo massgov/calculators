@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#000000">
-    <!--
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+  <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    <meta name="robots" content="%REACT_APP_SITE_INDEX%">
-    <!-- metatags for social media -->
-    <meta property="og:title" content="Unemployment Benefits Calculator">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="%REACT_APP_CANONICAL_URL%">
-    <meta property="og:description" content="If you are eligible to receive unemployment benefits from the state of Massachusetts, use the calculator below to estimate the benefits you're eligible for.">
-    <meta property="og:site_name" content="Mass.gov">
-    <!-- metatag for search.mass.gov -->
-    <meta name="mg_organization" content="departmentofunemploymentassistance,executiveofficeoflaborandworkforcedevelopment">
-    <!--
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+  <meta name="robots" content="%REACT_APP_SITE_INDEX%">
+  <!-- metatags for social media -->
+  <meta property="og:title" content="Unemployment Benefits Calculator">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="%REACT_APP_CANONICAL_URL%">
+  <meta property="og:description" content="If you are eligible to receive unemployment benefits from the state of Massachusetts, use the calculator below to estimate the benefits you're eligible for.">
+  <meta property="og:site_name" content="Mass.gov">
+  <!-- metatag for search.mass.gov -->
+  <meta name="mg_organization" content="departmentofunemploymentassistance,executiveofficeoflaborandworkforcedevelopment">
+  <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -28,32 +29,37 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>UI Claimants Benefits Calculator | Mass.gov</title>
-    <!-- Google Tag Manager -->
-    <script>(
-      function(w,d,s,l,i){
-        w[l]=w[l]||[];w[l].push({
-          'gtm.start': new Date().getTime(),event:'gtm.js'
+  <title>UI Claimants Benefits Calculator | Mass.gov</title>
+  <!-- Google Tag Manager -->
+  <script>
+    (
+      function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+          'gtm.start': new Date().getTime(),
+          event: 'gtm.js'
         });
-        var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),
-            dl=l!='dataLayer'?'&l='+l:'';
-            j.async=true;
-            j.src=%REACT_APP_GTM_SCRPT%;
-            f.parentNode.insertBefore(j,f);
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = % REACT_APP_GTM_SCRPT % ;
+        f.parentNode.insertBefore(j, f);
       })
-      (window,document,'script','dataLayer','GTM-PJ224LR');
-    </script>
-    <!-- End Google Tag Manager -->
-  </head>
-  <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="%REACT_APP_GTM_NOSCRPT%"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <div id="root"></div>
-  </body>
+    (window, document, 'script', 'dataLayer', 'GTM-PJ224LR');
+  </script>
+  <!-- End Google Tag Manager -->
+</head>
+
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="%REACT_APP_GTM_NOSCRPT%" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="root"></div>
+
+</body>
+
 </html>
