@@ -17,13 +17,15 @@
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
-    "react-scripts": "2.1.3",
+    "cheerio": "^1.0.0-rc.5",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.1",
-    "eslint-plugin-json": "^1.4.0",
-    "prettier": "1.14.2"
+    "js-beautify": "^1.13.5",
+    "prettier": "1.14.2",
+    "react-scripts": "2.1.3"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./node_modules/ --include-path ./node_modules/@massds/mayflower-react/es/assets/scss/ src/ -o src/",
@@ -31,10 +33,11 @@
     "start-js": "react-scripts start",
     "build-js": "react-scripts build",
     "build-menus": "node ../../utils/buildMainNav.js && node ../../utils/buildFooter.js",
+    "add-iframe-resizer": "node scripts/iframe-resizer",
     "start": "npm-run-all build-menus -p watch-css start-js",
     "build": "npm-run-all build-menus build-css build-js",
     "build:development": "env-cmd .env.development npm-run-all build-css build-js",
-    "build:iframe": "env-cmd .env.iframe npm-run-all build-css build-js",
+    "build:iframe": "env-cmd .env.iframe npm-run-all add-iframe-resizer build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/eslint .",
